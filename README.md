@@ -6,14 +6,14 @@ composer req yabx/telegram
 Simple usage
 ------------
 ```php
-use Yabx\Telegram\Update;
+use Yabx\Telegram\Service;
 
 // Parse telegram webhook
-$update = Update::fromRequest();
+$update = Service::fromRequest();
 // or
-$update = Update::fromJson($json);
+$update = Service::fromJson($json);
 
-// Get Message or EditedMessage object
+// Get Message object
 $message = $update->getMessage();
 
 // Get Sender and Chat objects

@@ -1,23 +1,24 @@
 {
-    "name": "yabx/telegram",
-    "version": "0.1.0",
-    "description": "Telegram Bot API webhooks parser",
-    "type": "library",
-    "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Yabx\\Telegram\\": "src/"
-        }
-    },
-    "authors": [
-        {
-            "name": "Yauheni Kiryienkau",
-            "email": "ya@yabx.net"
-        }
-    ],
-    "minimum-stability": "stable",
-    "require": {
-        "php": ">=8.0",
-        "ext-json": "*"
+  "name": "yabx/telegram",
+  "version": "0.2.0",
+  "description": "Telegram Bot API",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Yabx\\Telegram\\": "src/"
     }
+  },
+  "authors": [
+    {
+      "name": "Yauheni Kiryienkau",
+      "email": "ya@yabx.net"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=8.0",
+    "ext-json": "*",
+    "ext-mbstring": "*"
+  }
 }
