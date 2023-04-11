@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * This script is needed only for the development and initial generation of all classes.
+ * Please DO NOT USE IT
+ */
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Yabx\Telegram\Utils;
