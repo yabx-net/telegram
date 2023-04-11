@@ -2,39 +2,43 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InlineQuery {
+use Yabx\Telegram\ObjectTrait;
+
+final class InlineQuery {
+
+    use ObjectTrait;
 
     /**
      * Id
      *
      * Unique identifier for this query
-     * @var string
+     * @var string|null
      */
-    protected string $id;
+    protected ?string $id = null;
 
     /**
      * From
      *
      * Sender
-     * @var User
+     * @var User|null
      */
-    protected User $from;
+    protected ?User $from = null;
 
     /**
      * Query
      *
      * Text of the query (up to 256 characters)
-     * @var string
+     * @var string|null
      */
-    protected string $query;
+    protected ?string $query = null;
 
     /**
      * Offset
      *
      * Offset of the results to be returned, can be controlled by the bot
-     * @var string
+     * @var string|null
      */
-    protected string $offset;
+    protected ?string $offset = null;
 
     /**
      * Chat Type
@@ -52,56 +56,97 @@ class InlineQuery {
      */
     protected ?Location $location = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['id'])) {
-            $this->id = $data['id'];
-        }
-        if (isset($data['from'])) {
-            $this->from = new User($data['from']);
-        }
-        if (isset($data['query'])) {
-            $this->query = $data['query'];
-        }
-        if (isset($data['offset'])) {
-            $this->offset = $data['offset'];
-        }
-        if (isset($data['chat_type'])) {
-            $this->chatType = $data['chat_type'];
-        }
-        if (isset($data['location'])) {
-            $this->location = new Location($data['location']);
-        }
+    public function __construct(
+        ?string   $id = null,
+        ?User     $from = null,
+        ?string   $query = null,
+        ?string   $offset = null,
+        ?string   $chatType = null,
+        ?Location $location = null,
+    ) {
+        $this->id = $id;
+        $this->from = $from;
+        $this->query = $query;
+        $this->offset = $offset;
+        $this->chatType = $chatType;
+        $this->location = $location;
     }
 
-    public function getId(): string {
+    public static function fromArray(array $data): InlineQuery {
+        $instance = new self();
+        if (isset($data['id'])) {
+            $instance->id = $data['id'];
+        }
+        if (isset($data['from'])) {
+            $instance->from = User::fromArray($data['from']);
+        }
+        if (isset($data['query'])) {
+            $instance->query = $data['query'];
+        }
+        if (isset($data['offset'])) {
+            $instance->offset = $data['offset'];
+        }
+        if (isset($data['chat_type'])) {
+            $instance->chatType = $data['chat_type'];
+        }
+        if (isset($data['location'])) {
+            $instance->location = Location::fromArray($data['location']);
+        }
+        return $instance;
+    }
+
+    public function getId(): ?string {
         return $this->id;
     }
 
-    public function getFrom(): User {
+    public function setId(?string $value): self {
+        $this->id = $value;
+        return $this;
+    }
+
+    public function getFrom(): ?User {
         return $this->from;
     }
 
-    public function getQuery(): string {
+    public function setFrom(?User $value): self {
+        $this->from = $value;
+        return $this;
+    }
+
+    public function getQuery(): ?string {
         return $this->query;
     }
 
-    public function getOffset(): string {
+    public function setQuery(?string $value): self {
+        $this->query = $value;
+        return $this;
+    }
+
+    public function getOffset(): ?string {
         return $this->offset;
+    }
+
+    public function setOffset(?string $value): self {
+        $this->offset = $value;
+        return $this;
     }
 
     public function getChatType(): ?string {
         return $this->chatType;
     }
 
+    public function setChatType(?string $value): self {
+        $this->chatType = $value;
+        return $this;
+    }
+
     public function getLocation(): ?Location {
         return $this->location;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setLocation(?Location $value): self {
+        $this->location = $value;
+        return $this;
     }
 
 }

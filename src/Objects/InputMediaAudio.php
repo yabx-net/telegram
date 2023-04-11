@@ -2,23 +2,27 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InputMediaAudio {
+use Yabx\Telegram\ObjectTrait;
+
+final class InputMediaAudio {
+
+    use ObjectTrait;
 
     /**
      * Type
      *
      * Type of the result, must be audio
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * Media
      *
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »
-     * @var string
+     * @var string|null
      */
-    protected string $media;
+    protected ?string $media = null;
 
     /**
      * Thumbnail
@@ -76,80 +80,142 @@ class InputMediaAudio {
      */
     protected ?string $title = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string $type = null,
+        ?string $media = null,
+        ?string $thumbnail = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array  $captionEntities = null,
+        ?int    $duration = null,
+        ?string $performer = null,
+        ?string $title = null,
+    ) {
+        $this->type = $type;
+        $this->media = $media;
+        $this->thumbnail = $thumbnail;
+        $this->caption = $caption;
+        $this->parseMode = $parseMode;
+        $this->captionEntities = $captionEntities;
+        $this->duration = $duration;
+        $this->performer = $performer;
+        $this->title = $title;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): InputMediaAudio {
+        $instance = new self();
         if (isset($data['type'])) {
-            $this->type = $data['type'];
+            $instance->type = $data['type'];
         }
         if (isset($data['media'])) {
-            $this->media = $data['media'];
+            $instance->media = $data['media'];
         }
         if (isset($data['thumbnail'])) {
-            $this->thumbnail = $data['thumbnail'];
+            $instance->thumbnail = $data['thumbnail'];
         }
         if (isset($data['caption'])) {
-            $this->caption = $data['caption'];
+            $instance->caption = $data['caption'];
         }
         if (isset($data['parse_mode'])) {
-            $this->parseMode = $data['parse_mode'];
+            $instance->parseMode = $data['parse_mode'];
         }
         if (isset($data['caption_entities'])) {
-            $this->captionEntities = [];
+            $instance->captionEntities = [];
             foreach ($data['caption_entities'] as $item) {
-                $this->captionEntities[] = new MessageEntity($item);
+                $instance->captionEntities[] = MessageEntity::fromArray($item);
             }
         }
         if (isset($data['duration'])) {
-            $this->duration = $data['duration'];
+            $instance->duration = $data['duration'];
         }
         if (isset($data['performer'])) {
-            $this->performer = $data['performer'];
+            $instance->performer = $data['performer'];
         }
         if (isset($data['title'])) {
-            $this->title = $data['title'];
+            $instance->title = $data['title'];
         }
+        return $instance;
     }
 
-    public function getType(): string {
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getMedia(): string {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getMedia(): ?string {
         return $this->media;
+    }
+
+    public function setMedia(?string $value): self {
+        $this->media = $value;
+        return $this;
     }
 
     public function getThumbnail(): ?string {
         return $this->thumbnail;
     }
 
+    public function setThumbnail(?string $value): self {
+        $this->thumbnail = $value;
+        return $this;
+    }
+
     public function getCaption(): ?string {
         return $this->caption;
+    }
+
+    public function setCaption(?string $value): self {
+        $this->caption = $value;
+        return $this;
     }
 
     public function getParseMode(): ?string {
         return $this->parseMode;
     }
 
+    public function setParseMode(?string $value): self {
+        $this->parseMode = $value;
+        return $this;
+    }
+
     public function getCaptionEntities(): ?array {
         return $this->captionEntities;
+    }
+
+    public function setCaptionEntities(?array $value): self {
+        $this->captionEntities = $value;
+        return $this;
     }
 
     public function getDuration(): ?int {
         return $this->duration;
     }
 
+    public function setDuration(?int $value): self {
+        $this->duration = $value;
+        return $this;
+    }
+
     public function getPerformer(): ?string {
         return $this->performer;
+    }
+
+    public function setPerformer(?string $value): self {
+        $this->performer = $value;
+        return $this;
     }
 
     public function getTitle(): ?string {
         return $this->title;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setTitle(?string $value): self {
+        $this->title = $value;
+        return $this;
     }
 
 }

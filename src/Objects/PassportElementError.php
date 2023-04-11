@@ -2,16 +2,17 @@
 
 namespace Yabx\Telegram\Objects;
 
-class PassportElementError {
+use Yabx\Telegram\ObjectTrait;
 
-    protected array $rawData;
+final class PassportElementError {
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
-    }
+    use ObjectTrait;
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function __construct() {}
+
+    public static function fromArray(array $data): PassportElementError {
+        $instance = new self();
+        return $instance;
     }
 
 }

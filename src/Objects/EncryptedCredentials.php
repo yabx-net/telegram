@@ -2,61 +2,85 @@
 
 namespace Yabx\Telegram\Objects;
 
-class EncryptedCredentials {
+use Yabx\Telegram\ObjectTrait;
+
+final class EncryptedCredentials {
+
+    use ObjectTrait;
 
     /**
      * Data
      *
      * Base64-encoded encrypted JSON-serialized data with unique user's payload, data hashes and secrets required for EncryptedPassportElement decryption and authentication
-     * @var string
+     * @var string|null
      */
-    protected string $data;
+    protected ?string $data = null;
 
     /**
      * Hash
      *
      * Base64-encoded data hash for data authentication
-     * @var string
+     * @var string|null
      */
-    protected string $hash;
+    protected ?string $hash = null;
 
     /**
      * Secret
      *
      * Base64-encoded secret, encrypted with the bot's public RSA key, required for data decryption
-     * @var string
+     * @var string|null
      */
-    protected string $secret;
+    protected ?string $secret = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['data'])) {
-            $this->data = $data['data'];
-        }
-        if (isset($data['hash'])) {
-            $this->hash = $data['hash'];
-        }
-        if (isset($data['secret'])) {
-            $this->secret = $data['secret'];
-        }
+    public function __construct(
+        ?string $data = null,
+        ?string $hash = null,
+        ?string $secret = null,
+    ) {
+        $this->data = $data;
+        $this->hash = $hash;
+        $this->secret = $secret;
     }
 
-    public function getData(): string {
+    public static function fromArray(array $data): EncryptedCredentials {
+        $instance = new self();
+        if (isset($data['data'])) {
+            $instance->data = $data['data'];
+        }
+        if (isset($data['hash'])) {
+            $instance->hash = $data['hash'];
+        }
+        if (isset($data['secret'])) {
+            $instance->secret = $data['secret'];
+        }
+        return $instance;
+    }
+
+    public function getData(): ?string {
         return $this->data;
     }
 
-    public function getHash(): string {
+    public function setData(?string $value): self {
+        $this->data = $value;
+        return $this;
+    }
+
+    public function getHash(): ?string {
         return $this->hash;
     }
 
-    public function getSecret(): string {
+    public function setHash(?string $value): self {
+        $this->hash = $value;
+        return $this;
+    }
+
+    public function getSecret(): ?string {
         return $this->secret;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setSecret(?string $value): self {
+        $this->secret = $value;
+        return $this;
     }
 
 }

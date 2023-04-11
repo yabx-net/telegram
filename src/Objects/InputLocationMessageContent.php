@@ -2,23 +2,27 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InputLocationMessageContent {
+use Yabx\Telegram\ObjectTrait;
+
+final class InputLocationMessageContent {
+
+    use ObjectTrait;
 
     /**
      * Latitude
      *
      * Latitude of the location in degrees
-     * @var float
+     * @var float|null
      */
-    protected float $latitude;
+    protected ?float $latitude = null;
 
     /**
      * Longitude
      *
      * Longitude of the location in degrees
-     * @var float
+     * @var float|null
      */
-    protected float $longitude;
+    protected ?float $longitude = null;
 
     /**
      * Horizontal Accuracy
@@ -52,56 +56,97 @@ class InputLocationMessageContent {
      */
     protected ?int $proximityAlertRadius = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['latitude'])) {
-            $this->latitude = $data['latitude'];
-        }
-        if (isset($data['longitude'])) {
-            $this->longitude = $data['longitude'];
-        }
-        if (isset($data['horizontal_accuracy'])) {
-            $this->horizontalAccuracy = $data['horizontal_accuracy'];
-        }
-        if (isset($data['live_period'])) {
-            $this->livePeriod = $data['live_period'];
-        }
-        if (isset($data['heading'])) {
-            $this->heading = $data['heading'];
-        }
-        if (isset($data['proximity_alert_radius'])) {
-            $this->proximityAlertRadius = $data['proximity_alert_radius'];
-        }
+    public function __construct(
+        ?float $latitude = null,
+        ?float $longitude = null,
+        ?float $horizontalAccuracy = null,
+        ?int   $livePeriod = null,
+        ?int   $heading = null,
+        ?int   $proximityAlertRadius = null,
+    ) {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->horizontalAccuracy = $horizontalAccuracy;
+        $this->livePeriod = $livePeriod;
+        $this->heading = $heading;
+        $this->proximityAlertRadius = $proximityAlertRadius;
     }
 
-    public function getLatitude(): float {
+    public static function fromArray(array $data): InputLocationMessageContent {
+        $instance = new self();
+        if (isset($data['latitude'])) {
+            $instance->latitude = $data['latitude'];
+        }
+        if (isset($data['longitude'])) {
+            $instance->longitude = $data['longitude'];
+        }
+        if (isset($data['horizontal_accuracy'])) {
+            $instance->horizontalAccuracy = $data['horizontal_accuracy'];
+        }
+        if (isset($data['live_period'])) {
+            $instance->livePeriod = $data['live_period'];
+        }
+        if (isset($data['heading'])) {
+            $instance->heading = $data['heading'];
+        }
+        if (isset($data['proximity_alert_radius'])) {
+            $instance->proximityAlertRadius = $data['proximity_alert_radius'];
+        }
+        return $instance;
+    }
+
+    public function getLatitude(): ?float {
         return $this->latitude;
     }
 
-    public function getLongitude(): float {
+    public function setLatitude(?float $value): self {
+        $this->latitude = $value;
+        return $this;
+    }
+
+    public function getLongitude(): ?float {
         return $this->longitude;
+    }
+
+    public function setLongitude(?float $value): self {
+        $this->longitude = $value;
+        return $this;
     }
 
     public function getHorizontalAccuracy(): ?float {
         return $this->horizontalAccuracy;
     }
 
+    public function setHorizontalAccuracy(?float $value): self {
+        $this->horizontalAccuracy = $value;
+        return $this;
+    }
+
     public function getLivePeriod(): ?int {
         return $this->livePeriod;
+    }
+
+    public function setLivePeriod(?int $value): self {
+        $this->livePeriod = $value;
+        return $this;
     }
 
     public function getHeading(): ?int {
         return $this->heading;
     }
 
+    public function setHeading(?int $value): self {
+        $this->heading = $value;
+        return $this;
+    }
+
     public function getProximityAlertRadius(): ?int {
         return $this->proximityAlertRadius;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setProximityAlertRadius(?int $value): self {
+        $this->proximityAlertRadius = $value;
+        return $this;
     }
 
 }

@@ -7,11 +7,8 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Yabx\Telegram\Enum\ChatAction;
 use Yabx\Telegram\Objects\File;
-use Yabx\Telegram\Objects\ForceReply;
-use Yabx\Telegram\Objects\InlineKeyboardMarkup;
 use Yabx\Telegram\Objects\Message;
-use Yabx\Telegram\Objects\ReplyKeyboardMarkup;
-use Yabx\Telegram\Objects\ReplyKeyboardRemove;
+use Yabx\Telegram\Objects\ReplyMarkup;
 use Yabx\Telegram\Objects\Update;
 use Yabx\Telegram\Objects\User;
 use Yabx\Telegram\Objects\UserProfilePhotos;
@@ -36,7 +33,7 @@ class BotApi {
      */
     public static function getUpdateFromJson(string $json): Update {
         if ($data = json_decode($json, true)) {
-            return new Update($data);
+            return Update::fromArray($data);
         } else {
             throw new Exception('Malformed JSON: ' . json_last_error_msg());
         }
@@ -87,7 +84,7 @@ class BotApi {
      * @throws GuzzleException
      */
     public function getMe(): User {
-        return new User($this->request('getMe'));
+        return User::fromArray($this->request('getMe'));
     }
 
     /**
@@ -95,23 +92,23 @@ class BotApi {
      * @link https://core.telegram.org/bots/api#sendmessage
      * @param int|string $chatId
      * @param string $text
-     * @param ForceReply|ReplyKeyboardRemove|InlineKeyboardMarkup|ReplyKeyboardMarkup|null $replyMarkup
+     * @param ReplyMarkup|null $replyMarkup
      * @param array $options
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendMessage(int|string $chatId, string $text, ForceReply|ReplyKeyboardRemove|InlineKeyboardMarkup|ReplyKeyboardMarkup|null $replyMarkup = null,array $options = []): Message {
+    public function sendMessage(int|string $chatId, string $text, ?ReplyMarkup $replyMarkup = null, array $options = []): Message {
         $text = str_replace('\n', "\n", $text);
         $data = self::request('sendMessage', [
             'chat_id' => $chatId,
             'text' => $text,
             'parse_mode' => 'html',
             'disable_web_page_preview' => 1,
-            'reply_markup' => $replyMarkup?->getRawData(),
+            'reply_markup' => $replyMarkup?->toArray(),
             ...$options
         ]);
-        return new Message($data);
+        return Message::fromArray($data);
     }
 
     /**
@@ -133,7 +130,7 @@ class BotApi {
             'message_id' => $messageId,
             ...$options
         ]);
-        return new Message($data);
+        return Message::fromArray($data);
     }
 
     /**
@@ -157,7 +154,7 @@ class BotApi {
             'message_id' => $messageId,
             ...$options
         ]);
-        return new Message($data);
+        return Message::fromArray($data);
     }
 
     /**
@@ -291,7 +288,7 @@ class BotApi {
             'longitude' => $longitude,
             ...$options
         ]);
-        return new Message($data);
+        return Message::fromArray($data);
     }
 
     /**
@@ -316,7 +313,7 @@ class BotApi {
             'address' => $address,
             ...$options
         ]);
-        return new Message($data);
+        return Message::fromArray($data);
     }
 
     /**
@@ -342,9 +339,8 @@ class BotApi {
             'vcard' => $vcard,
             ...$options
         ]);
-        return new Message($data);
+        return Message::fromArray($data);
     }
-
 
     /**
      * Use this method when you need to tell the user that something is happening on the bot's side. The status is set
@@ -406,7 +402,7 @@ class BotApi {
             'offset' => $offset,
             'limit' => $limit
         ]);
-        return new UserProfilePhotos($data);
+        return UserProfilePhotos::fromArray($data);
     }
 
     /**
@@ -433,12 +429,12 @@ class BotApi {
         ], multipart: is_resource($attachment) || is_resource($thumbnail));
         if (is_resource($attachment)) fclose($attachment);
         if (is_resource($thumbnail)) fclose($thumbnail);
-        return new Message($data);
+        return Message::fromArray($data);
     }
 
     public function getFile(string $fileId, string $savePath): void {
         $data = $this->request('getFile', ['file_id' => $fileId]);
-        $file = new File($data);
+        $file = File::fromArray($data);
         $tmpPath = '/tmp/' . uniqid($fileId) . '.tmp';
         $res = $this->client->get($this->fileBaseUri . $file->getFilePath(), ['sink' => $tmpPath]);
         $code = $res->getStatusCode();
@@ -462,7 +458,7 @@ class BotApi {
 
     public function getWebhookInfo(): WebhookInfo {
         $data = self::request('getWebhookInfo');
-        return new WebhookInfo($data);
+        return WebhookInfo::fromArray($data);
     }
 
 }

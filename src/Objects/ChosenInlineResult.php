@@ -2,23 +2,27 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ChosenInlineResult {
+use Yabx\Telegram\ObjectTrait;
+
+final class ChosenInlineResult {
+
+    use ObjectTrait;
 
     /**
      * Result Id
      *
      * The unique identifier for the result that was chosen
-     * @var string
+     * @var string|null
      */
-    protected string $resultId;
+    protected ?string $resultId = null;
 
     /**
      * From
      *
      * The user that chose the result
-     * @var User
+     * @var User|null
      */
-    protected User $from;
+    protected ?User $from = null;
 
     /**
      * Location
@@ -40,53 +44,87 @@ class ChosenInlineResult {
      * Query
      *
      * The query that was used to obtain the result
-     * @var string
+     * @var string|null
      */
-    protected string $query;
+    protected ?string $query = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['result_id'])) {
-            $this->resultId = $data['result_id'];
-        }
-        if (isset($data['from'])) {
-            $this->from = new User($data['from']);
-        }
-        if (isset($data['location'])) {
-            $this->location = new Location($data['location']);
-        }
-        if (isset($data['inline_message_id'])) {
-            $this->inlineMessageId = $data['inline_message_id'];
-        }
-        if (isset($data['query'])) {
-            $this->query = $data['query'];
-        }
+    public function __construct(
+        ?string   $resultId = null,
+        ?User     $from = null,
+        ?Location $location = null,
+        ?string   $inlineMessageId = null,
+        ?string   $query = null,
+    ) {
+        $this->resultId = $resultId;
+        $this->from = $from;
+        $this->location = $location;
+        $this->inlineMessageId = $inlineMessageId;
+        $this->query = $query;
     }
 
-    public function getResultId(): string {
+    public static function fromArray(array $data): ChosenInlineResult {
+        $instance = new self();
+        if (isset($data['result_id'])) {
+            $instance->resultId = $data['result_id'];
+        }
+        if (isset($data['from'])) {
+            $instance->from = User::fromArray($data['from']);
+        }
+        if (isset($data['location'])) {
+            $instance->location = Location::fromArray($data['location']);
+        }
+        if (isset($data['inline_message_id'])) {
+            $instance->inlineMessageId = $data['inline_message_id'];
+        }
+        if (isset($data['query'])) {
+            $instance->query = $data['query'];
+        }
+        return $instance;
+    }
+
+    public function getResultId(): ?string {
         return $this->resultId;
     }
 
-    public function getFrom(): User {
+    public function setResultId(?string $value): self {
+        $this->resultId = $value;
+        return $this;
+    }
+
+    public function getFrom(): ?User {
         return $this->from;
+    }
+
+    public function setFrom(?User $value): self {
+        $this->from = $value;
+        return $this;
     }
 
     public function getLocation(): ?Location {
         return $this->location;
     }
 
+    public function setLocation(?Location $value): self {
+        $this->location = $value;
+        return $this;
+    }
+
     public function getInlineMessageId(): ?string {
         return $this->inlineMessageId;
     }
 
-    public function getQuery(): string {
+    public function setInlineMessageId(?string $value): self {
+        $this->inlineMessageId = $value;
+        return $this;
+    }
+
+    public function getQuery(): ?string {
         return $this->query;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setQuery(?string $value): self {
+        $this->query = $value;
+        return $this;
     }
 
 }

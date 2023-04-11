@@ -2,31 +2,41 @@
 
 namespace Yabx\Telegram\Objects;
 
-class VideoChatScheduled {
+use Yabx\Telegram\ObjectTrait;
+
+final class VideoChatScheduled {
+
+    use ObjectTrait;
 
     /**
      * Start Date
      *
      * Point in time (Unix timestamp) when the video chat is supposed to be started by a chat administrator
-     * @var int
+     * @var int|null
      */
-    protected int $startDate;
+    protected ?int $startDate = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['start_date'])) {
-            $this->startDate = $data['start_date'];
-        }
+    public function __construct(
+        ?int $startDate = null,
+    ) {
+        $this->startDate = $startDate;
     }
 
-    public function getStartDate(): int {
+    public static function fromArray(array $data): VideoChatScheduled {
+        $instance = new self();
+        if (isset($data['start_date'])) {
+            $instance->startDate = $data['start_date'];
+        }
+        return $instance;
+    }
+
+    public function getStartDate(): ?int {
         return $this->startDate;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setStartDate(?int $value): self {
+        $this->startDate = $value;
+        return $this;
     }
 
 }

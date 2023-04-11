@@ -2,15 +2,19 @@
 
 namespace Yabx\Telegram\Objects;
 
-class EncryptedPassportElement {
+use Yabx\Telegram\ObjectTrait;
+
+final class EncryptedPassportElement {
+
+    use ObjectTrait;
 
     /**
      * Type
      *
      * Element type. One of “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport”, “address”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”, “phone_number”, “email”.
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * Data
@@ -80,94 +84,163 @@ class EncryptedPassportElement {
      * Hash
      *
      * Base64-encoded element hash for using in PassportElementErrorUnspecified
-     * @var string
+     * @var string|null
      */
-    protected string $hash;
+    protected ?string $hash = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string       $type = null,
+        ?string       $data = null,
+        ?string       $phoneNumber = null,
+        ?string       $email = null,
+        ?array        $files = null,
+        ?PassportFile $frontSide = null,
+        ?PassportFile $reverseSide = null,
+        ?PassportFile $selfie = null,
+        ?array        $translation = null,
+        ?string       $hash = null,
+    ) {
+        $this->type = $type;
+        $this->data = $data;
+        $this->phoneNumber = $phoneNumber;
+        $this->email = $email;
+        $this->files = $files;
+        $this->frontSide = $frontSide;
+        $this->reverseSide = $reverseSide;
+        $this->selfie = $selfie;
+        $this->translation = $translation;
+        $this->hash = $hash;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): EncryptedPassportElement {
+        $instance = new self();
         if (isset($data['type'])) {
-            $this->type = $data['type'];
+            $instance->type = $data['type'];
         }
         if (isset($data['data'])) {
-            $this->data = $data['data'];
+            $instance->data = $data['data'];
         }
         if (isset($data['phone_number'])) {
-            $this->phoneNumber = $data['phone_number'];
+            $instance->phoneNumber = $data['phone_number'];
         }
         if (isset($data['email'])) {
-            $this->email = $data['email'];
+            $instance->email = $data['email'];
         }
         if (isset($data['files'])) {
-            $this->files = [];
+            $instance->files = [];
             foreach ($data['files'] as $item) {
-                $this->files[] = new PassportFile($item);
+                $instance->files[] = PassportFile::fromArray($item);
             }
         }
         if (isset($data['front_side'])) {
-            $this->frontSide = new PassportFile($data['front_side']);
+            $instance->frontSide = PassportFile::fromArray($data['front_side']);
         }
         if (isset($data['reverse_side'])) {
-            $this->reverseSide = new PassportFile($data['reverse_side']);
+            $instance->reverseSide = PassportFile::fromArray($data['reverse_side']);
         }
         if (isset($data['selfie'])) {
-            $this->selfie = new PassportFile($data['selfie']);
+            $instance->selfie = PassportFile::fromArray($data['selfie']);
         }
         if (isset($data['translation'])) {
-            $this->translation = [];
+            $instance->translation = [];
             foreach ($data['translation'] as $item) {
-                $this->translation[] = new PassportFile($item);
+                $instance->translation[] = PassportFile::fromArray($item);
             }
         }
         if (isset($data['hash'])) {
-            $this->hash = $data['hash'];
+            $instance->hash = $data['hash'];
         }
+        return $instance;
     }
 
-    public function getType(): string {
+    public function getType(): ?string {
         return $this->type;
+    }
+
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
     }
 
     public function getData(): ?string {
         return $this->data;
     }
 
+    public function setData(?string $value): self {
+        $this->data = $value;
+        return $this;
+    }
+
     public function getPhoneNumber(): ?string {
         return $this->phoneNumber;
+    }
+
+    public function setPhoneNumber(?string $value): self {
+        $this->phoneNumber = $value;
+        return $this;
     }
 
     public function getEmail(): ?string {
         return $this->email;
     }
 
+    public function setEmail(?string $value): self {
+        $this->email = $value;
+        return $this;
+    }
+
     public function getFiles(): ?array {
         return $this->files;
+    }
+
+    public function setFiles(?array $value): self {
+        $this->files = $value;
+        return $this;
     }
 
     public function getFrontSide(): ?PassportFile {
         return $this->frontSide;
     }
 
+    public function setFrontSide(?PassportFile $value): self {
+        $this->frontSide = $value;
+        return $this;
+    }
+
     public function getReverseSide(): ?PassportFile {
         return $this->reverseSide;
+    }
+
+    public function setReverseSide(?PassportFile $value): self {
+        $this->reverseSide = $value;
+        return $this;
     }
 
     public function getSelfie(): ?PassportFile {
         return $this->selfie;
     }
 
+    public function setSelfie(?PassportFile $value): self {
+        $this->selfie = $value;
+        return $this;
+    }
+
     public function getTranslation(): ?array {
         return $this->translation;
     }
 
-    public function getHash(): string {
+    public function setTranslation(?array $value): self {
+        $this->translation = $value;
+        return $this;
+    }
+
+    public function getHash(): ?string {
         return $this->hash;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setHash(?string $value): self {
+        $this->hash = $value;
+        return $this;
     }
 
 }

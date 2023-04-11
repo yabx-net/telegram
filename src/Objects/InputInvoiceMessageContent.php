@@ -2,55 +2,59 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InputInvoiceMessageContent {
+use Yabx\Telegram\ObjectTrait;
+
+final class InputInvoiceMessageContent {
+
+    use ObjectTrait;
 
     /**
      * Title
      *
      * Product name, 1-32 characters
-     * @var string
+     * @var string|null
      */
-    protected string $title;
+    protected ?string $title = null;
 
     /**
      * Description
      *
      * Product description, 1-255 characters
-     * @var string
+     * @var string|null
      */
-    protected string $description;
+    protected ?string $description = null;
 
     /**
      * Payload
      *
      * Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user, use for your internal processes.
-     * @var string
+     * @var string|null
      */
-    protected string $payload;
+    protected ?string $payload = null;
 
     /**
      * Provider Token
      *
      * Payment provider token, obtained via @BotFather
-     * @var string
+     * @var string|null
      */
-    protected string $providerToken;
+    protected ?string $providerToken = null;
 
     /**
      * Currency
      *
      * Three-letter ISO 4217 currency code, see more on currencies
-     * @var string
+     * @var string|null
      */
-    protected string $currency;
+    protected ?string $currency = null;
 
     /**
      * Prices
      *
      * Price breakdown, a JSON-serialized list of components (e.g. product price, tax, discount, delivery cost, delivery tax, bonus, etc.)
-     * @var LabeledPrice[]
+     * @var LabeledPrice[]|null
      */
-    protected array $prices;
+    protected ?array $prices = null;
 
     /**
      * Max Tip Amount
@@ -164,160 +168,299 @@ class InputInvoiceMessageContent {
      */
     protected ?bool $isFlexible = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string $title = null,
+        ?string $description = null,
+        ?string $payload = null,
+        ?string $providerToken = null,
+        ?string $currency = null,
+        ?array  $prices = null,
+        ?int    $maxTipAmount = null,
+        ?array  $suggestedTipAmounts = null,
+        ?string $providerData = null,
+        ?string $photoUrl = null,
+        ?int    $photoSize = null,
+        ?int    $photoWidth = null,
+        ?int    $photoHeight = null,
+        ?bool   $needName = null,
+        ?bool   $needPhoneNumber = null,
+        ?bool   $needEmail = null,
+        ?bool   $needShippingAddress = null,
+        ?bool   $sendPhoneNumberToProvider = null,
+        ?bool   $sendEmailToProvider = null,
+        ?bool   $isFlexible = null,
+    ) {
+        $this->title = $title;
+        $this->description = $description;
+        $this->payload = $payload;
+        $this->providerToken = $providerToken;
+        $this->currency = $currency;
+        $this->prices = $prices;
+        $this->maxTipAmount = $maxTipAmount;
+        $this->suggestedTipAmounts = $suggestedTipAmounts;
+        $this->providerData = $providerData;
+        $this->photoUrl = $photoUrl;
+        $this->photoSize = $photoSize;
+        $this->photoWidth = $photoWidth;
+        $this->photoHeight = $photoHeight;
+        $this->needName = $needName;
+        $this->needPhoneNumber = $needPhoneNumber;
+        $this->needEmail = $needEmail;
+        $this->needShippingAddress = $needShippingAddress;
+        $this->sendPhoneNumberToProvider = $sendPhoneNumberToProvider;
+        $this->sendEmailToProvider = $sendEmailToProvider;
+        $this->isFlexible = $isFlexible;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): InputInvoiceMessageContent {
+        $instance = new self();
         if (isset($data['title'])) {
-            $this->title = $data['title'];
+            $instance->title = $data['title'];
         }
         if (isset($data['description'])) {
-            $this->description = $data['description'];
+            $instance->description = $data['description'];
         }
         if (isset($data['payload'])) {
-            $this->payload = $data['payload'];
+            $instance->payload = $data['payload'];
         }
         if (isset($data['provider_token'])) {
-            $this->providerToken = $data['provider_token'];
+            $instance->providerToken = $data['provider_token'];
         }
         if (isset($data['currency'])) {
-            $this->currency = $data['currency'];
+            $instance->currency = $data['currency'];
         }
         if (isset($data['prices'])) {
-            $this->prices = [];
+            $instance->prices = [];
             foreach ($data['prices'] as $item) {
-                $this->prices[] = new LabeledPrice($item);
+                $instance->prices[] = LabeledPrice::fromArray($item);
             }
         }
         if (isset($data['max_tip_amount'])) {
-            $this->maxTipAmount = $data['max_tip_amount'];
+            $instance->maxTipAmount = $data['max_tip_amount'];
         }
         if (isset($data['suggested_tip_amounts'])) {
-            $this->suggestedTipAmounts = [];
+            $instance->suggestedTipAmounts = [];
             foreach ($data['suggested_tip_amounts'] as $item) {
-                $this->suggestedTipAmounts[] = $item;
+                $instance->suggestedTipAmounts[] = $item;
             }
         }
         if (isset($data['provider_data'])) {
-            $this->providerData = $data['provider_data'];
+            $instance->providerData = $data['provider_data'];
         }
         if (isset($data['photo_url'])) {
-            $this->photoUrl = $data['photo_url'];
+            $instance->photoUrl = $data['photo_url'];
         }
         if (isset($data['photo_size'])) {
-            $this->photoSize = $data['photo_size'];
+            $instance->photoSize = $data['photo_size'];
         }
         if (isset($data['photo_width'])) {
-            $this->photoWidth = $data['photo_width'];
+            $instance->photoWidth = $data['photo_width'];
         }
         if (isset($data['photo_height'])) {
-            $this->photoHeight = $data['photo_height'];
+            $instance->photoHeight = $data['photo_height'];
         }
         if (isset($data['need_name'])) {
-            $this->needName = $data['need_name'];
+            $instance->needName = $data['need_name'];
         }
         if (isset($data['need_phone_number'])) {
-            $this->needPhoneNumber = $data['need_phone_number'];
+            $instance->needPhoneNumber = $data['need_phone_number'];
         }
         if (isset($data['need_email'])) {
-            $this->needEmail = $data['need_email'];
+            $instance->needEmail = $data['need_email'];
         }
         if (isset($data['need_shipping_address'])) {
-            $this->needShippingAddress = $data['need_shipping_address'];
+            $instance->needShippingAddress = $data['need_shipping_address'];
         }
         if (isset($data['send_phone_number_to_provider'])) {
-            $this->sendPhoneNumberToProvider = $data['send_phone_number_to_provider'];
+            $instance->sendPhoneNumberToProvider = $data['send_phone_number_to_provider'];
         }
         if (isset($data['send_email_to_provider'])) {
-            $this->sendEmailToProvider = $data['send_email_to_provider'];
+            $instance->sendEmailToProvider = $data['send_email_to_provider'];
         }
         if (isset($data['is_flexible'])) {
-            $this->isFlexible = $data['is_flexible'];
+            $instance->isFlexible = $data['is_flexible'];
         }
+        return $instance;
     }
 
-    public function getTitle(): string {
+    public function getTitle(): ?string {
         return $this->title;
     }
 
-    public function getDescription(): string {
+    public function setTitle(?string $value): self {
+        $this->title = $value;
+        return $this;
+    }
+
+    public function getDescription(): ?string {
         return $this->description;
     }
 
-    public function getPayload(): string {
+    public function setDescription(?string $value): self {
+        $this->description = $value;
+        return $this;
+    }
+
+    public function getPayload(): ?string {
         return $this->payload;
     }
 
-    public function getProviderToken(): string {
+    public function setPayload(?string $value): self {
+        $this->payload = $value;
+        return $this;
+    }
+
+    public function getProviderToken(): ?string {
         return $this->providerToken;
     }
 
-    public function getCurrency(): string {
+    public function setProviderToken(?string $value): self {
+        $this->providerToken = $value;
+        return $this;
+    }
+
+    public function getCurrency(): ?string {
         return $this->currency;
     }
 
-    public function getPrices(): array {
+    public function setCurrency(?string $value): self {
+        $this->currency = $value;
+        return $this;
+    }
+
+    public function getPrices(): ?array {
         return $this->prices;
+    }
+
+    public function setPrices(?array $value): self {
+        $this->prices = $value;
+        return $this;
     }
 
     public function getMaxTipAmount(): ?int {
         return $this->maxTipAmount;
     }
 
+    public function setMaxTipAmount(?int $value): self {
+        $this->maxTipAmount = $value;
+        return $this;
+    }
+
     public function getSuggestedTipAmounts(): ?array {
         return $this->suggestedTipAmounts;
+    }
+
+    public function setSuggestedTipAmounts(?array $value): self {
+        $this->suggestedTipAmounts = $value;
+        return $this;
     }
 
     public function getProviderData(): ?string {
         return $this->providerData;
     }
 
+    public function setProviderData(?string $value): self {
+        $this->providerData = $value;
+        return $this;
+    }
+
     public function getPhotoUrl(): ?string {
         return $this->photoUrl;
+    }
+
+    public function setPhotoUrl(?string $value): self {
+        $this->photoUrl = $value;
+        return $this;
     }
 
     public function getPhotoSize(): ?int {
         return $this->photoSize;
     }
 
+    public function setPhotoSize(?int $value): self {
+        $this->photoSize = $value;
+        return $this;
+    }
+
     public function getPhotoWidth(): ?int {
         return $this->photoWidth;
+    }
+
+    public function setPhotoWidth(?int $value): self {
+        $this->photoWidth = $value;
+        return $this;
     }
 
     public function getPhotoHeight(): ?int {
         return $this->photoHeight;
     }
 
+    public function setPhotoHeight(?int $value): self {
+        $this->photoHeight = $value;
+        return $this;
+    }
+
     public function getNeedName(): ?bool {
         return $this->needName;
+    }
+
+    public function setNeedName(?bool $value): self {
+        $this->needName = $value;
+        return $this;
     }
 
     public function getNeedPhoneNumber(): ?bool {
         return $this->needPhoneNumber;
     }
 
+    public function setNeedPhoneNumber(?bool $value): self {
+        $this->needPhoneNumber = $value;
+        return $this;
+    }
+
     public function getNeedEmail(): ?bool {
         return $this->needEmail;
+    }
+
+    public function setNeedEmail(?bool $value): self {
+        $this->needEmail = $value;
+        return $this;
     }
 
     public function getNeedShippingAddress(): ?bool {
         return $this->needShippingAddress;
     }
 
+    public function setNeedShippingAddress(?bool $value): self {
+        $this->needShippingAddress = $value;
+        return $this;
+    }
+
     public function getSendPhoneNumberToProvider(): ?bool {
         return $this->sendPhoneNumberToProvider;
+    }
+
+    public function setSendPhoneNumberToProvider(?bool $value): self {
+        $this->sendPhoneNumberToProvider = $value;
+        return $this;
     }
 
     public function getSendEmailToProvider(): ?bool {
         return $this->sendEmailToProvider;
     }
 
+    public function setSendEmailToProvider(?bool $value): self {
+        $this->sendEmailToProvider = $value;
+        return $this;
+    }
+
     public function getIsFlexible(): ?bool {
         return $this->isFlexible;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setIsFlexible(?bool $value): self {
+        $this->isFlexible = $value;
+        return $this;
     }
 
 }

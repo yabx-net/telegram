@@ -2,76 +2,107 @@
 
 namespace Yabx\Telegram\Objects;
 
-class PassportElementErrorReverseSide {
+use Yabx\Telegram\ObjectTrait;
+
+final class PassportElementErrorReverseSide {
+
+    use ObjectTrait;
 
     /**
      * Source
      *
      * Error source, must be reverse_side
-     * @var string
+     * @var string|null
      */
-    protected string $source;
+    protected ?string $source = null;
 
     /**
      * Type
      *
      * The section of the user's Telegram Passport which has the issue, one of “driver_license”, “identity_card”
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * File Hash
      *
      * Base64-encoded hash of the file with the reverse side of the document
-     * @var string
+     * @var string|null
      */
-    protected string $fileHash;
+    protected ?string $fileHash = null;
 
     /**
      * Message
      *
      * Error message
-     * @var string
+     * @var string|null
      */
-    protected string $message;
+    protected ?string $message = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['source'])) {
-            $this->source = $data['source'];
-        }
-        if (isset($data['type'])) {
-            $this->type = $data['type'];
-        }
-        if (isset($data['file_hash'])) {
-            $this->fileHash = $data['file_hash'];
-        }
-        if (isset($data['message'])) {
-            $this->message = $data['message'];
-        }
+    public function __construct(
+        ?string $source = null,
+        ?string $type = null,
+        ?string $fileHash = null,
+        ?string $message = null,
+    ) {
+        $this->source = $source;
+        $this->type = $type;
+        $this->fileHash = $fileHash;
+        $this->message = $message;
     }
 
-    public function getSource(): string {
+    public static function fromArray(array $data): PassportElementErrorReverseSide {
+        $instance = new self();
+        if (isset($data['source'])) {
+            $instance->source = $data['source'];
+        }
+        if (isset($data['type'])) {
+            $instance->type = $data['type'];
+        }
+        if (isset($data['file_hash'])) {
+            $instance->fileHash = $data['file_hash'];
+        }
+        if (isset($data['message'])) {
+            $instance->message = $data['message'];
+        }
+        return $instance;
+    }
+
+    public function getSource(): ?string {
         return $this->source;
     }
 
-    public function getType(): string {
+    public function setSource(?string $value): self {
+        $this->source = $value;
+        return $this;
+    }
+
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getFileHash(): string {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getFileHash(): ?string {
         return $this->fileHash;
     }
 
-    public function getMessage(): string {
+    public function setFileHash(?string $value): self {
+        $this->fileHash = $value;
+        return $this;
+    }
+
+    public function getMessage(): ?string {
         return $this->message;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setMessage(?string $value): self {
+        $this->message = $value;
+        return $this;
     }
 
 }

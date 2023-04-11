@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-class KeyboardButton {
+use Yabx\Telegram\ObjectTrait;
+
+final class KeyboardButton {
+
+    use ObjectTrait;
 
     /**
      * Text
@@ -60,63 +64,111 @@ class KeyboardButton {
      */
     protected ?WebAppInfo $webApp = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string                    $text = null,
+        ?KeyboardButtonRequestUser $requestUser = null,
+        ?KeyboardButtonRequestChat $requestChat = null,
+        ?bool                      $requestContact = null,
+        ?bool                      $requestLocation = null,
+        ?KeyboardButtonPollType    $requestPoll = null,
+        ?WebAppInfo                $webApp = null,
+    ) {
+        $this->text = $text;
+        $this->requestUser = $requestUser;
+        $this->requestChat = $requestChat;
+        $this->requestContact = $requestContact;
+        $this->requestLocation = $requestLocation;
+        $this->requestPoll = $requestPoll;
+        $this->webApp = $webApp;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): KeyboardButton {
+        $instance = new self();
         if (isset($data['text'])) {
-            $this->text = $data['text'];
+            $instance->text = $data['text'];
         }
         if (isset($data['request_user'])) {
-            $this->requestUser = new KeyboardButtonRequestUser($data['request_user']);
+            $instance->requestUser = KeyboardButtonRequestUser::fromArray($data['request_user']);
         }
         if (isset($data['request_chat'])) {
-            $this->requestChat = new KeyboardButtonRequestChat($data['request_chat']);
+            $instance->requestChat = KeyboardButtonRequestChat::fromArray($data['request_chat']);
         }
         if (isset($data['request_contact'])) {
-            $this->requestContact = $data['request_contact'];
+            $instance->requestContact = $data['request_contact'];
         }
         if (isset($data['request_location'])) {
-            $this->requestLocation = $data['request_location'];
+            $instance->requestLocation = $data['request_location'];
         }
         if (isset($data['request_poll'])) {
-            $this->requestPoll = new KeyboardButtonPollType($data['request_poll']);
+            $instance->requestPoll = KeyboardButtonPollType::fromArray($data['request_poll']);
         }
         if (isset($data['web_app'])) {
-            $this->webApp = new WebAppInfo($data['web_app']);
+            $instance->webApp = WebAppInfo::fromArray($data['web_app']);
         }
+        return $instance;
     }
 
     public function getText(): ?string {
         return $this->text;
     }
 
+    public function setText(?string $value): self {
+        $this->text = $value;
+        return $this;
+    }
+
     public function getRequestUser(): ?KeyboardButtonRequestUser {
         return $this->requestUser;
+    }
+
+    public function setRequestUser(?KeyboardButtonRequestUser $value): self {
+        $this->requestUser = $value;
+        return $this;
     }
 
     public function getRequestChat(): ?KeyboardButtonRequestChat {
         return $this->requestChat;
     }
 
+    public function setRequestChat(?KeyboardButtonRequestChat $value): self {
+        $this->requestChat = $value;
+        return $this;
+    }
+
     public function getRequestContact(): ?bool {
         return $this->requestContact;
+    }
+
+    public function setRequestContact(?bool $value): self {
+        $this->requestContact = $value;
+        return $this;
     }
 
     public function getRequestLocation(): ?bool {
         return $this->requestLocation;
     }
 
+    public function setRequestLocation(?bool $value): self {
+        $this->requestLocation = $value;
+        return $this;
+    }
+
     public function getRequestPoll(): ?KeyboardButtonPollType {
         return $this->requestPoll;
+    }
+
+    public function setRequestPoll(?KeyboardButtonPollType $value): self {
+        $this->requestPoll = $value;
+        return $this;
     }
 
     public function getWebApp(): ?WebAppInfo {
         return $this->webApp;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setWebApp(?WebAppInfo $value): self {
+        $this->webApp = $value;
+        return $this;
     }
 
 }

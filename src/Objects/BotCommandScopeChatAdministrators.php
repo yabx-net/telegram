@@ -2,46 +2,63 @@
 
 namespace Yabx\Telegram\Objects;
 
-class BotCommandScopeChatAdministrators {
+use Yabx\Telegram\ObjectTrait;
+
+final class BotCommandScopeChatAdministrators {
+
+    use ObjectTrait;
 
     /**
      * Type
      *
      * Scope type, must be chat_administrators
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * Chat Id
      *
      * Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)
-     * @var int|string
+     * @var int|string|null
      */
-    protected int|string $chatId;
+    protected int|string|null $chatId = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['type'])) {
-            $this->type = $data['type'];
-        }
-        if (isset($data['chat_id'])) {
-            $this->chatId = $data['chat_id'];
-        }
+    public function __construct(
+        ?string         $type = null,
+        int|string|null $chatId = null,
+    ) {
+        $this->type = $type;
+        $this->chatId = $chatId;
     }
 
-    public function getType(): string {
+    public static function fromArray(array $data): BotCommandScopeChatAdministrators {
+        $instance = new self();
+        if (isset($data['type'])) {
+            $instance->type = $data['type'];
+        }
+        if (isset($data['chat_id'])) {
+            $instance->chatId = $data['chat_id'];
+        }
+        return $instance;
+    }
+
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getChatId(): int|string {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getChatId(): int|string|null {
         return $this->chatId;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setChatId(int|string|null $value): self {
+        $this->chatId = $value;
+        return $this;
     }
 
 }

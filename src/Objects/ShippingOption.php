@@ -2,64 +2,88 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ShippingOption {
+use Yabx\Telegram\ObjectTrait;
+
+final class ShippingOption {
+
+    use ObjectTrait;
 
     /**
      * Id
      *
      * Shipping option identifier
-     * @var string
+     * @var string|null
      */
-    protected string $id;
+    protected ?string $id = null;
 
     /**
      * Title
      *
      * Option title
-     * @var string
+     * @var string|null
      */
-    protected string $title;
+    protected ?string $title = null;
 
     /**
      * Prices
      *
      * List of price portions
-     * @var LabeledPrice[]
+     * @var LabeledPrice[]|null
      */
-    protected array $prices;
+    protected ?array $prices = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['id'])) {
-            $this->id = $data['id'];
-        }
-        if (isset($data['title'])) {
-            $this->title = $data['title'];
-        }
-        if (isset($data['prices'])) {
-            $this->prices = [];
-            foreach ($data['prices'] as $item) {
-                $this->prices[] = new LabeledPrice($item);
-            }
-        }
+    public function __construct(
+        ?string $id = null,
+        ?string $title = null,
+        ?array  $prices = null,
+    ) {
+        $this->id = $id;
+        $this->title = $title;
+        $this->prices = $prices;
     }
 
-    public function getId(): string {
+    public static function fromArray(array $data): ShippingOption {
+        $instance = new self();
+        if (isset($data['id'])) {
+            $instance->id = $data['id'];
+        }
+        if (isset($data['title'])) {
+            $instance->title = $data['title'];
+        }
+        if (isset($data['prices'])) {
+            $instance->prices = [];
+            foreach ($data['prices'] as $item) {
+                $instance->prices[] = LabeledPrice::fromArray($item);
+            }
+        }
+        return $instance;
+    }
+
+    public function getId(): ?string {
         return $this->id;
     }
 
-    public function getTitle(): string {
+    public function setId(?string $value): self {
+        $this->id = $value;
+        return $this;
+    }
+
+    public function getTitle(): ?string {
         return $this->title;
     }
 
-    public function getPrices(): array {
+    public function setTitle(?string $value): self {
+        $this->title = $value;
+        return $this;
+    }
+
+    public function getPrices(): ?array {
         return $this->prices;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setPrices(?array $value): self {
+        $this->prices = $value;
+        return $this;
     }
 
 }

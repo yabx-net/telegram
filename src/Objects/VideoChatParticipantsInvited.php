@@ -2,34 +2,44 @@
 
 namespace Yabx\Telegram\Objects;
 
-class VideoChatParticipantsInvited {
+use Yabx\Telegram\ObjectTrait;
+
+final class VideoChatParticipantsInvited {
+
+    use ObjectTrait;
 
     /**
      * Users
      *
      * New members that were invited to the video chat
-     * @var User[]
+     * @var User[]|null
      */
-    protected array $users;
+    protected ?array $users = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['users'])) {
-            $this->users = [];
-            foreach ($data['users'] as $item) {
-                $this->users[] = new User($item);
-            }
-        }
+    public function __construct(
+        ?array $users = null,
+    ) {
+        $this->users = $users;
     }
 
-    public function getUsers(): array {
+    public static function fromArray(array $data): VideoChatParticipantsInvited {
+        $instance = new self();
+        if (isset($data['users'])) {
+            $instance->users = [];
+            foreach ($data['users'] as $item) {
+                $instance->users[] = User::fromArray($item);
+            }
+        }
+        return $instance;
+    }
+
+    public function getUsers(): ?array {
         return $this->users;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setUsers(?array $value): self {
+        $this->users = $value;
+        return $this;
     }
 
 }

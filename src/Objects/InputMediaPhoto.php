@@ -2,23 +2,27 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InputMediaPhoto {
+use Yabx\Telegram\ObjectTrait;
+
+final class InputMediaPhoto {
+
+    use ObjectTrait;
 
     /**
      * Type
      *
      * Type of the result, must be photo
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * Media
      *
      * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »
-     * @var string
+     * @var string|null
      */
-    protected string $media;
+    protected ?string $media = null;
 
     /**
      * Caption
@@ -52,59 +56,100 @@ class InputMediaPhoto {
      */
     protected ?bool $hasSpoiler = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string $type = null,
+        ?string $media = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array  $captionEntities = null,
+        ?bool   $hasSpoiler = null,
+    ) {
+        $this->type = $type;
+        $this->media = $media;
+        $this->caption = $caption;
+        $this->parseMode = $parseMode;
+        $this->captionEntities = $captionEntities;
+        $this->hasSpoiler = $hasSpoiler;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): InputMediaPhoto {
+        $instance = new self();
         if (isset($data['type'])) {
-            $this->type = $data['type'];
+            $instance->type = $data['type'];
         }
         if (isset($data['media'])) {
-            $this->media = $data['media'];
+            $instance->media = $data['media'];
         }
         if (isset($data['caption'])) {
-            $this->caption = $data['caption'];
+            $instance->caption = $data['caption'];
         }
         if (isset($data['parse_mode'])) {
-            $this->parseMode = $data['parse_mode'];
+            $instance->parseMode = $data['parse_mode'];
         }
         if (isset($data['caption_entities'])) {
-            $this->captionEntities = [];
+            $instance->captionEntities = [];
             foreach ($data['caption_entities'] as $item) {
-                $this->captionEntities[] = new MessageEntity($item);
+                $instance->captionEntities[] = MessageEntity::fromArray($item);
             }
         }
         if (isset($data['has_spoiler'])) {
-            $this->hasSpoiler = $data['has_spoiler'];
+            $instance->hasSpoiler = $data['has_spoiler'];
         }
+        return $instance;
     }
 
-    public function getType(): string {
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getMedia(): string {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getMedia(): ?string {
         return $this->media;
+    }
+
+    public function setMedia(?string $value): self {
+        $this->media = $value;
+        return $this;
     }
 
     public function getCaption(): ?string {
         return $this->caption;
     }
 
+    public function setCaption(?string $value): self {
+        $this->caption = $value;
+        return $this;
+    }
+
     public function getParseMode(): ?string {
         return $this->parseMode;
+    }
+
+    public function setParseMode(?string $value): self {
+        $this->parseMode = $value;
+        return $this;
     }
 
     public function getCaptionEntities(): ?array {
         return $this->captionEntities;
     }
 
+    public function setCaptionEntities(?array $value): self {
+        $this->captionEntities = $value;
+        return $this;
+    }
+
     public function getHasSpoiler(): ?bool {
         return $this->hasSpoiler;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setHasSpoiler(?bool $value): self {
+        $this->hasSpoiler = $value;
+        return $this;
     }
 
 }

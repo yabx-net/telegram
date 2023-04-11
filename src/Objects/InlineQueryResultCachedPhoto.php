@@ -2,31 +2,35 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InlineQueryResultCachedPhoto {
+use Yabx\Telegram\ObjectTrait;
+
+final class InlineQueryResultCachedPhoto {
+
+    use ObjectTrait;
 
     /**
      * Type
      *
      * Type of the result, must be photo
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * Id
      *
      * Unique identifier for this result, 1-64 bytes
-     * @var string
+     * @var string|null
      */
-    protected string $id;
+    protected ?string $id = null;
 
     /**
      * Photo File Id
      *
      * A valid file identifier of the photo
-     * @var string
+     * @var string|null
      */
-    protected string $photoFileId;
+    protected ?string $photoFileId = null;
 
     /**
      * Title
@@ -84,87 +88,156 @@ class InlineQueryResultCachedPhoto {
      */
     protected ?InputMessageContent $inputMessageContent = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string               $type = null,
+        ?string               $id = null,
+        ?string               $photoFileId = null,
+        ?string               $title = null,
+        ?string               $description = null,
+        ?string               $caption = null,
+        ?string               $parseMode = null,
+        ?array                $captionEntities = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+        ?InputMessageContent  $inputMessageContent = null,
+    ) {
+        $this->type = $type;
+        $this->id = $id;
+        $this->photoFileId = $photoFileId;
+        $this->title = $title;
+        $this->description = $description;
+        $this->caption = $caption;
+        $this->parseMode = $parseMode;
+        $this->captionEntities = $captionEntities;
+        $this->replyMarkup = $replyMarkup;
+        $this->inputMessageContent = $inputMessageContent;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): InlineQueryResultCachedPhoto {
+        $instance = new self();
         if (isset($data['type'])) {
-            $this->type = $data['type'];
+            $instance->type = $data['type'];
         }
         if (isset($data['id'])) {
-            $this->id = $data['id'];
+            $instance->id = $data['id'];
         }
         if (isset($data['photo_file_id'])) {
-            $this->photoFileId = $data['photo_file_id'];
+            $instance->photoFileId = $data['photo_file_id'];
         }
         if (isset($data['title'])) {
-            $this->title = $data['title'];
+            $instance->title = $data['title'];
         }
         if (isset($data['description'])) {
-            $this->description = $data['description'];
+            $instance->description = $data['description'];
         }
         if (isset($data['caption'])) {
-            $this->caption = $data['caption'];
+            $instance->caption = $data['caption'];
         }
         if (isset($data['parse_mode'])) {
-            $this->parseMode = $data['parse_mode'];
+            $instance->parseMode = $data['parse_mode'];
         }
         if (isset($data['caption_entities'])) {
-            $this->captionEntities = [];
+            $instance->captionEntities = [];
             foreach ($data['caption_entities'] as $item) {
-                $this->captionEntities[] = new MessageEntity($item);
+                $instance->captionEntities[] = MessageEntity::fromArray($item);
             }
         }
         if (isset($data['reply_markup'])) {
-            $this->replyMarkup = new InlineKeyboardMarkup($data['reply_markup']);
+            $instance->replyMarkup = InlineKeyboardMarkup::fromArray($data['reply_markup']);
         }
         if (isset($data['input_message_content'])) {
-            $this->inputMessageContent = new InputMessageContent($data['input_message_content']);
+            $instance->inputMessageContent = InputMessageContent::fromArray($data['input_message_content']);
         }
+        return $instance;
     }
 
-    public function getType(): string {
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getId(): string {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getId(): ?string {
         return $this->id;
     }
 
-    public function getPhotoFileId(): string {
+    public function setId(?string $value): self {
+        $this->id = $value;
+        return $this;
+    }
+
+    public function getPhotoFileId(): ?string {
         return $this->photoFileId;
+    }
+
+    public function setPhotoFileId(?string $value): self {
+        $this->photoFileId = $value;
+        return $this;
     }
 
     public function getTitle(): ?string {
         return $this->title;
     }
 
+    public function setTitle(?string $value): self {
+        $this->title = $value;
+        return $this;
+    }
+
     public function getDescription(): ?string {
         return $this->description;
+    }
+
+    public function setDescription(?string $value): self {
+        $this->description = $value;
+        return $this;
     }
 
     public function getCaption(): ?string {
         return $this->caption;
     }
 
+    public function setCaption(?string $value): self {
+        $this->caption = $value;
+        return $this;
+    }
+
     public function getParseMode(): ?string {
         return $this->parseMode;
+    }
+
+    public function setParseMode(?string $value): self {
+        $this->parseMode = $value;
+        return $this;
     }
 
     public function getCaptionEntities(): ?array {
         return $this->captionEntities;
     }
 
+    public function setCaptionEntities(?array $value): self {
+        $this->captionEntities = $value;
+        return $this;
+    }
+
     public function getReplyMarkup(): ?InlineKeyboardMarkup {
         return $this->replyMarkup;
+    }
+
+    public function setReplyMarkup(?InlineKeyboardMarkup $value): self {
+        $this->replyMarkup = $value;
+        return $this;
     }
 
     public function getInputMessageContent(): ?InputMessageContent {
         return $this->inputMessageContent;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setInputMessageContent(?InputMessageContent $value): self {
+        $this->inputMessageContent = $value;
+        return $this;
     }
 
 }

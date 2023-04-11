@@ -2,16 +2,17 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InputMessageContent {
+use Yabx\Telegram\ObjectTrait;
 
-    protected array $rawData;
+final class InputMessageContent {
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
-    }
+    use ObjectTrait;
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function __construct() {}
+
+    public static function fromArray(array $data): InputMessageContent {
+        $instance = new self();
+        return $instance;
     }
 
 }

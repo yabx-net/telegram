@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-class KeyboardButtonPollType {
+use Yabx\Telegram\ObjectTrait;
+
+final class KeyboardButtonPollType {
+
+    use ObjectTrait;
 
     /**
      * Type
@@ -12,21 +16,27 @@ class KeyboardButtonPollType {
      */
     protected ?string $type = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string $type = null,
+    ) {
+        $this->type = $type;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): KeyboardButtonPollType {
+        $instance = new self();
         if (isset($data['type'])) {
-            $this->type = $data['type'];
+            $instance->type = $data['type'];
         }
+        return $instance;
     }
 
     public function getType(): ?string {
         return $this->type;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
     }
 
 }

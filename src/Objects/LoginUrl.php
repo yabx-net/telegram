@@ -2,15 +2,19 @@
 
 namespace Yabx\Telegram\Objects;
 
-class LoginUrl {
+use Yabx\Telegram\ObjectTrait;
+
+final class LoginUrl {
+
+    use ObjectTrait;
 
     /**
      * Url
      *
      * An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in Receiving authorization data.NOTE: You must always check the hash of the received data to verify the authentication and the integrity of the data as described in Checking authorization.
-     * @var string
+     * @var string|null
      */
-    protected string $url;
+    protected ?string $url = null;
 
     /**
      * Forward Text
@@ -36,42 +40,69 @@ class LoginUrl {
      */
     protected ?bool $requestWriteAccess = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['url'])) {
-            $this->url = $data['url'];
-        }
-        if (isset($data['forward_text'])) {
-            $this->forwardText = $data['forward_text'];
-        }
-        if (isset($data['bot_username'])) {
-            $this->botUsername = $data['bot_username'];
-        }
-        if (isset($data['request_write_access'])) {
-            $this->requestWriteAccess = $data['request_write_access'];
-        }
+    public function __construct(
+        ?string $url = null,
+        ?string $forwardText = null,
+        ?string $botUsername = null,
+        ?bool   $requestWriteAccess = null,
+    ) {
+        $this->url = $url;
+        $this->forwardText = $forwardText;
+        $this->botUsername = $botUsername;
+        $this->requestWriteAccess = $requestWriteAccess;
     }
 
-    public function getUrl(): string {
+    public static function fromArray(array $data): LoginUrl {
+        $instance = new self();
+        if (isset($data['url'])) {
+            $instance->url = $data['url'];
+        }
+        if (isset($data['forward_text'])) {
+            $instance->forwardText = $data['forward_text'];
+        }
+        if (isset($data['bot_username'])) {
+            $instance->botUsername = $data['bot_username'];
+        }
+        if (isset($data['request_write_access'])) {
+            $instance->requestWriteAccess = $data['request_write_access'];
+        }
+        return $instance;
+    }
+
+    public function getUrl(): ?string {
         return $this->url;
+    }
+
+    public function setUrl(?string $value): self {
+        $this->url = $value;
+        return $this;
     }
 
     public function getForwardText(): ?string {
         return $this->forwardText;
     }
 
+    public function setForwardText(?string $value): self {
+        $this->forwardText = $value;
+        return $this;
+    }
+
     public function getBotUsername(): ?string {
         return $this->botUsername;
+    }
+
+    public function setBotUsername(?string $value): self {
+        $this->botUsername = $value;
+        return $this;
     }
 
     public function getRequestWriteAccess(): ?bool {
         return $this->requestWriteAccess;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setRequestWriteAccess(?bool $value): self {
+        $this->requestWriteAccess = $value;
+        return $this;
     }
 
 }

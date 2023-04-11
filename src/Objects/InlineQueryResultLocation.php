@@ -2,47 +2,51 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InlineQueryResultLocation {
+use Yabx\Telegram\ObjectTrait;
+
+final class InlineQueryResultLocation {
+
+    use ObjectTrait;
 
     /**
      * Type
      *
      * Type of the result, must be location
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * Id
      *
      * Unique identifier for this result, 1-64 Bytes
-     * @var string
+     * @var string|null
      */
-    protected string $id;
+    protected ?string $id = null;
 
     /**
      * Latitude
      *
      * Location latitude in degrees
-     * @var float
+     * @var float|null
      */
-    protected float $latitude;
+    protected ?float $latitude = null;
 
     /**
      * Longitude
      *
      * Location longitude in degrees
-     * @var float
+     * @var float|null
      */
-    protected float $longitude;
+    protected ?float $longitude = null;
 
     /**
      * Title
      *
      * Location title
-     * @var string
+     * @var string|null
      */
-    protected string $title;
+    protected ?string $title = null;
 
     /**
      * Horizontal Accuracy
@@ -116,112 +120,209 @@ class InlineQueryResultLocation {
      */
     protected ?int $thumbnailHeight = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['type'])) {
-            $this->type = $data['type'];
-        }
-        if (isset($data['id'])) {
-            $this->id = $data['id'];
-        }
-        if (isset($data['latitude'])) {
-            $this->latitude = $data['latitude'];
-        }
-        if (isset($data['longitude'])) {
-            $this->longitude = $data['longitude'];
-        }
-        if (isset($data['title'])) {
-            $this->title = $data['title'];
-        }
-        if (isset($data['horizontal_accuracy'])) {
-            $this->horizontalAccuracy = $data['horizontal_accuracy'];
-        }
-        if (isset($data['live_period'])) {
-            $this->livePeriod = $data['live_period'];
-        }
-        if (isset($data['heading'])) {
-            $this->heading = $data['heading'];
-        }
-        if (isset($data['proximity_alert_radius'])) {
-            $this->proximityAlertRadius = $data['proximity_alert_radius'];
-        }
-        if (isset($data['reply_markup'])) {
-            $this->replyMarkup = new InlineKeyboardMarkup($data['reply_markup']);
-        }
-        if (isset($data['input_message_content'])) {
-            $this->inputMessageContent = new InputMessageContent($data['input_message_content']);
-        }
-        if (isset($data['thumbnail_url'])) {
-            $this->thumbnailUrl = $data['thumbnail_url'];
-        }
-        if (isset($data['thumbnail_width'])) {
-            $this->thumbnailWidth = $data['thumbnail_width'];
-        }
-        if (isset($data['thumbnail_height'])) {
-            $this->thumbnailHeight = $data['thumbnail_height'];
-        }
+    public function __construct(
+        ?string               $type = null,
+        ?string               $id = null,
+        ?float                $latitude = null,
+        ?float                $longitude = null,
+        ?string               $title = null,
+        ?float                $horizontalAccuracy = null,
+        ?int                  $livePeriod = null,
+        ?int                  $heading = null,
+        ?int                  $proximityAlertRadius = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+        ?InputMessageContent  $inputMessageContent = null,
+        ?string               $thumbnailUrl = null,
+        ?int                  $thumbnailWidth = null,
+        ?int                  $thumbnailHeight = null,
+    ) {
+        $this->type = $type;
+        $this->id = $id;
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->title = $title;
+        $this->horizontalAccuracy = $horizontalAccuracy;
+        $this->livePeriod = $livePeriod;
+        $this->heading = $heading;
+        $this->proximityAlertRadius = $proximityAlertRadius;
+        $this->replyMarkup = $replyMarkup;
+        $this->inputMessageContent = $inputMessageContent;
+        $this->thumbnailUrl = $thumbnailUrl;
+        $this->thumbnailWidth = $thumbnailWidth;
+        $this->thumbnailHeight = $thumbnailHeight;
     }
 
-    public function getType(): string {
+    public static function fromArray(array $data): InlineQueryResultLocation {
+        $instance = new self();
+        if (isset($data['type'])) {
+            $instance->type = $data['type'];
+        }
+        if (isset($data['id'])) {
+            $instance->id = $data['id'];
+        }
+        if (isset($data['latitude'])) {
+            $instance->latitude = $data['latitude'];
+        }
+        if (isset($data['longitude'])) {
+            $instance->longitude = $data['longitude'];
+        }
+        if (isset($data['title'])) {
+            $instance->title = $data['title'];
+        }
+        if (isset($data['horizontal_accuracy'])) {
+            $instance->horizontalAccuracy = $data['horizontal_accuracy'];
+        }
+        if (isset($data['live_period'])) {
+            $instance->livePeriod = $data['live_period'];
+        }
+        if (isset($data['heading'])) {
+            $instance->heading = $data['heading'];
+        }
+        if (isset($data['proximity_alert_radius'])) {
+            $instance->proximityAlertRadius = $data['proximity_alert_radius'];
+        }
+        if (isset($data['reply_markup'])) {
+            $instance->replyMarkup = InlineKeyboardMarkup::fromArray($data['reply_markup']);
+        }
+        if (isset($data['input_message_content'])) {
+            $instance->inputMessageContent = InputMessageContent::fromArray($data['input_message_content']);
+        }
+        if (isset($data['thumbnail_url'])) {
+            $instance->thumbnailUrl = $data['thumbnail_url'];
+        }
+        if (isset($data['thumbnail_width'])) {
+            $instance->thumbnailWidth = $data['thumbnail_width'];
+        }
+        if (isset($data['thumbnail_height'])) {
+            $instance->thumbnailHeight = $data['thumbnail_height'];
+        }
+        return $instance;
+    }
+
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getId(): string {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getId(): ?string {
         return $this->id;
     }
 
-    public function getLatitude(): float {
+    public function setId(?string $value): self {
+        $this->id = $value;
+        return $this;
+    }
+
+    public function getLatitude(): ?float {
         return $this->latitude;
     }
 
-    public function getLongitude(): float {
+    public function setLatitude(?float $value): self {
+        $this->latitude = $value;
+        return $this;
+    }
+
+    public function getLongitude(): ?float {
         return $this->longitude;
     }
 
-    public function getTitle(): string {
+    public function setLongitude(?float $value): self {
+        $this->longitude = $value;
+        return $this;
+    }
+
+    public function getTitle(): ?string {
         return $this->title;
+    }
+
+    public function setTitle(?string $value): self {
+        $this->title = $value;
+        return $this;
     }
 
     public function getHorizontalAccuracy(): ?float {
         return $this->horizontalAccuracy;
     }
 
+    public function setHorizontalAccuracy(?float $value): self {
+        $this->horizontalAccuracy = $value;
+        return $this;
+    }
+
     public function getLivePeriod(): ?int {
         return $this->livePeriod;
+    }
+
+    public function setLivePeriod(?int $value): self {
+        $this->livePeriod = $value;
+        return $this;
     }
 
     public function getHeading(): ?int {
         return $this->heading;
     }
 
+    public function setHeading(?int $value): self {
+        $this->heading = $value;
+        return $this;
+    }
+
     public function getProximityAlertRadius(): ?int {
         return $this->proximityAlertRadius;
+    }
+
+    public function setProximityAlertRadius(?int $value): self {
+        $this->proximityAlertRadius = $value;
+        return $this;
     }
 
     public function getReplyMarkup(): ?InlineKeyboardMarkup {
         return $this->replyMarkup;
     }
 
+    public function setReplyMarkup(?InlineKeyboardMarkup $value): self {
+        $this->replyMarkup = $value;
+        return $this;
+    }
+
     public function getInputMessageContent(): ?InputMessageContent {
         return $this->inputMessageContent;
+    }
+
+    public function setInputMessageContent(?InputMessageContent $value): self {
+        $this->inputMessageContent = $value;
+        return $this;
     }
 
     public function getThumbnailUrl(): ?string {
         return $this->thumbnailUrl;
     }
 
+    public function setThumbnailUrl(?string $value): self {
+        $this->thumbnailUrl = $value;
+        return $this;
+    }
+
     public function getThumbnailWidth(): ?int {
         return $this->thumbnailWidth;
+    }
+
+    public function setThumbnailWidth(?int $value): self {
+        $this->thumbnailWidth = $value;
+        return $this;
     }
 
     public function getThumbnailHeight(): ?int {
         return $this->thumbnailHeight;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setThumbnailHeight(?int $value): self {
+        $this->thumbnailHeight = $value;
+        return $this;
     }
 
 }

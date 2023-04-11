@@ -5,6 +5,8 @@
  * Please DO NOT USE IT
  */
 
+exit;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Yabx\Telegram\Utils;
@@ -43,7 +45,7 @@ foreach ($docs as $doc) {
     $path = __DIR__ . '/../src/Objects/' . $name . '.php';
 
     $f = fopen($path, 'w');
-    fwrite($f, "<?php\n\nnamespace Yabx\\Telegram\\Objects;\n\nuse InvalidArgumentException;\n\nclass {$name} {\n\n");
+    fwrite($f, "<?php\n\nnamespace Yabx\\Telegram\\Objects;\n\nuse InvalidArgumentException;\nuse Yabx\\Telegram\\ObjectTrait;\n\nfinal class {$name} {\n\n\tuse ObjectTrait;\n\n");
 
     preg_match('#<p>.+</p>#isu', $doc, $description);
     $description = strip_tags($description[0]);
@@ -51,7 +53,9 @@ foreach ($docs as $doc) {
 
     preg_match_all('#<tr>(.+)</tr>#isU', $doc, $m);
 
-    $props = $constructor = $methods = [];
+    $props = $construct = $constructBody = $fromArray = $methods = [];
+
+    $fromArray[] = '$instance = new self();';
 
     foreach ($m[0] as $line) {
 
@@ -68,7 +72,7 @@ foreach ($docs as $doc) {
         $type = str_replace(' or ', '|', $type);
 
         $objectKey = Utils::toCamelCase($key);
-        $optional = str_contains(strtolower($description), 'optional');
+        $optional = true;//str_contains(strtolower($description), 'optional');
 
         $type = str_replace('Integer', 'int', $type);
         $type = str_replace('String', 'string', $type);
@@ -93,39 +97,59 @@ foreach ($docs as $doc) {
 
         $isObj = preg_match('/^[A-Z]/', $type);
 
-        $constructor[] = 'if(isset($data[\'' . $key . '\'])) {';
+        $fromArray[] = 'if(isset($data[\'' . $key . '\'])) {';
         if($isArray) {
-            $constructor[] = '    $this->' . $objectKey . ' = [];';
-            $constructor[] = '    foreach($data[\'' . $key . '\'] as $item) {';
-            $constructor[] = '        $this->' . $objectKey . '[] = ' . ($isObj ? 'new ' . $newType . '($item)' : '$item') . ';';
-            $constructor[] = '    }';
+            $fromArray[] = '    $instance->' . $objectKey . ' = [];';
+            $fromArray[] = '    foreach($data[\'' . $key . '\'] as $item) {';
+            $fromArray[] = '        $instance->' . $objectKey . '[] = ' . ($isObj ? $newType . '::fromArray($item)' : '$item') . ';';
+            $fromArray[] = '    }';
         } else {
-            $constructor[] = '    $this->' . $objectKey . ' = ' . ($isObj ? 'new ' . $newType . '($data[\'' . $key . '\'])' : '$data[\'' . $key . '\']') . ';';
+            $fromArray[] = '    $instance->' . $objectKey . ' = ' . ($isObj ? $newType . '::fromArray($data[\'' . $key . '\'])' : '$data[\'' . $key . '\']') . ';';
         }
-        $constructor[] = '}';
+        $fromArray[] = '}';
+
+        $construct[] = "{$phpType} \${$objectKey}" . ($optional ? ' = null' : '') . ',';
+        $constructBody[] = "\$this->{$objectKey} = \${$objectKey};";
 
         $methods[] = 'public function ' . Utils::toCamelCase('get_' . $key) . '(): ' . $phpType . ' {';
         $methods[] = "\treturn \$this->{$objectKey};";
         $methods[] = '}' . PHP_EOL;
 
+        $methods[] = 'public function ' . Utils::toCamelCase('set_' . $key) . '(' . $phpType .' $value): self {';
+        $methods[] = "\t\$this->{$objectKey} = \$value;";
+        $methods[] = "\treturn \$this;";
+        $methods[] = '}' . PHP_EOL;
+
     }
 
-    $props[] = 'protected array $rawData;' . PHP_EOL;
+    $fromArray[] = 'return $instance;';
+
+    //$props[] = 'protected array $rawData;' . PHP_EOL;
 
     foreach ($props as $prop) {
         fwrite($f, "\t{$prop}\n");
     }
 
-    fwrite($f, "\tpublic function __construct(array \$data) {\n");
-    fwrite($f, "\t\t\$this->rawData = \$data;\n");
-    foreach ($constructor as $line) {
+    fwrite($f, "\tpublic static function fromArray(array \$data): {$name} {\n");
+//    fwrite($f, "\t\t\$this->rawData = \$data;\n");
+    foreach ($fromArray as $line) {
         fwrite($f, "\t\t{$line}\n");
     }
     fwrite($f, "\t}\n\n");
 
-    $methods[] = 'public function getRawData(): array {';
-    $methods[] = "\treturn \$this->rawData;";
-    $methods[] = '}' . PHP_EOL;
+    fwrite($f, "\tpublic function __construct(\n");
+    foreach ($construct as $line) {
+        fwrite($f, "\t\t{$line}\n");
+    }
+    fwrite($f, "\t) {\n");
+    foreach ($constructBody as $line) {
+        fwrite($f, "\t\t{$line}\n");
+    }
+    fwrite($f, "\t}\n\n");
+
+//    $methods[] = 'public function getRawData(): array {';
+//    $methods[] = "\treturn \$this->rawData;";
+//    $methods[] = '}' . PHP_EOL;
 
     foreach ($methods as $line) {
         fwrite($f, "\t{$line}\n");

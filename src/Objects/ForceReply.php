@@ -2,15 +2,15 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ForceReply {
+final class ForceReply extends ReplyMarkup {
 
     /**
      * Force Reply
      *
      * Shows reply interface to the user, as if they manually selected the bot's message and tapped 'Reply'
-     * @var bool
+     * @var bool|null
      */
-    protected bool $forceReply;
+    protected ?bool $forceReply = null;
 
     /**
      * Input Field Placeholder
@@ -28,35 +28,55 @@ class ForceReply {
      */
     protected ?bool $selective = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['force_reply'])) {
-            $this->forceReply = $data['force_reply'];
-        }
-        if (isset($data['input_field_placeholder'])) {
-            $this->inputFieldPlaceholder = $data['input_field_placeholder'];
-        }
-        if (isset($data['selective'])) {
-            $this->selective = $data['selective'];
-        }
+    public function __construct(
+        ?bool   $forceReply = null,
+        ?string $inputFieldPlaceholder = null,
+        ?bool   $selective = null,
+    ) {
+        $this->forceReply = $forceReply;
+        $this->inputFieldPlaceholder = $inputFieldPlaceholder;
+        $this->selective = $selective;
     }
 
-    public function getForceReply(): bool {
+    public static function fromArray(array $data): ForceReply {
+        $instance = new self();
+        if (isset($data['force_reply'])) {
+            $instance->forceReply = $data['force_reply'];
+        }
+        if (isset($data['input_field_placeholder'])) {
+            $instance->inputFieldPlaceholder = $data['input_field_placeholder'];
+        }
+        if (isset($data['selective'])) {
+            $instance->selective = $data['selective'];
+        }
+        return $instance;
+    }
+
+    public function getForceReply(): ?bool {
         return $this->forceReply;
+    }
+
+    public function setForceReply(?bool $value): self {
+        $this->forceReply = $value;
+        return $this;
     }
 
     public function getInputFieldPlaceholder(): ?string {
         return $this->inputFieldPlaceholder;
     }
 
+    public function setInputFieldPlaceholder(?string $value): self {
+        $this->inputFieldPlaceholder = $value;
+        return $this;
+    }
+
     public function getSelective(): ?bool {
         return $this->selective;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setSelective(?bool $value): self {
+        $this->selective = $value;
+        return $this;
     }
 
 }

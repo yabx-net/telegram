@@ -2,31 +2,35 @@
 
 namespace Yabx\Telegram\Objects;
 
-class User {
+use Yabx\Telegram\ObjectTrait;
+
+final class User {
+
+    use ObjectTrait;
 
     /**
      * Id
      *
      * Unique identifier for this user or bot. This number may have more than 32 significant bits and some programming languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe for storing this identifier.
-     * @var int
+     * @var int|null
      */
-    protected int $id;
+    protected ?int $id = null;
 
     /**
      * Is Bot
      *
      * True, if this user is a bot
-     * @var bool
+     * @var bool|null
      */
-    protected bool $isBot;
+    protected ?bool $isBot = null;
 
     /**
      * First Name
      *
      * User's or bot's first name
-     * @var string
+     * @var string|null
      */
-    protected string $firstName;
+    protected ?string $firstName = null;
 
     /**
      * Last Name
@@ -92,91 +96,167 @@ class User {
      */
     protected ?bool $supportsInlineQueries = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['id'])) {
-            $this->id = $data['id'];
-        }
-        if (isset($data['is_bot'])) {
-            $this->isBot = $data['is_bot'];
-        }
-        if (isset($data['first_name'])) {
-            $this->firstName = $data['first_name'];
-        }
-        if (isset($data['last_name'])) {
-            $this->lastName = $data['last_name'];
-        }
-        if (isset($data['username'])) {
-            $this->username = $data['username'];
-        }
-        if (isset($data['language_code'])) {
-            $this->languageCode = $data['language_code'];
-        }
-        if (isset($data['is_premium'])) {
-            $this->isPremium = $data['is_premium'];
-        }
-        if (isset($data['added_to_attachment_menu'])) {
-            $this->addedToAttachmentMenu = $data['added_to_attachment_menu'];
-        }
-        if (isset($data['can_join_groups'])) {
-            $this->canJoinGroups = $data['can_join_groups'];
-        }
-        if (isset($data['can_read_all_group_messages'])) {
-            $this->canReadAllGroupMessages = $data['can_read_all_group_messages'];
-        }
-        if (isset($data['supports_inline_queries'])) {
-            $this->supportsInlineQueries = $data['supports_inline_queries'];
-        }
+    public function __construct(
+        ?int    $id = null,
+        ?bool   $isBot = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?string $username = null,
+        ?string $languageCode = null,
+        ?bool   $isPremium = null,
+        ?bool   $addedToAttachmentMenu = null,
+        ?bool   $canJoinGroups = null,
+        ?bool   $canReadAllGroupMessages = null,
+        ?bool   $supportsInlineQueries = null,
+    ) {
+        $this->id = $id;
+        $this->isBot = $isBot;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->username = $username;
+        $this->languageCode = $languageCode;
+        $this->isPremium = $isPremium;
+        $this->addedToAttachmentMenu = $addedToAttachmentMenu;
+        $this->canJoinGroups = $canJoinGroups;
+        $this->canReadAllGroupMessages = $canReadAllGroupMessages;
+        $this->supportsInlineQueries = $supportsInlineQueries;
     }
 
-    public function getId(): int {
+    public static function fromArray(array $data): User {
+        $instance = new self();
+        if (isset($data['id'])) {
+            $instance->id = $data['id'];
+        }
+        if (isset($data['is_bot'])) {
+            $instance->isBot = $data['is_bot'];
+        }
+        if (isset($data['first_name'])) {
+            $instance->firstName = $data['first_name'];
+        }
+        if (isset($data['last_name'])) {
+            $instance->lastName = $data['last_name'];
+        }
+        if (isset($data['username'])) {
+            $instance->username = $data['username'];
+        }
+        if (isset($data['language_code'])) {
+            $instance->languageCode = $data['language_code'];
+        }
+        if (isset($data['is_premium'])) {
+            $instance->isPremium = $data['is_premium'];
+        }
+        if (isset($data['added_to_attachment_menu'])) {
+            $instance->addedToAttachmentMenu = $data['added_to_attachment_menu'];
+        }
+        if (isset($data['can_join_groups'])) {
+            $instance->canJoinGroups = $data['can_join_groups'];
+        }
+        if (isset($data['can_read_all_group_messages'])) {
+            $instance->canReadAllGroupMessages = $data['can_read_all_group_messages'];
+        }
+        if (isset($data['supports_inline_queries'])) {
+            $instance->supportsInlineQueries = $data['supports_inline_queries'];
+        }
+        return $instance;
+    }
+
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getIsBot(): bool {
+    public function setId(?int $value): self {
+        $this->id = $value;
+        return $this;
+    }
+
+    public function getIsBot(): ?bool {
         return $this->isBot;
     }
 
-    public function getFirstName(): string {
+    public function setIsBot(?bool $value): self {
+        $this->isBot = $value;
+        return $this;
+    }
+
+    public function getFirstName(): ?string {
         return $this->firstName;
+    }
+
+    public function setFirstName(?string $value): self {
+        $this->firstName = $value;
+        return $this;
     }
 
     public function getLastName(): ?string {
         return $this->lastName;
     }
 
+    public function setLastName(?string $value): self {
+        $this->lastName = $value;
+        return $this;
+    }
+
     public function getUsername(): ?string {
         return $this->username;
+    }
+
+    public function setUsername(?string $value): self {
+        $this->username = $value;
+        return $this;
     }
 
     public function getLanguageCode(): ?string {
         return $this->languageCode;
     }
 
+    public function setLanguageCode(?string $value): self {
+        $this->languageCode = $value;
+        return $this;
+    }
+
     public function getIsPremium(): ?bool {
         return $this->isPremium;
+    }
+
+    public function setIsPremium(?bool $value): self {
+        $this->isPremium = $value;
+        return $this;
     }
 
     public function getAddedToAttachmentMenu(): ?bool {
         return $this->addedToAttachmentMenu;
     }
 
+    public function setAddedToAttachmentMenu(?bool $value): self {
+        $this->addedToAttachmentMenu = $value;
+        return $this;
+    }
+
     public function getCanJoinGroups(): ?bool {
         return $this->canJoinGroups;
+    }
+
+    public function setCanJoinGroups(?bool $value): self {
+        $this->canJoinGroups = $value;
+        return $this;
     }
 
     public function getCanReadAllGroupMessages(): ?bool {
         return $this->canReadAllGroupMessages;
     }
 
+    public function setCanReadAllGroupMessages(?bool $value): self {
+        $this->canReadAllGroupMessages = $value;
+        return $this;
+    }
+
     public function getSupportsInlineQueries(): ?bool {
         return $this->supportsInlineQueries;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setSupportsInlineQueries(?bool $value): self {
+        $this->supportsInlineQueries = $value;
+        return $this;
     }
 
 }

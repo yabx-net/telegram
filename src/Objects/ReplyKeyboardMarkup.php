@@ -2,15 +2,15 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ReplyKeyboardMarkup {
+final class ReplyKeyboardMarkup extends ReplyMarkup {
 
     /**
      * Keyboard
      *
      * Array of button rows, each represented by an Array of KeyboardButton objects
-     * @var KeyboardButton[]
+     * @var KeyboardButton[]|null
      */
-    protected array $keyboard;
+    protected ?array $keyboard = null;
 
     /**
      * Is Persistent
@@ -52,59 +52,100 @@ class ReplyKeyboardMarkup {
      */
     protected ?bool $selective = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?array  $keyboard = null,
+        ?bool   $isPersistent = null,
+        ?bool   $resizeKeyboard = null,
+        ?bool   $oneTimeKeyboard = null,
+        ?string $inputFieldPlaceholder = null,
+        ?bool   $selective = null,
+    ) {
+        $this->keyboard = $keyboard;
+        $this->isPersistent = $isPersistent;
+        $this->resizeKeyboard = $resizeKeyboard;
+        $this->oneTimeKeyboard = $oneTimeKeyboard;
+        $this->inputFieldPlaceholder = $inputFieldPlaceholder;
+        $this->selective = $selective;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): ReplyKeyboardMarkup {
+        $instance = new self();
         if (isset($data['keyboard'])) {
-            $this->keyboard = [];
+            $instance->keyboard = [];
             foreach ($data['keyboard'] as $item) {
-                $this->keyboard[] = new KeyboardButton($item);
+                $instance->keyboard[] = KeyboardButton::fromArray($item);
             }
         }
         if (isset($data['is_persistent'])) {
-            $this->isPersistent = $data['is_persistent'];
+            $instance->isPersistent = $data['is_persistent'];
         }
         if (isset($data['resize_keyboard'])) {
-            $this->resizeKeyboard = $data['resize_keyboard'];
+            $instance->resizeKeyboard = $data['resize_keyboard'];
         }
         if (isset($data['one_time_keyboard'])) {
-            $this->oneTimeKeyboard = $data['one_time_keyboard'];
+            $instance->oneTimeKeyboard = $data['one_time_keyboard'];
         }
         if (isset($data['input_field_placeholder'])) {
-            $this->inputFieldPlaceholder = $data['input_field_placeholder'];
+            $instance->inputFieldPlaceholder = $data['input_field_placeholder'];
         }
         if (isset($data['selective'])) {
-            $this->selective = $data['selective'];
+            $instance->selective = $data['selective'];
         }
+        return $instance;
     }
 
-    public function getKeyboard(): array {
+    public function getKeyboard(): ?array {
         return $this->keyboard;
+    }
+
+    public function setKeyboard(?array $value): self {
+        $this->keyboard = $value;
+        return $this;
     }
 
     public function getIsPersistent(): ?bool {
         return $this->isPersistent;
     }
 
+    public function setIsPersistent(?bool $value): self {
+        $this->isPersistent = $value;
+        return $this;
+    }
+
     public function getResizeKeyboard(): ?bool {
         return $this->resizeKeyboard;
+    }
+
+    public function setResizeKeyboard(?bool $value): self {
+        $this->resizeKeyboard = $value;
+        return $this;
     }
 
     public function getOneTimeKeyboard(): ?bool {
         return $this->oneTimeKeyboard;
     }
 
+    public function setOneTimeKeyboard(?bool $value): self {
+        $this->oneTimeKeyboard = $value;
+        return $this;
+    }
+
     public function getInputFieldPlaceholder(): ?string {
         return $this->inputFieldPlaceholder;
+    }
+
+    public function setInputFieldPlaceholder(?string $value): self {
+        $this->inputFieldPlaceholder = $value;
+        return $this;
     }
 
     public function getSelective(): ?bool {
         return $this->selective;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setSelective(?bool $value): self {
+        $this->selective = $value;
+        return $this;
     }
 
 }

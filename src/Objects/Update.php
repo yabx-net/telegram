@@ -2,15 +2,19 @@
 
 namespace Yabx\Telegram\Objects;
 
-class Update {
+use Yabx\Telegram\ObjectTrait;
+
+final class Update {
+
+    use ObjectTrait;
 
     /**
      * Update Id
      *
      * The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you're using webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
-     * @var int
+     * @var int|null
      */
-    protected int $updateId;
+    protected ?int $updateId = null;
 
     /**
      * Message
@@ -124,119 +128,223 @@ class Update {
      */
     protected ?ChatJoinRequest $chatJoinRequest = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['update_id'])) {
-            $this->updateId = $data['update_id'];
-        }
-        if (isset($data['message'])) {
-            $this->message = new Message($data['message']);
-        }
-        if (isset($data['edited_message'])) {
-            $this->editedMessage = new Message($data['edited_message']);
-        }
-        if (isset($data['channel_post'])) {
-            $this->channelPost = new Message($data['channel_post']);
-        }
-        if (isset($data['edited_channel_post'])) {
-            $this->editedChannelPost = new Message($data['edited_channel_post']);
-        }
-        if (isset($data['inline_query'])) {
-            $this->inlineQuery = new InlineQuery($data['inline_query']);
-        }
-        if (isset($data['chosen_inline_result'])) {
-            $this->chosenInlineResult = new ChosenInlineResult($data['chosen_inline_result']);
-        }
-        if (isset($data['callback_query'])) {
-            $this->callbackQuery = new CallbackQuery($data['callback_query']);
-        }
-        if (isset($data['shipping_query'])) {
-            $this->shippingQuery = new ShippingQuery($data['shipping_query']);
-        }
-        if (isset($data['pre_checkout_query'])) {
-            $this->preCheckoutQuery = new PreCheckoutQuery($data['pre_checkout_query']);
-        }
-        if (isset($data['poll'])) {
-            $this->poll = new Poll($data['poll']);
-        }
-        if (isset($data['poll_answer'])) {
-            $this->pollAnswer = new PollAnswer($data['poll_answer']);
-        }
-        if (isset($data['my_chat_member'])) {
-            $this->myChatMember = new ChatMemberUpdated($data['my_chat_member']);
-        }
-        if (isset($data['chat_member'])) {
-            $this->chatMember = new ChatMemberUpdated($data['chat_member']);
-        }
-        if (isset($data['chat_join_request'])) {
-            $this->chatJoinRequest = new ChatJoinRequest($data['chat_join_request']);
-        }
+    public function __construct(
+        ?int                $updateId = null,
+        ?Message            $message = null,
+        ?Message            $editedMessage = null,
+        ?Message            $channelPost = null,
+        ?Message            $editedChannelPost = null,
+        ?InlineQuery        $inlineQuery = null,
+        ?ChosenInlineResult $chosenInlineResult = null,
+        ?CallbackQuery      $callbackQuery = null,
+        ?ShippingQuery      $shippingQuery = null,
+        ?PreCheckoutQuery   $preCheckoutQuery = null,
+        ?Poll               $poll = null,
+        ?PollAnswer         $pollAnswer = null,
+        ?ChatMemberUpdated  $myChatMember = null,
+        ?ChatMemberUpdated  $chatMember = null,
+        ?ChatJoinRequest    $chatJoinRequest = null,
+    ) {
+        $this->updateId = $updateId;
+        $this->message = $message;
+        $this->editedMessage = $editedMessage;
+        $this->channelPost = $channelPost;
+        $this->editedChannelPost = $editedChannelPost;
+        $this->inlineQuery = $inlineQuery;
+        $this->chosenInlineResult = $chosenInlineResult;
+        $this->callbackQuery = $callbackQuery;
+        $this->shippingQuery = $shippingQuery;
+        $this->preCheckoutQuery = $preCheckoutQuery;
+        $this->poll = $poll;
+        $this->pollAnswer = $pollAnswer;
+        $this->myChatMember = $myChatMember;
+        $this->chatMember = $chatMember;
+        $this->chatJoinRequest = $chatJoinRequest;
     }
 
-    public function getUpdateId(): int {
+    public static function fromArray(array $data): Update {
+        $instance = new self();
+        if (isset($data['update_id'])) {
+            $instance->updateId = $data['update_id'];
+        }
+        if (isset($data['message'])) {
+            $instance->message = Message::fromArray($data['message']);
+        }
+        if (isset($data['edited_message'])) {
+            $instance->editedMessage = Message::fromArray($data['edited_message']);
+        }
+        if (isset($data['channel_post'])) {
+            $instance->channelPost = Message::fromArray($data['channel_post']);
+        }
+        if (isset($data['edited_channel_post'])) {
+            $instance->editedChannelPost = Message::fromArray($data['edited_channel_post']);
+        }
+        if (isset($data['inline_query'])) {
+            $instance->inlineQuery = InlineQuery::fromArray($data['inline_query']);
+        }
+        if (isset($data['chosen_inline_result'])) {
+            $instance->chosenInlineResult = ChosenInlineResult::fromArray($data['chosen_inline_result']);
+        }
+        if (isset($data['callback_query'])) {
+            $instance->callbackQuery = CallbackQuery::fromArray($data['callback_query']);
+        }
+        if (isset($data['shipping_query'])) {
+            $instance->shippingQuery = ShippingQuery::fromArray($data['shipping_query']);
+        }
+        if (isset($data['pre_checkout_query'])) {
+            $instance->preCheckoutQuery = PreCheckoutQuery::fromArray($data['pre_checkout_query']);
+        }
+        if (isset($data['poll'])) {
+            $instance->poll = Poll::fromArray($data['poll']);
+        }
+        if (isset($data['poll_answer'])) {
+            $instance->pollAnswer = PollAnswer::fromArray($data['poll_answer']);
+        }
+        if (isset($data['my_chat_member'])) {
+            $instance->myChatMember = ChatMemberUpdated::fromArray($data['my_chat_member']);
+        }
+        if (isset($data['chat_member'])) {
+            $instance->chatMember = ChatMemberUpdated::fromArray($data['chat_member']);
+        }
+        if (isset($data['chat_join_request'])) {
+            $instance->chatJoinRequest = ChatJoinRequest::fromArray($data['chat_join_request']);
+        }
+        return $instance;
+    }
+
+    public function getUpdateId(): ?int {
         return $this->updateId;
+    }
+
+    public function setUpdateId(?int $value): self {
+        $this->updateId = $value;
+        return $this;
     }
 
     public function getMessage(): ?Message {
         return $this->message;
     }
 
+    public function setMessage(?Message $value): self {
+        $this->message = $value;
+        return $this;
+    }
+
     public function getEditedMessage(): ?Message {
         return $this->editedMessage;
+    }
+
+    public function setEditedMessage(?Message $value): self {
+        $this->editedMessage = $value;
+        return $this;
     }
 
     public function getChannelPost(): ?Message {
         return $this->channelPost;
     }
 
+    public function setChannelPost(?Message $value): self {
+        $this->channelPost = $value;
+        return $this;
+    }
+
     public function getEditedChannelPost(): ?Message {
         return $this->editedChannelPost;
+    }
+
+    public function setEditedChannelPost(?Message $value): self {
+        $this->editedChannelPost = $value;
+        return $this;
     }
 
     public function getInlineQuery(): ?InlineQuery {
         return $this->inlineQuery;
     }
 
+    public function setInlineQuery(?InlineQuery $value): self {
+        $this->inlineQuery = $value;
+        return $this;
+    }
+
     public function getChosenInlineResult(): ?ChosenInlineResult {
         return $this->chosenInlineResult;
+    }
+
+    public function setChosenInlineResult(?ChosenInlineResult $value): self {
+        $this->chosenInlineResult = $value;
+        return $this;
     }
 
     public function getCallbackQuery(): ?CallbackQuery {
         return $this->callbackQuery;
     }
 
+    public function setCallbackQuery(?CallbackQuery $value): self {
+        $this->callbackQuery = $value;
+        return $this;
+    }
+
     public function getShippingQuery(): ?ShippingQuery {
         return $this->shippingQuery;
+    }
+
+    public function setShippingQuery(?ShippingQuery $value): self {
+        $this->shippingQuery = $value;
+        return $this;
     }
 
     public function getPreCheckoutQuery(): ?PreCheckoutQuery {
         return $this->preCheckoutQuery;
     }
 
+    public function setPreCheckoutQuery(?PreCheckoutQuery $value): self {
+        $this->preCheckoutQuery = $value;
+        return $this;
+    }
+
     public function getPoll(): ?Poll {
         return $this->poll;
+    }
+
+    public function setPoll(?Poll $value): self {
+        $this->poll = $value;
+        return $this;
     }
 
     public function getPollAnswer(): ?PollAnswer {
         return $this->pollAnswer;
     }
 
+    public function setPollAnswer(?PollAnswer $value): self {
+        $this->pollAnswer = $value;
+        return $this;
+    }
+
     public function getMyChatMember(): ?ChatMemberUpdated {
         return $this->myChatMember;
+    }
+
+    public function setMyChatMember(?ChatMemberUpdated $value): self {
+        $this->myChatMember = $value;
+        return $this;
     }
 
     public function getChatMember(): ?ChatMemberUpdated {
         return $this->chatMember;
     }
 
+    public function setChatMember(?ChatMemberUpdated $value): self {
+        $this->chatMember = $value;
+        return $this;
+    }
+
     public function getChatJoinRequest(): ?ChatJoinRequest {
         return $this->chatJoinRequest;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setChatJoinRequest(?ChatJoinRequest $value): self {
+        $this->chatJoinRequest = $value;
+        return $this;
     }
 
 }

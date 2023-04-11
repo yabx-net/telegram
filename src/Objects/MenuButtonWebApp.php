@@ -2,61 +2,85 @@
 
 namespace Yabx\Telegram\Objects;
 
-class MenuButtonWebApp {
+use Yabx\Telegram\ObjectTrait;
+
+final class MenuButtonWebApp {
+
+    use ObjectTrait;
 
     /**
      * Type
      *
      * Type of the button, must be web_app
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * Text
      *
      * Text on the button
-     * @var string
+     * @var string|null
      */
-    protected string $text;
+    protected ?string $text = null;
 
     /**
      * Web App
      *
      * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery.
-     * @var WebAppInfo
+     * @var WebAppInfo|null
      */
-    protected WebAppInfo $webApp;
+    protected ?WebAppInfo $webApp = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['type'])) {
-            $this->type = $data['type'];
-        }
-        if (isset($data['text'])) {
-            $this->text = $data['text'];
-        }
-        if (isset($data['web_app'])) {
-            $this->webApp = new WebAppInfo($data['web_app']);
-        }
+    public function __construct(
+        ?string     $type = null,
+        ?string     $text = null,
+        ?WebAppInfo $webApp = null,
+    ) {
+        $this->type = $type;
+        $this->text = $text;
+        $this->webApp = $webApp;
     }
 
-    public function getType(): string {
+    public static function fromArray(array $data): MenuButtonWebApp {
+        $instance = new self();
+        if (isset($data['type'])) {
+            $instance->type = $data['type'];
+        }
+        if (isset($data['text'])) {
+            $instance->text = $data['text'];
+        }
+        if (isset($data['web_app'])) {
+            $instance->webApp = WebAppInfo::fromArray($data['web_app']);
+        }
+        return $instance;
+    }
+
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getText(): string {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getText(): ?string {
         return $this->text;
     }
 
-    public function getWebApp(): WebAppInfo {
+    public function setText(?string $value): self {
+        $this->text = $value;
+        return $this;
+    }
+
+    public function getWebApp(): ?WebAppInfo {
         return $this->webApp;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setWebApp(?WebAppInfo $value): self {
+        $this->webApp = $value;
+        return $this;
     }
 
 }

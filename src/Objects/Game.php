@@ -2,31 +2,35 @@
 
 namespace Yabx\Telegram\Objects;
 
-class Game {
+use Yabx\Telegram\ObjectTrait;
+
+final class Game {
+
+    use ObjectTrait;
 
     /**
      * Title
      *
      * Title of the game
-     * @var string
+     * @var string|null
      */
-    protected string $title;
+    protected ?string $title = null;
 
     /**
      * Description
      *
      * Description of the game
-     * @var string
+     * @var string|null
      */
-    protected string $description;
+    protected ?string $description = null;
 
     /**
      * Photo
      *
      * Photo that will be displayed in the game message in chats.
-     * @var PhotoSize[]
+     * @var PhotoSize[]|null
      */
-    protected array $photo;
+    protected ?array $photo = null;
 
     /**
      * Text
@@ -52,62 +56,103 @@ class Game {
      */
     protected ?Animation $animation = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string    $title = null,
+        ?string    $description = null,
+        ?array     $photo = null,
+        ?string    $text = null,
+        ?array     $textEntities = null,
+        ?Animation $animation = null,
+    ) {
+        $this->title = $title;
+        $this->description = $description;
+        $this->photo = $photo;
+        $this->text = $text;
+        $this->textEntities = $textEntities;
+        $this->animation = $animation;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): Game {
+        $instance = new self();
         if (isset($data['title'])) {
-            $this->title = $data['title'];
+            $instance->title = $data['title'];
         }
         if (isset($data['description'])) {
-            $this->description = $data['description'];
+            $instance->description = $data['description'];
         }
         if (isset($data['photo'])) {
-            $this->photo = [];
+            $instance->photo = [];
             foreach ($data['photo'] as $item) {
-                $this->photo[] = new PhotoSize($item);
+                $instance->photo[] = PhotoSize::fromArray($item);
             }
         }
         if (isset($data['text'])) {
-            $this->text = $data['text'];
+            $instance->text = $data['text'];
         }
         if (isset($data['text_entities'])) {
-            $this->textEntities = [];
+            $instance->textEntities = [];
             foreach ($data['text_entities'] as $item) {
-                $this->textEntities[] = new MessageEntity($item);
+                $instance->textEntities[] = MessageEntity::fromArray($item);
             }
         }
         if (isset($data['animation'])) {
-            $this->animation = new Animation($data['animation']);
+            $instance->animation = Animation::fromArray($data['animation']);
         }
+        return $instance;
     }
 
-    public function getTitle(): string {
+    public function getTitle(): ?string {
         return $this->title;
     }
 
-    public function getDescription(): string {
+    public function setTitle(?string $value): self {
+        $this->title = $value;
+        return $this;
+    }
+
+    public function getDescription(): ?string {
         return $this->description;
     }
 
-    public function getPhoto(): array {
+    public function setDescription(?string $value): self {
+        $this->description = $value;
+        return $this;
+    }
+
+    public function getPhoto(): ?array {
         return $this->photo;
+    }
+
+    public function setPhoto(?array $value): self {
+        $this->photo = $value;
+        return $this;
     }
 
     public function getText(): ?string {
         return $this->text;
     }
 
+    public function setText(?string $value): self {
+        $this->text = $value;
+        return $this;
+    }
+
     public function getTextEntities(): ?array {
         return $this->textEntities;
+    }
+
+    public function setTextEntities(?array $value): self {
+        $this->textEntities = $value;
+        return $this;
     }
 
     public function getAnimation(): ?Animation {
         return $this->animation;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setAnimation(?Animation $value): self {
+        $this->animation = $value;
+        return $this;
     }
 
 }

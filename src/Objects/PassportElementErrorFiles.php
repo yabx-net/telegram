@@ -2,79 +2,110 @@
 
 namespace Yabx\Telegram\Objects;
 
-class PassportElementErrorFiles {
+use Yabx\Telegram\ObjectTrait;
+
+final class PassportElementErrorFiles {
+
+    use ObjectTrait;
 
     /**
      * Source
      *
      * Error source, must be files
-     * @var string
+     * @var string|null
      */
-    protected string $source;
+    protected ?string $source = null;
 
     /**
      * Type
      *
      * The section of the user's Telegram Passport which has the issue, one of “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration”, “temporary_registration”
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * File Hashes
      *
      * List of base64-encoded file hashes
-     * @var string[]
+     * @var string[]|null
      */
-    protected array $fileHashes;
+    protected ?array $fileHashes = null;
 
     /**
      * Message
      *
      * Error message
-     * @var string
+     * @var string|null
      */
-    protected string $message;
+    protected ?string $message = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string $source = null,
+        ?string $type = null,
+        ?array  $fileHashes = null,
+        ?string $message = null,
+    ) {
+        $this->source = $source;
+        $this->type = $type;
+        $this->fileHashes = $fileHashes;
+        $this->message = $message;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): PassportElementErrorFiles {
+        $instance = new self();
         if (isset($data['source'])) {
-            $this->source = $data['source'];
+            $instance->source = $data['source'];
         }
         if (isset($data['type'])) {
-            $this->type = $data['type'];
+            $instance->type = $data['type'];
         }
         if (isset($data['file_hashes'])) {
-            $this->fileHashes = [];
+            $instance->fileHashes = [];
             foreach ($data['file_hashes'] as $item) {
-                $this->fileHashes[] = $item;
+                $instance->fileHashes[] = $item;
             }
         }
         if (isset($data['message'])) {
-            $this->message = $data['message'];
+            $instance->message = $data['message'];
         }
+        return $instance;
     }
 
-    public function getSource(): string {
+    public function getSource(): ?string {
         return $this->source;
     }
 
-    public function getType(): string {
+    public function setSource(?string $value): self {
+        $this->source = $value;
+        return $this;
+    }
+
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getFileHashes(): array {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getFileHashes(): ?array {
         return $this->fileHashes;
     }
 
-    public function getMessage(): string {
+    public function setFileHashes(?array $value): self {
+        $this->fileHashes = $value;
+        return $this;
+    }
+
+    public function getMessage(): ?string {
         return $this->message;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setMessage(?string $value): self {
+        $this->message = $value;
+        return $this;
     }
 
 }

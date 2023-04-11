@@ -2,31 +2,35 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InlineQueryResultGame {
+use Yabx\Telegram\ObjectTrait;
+
+final class InlineQueryResultGame {
+
+    use ObjectTrait;
 
     /**
      * Type
      *
      * Type of the result, must be game
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * Id
      *
      * Unique identifier for this result, 1-64 bytes
-     * @var string
+     * @var string|null
      */
-    protected string $id;
+    protected ?string $id = null;
 
     /**
      * Game Short Name
      *
      * Short name of the game
-     * @var string
+     * @var string|null
      */
-    protected string $gameShortName;
+    protected ?string $gameShortName = null;
 
     /**
      * Reply Markup
@@ -36,42 +40,69 @@ class InlineQueryResultGame {
      */
     protected ?InlineKeyboardMarkup $replyMarkup = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['type'])) {
-            $this->type = $data['type'];
-        }
-        if (isset($data['id'])) {
-            $this->id = $data['id'];
-        }
-        if (isset($data['game_short_name'])) {
-            $this->gameShortName = $data['game_short_name'];
-        }
-        if (isset($data['reply_markup'])) {
-            $this->replyMarkup = new InlineKeyboardMarkup($data['reply_markup']);
-        }
+    public function __construct(
+        ?string               $type = null,
+        ?string               $id = null,
+        ?string               $gameShortName = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ) {
+        $this->type = $type;
+        $this->id = $id;
+        $this->gameShortName = $gameShortName;
+        $this->replyMarkup = $replyMarkup;
     }
 
-    public function getType(): string {
+    public static function fromArray(array $data): InlineQueryResultGame {
+        $instance = new self();
+        if (isset($data['type'])) {
+            $instance->type = $data['type'];
+        }
+        if (isset($data['id'])) {
+            $instance->id = $data['id'];
+        }
+        if (isset($data['game_short_name'])) {
+            $instance->gameShortName = $data['game_short_name'];
+        }
+        if (isset($data['reply_markup'])) {
+            $instance->replyMarkup = InlineKeyboardMarkup::fromArray($data['reply_markup']);
+        }
+        return $instance;
+    }
+
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getId(): string {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getId(): ?string {
         return $this->id;
     }
 
-    public function getGameShortName(): string {
+    public function setId(?string $value): self {
+        $this->id = $value;
+        return $this;
+    }
+
+    public function getGameShortName(): ?string {
         return $this->gameShortName;
+    }
+
+    public function setGameShortName(?string $value): self {
+        $this->gameShortName = $value;
+        return $this;
     }
 
     public function getReplyMarkup(): ?InlineKeyboardMarkup {
         return $this->replyMarkup;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setReplyMarkup(?InlineKeyboardMarkup $value): self {
+        $this->replyMarkup = $value;
+        return $this;
     }
 
 }

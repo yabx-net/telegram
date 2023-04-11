@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ResponseParameters {
+use Yabx\Telegram\ObjectTrait;
+
+final class ResponseParameters {
+
+    use ObjectTrait;
 
     /**
      * Migrate To Chat Id
@@ -20,28 +24,41 @@ class ResponseParameters {
      */
     protected ?int $retryAfter = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?int $migrateToChatId = null,
+        ?int $retryAfter = null,
+    ) {
+        $this->migrateToChatId = $migrateToChatId;
+        $this->retryAfter = $retryAfter;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): ResponseParameters {
+        $instance = new self();
         if (isset($data['migrate_to_chat_id'])) {
-            $this->migrateToChatId = $data['migrate_to_chat_id'];
+            $instance->migrateToChatId = $data['migrate_to_chat_id'];
         }
         if (isset($data['retry_after'])) {
-            $this->retryAfter = $data['retry_after'];
+            $instance->retryAfter = $data['retry_after'];
         }
+        return $instance;
     }
 
     public function getMigrateToChatId(): ?int {
         return $this->migrateToChatId;
     }
 
+    public function setMigrateToChatId(?int $value): self {
+        $this->migrateToChatId = $value;
+        return $this;
+    }
+
     public function getRetryAfter(): ?int {
         return $this->retryAfter;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setRetryAfter(?int $value): self {
+        $this->retryAfter = $value;
+        return $this;
     }
 
 }

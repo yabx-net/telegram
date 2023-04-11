@@ -2,23 +2,27 @@
 
 namespace Yabx\Telegram\Objects;
 
-class File {
+use Yabx\Telegram\ObjectTrait;
+
+final class File {
+
+    use ObjectTrait;
 
     /**
      * File Id
      *
      * Identifier for this file, which can be used to download or reuse the file
-     * @var string
+     * @var string|null
      */
-    protected string $fileId;
+    protected ?string $fileId = null;
 
     /**
      * File Unique Id
      *
      * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
-     * @var string
+     * @var string|null
      */
-    protected string $fileUniqueId;
+    protected ?string $fileUniqueId = null;
 
     /**
      * File Size
@@ -36,42 +40,69 @@ class File {
      */
     protected ?string $filePath = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['file_id'])) {
-            $this->fileId = $data['file_id'];
-        }
-        if (isset($data['file_unique_id'])) {
-            $this->fileUniqueId = $data['file_unique_id'];
-        }
-        if (isset($data['file_size'])) {
-            $this->fileSize = $data['file_size'];
-        }
-        if (isset($data['file_path'])) {
-            $this->filePath = $data['file_path'];
-        }
+    public function __construct(
+        ?string $fileId = null,
+        ?string $fileUniqueId = null,
+        ?int    $fileSize = null,
+        ?string $filePath = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->fileSize = $fileSize;
+        $this->filePath = $filePath;
     }
 
-    public function getFileId(): string {
+    public static function fromArray(array $data): File {
+        $instance = new self();
+        if (isset($data['file_id'])) {
+            $instance->fileId = $data['file_id'];
+        }
+        if (isset($data['file_unique_id'])) {
+            $instance->fileUniqueId = $data['file_unique_id'];
+        }
+        if (isset($data['file_size'])) {
+            $instance->fileSize = $data['file_size'];
+        }
+        if (isset($data['file_path'])) {
+            $instance->filePath = $data['file_path'];
+        }
+        return $instance;
+    }
+
+    public function getFileId(): ?string {
         return $this->fileId;
     }
 
-    public function getFileUniqueId(): string {
+    public function setFileId(?string $value): self {
+        $this->fileId = $value;
+        return $this;
+    }
+
+    public function getFileUniqueId(): ?string {
         return $this->fileUniqueId;
+    }
+
+    public function setFileUniqueId(?string $value): self {
+        $this->fileUniqueId = $value;
+        return $this;
     }
 
     public function getFileSize(): ?int {
         return $this->fileSize;
     }
 
+    public function setFileSize(?int $value): self {
+        $this->fileSize = $value;
+        return $this;
+    }
+
     public function getFilePath(): ?string {
         return $this->filePath;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setFilePath(?string $value): self {
+        $this->filePath = $value;
+        return $this;
     }
 
 }

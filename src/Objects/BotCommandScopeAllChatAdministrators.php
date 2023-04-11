@@ -2,31 +2,41 @@
 
 namespace Yabx\Telegram\Objects;
 
-class BotCommandScopeAllChatAdministrators {
+use Yabx\Telegram\ObjectTrait;
+
+final class BotCommandScopeAllChatAdministrators {
+
+    use ObjectTrait;
 
     /**
      * Type
      *
      * Scope type, must be all_chat_administrators
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['type'])) {
-            $this->type = $data['type'];
-        }
+    public function __construct(
+        ?string $type = null,
+    ) {
+        $this->type = $type;
     }
 
-    public function getType(): string {
+    public static function fromArray(array $data): BotCommandScopeAllChatAdministrators {
+        $instance = new self();
+        if (isset($data['type'])) {
+            $instance->type = $data['type'];
+        }
+        return $instance;
+    }
+
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
     }
 
 }

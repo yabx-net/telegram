@@ -2,76 +2,107 @@
 
 namespace Yabx\Telegram\Objects;
 
-class PassportElementErrorUnspecified {
+use Yabx\Telegram\ObjectTrait;
+
+final class PassportElementErrorUnspecified {
+
+    use ObjectTrait;
 
     /**
      * Source
      *
      * Error source, must be unspecified
-     * @var string
+     * @var string|null
      */
-    protected string $source;
+    protected ?string $source = null;
 
     /**
      * Type
      *
      * Type of element of the user's Telegram Passport which has the issue
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * Element Hash
      *
      * Base64-encoded element hash
-     * @var string
+     * @var string|null
      */
-    protected string $elementHash;
+    protected ?string $elementHash = null;
 
     /**
      * Message
      *
      * Error message
-     * @var string
+     * @var string|null
      */
-    protected string $message;
+    protected ?string $message = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['source'])) {
-            $this->source = $data['source'];
-        }
-        if (isset($data['type'])) {
-            $this->type = $data['type'];
-        }
-        if (isset($data['element_hash'])) {
-            $this->elementHash = $data['element_hash'];
-        }
-        if (isset($data['message'])) {
-            $this->message = $data['message'];
-        }
+    public function __construct(
+        ?string $source = null,
+        ?string $type = null,
+        ?string $elementHash = null,
+        ?string $message = null,
+    ) {
+        $this->source = $source;
+        $this->type = $type;
+        $this->elementHash = $elementHash;
+        $this->message = $message;
     }
 
-    public function getSource(): string {
+    public static function fromArray(array $data): PassportElementErrorUnspecified {
+        $instance = new self();
+        if (isset($data['source'])) {
+            $instance->source = $data['source'];
+        }
+        if (isset($data['type'])) {
+            $instance->type = $data['type'];
+        }
+        if (isset($data['element_hash'])) {
+            $instance->elementHash = $data['element_hash'];
+        }
+        if (isset($data['message'])) {
+            $instance->message = $data['message'];
+        }
+        return $instance;
+    }
+
+    public function getSource(): ?string {
         return $this->source;
     }
 
-    public function getType(): string {
+    public function setSource(?string $value): self {
+        $this->source = $value;
+        return $this;
+    }
+
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getElementHash(): string {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getElementHash(): ?string {
         return $this->elementHash;
     }
 
-    public function getMessage(): string {
+    public function setElementHash(?string $value): self {
+        $this->elementHash = $value;
+        return $this;
+    }
+
+    public function getMessage(): ?string {
         return $this->message;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setMessage(?string $value): self {
+        $this->message = $value;
+        return $this;
     }
 
 }

@@ -2,15 +2,19 @@
 
 namespace Yabx\Telegram\Objects;
 
-class Message {
+use Yabx\Telegram\ObjectTrait;
+
+final class Message {
+
+    use ObjectTrait;
 
     /**
      * Message Id
      *
      * Unique message identifier inside this chat
-     * @var int
+     * @var int|null
      */
-    protected int $messageId;
+    protected ?int $messageId = null;
 
     /**
      * Message Thread Id
@@ -40,17 +44,17 @@ class Message {
      * Date
      *
      * Date the message was sent in Unix time
-     * @var int
+     * @var int|null
      */
-    protected int $date;
+    protected ?int $date = null;
 
     /**
      * Chat
      *
      * Conversation the message belongs to
-     * @var Chat
+     * @var Chat|null
      */
-    protected Chat $chat;
+    protected ?Chat $chat = null;
 
     /**
      * Forward From
@@ -572,526 +576,1022 @@ class Message {
      */
     protected ?InlineKeyboardMarkup $replyMarkup = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?int                           $messageId = null,
+        ?int                           $messageThreadId = null,
+        ?User                          $from = null,
+        ?Chat                          $senderChat = null,
+        ?int                           $date = null,
+        ?Chat                          $chat = null,
+        ?User                          $forwardFrom = null,
+        ?Chat                          $forwardFromChat = null,
+        ?int                           $forwardFromMessageId = null,
+        ?string                        $forwardSignature = null,
+        ?string                        $forwardSenderName = null,
+        ?int                           $forwardDate = null,
+        ?bool                          $isTopicMessage = null,
+        ?bool                          $isAutomaticForward = null,
+        ?Message                       $replyToMessage = null,
+        ?User                          $viaBot = null,
+        ?int                           $editDate = null,
+        ?bool                          $hasProtectedContent = null,
+        ?string                        $mediaGroupId = null,
+        ?string                        $authorSignature = null,
+        ?string                        $text = null,
+        ?array                         $entities = null,
+        ?Animation                     $animation = null,
+        ?Audio                         $audio = null,
+        ?Document                      $document = null,
+        ?array                         $photo = null,
+        ?Sticker                       $sticker = null,
+        ?Video                         $video = null,
+        ?VideoNote                     $videoNote = null,
+        ?Voice                         $voice = null,
+        ?string                        $caption = null,
+        ?array                         $captionEntities = null,
+        ?bool                          $hasMediaSpoiler = null,
+        ?Contact                       $contact = null,
+        ?Dice                          $dice = null,
+        ?Game                          $game = null,
+        ?Poll                          $poll = null,
+        ?Venue                         $venue = null,
+        ?Location                      $location = null,
+        ?array                         $newChatMembers = null,
+        ?User                          $leftChatMember = null,
+        ?string                        $newChatTitle = null,
+        ?array                         $newChatPhoto = null,
+        ?bool                          $deleteChatPhoto = null,
+        ?bool                          $groupChatCreated = null,
+        ?bool                          $supergroupChatCreated = null,
+        ?bool                          $channelChatCreated = null,
+        ?MessageAutoDeleteTimerChanged $messageAutoDeleteTimerChanged = null,
+        ?int                           $migrateToChatId = null,
+        ?int                           $migrateFromChatId = null,
+        ?Message                       $pinnedMessage = null,
+        ?Invoice                       $invoice = null,
+        ?SuccessfulPayment             $successfulPayment = null,
+        ?UserShared                    $userShared = null,
+        ?ChatShared                    $chatShared = null,
+        ?string                        $connectedWebsite = null,
+        ?WriteAccessAllowed            $writeAccessAllowed = null,
+        ?PassportData                  $passportData = null,
+        ?ProximityAlertTriggered       $proximityAlertTriggered = null,
+        ?ForumTopicCreated             $forumTopicCreated = null,
+        ?ForumTopicEdited              $forumTopicEdited = null,
+        ?ForumTopicClosed              $forumTopicClosed = null,
+        ?ForumTopicReopened            $forumTopicReopened = null,
+        ?GeneralForumTopicHidden       $generalForumTopicHidden = null,
+        ?GeneralForumTopicUnhidden     $generalForumTopicUnhidden = null,
+        ?VideoChatScheduled            $videoChatScheduled = null,
+        ?VideoChatStarted              $videoChatStarted = null,
+        ?VideoChatEnded                $videoChatEnded = null,
+        ?VideoChatParticipantsInvited  $videoChatParticipantsInvited = null,
+        ?WebAppData                    $webAppData = null,
+        ?InlineKeyboardMarkup          $replyMarkup = null,
+    ) {
+        $this->messageId = $messageId;
+        $this->messageThreadId = $messageThreadId;
+        $this->from = $from;
+        $this->senderChat = $senderChat;
+        $this->date = $date;
+        $this->chat = $chat;
+        $this->forwardFrom = $forwardFrom;
+        $this->forwardFromChat = $forwardFromChat;
+        $this->forwardFromMessageId = $forwardFromMessageId;
+        $this->forwardSignature = $forwardSignature;
+        $this->forwardSenderName = $forwardSenderName;
+        $this->forwardDate = $forwardDate;
+        $this->isTopicMessage = $isTopicMessage;
+        $this->isAutomaticForward = $isAutomaticForward;
+        $this->replyToMessage = $replyToMessage;
+        $this->viaBot = $viaBot;
+        $this->editDate = $editDate;
+        $this->hasProtectedContent = $hasProtectedContent;
+        $this->mediaGroupId = $mediaGroupId;
+        $this->authorSignature = $authorSignature;
+        $this->text = $text;
+        $this->entities = $entities;
+        $this->animation = $animation;
+        $this->audio = $audio;
+        $this->document = $document;
+        $this->photo = $photo;
+        $this->sticker = $sticker;
+        $this->video = $video;
+        $this->videoNote = $videoNote;
+        $this->voice = $voice;
+        $this->caption = $caption;
+        $this->captionEntities = $captionEntities;
+        $this->hasMediaSpoiler = $hasMediaSpoiler;
+        $this->contact = $contact;
+        $this->dice = $dice;
+        $this->game = $game;
+        $this->poll = $poll;
+        $this->venue = $venue;
+        $this->location = $location;
+        $this->newChatMembers = $newChatMembers;
+        $this->leftChatMember = $leftChatMember;
+        $this->newChatTitle = $newChatTitle;
+        $this->newChatPhoto = $newChatPhoto;
+        $this->deleteChatPhoto = $deleteChatPhoto;
+        $this->groupChatCreated = $groupChatCreated;
+        $this->supergroupChatCreated = $supergroupChatCreated;
+        $this->channelChatCreated = $channelChatCreated;
+        $this->messageAutoDeleteTimerChanged = $messageAutoDeleteTimerChanged;
+        $this->migrateToChatId = $migrateToChatId;
+        $this->migrateFromChatId = $migrateFromChatId;
+        $this->pinnedMessage = $pinnedMessage;
+        $this->invoice = $invoice;
+        $this->successfulPayment = $successfulPayment;
+        $this->userShared = $userShared;
+        $this->chatShared = $chatShared;
+        $this->connectedWebsite = $connectedWebsite;
+        $this->writeAccessAllowed = $writeAccessAllowed;
+        $this->passportData = $passportData;
+        $this->proximityAlertTriggered = $proximityAlertTriggered;
+        $this->forumTopicCreated = $forumTopicCreated;
+        $this->forumTopicEdited = $forumTopicEdited;
+        $this->forumTopicClosed = $forumTopicClosed;
+        $this->forumTopicReopened = $forumTopicReopened;
+        $this->generalForumTopicHidden = $generalForumTopicHidden;
+        $this->generalForumTopicUnhidden = $generalForumTopicUnhidden;
+        $this->videoChatScheduled = $videoChatScheduled;
+        $this->videoChatStarted = $videoChatStarted;
+        $this->videoChatEnded = $videoChatEnded;
+        $this->videoChatParticipantsInvited = $videoChatParticipantsInvited;
+        $this->webAppData = $webAppData;
+        $this->replyMarkup = $replyMarkup;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): Message {
+        $instance = new self();
         if (isset($data['message_id'])) {
-            $this->messageId = $data['message_id'];
+            $instance->messageId = $data['message_id'];
         }
         if (isset($data['message_thread_id'])) {
-            $this->messageThreadId = $data['message_thread_id'];
+            $instance->messageThreadId = $data['message_thread_id'];
         }
         if (isset($data['from'])) {
-            $this->from = new User($data['from']);
+            $instance->from = User::fromArray($data['from']);
         }
         if (isset($data['sender_chat'])) {
-            $this->senderChat = new Chat($data['sender_chat']);
+            $instance->senderChat = Chat::fromArray($data['sender_chat']);
         }
         if (isset($data['date'])) {
-            $this->date = $data['date'];
+            $instance->date = $data['date'];
         }
         if (isset($data['chat'])) {
-            $this->chat = new Chat($data['chat']);
+            $instance->chat = Chat::fromArray($data['chat']);
         }
         if (isset($data['forward_from'])) {
-            $this->forwardFrom = new User($data['forward_from']);
+            $instance->forwardFrom = User::fromArray($data['forward_from']);
         }
         if (isset($data['forward_from_chat'])) {
-            $this->forwardFromChat = new Chat($data['forward_from_chat']);
+            $instance->forwardFromChat = Chat::fromArray($data['forward_from_chat']);
         }
         if (isset($data['forward_from_message_id'])) {
-            $this->forwardFromMessageId = $data['forward_from_message_id'];
+            $instance->forwardFromMessageId = $data['forward_from_message_id'];
         }
         if (isset($data['forward_signature'])) {
-            $this->forwardSignature = $data['forward_signature'];
+            $instance->forwardSignature = $data['forward_signature'];
         }
         if (isset($data['forward_sender_name'])) {
-            $this->forwardSenderName = $data['forward_sender_name'];
+            $instance->forwardSenderName = $data['forward_sender_name'];
         }
         if (isset($data['forward_date'])) {
-            $this->forwardDate = $data['forward_date'];
+            $instance->forwardDate = $data['forward_date'];
         }
         if (isset($data['is_topic_message'])) {
-            $this->isTopicMessage = $data['is_topic_message'];
+            $instance->isTopicMessage = $data['is_topic_message'];
         }
         if (isset($data['is_automatic_forward'])) {
-            $this->isAutomaticForward = $data['is_automatic_forward'];
+            $instance->isAutomaticForward = $data['is_automatic_forward'];
         }
         if (isset($data['reply_to_message'])) {
-            $this->replyToMessage = new Message($data['reply_to_message']);
+            $instance->replyToMessage = Message::fromArray($data['reply_to_message']);
         }
         if (isset($data['via_bot'])) {
-            $this->viaBot = new User($data['via_bot']);
+            $instance->viaBot = User::fromArray($data['via_bot']);
         }
         if (isset($data['edit_date'])) {
-            $this->editDate = $data['edit_date'];
+            $instance->editDate = $data['edit_date'];
         }
         if (isset($data['has_protected_content'])) {
-            $this->hasProtectedContent = $data['has_protected_content'];
+            $instance->hasProtectedContent = $data['has_protected_content'];
         }
         if (isset($data['media_group_id'])) {
-            $this->mediaGroupId = $data['media_group_id'];
+            $instance->mediaGroupId = $data['media_group_id'];
         }
         if (isset($data['author_signature'])) {
-            $this->authorSignature = $data['author_signature'];
+            $instance->authorSignature = $data['author_signature'];
         }
         if (isset($data['text'])) {
-            $this->text = $data['text'];
+            $instance->text = $data['text'];
         }
         if (isset($data['entities'])) {
-            $this->entities = [];
+            $instance->entities = [];
             foreach ($data['entities'] as $item) {
-                $this->entities[] = new MessageEntity($item);
+                $instance->entities[] = MessageEntity::fromArray($item);
             }
         }
         if (isset($data['animation'])) {
-            $this->animation = new Animation($data['animation']);
+            $instance->animation = Animation::fromArray($data['animation']);
         }
         if (isset($data['audio'])) {
-            $this->audio = new Audio($data['audio']);
+            $instance->audio = Audio::fromArray($data['audio']);
         }
         if (isset($data['document'])) {
-            $this->document = new Document($data['document']);
+            $instance->document = Document::fromArray($data['document']);
         }
         if (isset($data['photo'])) {
-            $this->photo = [];
+            $instance->photo = [];
             foreach ($data['photo'] as $item) {
-                $this->photo[] = new PhotoSize($item);
+                $instance->photo[] = PhotoSize::fromArray($item);
             }
         }
         if (isset($data['sticker'])) {
-            $this->sticker = new Sticker($data['sticker']);
+            $instance->sticker = Sticker::fromArray($data['sticker']);
         }
         if (isset($data['video'])) {
-            $this->video = new Video($data['video']);
+            $instance->video = Video::fromArray($data['video']);
         }
         if (isset($data['video_note'])) {
-            $this->videoNote = new VideoNote($data['video_note']);
+            $instance->videoNote = VideoNote::fromArray($data['video_note']);
         }
         if (isset($data['voice'])) {
-            $this->voice = new Voice($data['voice']);
+            $instance->voice = Voice::fromArray($data['voice']);
         }
         if (isset($data['caption'])) {
-            $this->caption = $data['caption'];
+            $instance->caption = $data['caption'];
         }
         if (isset($data['caption_entities'])) {
-            $this->captionEntities = [];
+            $instance->captionEntities = [];
             foreach ($data['caption_entities'] as $item) {
-                $this->captionEntities[] = new MessageEntity($item);
+                $instance->captionEntities[] = MessageEntity::fromArray($item);
             }
         }
         if (isset($data['has_media_spoiler'])) {
-            $this->hasMediaSpoiler = $data['has_media_spoiler'];
+            $instance->hasMediaSpoiler = $data['has_media_spoiler'];
         }
         if (isset($data['contact'])) {
-            $this->contact = new Contact($data['contact']);
+            $instance->contact = Contact::fromArray($data['contact']);
         }
         if (isset($data['dice'])) {
-            $this->dice = new Dice($data['dice']);
+            $instance->dice = Dice::fromArray($data['dice']);
         }
         if (isset($data['game'])) {
-            $this->game = new Game($data['game']);
+            $instance->game = Game::fromArray($data['game']);
         }
         if (isset($data['poll'])) {
-            $this->poll = new Poll($data['poll']);
+            $instance->poll = Poll::fromArray($data['poll']);
         }
         if (isset($data['venue'])) {
-            $this->venue = new Venue($data['venue']);
+            $instance->venue = Venue::fromArray($data['venue']);
         }
         if (isset($data['location'])) {
-            $this->location = new Location($data['location']);
+            $instance->location = Location::fromArray($data['location']);
         }
         if (isset($data['new_chat_members'])) {
-            $this->newChatMembers = [];
+            $instance->newChatMembers = [];
             foreach ($data['new_chat_members'] as $item) {
-                $this->newChatMembers[] = new User($item);
+                $instance->newChatMembers[] = User::fromArray($item);
             }
         }
         if (isset($data['left_chat_member'])) {
-            $this->leftChatMember = new User($data['left_chat_member']);
+            $instance->leftChatMember = User::fromArray($data['left_chat_member']);
         }
         if (isset($data['new_chat_title'])) {
-            $this->newChatTitle = $data['new_chat_title'];
+            $instance->newChatTitle = $data['new_chat_title'];
         }
         if (isset($data['new_chat_photo'])) {
-            $this->newChatPhoto = [];
+            $instance->newChatPhoto = [];
             foreach ($data['new_chat_photo'] as $item) {
-                $this->newChatPhoto[] = new PhotoSize($item);
+                $instance->newChatPhoto[] = PhotoSize::fromArray($item);
             }
         }
         if (isset($data['delete_chat_photo'])) {
-            $this->deleteChatPhoto = $data['delete_chat_photo'];
+            $instance->deleteChatPhoto = $data['delete_chat_photo'];
         }
         if (isset($data['group_chat_created'])) {
-            $this->groupChatCreated = $data['group_chat_created'];
+            $instance->groupChatCreated = $data['group_chat_created'];
         }
         if (isset($data['supergroup_chat_created'])) {
-            $this->supergroupChatCreated = $data['supergroup_chat_created'];
+            $instance->supergroupChatCreated = $data['supergroup_chat_created'];
         }
         if (isset($data['channel_chat_created'])) {
-            $this->channelChatCreated = $data['channel_chat_created'];
+            $instance->channelChatCreated = $data['channel_chat_created'];
         }
         if (isset($data['message_auto_delete_timer_changed'])) {
-            $this->messageAutoDeleteTimerChanged = new MessageAutoDeleteTimerChanged($data['message_auto_delete_timer_changed']);
+            $instance->messageAutoDeleteTimerChanged = MessageAutoDeleteTimerChanged::fromArray($data['message_auto_delete_timer_changed']);
         }
         if (isset($data['migrate_to_chat_id'])) {
-            $this->migrateToChatId = $data['migrate_to_chat_id'];
+            $instance->migrateToChatId = $data['migrate_to_chat_id'];
         }
         if (isset($data['migrate_from_chat_id'])) {
-            $this->migrateFromChatId = $data['migrate_from_chat_id'];
+            $instance->migrateFromChatId = $data['migrate_from_chat_id'];
         }
         if (isset($data['pinned_message'])) {
-            $this->pinnedMessage = new Message($data['pinned_message']);
+            $instance->pinnedMessage = Message::fromArray($data['pinned_message']);
         }
         if (isset($data['invoice'])) {
-            $this->invoice = new Invoice($data['invoice']);
+            $instance->invoice = Invoice::fromArray($data['invoice']);
         }
         if (isset($data['successful_payment'])) {
-            $this->successfulPayment = new SuccessfulPayment($data['successful_payment']);
+            $instance->successfulPayment = SuccessfulPayment::fromArray($data['successful_payment']);
         }
         if (isset($data['user_shared'])) {
-            $this->userShared = new UserShared($data['user_shared']);
+            $instance->userShared = UserShared::fromArray($data['user_shared']);
         }
         if (isset($data['chat_shared'])) {
-            $this->chatShared = new ChatShared($data['chat_shared']);
+            $instance->chatShared = ChatShared::fromArray($data['chat_shared']);
         }
         if (isset($data['connected_website'])) {
-            $this->connectedWebsite = $data['connected_website'];
+            $instance->connectedWebsite = $data['connected_website'];
         }
         if (isset($data['write_access_allowed'])) {
-            $this->writeAccessAllowed = new WriteAccessAllowed($data['write_access_allowed']);
+            $instance->writeAccessAllowed = WriteAccessAllowed::fromArray($data['write_access_allowed']);
         }
         if (isset($data['passport_data'])) {
-            $this->passportData = new PassportData($data['passport_data']);
+            $instance->passportData = PassportData::fromArray($data['passport_data']);
         }
         if (isset($data['proximity_alert_triggered'])) {
-            $this->proximityAlertTriggered = new ProximityAlertTriggered($data['proximity_alert_triggered']);
+            $instance->proximityAlertTriggered = ProximityAlertTriggered::fromArray($data['proximity_alert_triggered']);
         }
         if (isset($data['forum_topic_created'])) {
-            $this->forumTopicCreated = new ForumTopicCreated($data['forum_topic_created']);
+            $instance->forumTopicCreated = ForumTopicCreated::fromArray($data['forum_topic_created']);
         }
         if (isset($data['forum_topic_edited'])) {
-            $this->forumTopicEdited = new ForumTopicEdited($data['forum_topic_edited']);
+            $instance->forumTopicEdited = ForumTopicEdited::fromArray($data['forum_topic_edited']);
         }
         if (isset($data['forum_topic_closed'])) {
-            $this->forumTopicClosed = new ForumTopicClosed($data['forum_topic_closed']);
+            $instance->forumTopicClosed = ForumTopicClosed::fromArray($data['forum_topic_closed']);
         }
         if (isset($data['forum_topic_reopened'])) {
-            $this->forumTopicReopened = new ForumTopicReopened($data['forum_topic_reopened']);
+            $instance->forumTopicReopened = ForumTopicReopened::fromArray($data['forum_topic_reopened']);
         }
         if (isset($data['general_forum_topic_hidden'])) {
-            $this->generalForumTopicHidden = new GeneralForumTopicHidden($data['general_forum_topic_hidden']);
+            $instance->generalForumTopicHidden = GeneralForumTopicHidden::fromArray($data['general_forum_topic_hidden']);
         }
         if (isset($data['general_forum_topic_unhidden'])) {
-            $this->generalForumTopicUnhidden = new GeneralForumTopicUnhidden($data['general_forum_topic_unhidden']);
+            $instance->generalForumTopicUnhidden = GeneralForumTopicUnhidden::fromArray($data['general_forum_topic_unhidden']);
         }
         if (isset($data['video_chat_scheduled'])) {
-            $this->videoChatScheduled = new VideoChatScheduled($data['video_chat_scheduled']);
+            $instance->videoChatScheduled = VideoChatScheduled::fromArray($data['video_chat_scheduled']);
         }
         if (isset($data['video_chat_started'])) {
-            $this->videoChatStarted = new VideoChatStarted($data['video_chat_started']);
+            $instance->videoChatStarted = VideoChatStarted::fromArray($data['video_chat_started']);
         }
         if (isset($data['video_chat_ended'])) {
-            $this->videoChatEnded = new VideoChatEnded($data['video_chat_ended']);
+            $instance->videoChatEnded = VideoChatEnded::fromArray($data['video_chat_ended']);
         }
         if (isset($data['video_chat_participants_invited'])) {
-            $this->videoChatParticipantsInvited = new VideoChatParticipantsInvited($data['video_chat_participants_invited']);
+            $instance->videoChatParticipantsInvited = VideoChatParticipantsInvited::fromArray($data['video_chat_participants_invited']);
         }
         if (isset($data['web_app_data'])) {
-            $this->webAppData = new WebAppData($data['web_app_data']);
+            $instance->webAppData = WebAppData::fromArray($data['web_app_data']);
         }
         if (isset($data['reply_markup'])) {
-            $this->replyMarkup = new InlineKeyboardMarkup($data['reply_markup']);
+            $instance->replyMarkup = InlineKeyboardMarkup::fromArray($data['reply_markup']);
         }
+        return $instance;
     }
 
-    public function getMessageId(): int {
+    public function getMessageId(): ?int {
         return $this->messageId;
+    }
+
+    public function setMessageId(?int $value): self {
+        $this->messageId = $value;
+        return $this;
     }
 
     public function getMessageThreadId(): ?int {
         return $this->messageThreadId;
     }
 
+    public function setMessageThreadId(?int $value): self {
+        $this->messageThreadId = $value;
+        return $this;
+    }
+
     public function getFrom(): ?User {
         return $this->from;
+    }
+
+    public function setFrom(?User $value): self {
+        $this->from = $value;
+        return $this;
     }
 
     public function getSenderChat(): ?Chat {
         return $this->senderChat;
     }
 
-    public function getDate(): int {
+    public function setSenderChat(?Chat $value): self {
+        $this->senderChat = $value;
+        return $this;
+    }
+
+    public function getDate(): ?int {
         return $this->date;
     }
 
-    public function getChat(): Chat {
+    public function setDate(?int $value): self {
+        $this->date = $value;
+        return $this;
+    }
+
+    public function getChat(): ?Chat {
         return $this->chat;
+    }
+
+    public function setChat(?Chat $value): self {
+        $this->chat = $value;
+        return $this;
     }
 
     public function getForwardFrom(): ?User {
         return $this->forwardFrom;
     }
 
+    public function setForwardFrom(?User $value): self {
+        $this->forwardFrom = $value;
+        return $this;
+    }
+
     public function getForwardFromChat(): ?Chat {
         return $this->forwardFromChat;
+    }
+
+    public function setForwardFromChat(?Chat $value): self {
+        $this->forwardFromChat = $value;
+        return $this;
     }
 
     public function getForwardFromMessageId(): ?int {
         return $this->forwardFromMessageId;
     }
 
+    public function setForwardFromMessageId(?int $value): self {
+        $this->forwardFromMessageId = $value;
+        return $this;
+    }
+
     public function getForwardSignature(): ?string {
         return $this->forwardSignature;
+    }
+
+    public function setForwardSignature(?string $value): self {
+        $this->forwardSignature = $value;
+        return $this;
     }
 
     public function getForwardSenderName(): ?string {
         return $this->forwardSenderName;
     }
 
+    public function setForwardSenderName(?string $value): self {
+        $this->forwardSenderName = $value;
+        return $this;
+    }
+
     public function getForwardDate(): ?int {
         return $this->forwardDate;
+    }
+
+    public function setForwardDate(?int $value): self {
+        $this->forwardDate = $value;
+        return $this;
     }
 
     public function getIsTopicMessage(): ?bool {
         return $this->isTopicMessage;
     }
 
+    public function setIsTopicMessage(?bool $value): self {
+        $this->isTopicMessage = $value;
+        return $this;
+    }
+
     public function getIsAutomaticForward(): ?bool {
         return $this->isAutomaticForward;
+    }
+
+    public function setIsAutomaticForward(?bool $value): self {
+        $this->isAutomaticForward = $value;
+        return $this;
     }
 
     public function getReplyToMessage(): ?Message {
         return $this->replyToMessage;
     }
 
+    public function setReplyToMessage(?Message $value): self {
+        $this->replyToMessage = $value;
+        return $this;
+    }
+
     public function getViaBot(): ?User {
         return $this->viaBot;
+    }
+
+    public function setViaBot(?User $value): self {
+        $this->viaBot = $value;
+        return $this;
     }
 
     public function getEditDate(): ?int {
         return $this->editDate;
     }
 
+    public function setEditDate(?int $value): self {
+        $this->editDate = $value;
+        return $this;
+    }
+
     public function getHasProtectedContent(): ?bool {
         return $this->hasProtectedContent;
+    }
+
+    public function setHasProtectedContent(?bool $value): self {
+        $this->hasProtectedContent = $value;
+        return $this;
     }
 
     public function getMediaGroupId(): ?string {
         return $this->mediaGroupId;
     }
 
+    public function setMediaGroupId(?string $value): self {
+        $this->mediaGroupId = $value;
+        return $this;
+    }
+
     public function getAuthorSignature(): ?string {
         return $this->authorSignature;
+    }
+
+    public function setAuthorSignature(?string $value): self {
+        $this->authorSignature = $value;
+        return $this;
     }
 
     public function getText(): ?string {
         return $this->text;
     }
 
+    public function setText(?string $value): self {
+        $this->text = $value;
+        return $this;
+    }
+
     public function getEntities(): ?array {
         return $this->entities;
+    }
+
+    public function setEntities(?array $value): self {
+        $this->entities = $value;
+        return $this;
     }
 
     public function getAnimation(): ?Animation {
         return $this->animation;
     }
 
+    public function setAnimation(?Animation $value): self {
+        $this->animation = $value;
+        return $this;
+    }
+
     public function getAudio(): ?Audio {
         return $this->audio;
+    }
+
+    public function setAudio(?Audio $value): self {
+        $this->audio = $value;
+        return $this;
     }
 
     public function getDocument(): ?Document {
         return $this->document;
     }
 
+    public function setDocument(?Document $value): self {
+        $this->document = $value;
+        return $this;
+    }
+
     public function getPhoto(): ?array {
         return $this->photo;
+    }
+
+    public function setPhoto(?array $value): self {
+        $this->photo = $value;
+        return $this;
     }
 
     public function getSticker(): ?Sticker {
         return $this->sticker;
     }
 
+    public function setSticker(?Sticker $value): self {
+        $this->sticker = $value;
+        return $this;
+    }
+
     public function getVideo(): ?Video {
         return $this->video;
+    }
+
+    public function setVideo(?Video $value): self {
+        $this->video = $value;
+        return $this;
     }
 
     public function getVideoNote(): ?VideoNote {
         return $this->videoNote;
     }
 
+    public function setVideoNote(?VideoNote $value): self {
+        $this->videoNote = $value;
+        return $this;
+    }
+
     public function getVoice(): ?Voice {
         return $this->voice;
+    }
+
+    public function setVoice(?Voice $value): self {
+        $this->voice = $value;
+        return $this;
     }
 
     public function getCaption(): ?string {
         return $this->caption;
     }
 
+    public function setCaption(?string $value): self {
+        $this->caption = $value;
+        return $this;
+    }
+
     public function getCaptionEntities(): ?array {
         return $this->captionEntities;
+    }
+
+    public function setCaptionEntities(?array $value): self {
+        $this->captionEntities = $value;
+        return $this;
     }
 
     public function getHasMediaSpoiler(): ?bool {
         return $this->hasMediaSpoiler;
     }
 
+    public function setHasMediaSpoiler(?bool $value): self {
+        $this->hasMediaSpoiler = $value;
+        return $this;
+    }
+
     public function getContact(): ?Contact {
         return $this->contact;
+    }
+
+    public function setContact(?Contact $value): self {
+        $this->contact = $value;
+        return $this;
     }
 
     public function getDice(): ?Dice {
         return $this->dice;
     }
 
+    public function setDice(?Dice $value): self {
+        $this->dice = $value;
+        return $this;
+    }
+
     public function getGame(): ?Game {
         return $this->game;
+    }
+
+    public function setGame(?Game $value): self {
+        $this->game = $value;
+        return $this;
     }
 
     public function getPoll(): ?Poll {
         return $this->poll;
     }
 
+    public function setPoll(?Poll $value): self {
+        $this->poll = $value;
+        return $this;
+    }
+
     public function getVenue(): ?Venue {
         return $this->venue;
+    }
+
+    public function setVenue(?Venue $value): self {
+        $this->venue = $value;
+        return $this;
     }
 
     public function getLocation(): ?Location {
         return $this->location;
     }
 
+    public function setLocation(?Location $value): self {
+        $this->location = $value;
+        return $this;
+    }
+
     public function getNewChatMembers(): ?array {
         return $this->newChatMembers;
+    }
+
+    public function setNewChatMembers(?array $value): self {
+        $this->newChatMembers = $value;
+        return $this;
     }
 
     public function getLeftChatMember(): ?User {
         return $this->leftChatMember;
     }
 
+    public function setLeftChatMember(?User $value): self {
+        $this->leftChatMember = $value;
+        return $this;
+    }
+
     public function getNewChatTitle(): ?string {
         return $this->newChatTitle;
+    }
+
+    public function setNewChatTitle(?string $value): self {
+        $this->newChatTitle = $value;
+        return $this;
     }
 
     public function getNewChatPhoto(): ?array {
         return $this->newChatPhoto;
     }
 
+    public function setNewChatPhoto(?array $value): self {
+        $this->newChatPhoto = $value;
+        return $this;
+    }
+
     public function getDeleteChatPhoto(): ?bool {
         return $this->deleteChatPhoto;
+    }
+
+    public function setDeleteChatPhoto(?bool $value): self {
+        $this->deleteChatPhoto = $value;
+        return $this;
     }
 
     public function getGroupChatCreated(): ?bool {
         return $this->groupChatCreated;
     }
 
+    public function setGroupChatCreated(?bool $value): self {
+        $this->groupChatCreated = $value;
+        return $this;
+    }
+
     public function getSupergroupChatCreated(): ?bool {
         return $this->supergroupChatCreated;
+    }
+
+    public function setSupergroupChatCreated(?bool $value): self {
+        $this->supergroupChatCreated = $value;
+        return $this;
     }
 
     public function getChannelChatCreated(): ?bool {
         return $this->channelChatCreated;
     }
 
+    public function setChannelChatCreated(?bool $value): self {
+        $this->channelChatCreated = $value;
+        return $this;
+    }
+
     public function getMessageAutoDeleteTimerChanged(): ?MessageAutoDeleteTimerChanged {
         return $this->messageAutoDeleteTimerChanged;
+    }
+
+    public function setMessageAutoDeleteTimerChanged(?MessageAutoDeleteTimerChanged $value): self {
+        $this->messageAutoDeleteTimerChanged = $value;
+        return $this;
     }
 
     public function getMigrateToChatId(): ?int {
         return $this->migrateToChatId;
     }
 
+    public function setMigrateToChatId(?int $value): self {
+        $this->migrateToChatId = $value;
+        return $this;
+    }
+
     public function getMigrateFromChatId(): ?int {
         return $this->migrateFromChatId;
+    }
+
+    public function setMigrateFromChatId(?int $value): self {
+        $this->migrateFromChatId = $value;
+        return $this;
     }
 
     public function getPinnedMessage(): ?Message {
         return $this->pinnedMessage;
     }
 
+    public function setPinnedMessage(?Message $value): self {
+        $this->pinnedMessage = $value;
+        return $this;
+    }
+
     public function getInvoice(): ?Invoice {
         return $this->invoice;
+    }
+
+    public function setInvoice(?Invoice $value): self {
+        $this->invoice = $value;
+        return $this;
     }
 
     public function getSuccessfulPayment(): ?SuccessfulPayment {
         return $this->successfulPayment;
     }
 
+    public function setSuccessfulPayment(?SuccessfulPayment $value): self {
+        $this->successfulPayment = $value;
+        return $this;
+    }
+
     public function getUserShared(): ?UserShared {
         return $this->userShared;
+    }
+
+    public function setUserShared(?UserShared $value): self {
+        $this->userShared = $value;
+        return $this;
     }
 
     public function getChatShared(): ?ChatShared {
         return $this->chatShared;
     }
 
+    public function setChatShared(?ChatShared $value): self {
+        $this->chatShared = $value;
+        return $this;
+    }
+
     public function getConnectedWebsite(): ?string {
         return $this->connectedWebsite;
+    }
+
+    public function setConnectedWebsite(?string $value): self {
+        $this->connectedWebsite = $value;
+        return $this;
     }
 
     public function getWriteAccessAllowed(): ?WriteAccessAllowed {
         return $this->writeAccessAllowed;
     }
 
+    public function setWriteAccessAllowed(?WriteAccessAllowed $value): self {
+        $this->writeAccessAllowed = $value;
+        return $this;
+    }
+
     public function getPassportData(): ?PassportData {
         return $this->passportData;
+    }
+
+    public function setPassportData(?PassportData $value): self {
+        $this->passportData = $value;
+        return $this;
     }
 
     public function getProximityAlertTriggered(): ?ProximityAlertTriggered {
         return $this->proximityAlertTriggered;
     }
 
+    public function setProximityAlertTriggered(?ProximityAlertTriggered $value): self {
+        $this->proximityAlertTriggered = $value;
+        return $this;
+    }
+
     public function getForumTopicCreated(): ?ForumTopicCreated {
         return $this->forumTopicCreated;
+    }
+
+    public function setForumTopicCreated(?ForumTopicCreated $value): self {
+        $this->forumTopicCreated = $value;
+        return $this;
     }
 
     public function getForumTopicEdited(): ?ForumTopicEdited {
         return $this->forumTopicEdited;
     }
 
+    public function setForumTopicEdited(?ForumTopicEdited $value): self {
+        $this->forumTopicEdited = $value;
+        return $this;
+    }
+
     public function getForumTopicClosed(): ?ForumTopicClosed {
         return $this->forumTopicClosed;
+    }
+
+    public function setForumTopicClosed(?ForumTopicClosed $value): self {
+        $this->forumTopicClosed = $value;
+        return $this;
     }
 
     public function getForumTopicReopened(): ?ForumTopicReopened {
         return $this->forumTopicReopened;
     }
 
+    public function setForumTopicReopened(?ForumTopicReopened $value): self {
+        $this->forumTopicReopened = $value;
+        return $this;
+    }
+
     public function getGeneralForumTopicHidden(): ?GeneralForumTopicHidden {
         return $this->generalForumTopicHidden;
+    }
+
+    public function setGeneralForumTopicHidden(?GeneralForumTopicHidden $value): self {
+        $this->generalForumTopicHidden = $value;
+        return $this;
     }
 
     public function getGeneralForumTopicUnhidden(): ?GeneralForumTopicUnhidden {
         return $this->generalForumTopicUnhidden;
     }
 
+    public function setGeneralForumTopicUnhidden(?GeneralForumTopicUnhidden $value): self {
+        $this->generalForumTopicUnhidden = $value;
+        return $this;
+    }
+
     public function getVideoChatScheduled(): ?VideoChatScheduled {
         return $this->videoChatScheduled;
+    }
+
+    public function setVideoChatScheduled(?VideoChatScheduled $value): self {
+        $this->videoChatScheduled = $value;
+        return $this;
     }
 
     public function getVideoChatStarted(): ?VideoChatStarted {
         return $this->videoChatStarted;
     }
 
+    public function setVideoChatStarted(?VideoChatStarted $value): self {
+        $this->videoChatStarted = $value;
+        return $this;
+    }
+
     public function getVideoChatEnded(): ?VideoChatEnded {
         return $this->videoChatEnded;
+    }
+
+    public function setVideoChatEnded(?VideoChatEnded $value): self {
+        $this->videoChatEnded = $value;
+        return $this;
     }
 
     public function getVideoChatParticipantsInvited(): ?VideoChatParticipantsInvited {
         return $this->videoChatParticipantsInvited;
     }
 
+    public function setVideoChatParticipantsInvited(?VideoChatParticipantsInvited $value): self {
+        $this->videoChatParticipantsInvited = $value;
+        return $this;
+    }
+
     public function getWebAppData(): ?WebAppData {
         return $this->webAppData;
+    }
+
+    public function setWebAppData(?WebAppData $value): self {
+        $this->webAppData = $value;
+        return $this;
     }
 
     public function getReplyMarkup(): ?InlineKeyboardMarkup {
         return $this->replyMarkup;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setReplyMarkup(?InlineKeyboardMarkup $value): self {
+        $this->replyMarkup = $value;
+        return $this;
     }
 
 }

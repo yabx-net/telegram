@@ -2,55 +2,59 @@
 
 namespace Yabx\Telegram\Objects;
 
-class StickerSet {
+use Yabx\Telegram\ObjectTrait;
+
+final class StickerSet {
+
+    use ObjectTrait;
 
     /**
      * Name
      *
      * Sticker set name
-     * @var string
+     * @var string|null
      */
-    protected string $name;
+    protected ?string $name = null;
 
     /**
      * Title
      *
      * Sticker set title
-     * @var string
+     * @var string|null
      */
-    protected string $title;
+    protected ?string $title = null;
 
     /**
      * Sticker Type
      *
      * Type of stickers in the set, currently one of “regular”, “mask”, “custom_emoji”
-     * @var string
+     * @var string|null
      */
-    protected string $stickerType;
+    protected ?string $stickerType = null;
 
     /**
      * Is Animated
      *
      * True, if the sticker set contains animated stickers
-     * @var bool
+     * @var bool|null
      */
-    protected bool $isAnimated;
+    protected ?bool $isAnimated = null;
 
     /**
      * Is Video
      *
      * True, if the sticker set contains video stickers
-     * @var bool
+     * @var bool|null
      */
-    protected bool $isVideo;
+    protected ?bool $isVideo = null;
 
     /**
      * Stickers
      *
      * List of all set stickers
-     * @var Sticker[]
+     * @var Sticker[]|null
      */
-    protected array $stickers;
+    protected ?array $stickers = null;
 
     /**
      * Thumbnail
@@ -60,66 +64,114 @@ class StickerSet {
      */
     protected ?PhotoSize $thumbnail = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string    $name = null,
+        ?string    $title = null,
+        ?string    $stickerType = null,
+        ?bool      $isAnimated = null,
+        ?bool      $isVideo = null,
+        ?array     $stickers = null,
+        ?PhotoSize $thumbnail = null,
+    ) {
+        $this->name = $name;
+        $this->title = $title;
+        $this->stickerType = $stickerType;
+        $this->isAnimated = $isAnimated;
+        $this->isVideo = $isVideo;
+        $this->stickers = $stickers;
+        $this->thumbnail = $thumbnail;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): StickerSet {
+        $instance = new self();
         if (isset($data['name'])) {
-            $this->name = $data['name'];
+            $instance->name = $data['name'];
         }
         if (isset($data['title'])) {
-            $this->title = $data['title'];
+            $instance->title = $data['title'];
         }
         if (isset($data['sticker_type'])) {
-            $this->stickerType = $data['sticker_type'];
+            $instance->stickerType = $data['sticker_type'];
         }
         if (isset($data['is_animated'])) {
-            $this->isAnimated = $data['is_animated'];
+            $instance->isAnimated = $data['is_animated'];
         }
         if (isset($data['is_video'])) {
-            $this->isVideo = $data['is_video'];
+            $instance->isVideo = $data['is_video'];
         }
         if (isset($data['stickers'])) {
-            $this->stickers = [];
+            $instance->stickers = [];
             foreach ($data['stickers'] as $item) {
-                $this->stickers[] = new Sticker($item);
+                $instance->stickers[] = Sticker::fromArray($item);
             }
         }
         if (isset($data['thumbnail'])) {
-            $this->thumbnail = new PhotoSize($data['thumbnail']);
+            $instance->thumbnail = PhotoSize::fromArray($data['thumbnail']);
         }
+        return $instance;
     }
 
-    public function getName(): string {
+    public function getName(): ?string {
         return $this->name;
     }
 
-    public function getTitle(): string {
+    public function setName(?string $value): self {
+        $this->name = $value;
+        return $this;
+    }
+
+    public function getTitle(): ?string {
         return $this->title;
     }
 
-    public function getStickerType(): string {
+    public function setTitle(?string $value): self {
+        $this->title = $value;
+        return $this;
+    }
+
+    public function getStickerType(): ?string {
         return $this->stickerType;
     }
 
-    public function getIsAnimated(): bool {
+    public function setStickerType(?string $value): self {
+        $this->stickerType = $value;
+        return $this;
+    }
+
+    public function getIsAnimated(): ?bool {
         return $this->isAnimated;
     }
 
-    public function getIsVideo(): bool {
+    public function setIsAnimated(?bool $value): self {
+        $this->isAnimated = $value;
+        return $this;
+    }
+
+    public function getIsVideo(): ?bool {
         return $this->isVideo;
     }
 
-    public function getStickers(): array {
+    public function setIsVideo(?bool $value): self {
+        $this->isVideo = $value;
+        return $this;
+    }
+
+    public function getStickers(): ?array {
         return $this->stickers;
+    }
+
+    public function setStickers(?array $value): self {
+        $this->stickers = $value;
+        return $this;
     }
 
     public function getThumbnail(): ?PhotoSize {
         return $this->thumbnail;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setThumbnail(?PhotoSize $value): self {
+        $this->thumbnail = $value;
+        return $this;
     }
 
 }

@@ -2,31 +2,35 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ChatMemberOwner {
+use Yabx\Telegram\ObjectTrait;
+
+final class ChatMemberOwner {
+
+    use ObjectTrait;
 
     /**
      * Status
      *
      * The member's status in the chat, always “creator”
-     * @var string
+     * @var string|null
      */
-    protected string $status;
+    protected ?string $status = null;
 
     /**
      * User
      *
      * Information about the user
-     * @var User
+     * @var User|null
      */
-    protected User $user;
+    protected ?User $user = null;
 
     /**
      * Is Anonymous
      *
      * True, if the user's presence in the chat is hidden
-     * @var bool
+     * @var bool|null
      */
-    protected bool $isAnonymous;
+    protected ?bool $isAnonymous = null;
 
     /**
      * Custom Title
@@ -36,42 +40,69 @@ class ChatMemberOwner {
      */
     protected ?string $customTitle = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['status'])) {
-            $this->status = $data['status'];
-        }
-        if (isset($data['user'])) {
-            $this->user = new User($data['user']);
-        }
-        if (isset($data['is_anonymous'])) {
-            $this->isAnonymous = $data['is_anonymous'];
-        }
-        if (isset($data['custom_title'])) {
-            $this->customTitle = $data['custom_title'];
-        }
+    public function __construct(
+        ?string $status = null,
+        ?User   $user = null,
+        ?bool   $isAnonymous = null,
+        ?string $customTitle = null,
+    ) {
+        $this->status = $status;
+        $this->user = $user;
+        $this->isAnonymous = $isAnonymous;
+        $this->customTitle = $customTitle;
     }
 
-    public function getStatus(): string {
+    public static function fromArray(array $data): ChatMemberOwner {
+        $instance = new self();
+        if (isset($data['status'])) {
+            $instance->status = $data['status'];
+        }
+        if (isset($data['user'])) {
+            $instance->user = User::fromArray($data['user']);
+        }
+        if (isset($data['is_anonymous'])) {
+            $instance->isAnonymous = $data['is_anonymous'];
+        }
+        if (isset($data['custom_title'])) {
+            $instance->customTitle = $data['custom_title'];
+        }
+        return $instance;
+    }
+
+    public function getStatus(): ?string {
         return $this->status;
     }
 
-    public function getUser(): User {
+    public function setStatus(?string $value): self {
+        $this->status = $value;
+        return $this;
+    }
+
+    public function getUser(): ?User {
         return $this->user;
     }
 
-    public function getIsAnonymous(): bool {
+    public function setUser(?User $value): self {
+        $this->user = $value;
+        return $this;
+    }
+
+    public function getIsAnonymous(): ?bool {
         return $this->isAnonymous;
+    }
+
+    public function setIsAnonymous(?bool $value): self {
+        $this->isAnonymous = $value;
+        return $this;
     }
 
     public function getCustomTitle(): ?string {
         return $this->customTitle;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setCustomTitle(?string $value): self {
+        $this->customTitle = $value;
+        return $this;
     }
 
 }

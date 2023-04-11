@@ -2,31 +2,41 @@
 
 namespace Yabx\Telegram\Objects;
 
-class MessageAutoDeleteTimerChanged {
+use Yabx\Telegram\ObjectTrait;
+
+final class MessageAutoDeleteTimerChanged {
+
+    use ObjectTrait;
 
     /**
      * Message Auto Delete Time
      *
      * New auto-delete time for messages in the chat; in seconds
-     * @var int
+     * @var int|null
      */
-    protected int $messageAutoDeleteTime;
+    protected ?int $messageAutoDeleteTime = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['message_auto_delete_time'])) {
-            $this->messageAutoDeleteTime = $data['message_auto_delete_time'];
-        }
+    public function __construct(
+        ?int $messageAutoDeleteTime = null,
+    ) {
+        $this->messageAutoDeleteTime = $messageAutoDeleteTime;
     }
 
-    public function getMessageAutoDeleteTime(): int {
+    public static function fromArray(array $data): MessageAutoDeleteTimerChanged {
+        $instance = new self();
+        if (isset($data['message_auto_delete_time'])) {
+            $instance->messageAutoDeleteTime = $data['message_auto_delete_time'];
+        }
+        return $instance;
+    }
+
+    public function getMessageAutoDeleteTime(): ?int {
         return $this->messageAutoDeleteTime;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setMessageAutoDeleteTime(?int $value): self {
+        $this->messageAutoDeleteTime = $value;
+        return $this;
     }
 
 }

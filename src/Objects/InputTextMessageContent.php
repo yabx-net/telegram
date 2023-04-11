@@ -2,15 +2,19 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InputTextMessageContent {
+use Yabx\Telegram\ObjectTrait;
+
+final class InputTextMessageContent {
+
+    use ObjectTrait;
 
     /**
      * Message Text
      *
      * Text of the message to be sent, 1-4096 characters
-     * @var string
+     * @var string|null
      */
-    protected string $messageText;
+    protected ?string $messageText = null;
 
     /**
      * Parse Mode
@@ -36,45 +40,72 @@ class InputTextMessageContent {
      */
     protected ?bool $disableWebPagePreview = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string $messageText = null,
+        ?string $parseMode = null,
+        ?array  $entities = null,
+        ?bool   $disableWebPagePreview = null,
+    ) {
+        $this->messageText = $messageText;
+        $this->parseMode = $parseMode;
+        $this->entities = $entities;
+        $this->disableWebPagePreview = $disableWebPagePreview;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): InputTextMessageContent {
+        $instance = new self();
         if (isset($data['message_text'])) {
-            $this->messageText = $data['message_text'];
+            $instance->messageText = $data['message_text'];
         }
         if (isset($data['parse_mode'])) {
-            $this->parseMode = $data['parse_mode'];
+            $instance->parseMode = $data['parse_mode'];
         }
         if (isset($data['entities'])) {
-            $this->entities = [];
+            $instance->entities = [];
             foreach ($data['entities'] as $item) {
-                $this->entities[] = new MessageEntity($item);
+                $instance->entities[] = MessageEntity::fromArray($item);
             }
         }
         if (isset($data['disable_web_page_preview'])) {
-            $this->disableWebPagePreview = $data['disable_web_page_preview'];
+            $instance->disableWebPagePreview = $data['disable_web_page_preview'];
         }
+        return $instance;
     }
 
-    public function getMessageText(): string {
+    public function getMessageText(): ?string {
         return $this->messageText;
+    }
+
+    public function setMessageText(?string $value): self {
+        $this->messageText = $value;
+        return $this;
     }
 
     public function getParseMode(): ?string {
         return $this->parseMode;
     }
 
+    public function setParseMode(?string $value): self {
+        $this->parseMode = $value;
+        return $this;
+    }
+
     public function getEntities(): ?array {
         return $this->entities;
+    }
+
+    public function setEntities(?array $value): self {
+        $this->entities = $value;
+        return $this;
     }
 
     public function getDisableWebPagePreview(): ?bool {
         return $this->disableWebPagePreview;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setDisableWebPagePreview(?bool $value): self {
+        $this->disableWebPagePreview = $value;
+        return $this;
     }
 
 }

@@ -2,39 +2,43 @@
 
 namespace Yabx\Telegram\Objects;
 
-class VideoNote {
+use Yabx\Telegram\ObjectTrait;
+
+final class VideoNote {
+
+    use ObjectTrait;
 
     /**
      * File Id
      *
      * Identifier for this file, which can be used to download or reuse the file
-     * @var string
+     * @var string|null
      */
-    protected string $fileId;
+    protected ?string $fileId = null;
 
     /**
      * File Unique Id
      *
      * Unique identifier for this file, which is supposed to be the same over time and for different bots. Can't be used to download or reuse the file.
-     * @var string
+     * @var string|null
      */
-    protected string $fileUniqueId;
+    protected ?string $fileUniqueId = null;
 
     /**
      * Length
      *
      * Video width and height (diameter of the video message) as defined by sender
-     * @var int
+     * @var int|null
      */
-    protected int $length;
+    protected ?int $length = null;
 
     /**
      * Duration
      *
      * Duration of the video in seconds as defined by sender
-     * @var int
+     * @var int|null
      */
-    protected int $duration;
+    protected ?int $duration = null;
 
     /**
      * Thumbnail
@@ -52,56 +56,97 @@ class VideoNote {
      */
     protected ?int $fileSize = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['file_id'])) {
-            $this->fileId = $data['file_id'];
-        }
-        if (isset($data['file_unique_id'])) {
-            $this->fileUniqueId = $data['file_unique_id'];
-        }
-        if (isset($data['length'])) {
-            $this->length = $data['length'];
-        }
-        if (isset($data['duration'])) {
-            $this->duration = $data['duration'];
-        }
-        if (isset($data['thumbnail'])) {
-            $this->thumbnail = new PhotoSize($data['thumbnail']);
-        }
-        if (isset($data['file_size'])) {
-            $this->fileSize = $data['file_size'];
-        }
+    public function __construct(
+        ?string    $fileId = null,
+        ?string    $fileUniqueId = null,
+        ?int       $length = null,
+        ?int       $duration = null,
+        ?PhotoSize $thumbnail = null,
+        ?int       $fileSize = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->length = $length;
+        $this->duration = $duration;
+        $this->thumbnail = $thumbnail;
+        $this->fileSize = $fileSize;
     }
 
-    public function getFileId(): string {
+    public static function fromArray(array $data): VideoNote {
+        $instance = new self();
+        if (isset($data['file_id'])) {
+            $instance->fileId = $data['file_id'];
+        }
+        if (isset($data['file_unique_id'])) {
+            $instance->fileUniqueId = $data['file_unique_id'];
+        }
+        if (isset($data['length'])) {
+            $instance->length = $data['length'];
+        }
+        if (isset($data['duration'])) {
+            $instance->duration = $data['duration'];
+        }
+        if (isset($data['thumbnail'])) {
+            $instance->thumbnail = PhotoSize::fromArray($data['thumbnail']);
+        }
+        if (isset($data['file_size'])) {
+            $instance->fileSize = $data['file_size'];
+        }
+        return $instance;
+    }
+
+    public function getFileId(): ?string {
         return $this->fileId;
     }
 
-    public function getFileUniqueId(): string {
+    public function setFileId(?string $value): self {
+        $this->fileId = $value;
+        return $this;
+    }
+
+    public function getFileUniqueId(): ?string {
         return $this->fileUniqueId;
     }
 
-    public function getLength(): int {
+    public function setFileUniqueId(?string $value): self {
+        $this->fileUniqueId = $value;
+        return $this;
+    }
+
+    public function getLength(): ?int {
         return $this->length;
     }
 
-    public function getDuration(): int {
+    public function setLength(?int $value): self {
+        $this->length = $value;
+        return $this;
+    }
+
+    public function getDuration(): ?int {
         return $this->duration;
+    }
+
+    public function setDuration(?int $value): self {
+        $this->duration = $value;
+        return $this;
     }
 
     public function getThumbnail(): ?PhotoSize {
         return $this->thumbnail;
     }
 
+    public function setThumbnail(?PhotoSize $value): self {
+        $this->thumbnail = $value;
+        return $this;
+    }
+
     public function getFileSize(): ?int {
         return $this->fileSize;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setFileSize(?int $value): self {
+        $this->fileSize = $value;
+        return $this;
     }
 
 }

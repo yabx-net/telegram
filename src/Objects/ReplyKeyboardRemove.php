@@ -2,15 +2,15 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ReplyKeyboardRemove {
+final class ReplyKeyboardRemove extends ReplyMarkup {
 
     /**
      * Remove Keyboard
      *
      * Requests clients to remove the custom keyboard (user will not be able to summon this keyboard; if you want to hide the keyboard from sight but keep it accessible, use one_time_keyboard in ReplyKeyboardMarkup)
-     * @var bool
+     * @var bool|null
      */
-    protected bool $removeKeyboard;
+    protected ?bool $removeKeyboard = null;
 
     /**
      * Selective
@@ -20,28 +20,41 @@ class ReplyKeyboardRemove {
      */
     protected ?bool $selective = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['remove_keyboard'])) {
-            $this->removeKeyboard = $data['remove_keyboard'];
-        }
-        if (isset($data['selective'])) {
-            $this->selective = $data['selective'];
-        }
+    public function __construct(
+        ?bool $removeKeyboard = null,
+        ?bool $selective = null,
+    ) {
+        $this->removeKeyboard = $removeKeyboard;
+        $this->selective = $selective;
     }
 
-    public function getRemoveKeyboard(): bool {
+    public static function fromArray(array $data): ReplyKeyboardRemove {
+        $instance = new self();
+        if (isset($data['remove_keyboard'])) {
+            $instance->removeKeyboard = $data['remove_keyboard'];
+        }
+        if (isset($data['selective'])) {
+            $instance->selective = $data['selective'];
+        }
+        return $instance;
+    }
+
+    public function getRemoveKeyboard(): ?bool {
         return $this->removeKeyboard;
+    }
+
+    public function setRemoveKeyboard(?bool $value): self {
+        $this->removeKeyboard = $value;
+        return $this;
     }
 
     public function getSelective(): ?bool {
         return $this->selective;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setSelective(?bool $value): self {
+        $this->selective = $value;
+        return $this;
     }
 
 }

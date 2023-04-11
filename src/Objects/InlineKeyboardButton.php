@@ -2,15 +2,19 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InlineKeyboardButton {
+use Yabx\Telegram\ObjectTrait;
+
+final class InlineKeyboardButton {
+
+    use ObjectTrait;
 
     /**
      * Text
      *
      * Label text on the button
-     * @var string
+     * @var string|null
      */
-    protected string $text;
+    protected ?string $text = null;
 
     /**
      * Url
@@ -76,77 +80,139 @@ class InlineKeyboardButton {
      */
     protected ?bool $pay = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['text'])) {
-            $this->text = $data['text'];
-        }
-        if (isset($data['url'])) {
-            $this->url = $data['url'];
-        }
-        if (isset($data['callback_data'])) {
-            $this->callbackData = $data['callback_data'];
-        }
-        if (isset($data['web_app'])) {
-            $this->webApp = new WebAppInfo($data['web_app']);
-        }
-        if (isset($data['login_url'])) {
-            $this->loginUrl = new LoginUrl($data['login_url']);
-        }
-        if (isset($data['switch_inline_query'])) {
-            $this->switchInlineQuery = $data['switch_inline_query'];
-        }
-        if (isset($data['switch_inline_query_current_chat'])) {
-            $this->switchInlineQueryCurrentChat = $data['switch_inline_query_current_chat'];
-        }
-        if (isset($data['callback_game'])) {
-            $this->callbackGame = new CallbackGame($data['callback_game']);
-        }
-        if (isset($data['pay'])) {
-            $this->pay = $data['pay'];
-        }
+    public function __construct(
+        ?string       $text = null,
+        ?string       $url = null,
+        ?string       $callbackData = null,
+        ?WebAppInfo   $webApp = null,
+        ?LoginUrl     $loginUrl = null,
+        ?string       $switchInlineQuery = null,
+        ?string       $switchInlineQueryCurrentChat = null,
+        ?CallbackGame $callbackGame = null,
+        ?bool         $pay = null,
+    ) {
+        $this->text = $text;
+        $this->url = $url;
+        $this->callbackData = $callbackData;
+        $this->webApp = $webApp;
+        $this->loginUrl = $loginUrl;
+        $this->switchInlineQuery = $switchInlineQuery;
+        $this->switchInlineQueryCurrentChat = $switchInlineQueryCurrentChat;
+        $this->callbackGame = $callbackGame;
+        $this->pay = $pay;
     }
 
-    public function getText(): string {
+    public static function fromArray(array $data): InlineKeyboardButton {
+        $instance = new self();
+        if (isset($data['text'])) {
+            $instance->text = $data['text'];
+        }
+        if (isset($data['url'])) {
+            $instance->url = $data['url'];
+        }
+        if (isset($data['callback_data'])) {
+            $instance->callbackData = $data['callback_data'];
+        }
+        if (isset($data['web_app'])) {
+            $instance->webApp = WebAppInfo::fromArray($data['web_app']);
+        }
+        if (isset($data['login_url'])) {
+            $instance->loginUrl = LoginUrl::fromArray($data['login_url']);
+        }
+        if (isset($data['switch_inline_query'])) {
+            $instance->switchInlineQuery = $data['switch_inline_query'];
+        }
+        if (isset($data['switch_inline_query_current_chat'])) {
+            $instance->switchInlineQueryCurrentChat = $data['switch_inline_query_current_chat'];
+        }
+        if (isset($data['callback_game'])) {
+            $instance->callbackGame = CallbackGame::fromArray($data['callback_game']);
+        }
+        if (isset($data['pay'])) {
+            $instance->pay = $data['pay'];
+        }
+        return $instance;
+    }
+
+    public function getText(): ?string {
         return $this->text;
+    }
+
+    public function setText(?string $value): self {
+        $this->text = $value;
+        return $this;
     }
 
     public function getUrl(): ?string {
         return $this->url;
     }
 
+    public function setUrl(?string $value): self {
+        $this->url = $value;
+        return $this;
+    }
+
     public function getCallbackData(): ?string {
         return $this->callbackData;
+    }
+
+    public function setCallbackData(?string $value): self {
+        $this->callbackData = $value;
+        return $this;
     }
 
     public function getWebApp(): ?WebAppInfo {
         return $this->webApp;
     }
 
+    public function setWebApp(?WebAppInfo $value): self {
+        $this->webApp = $value;
+        return $this;
+    }
+
     public function getLoginUrl(): ?LoginUrl {
         return $this->loginUrl;
+    }
+
+    public function setLoginUrl(?LoginUrl $value): self {
+        $this->loginUrl = $value;
+        return $this;
     }
 
     public function getSwitchInlineQuery(): ?string {
         return $this->switchInlineQuery;
     }
 
+    public function setSwitchInlineQuery(?string $value): self {
+        $this->switchInlineQuery = $value;
+        return $this;
+    }
+
     public function getSwitchInlineQueryCurrentChat(): ?string {
         return $this->switchInlineQueryCurrentChat;
+    }
+
+    public function setSwitchInlineQueryCurrentChat(?string $value): self {
+        $this->switchInlineQueryCurrentChat = $value;
+        return $this;
     }
 
     public function getCallbackGame(): ?CallbackGame {
         return $this->callbackGame;
     }
 
+    public function setCallbackGame(?CallbackGame $value): self {
+        $this->callbackGame = $value;
+        return $this;
+    }
+
     public function getPay(): ?bool {
         return $this->pay;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setPay(?bool $value): self {
+        $this->pay = $value;
+        return $this;
     }
 
 }

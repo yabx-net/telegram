@@ -2,15 +2,19 @@
 
 namespace Yabx\Telegram\Objects;
 
-class KeyboardButtonRequestUser {
+use Yabx\Telegram\ObjectTrait;
+
+final class KeyboardButtonRequestUser {
+
+    use ObjectTrait;
 
     /**
      * Request Id
      *
      * Signed 32-bit identifier of the request, which will be received back in the UserShared object. Must be unique within the message
-     * @var int
+     * @var int|null
      */
-    protected int $requestId;
+    protected ?int $requestId = null;
 
     /**
      * User Is Bot
@@ -28,35 +32,55 @@ class KeyboardButtonRequestUser {
      */
     protected ?bool $userIsPremium = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['request_id'])) {
-            $this->requestId = $data['request_id'];
-        }
-        if (isset($data['user_is_bot'])) {
-            $this->userIsBot = $data['user_is_bot'];
-        }
-        if (isset($data['user_is_premium'])) {
-            $this->userIsPremium = $data['user_is_premium'];
-        }
+    public function __construct(
+        ?int  $requestId = null,
+        ?bool $userIsBot = null,
+        ?bool $userIsPremium = null,
+    ) {
+        $this->requestId = $requestId;
+        $this->userIsBot = $userIsBot;
+        $this->userIsPremium = $userIsPremium;
     }
 
-    public function getRequestId(): int {
+    public static function fromArray(array $data): KeyboardButtonRequestUser {
+        $instance = new self();
+        if (isset($data['request_id'])) {
+            $instance->requestId = $data['request_id'];
+        }
+        if (isset($data['user_is_bot'])) {
+            $instance->userIsBot = $data['user_is_bot'];
+        }
+        if (isset($data['user_is_premium'])) {
+            $instance->userIsPremium = $data['user_is_premium'];
+        }
+        return $instance;
+    }
+
+    public function getRequestId(): ?int {
         return $this->requestId;
+    }
+
+    public function setRequestId(?int $value): self {
+        $this->requestId = $value;
+        return $this;
     }
 
     public function getUserIsBot(): ?bool {
         return $this->userIsBot;
     }
 
+    public function setUserIsBot(?bool $value): self {
+        $this->userIsBot = $value;
+        return $this;
+    }
+
     public function getUserIsPremium(): ?bool {
         return $this->userIsPremium;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setUserIsPremium(?bool $value): self {
+        $this->userIsPremium = $value;
+        return $this;
     }
 
 }

@@ -2,39 +2,43 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InlineQueryResultCachedVoice {
+use Yabx\Telegram\ObjectTrait;
+
+final class InlineQueryResultCachedVoice {
+
+    use ObjectTrait;
 
     /**
      * Type
      *
      * Type of the result, must be voice
-     * @var string
+     * @var string|null
      */
-    protected string $type;
+    protected ?string $type = null;
 
     /**
      * Id
      *
      * Unique identifier for this result, 1-64 bytes
-     * @var string
+     * @var string|null
      */
-    protected string $id;
+    protected ?string $id = null;
 
     /**
      * Voice File Id
      *
      * A valid file identifier for the voice message
-     * @var string
+     * @var string|null
      */
-    protected string $voiceFileId;
+    protected ?string $voiceFileId = null;
 
     /**
      * Title
      *
      * Voice message title
-     * @var string
+     * @var string|null
      */
-    protected string $title;
+    protected ?string $title = null;
 
     /**
      * Caption
@@ -76,80 +80,142 @@ class InlineQueryResultCachedVoice {
      */
     protected ?InputMessageContent $inputMessageContent = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string               $type = null,
+        ?string               $id = null,
+        ?string               $voiceFileId = null,
+        ?string               $title = null,
+        ?string               $caption = null,
+        ?string               $parseMode = null,
+        ?array                $captionEntities = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+        ?InputMessageContent  $inputMessageContent = null,
+    ) {
+        $this->type = $type;
+        $this->id = $id;
+        $this->voiceFileId = $voiceFileId;
+        $this->title = $title;
+        $this->caption = $caption;
+        $this->parseMode = $parseMode;
+        $this->captionEntities = $captionEntities;
+        $this->replyMarkup = $replyMarkup;
+        $this->inputMessageContent = $inputMessageContent;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): InlineQueryResultCachedVoice {
+        $instance = new self();
         if (isset($data['type'])) {
-            $this->type = $data['type'];
+            $instance->type = $data['type'];
         }
         if (isset($data['id'])) {
-            $this->id = $data['id'];
+            $instance->id = $data['id'];
         }
         if (isset($data['voice_file_id'])) {
-            $this->voiceFileId = $data['voice_file_id'];
+            $instance->voiceFileId = $data['voice_file_id'];
         }
         if (isset($data['title'])) {
-            $this->title = $data['title'];
+            $instance->title = $data['title'];
         }
         if (isset($data['caption'])) {
-            $this->caption = $data['caption'];
+            $instance->caption = $data['caption'];
         }
         if (isset($data['parse_mode'])) {
-            $this->parseMode = $data['parse_mode'];
+            $instance->parseMode = $data['parse_mode'];
         }
         if (isset($data['caption_entities'])) {
-            $this->captionEntities = [];
+            $instance->captionEntities = [];
             foreach ($data['caption_entities'] as $item) {
-                $this->captionEntities[] = new MessageEntity($item);
+                $instance->captionEntities[] = MessageEntity::fromArray($item);
             }
         }
         if (isset($data['reply_markup'])) {
-            $this->replyMarkup = new InlineKeyboardMarkup($data['reply_markup']);
+            $instance->replyMarkup = InlineKeyboardMarkup::fromArray($data['reply_markup']);
         }
         if (isset($data['input_message_content'])) {
-            $this->inputMessageContent = new InputMessageContent($data['input_message_content']);
+            $instance->inputMessageContent = InputMessageContent::fromArray($data['input_message_content']);
         }
+        return $instance;
     }
 
-    public function getType(): string {
+    public function getType(): ?string {
         return $this->type;
     }
 
-    public function getId(): string {
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
+    }
+
+    public function getId(): ?string {
         return $this->id;
     }
 
-    public function getVoiceFileId(): string {
+    public function setId(?string $value): self {
+        $this->id = $value;
+        return $this;
+    }
+
+    public function getVoiceFileId(): ?string {
         return $this->voiceFileId;
     }
 
-    public function getTitle(): string {
+    public function setVoiceFileId(?string $value): self {
+        $this->voiceFileId = $value;
+        return $this;
+    }
+
+    public function getTitle(): ?string {
         return $this->title;
+    }
+
+    public function setTitle(?string $value): self {
+        $this->title = $value;
+        return $this;
     }
 
     public function getCaption(): ?string {
         return $this->caption;
     }
 
+    public function setCaption(?string $value): self {
+        $this->caption = $value;
+        return $this;
+    }
+
     public function getParseMode(): ?string {
         return $this->parseMode;
+    }
+
+    public function setParseMode(?string $value): self {
+        $this->parseMode = $value;
+        return $this;
     }
 
     public function getCaptionEntities(): ?array {
         return $this->captionEntities;
     }
 
+    public function setCaptionEntities(?array $value): self {
+        $this->captionEntities = $value;
+        return $this;
+    }
+
     public function getReplyMarkup(): ?InlineKeyboardMarkup {
         return $this->replyMarkup;
+    }
+
+    public function setReplyMarkup(?InlineKeyboardMarkup $value): self {
+        $this->replyMarkup = $value;
+        return $this;
     }
 
     public function getInputMessageContent(): ?InputMessageContent {
         return $this->inputMessageContent;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setInputMessageContent(?InputMessageContent $value): self {
+        $this->inputMessageContent = $value;
+        return $this;
     }
 
 }

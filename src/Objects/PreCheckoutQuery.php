@@ -2,47 +2,51 @@
 
 namespace Yabx\Telegram\Objects;
 
-class PreCheckoutQuery {
+use Yabx\Telegram\ObjectTrait;
+
+final class PreCheckoutQuery {
+
+    use ObjectTrait;
 
     /**
      * Id
      *
      * Unique query identifier
-     * @var string
+     * @var string|null
      */
-    protected string $id;
+    protected ?string $id = null;
 
     /**
      * From
      *
      * User who sent the query
-     * @var User
+     * @var User|null
      */
-    protected User $from;
+    protected ?User $from = null;
 
     /**
      * Currency
      *
      * Three-letter ISO 4217 currency code
-     * @var string
+     * @var string|null
      */
-    protected string $currency;
+    protected ?string $currency = null;
 
     /**
      * Total Amount
      *
      * Total price in the smallest units of the currency (integer, not float/double). For example, for a price of US$ 1.45 pass amount = 145. See the exp parameter in currencies.json, it shows the number of digits past the decimal point for each currency (2 for the majority of currencies).
-     * @var int
+     * @var int|null
      */
-    protected int $totalAmount;
+    protected ?int $totalAmount = null;
 
     /**
      * Invoice Payload
      *
      * Bot specified invoice payload
-     * @var string
+     * @var string|null
      */
-    protected string $invoicePayload;
+    protected ?string $invoicePayload = null;
 
     /**
      * Shipping Option Id
@@ -60,63 +64,111 @@ class PreCheckoutQuery {
      */
     protected ?OrderInfo $orderInfo = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['id'])) {
-            $this->id = $data['id'];
-        }
-        if (isset($data['from'])) {
-            $this->from = new User($data['from']);
-        }
-        if (isset($data['currency'])) {
-            $this->currency = $data['currency'];
-        }
-        if (isset($data['total_amount'])) {
-            $this->totalAmount = $data['total_amount'];
-        }
-        if (isset($data['invoice_payload'])) {
-            $this->invoicePayload = $data['invoice_payload'];
-        }
-        if (isset($data['shipping_option_id'])) {
-            $this->shippingOptionId = $data['shipping_option_id'];
-        }
-        if (isset($data['order_info'])) {
-            $this->orderInfo = new OrderInfo($data['order_info']);
-        }
+    public function __construct(
+        ?string    $id = null,
+        ?User      $from = null,
+        ?string    $currency = null,
+        ?int       $totalAmount = null,
+        ?string    $invoicePayload = null,
+        ?string    $shippingOptionId = null,
+        ?OrderInfo $orderInfo = null,
+    ) {
+        $this->id = $id;
+        $this->from = $from;
+        $this->currency = $currency;
+        $this->totalAmount = $totalAmount;
+        $this->invoicePayload = $invoicePayload;
+        $this->shippingOptionId = $shippingOptionId;
+        $this->orderInfo = $orderInfo;
     }
 
-    public function getId(): string {
+    public static function fromArray(array $data): PreCheckoutQuery {
+        $instance = new self();
+        if (isset($data['id'])) {
+            $instance->id = $data['id'];
+        }
+        if (isset($data['from'])) {
+            $instance->from = User::fromArray($data['from']);
+        }
+        if (isset($data['currency'])) {
+            $instance->currency = $data['currency'];
+        }
+        if (isset($data['total_amount'])) {
+            $instance->totalAmount = $data['total_amount'];
+        }
+        if (isset($data['invoice_payload'])) {
+            $instance->invoicePayload = $data['invoice_payload'];
+        }
+        if (isset($data['shipping_option_id'])) {
+            $instance->shippingOptionId = $data['shipping_option_id'];
+        }
+        if (isset($data['order_info'])) {
+            $instance->orderInfo = OrderInfo::fromArray($data['order_info']);
+        }
+        return $instance;
+    }
+
+    public function getId(): ?string {
         return $this->id;
     }
 
-    public function getFrom(): User {
+    public function setId(?string $value): self {
+        $this->id = $value;
+        return $this;
+    }
+
+    public function getFrom(): ?User {
         return $this->from;
     }
 
-    public function getCurrency(): string {
+    public function setFrom(?User $value): self {
+        $this->from = $value;
+        return $this;
+    }
+
+    public function getCurrency(): ?string {
         return $this->currency;
     }
 
-    public function getTotalAmount(): int {
+    public function setCurrency(?string $value): self {
+        $this->currency = $value;
+        return $this;
+    }
+
+    public function getTotalAmount(): ?int {
         return $this->totalAmount;
     }
 
-    public function getInvoicePayload(): string {
+    public function setTotalAmount(?int $value): self {
+        $this->totalAmount = $value;
+        return $this;
+    }
+
+    public function getInvoicePayload(): ?string {
         return $this->invoicePayload;
+    }
+
+    public function setInvoicePayload(?string $value): self {
+        $this->invoicePayload = $value;
+        return $this;
     }
 
     public function getShippingOptionId(): ?string {
         return $this->shippingOptionId;
     }
 
+    public function setShippingOptionId(?string $value): self {
+        $this->shippingOptionId = $value;
+        return $this;
+    }
+
     public function getOrderInfo(): ?OrderInfo {
         return $this->orderInfo;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setOrderInfo(?OrderInfo $value): self {
+        $this->orderInfo = $value;
+        return $this;
     }
 
 }

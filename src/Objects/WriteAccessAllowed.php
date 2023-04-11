@@ -2,16 +2,17 @@
 
 namespace Yabx\Telegram\Objects;
 
-class WriteAccessAllowed {
+use Yabx\Telegram\ObjectTrait;
 
-    protected array $rawData;
+final class WriteAccessAllowed {
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
-    }
+    use ObjectTrait;
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function __construct() {}
+
+    public static function fromArray(array $data): WriteAccessAllowed {
+        $instance = new self();
+        return $instance;
     }
 
 }

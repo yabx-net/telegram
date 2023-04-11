@@ -2,31 +2,41 @@
 
 namespace Yabx\Telegram\Objects;
 
-class BotShortDescription {
+use Yabx\Telegram\ObjectTrait;
+
+final class BotShortDescription {
+
+    use ObjectTrait;
 
     /**
      * Short Description
      *
      * The bot's short description
-     * @var string
+     * @var string|null
      */
-    protected string $shortDescription;
+    protected ?string $shortDescription = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['short_description'])) {
-            $this->shortDescription = $data['short_description'];
-        }
+    public function __construct(
+        ?string $shortDescription = null,
+    ) {
+        $this->shortDescription = $shortDescription;
     }
 
-    public function getShortDescription(): string {
+    public static function fromArray(array $data): BotShortDescription {
+        $instance = new self();
+        if (isset($data['short_description'])) {
+            $instance->shortDescription = $data['short_description'];
+        }
+        return $instance;
+    }
+
+    public function getShortDescription(): ?string {
         return $this->shortDescription;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setShortDescription(?string $value): self {
+        $this->shortDescription = $value;
+        return $this;
     }
 
 }

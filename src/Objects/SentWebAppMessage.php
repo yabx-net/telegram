@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-class SentWebAppMessage {
+use Yabx\Telegram\ObjectTrait;
+
+final class SentWebAppMessage {
+
+    use ObjectTrait;
 
     /**
      * Inline Message Id
@@ -12,21 +16,27 @@ class SentWebAppMessage {
      */
     protected ?string $inlineMessageId = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string $inlineMessageId = null,
+    ) {
+        $this->inlineMessageId = $inlineMessageId;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): SentWebAppMessage {
+        $instance = new self();
         if (isset($data['inline_message_id'])) {
-            $this->inlineMessageId = $data['inline_message_id'];
+            $instance->inlineMessageId = $data['inline_message_id'];
         }
+        return $instance;
     }
 
     public function getInlineMessageId(): ?string {
         return $this->inlineMessageId;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setInlineMessageId(?string $value): self {
+        $this->inlineMessageId = $value;
+        return $this;
     }
 
 }

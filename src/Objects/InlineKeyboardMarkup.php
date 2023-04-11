@@ -2,34 +2,40 @@
 
 namespace Yabx\Telegram\Objects;
 
-class InlineKeyboardMarkup {
+final class InlineKeyboardMarkup extends ReplyMarkup {
 
     /**
      * Inline Keyboard
      *
      * Array of button rows, each represented by an Array of InlineKeyboardButton objects
-     * @var InlineKeyboardButton[]
+     * @var InlineKeyboardButton[]|null
      */
-    protected array $inlineKeyboard;
+    protected ?array $inlineKeyboard = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['inline_keyboard'])) {
-            $this->inlineKeyboard = [];
-            foreach ($data['inline_keyboard'] as $item) {
-                $this->inlineKeyboard[] = new InlineKeyboardButton($item);
-            }
-        }
+    public function __construct(
+        ?array $inlineKeyboard = null,
+    ) {
+        $this->inlineKeyboard = $inlineKeyboard;
     }
 
-    public function getInlineKeyboard(): array {
+    public static function fromArray(array $data): InlineKeyboardMarkup {
+        $instance = new self();
+        if (isset($data['inline_keyboard'])) {
+            $instance->inlineKeyboard = [];
+            foreach ($data['inline_keyboard'] as $item) {
+                $instance->inlineKeyboard[] = InlineKeyboardButton::fromArray($item);
+            }
+        }
+        return $instance;
+    }
+
+    public function getInlineKeyboard(): ?array {
         return $this->inlineKeyboard;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setInlineKeyboard(?array $value): self {
+        $this->inlineKeyboard = $value;
+        return $this;
     }
 
 }

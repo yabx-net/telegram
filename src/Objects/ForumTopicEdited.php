@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ForumTopicEdited {
+use Yabx\Telegram\ObjectTrait;
+
+final class ForumTopicEdited {
+
+    use ObjectTrait;
 
     /**
      * Name
@@ -20,28 +24,41 @@ class ForumTopicEdited {
      */
     protected ?string $iconCustomEmojiId = null;
 
-    protected array $rawData;
+    public function __construct(
+        ?string $name = null,
+        ?string $iconCustomEmojiId = null,
+    ) {
+        $this->name = $name;
+        $this->iconCustomEmojiId = $iconCustomEmojiId;
+    }
 
-    public function __construct(array $data) {
-        $this->rawData = $data;
+    public static function fromArray(array $data): ForumTopicEdited {
+        $instance = new self();
         if (isset($data['name'])) {
-            $this->name = $data['name'];
+            $instance->name = $data['name'];
         }
         if (isset($data['icon_custom_emoji_id'])) {
-            $this->iconCustomEmojiId = $data['icon_custom_emoji_id'];
+            $instance->iconCustomEmojiId = $data['icon_custom_emoji_id'];
         }
+        return $instance;
     }
 
     public function getName(): ?string {
         return $this->name;
     }
 
+    public function setName(?string $value): self {
+        $this->name = $value;
+        return $this;
+    }
+
     public function getIconCustomEmojiId(): ?string {
         return $this->iconCustomEmojiId;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setIconCustomEmojiId(?string $value): self {
+        $this->iconCustomEmojiId = $value;
+        return $this;
     }
 
 }

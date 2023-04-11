@@ -2,31 +2,41 @@
 
 namespace Yabx\Telegram\Objects;
 
-class VideoChatEnded {
+use Yabx\Telegram\ObjectTrait;
+
+final class VideoChatEnded {
+
+    use ObjectTrait;
 
     /**
      * Duration
      *
      * Video chat duration in seconds
-     * @var int
+     * @var int|null
      */
-    protected int $duration;
+    protected ?int $duration = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['duration'])) {
-            $this->duration = $data['duration'];
-        }
+    public function __construct(
+        ?int $duration = null,
+    ) {
+        $this->duration = $duration;
     }
 
-    public function getDuration(): int {
+    public static function fromArray(array $data): VideoChatEnded {
+        $instance = new self();
+        if (isset($data['duration'])) {
+            $instance->duration = $data['duration'];
+        }
+        return $instance;
+    }
+
+    public function getDuration(): ?int {
         return $this->duration;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setDuration(?int $value): self {
+        $this->duration = $value;
+        return $this;
     }
 
 }

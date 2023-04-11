@@ -2,61 +2,85 @@
 
 namespace Yabx\Telegram\Objects;
 
-class GameHighScore {
+use Yabx\Telegram\ObjectTrait;
+
+final class GameHighScore {
+
+    use ObjectTrait;
 
     /**
      * Position
      *
      * Position in high score table for the game
-     * @var int
+     * @var int|null
      */
-    protected int $position;
+    protected ?int $position = null;
 
     /**
      * User
      *
      * User
-     * @var User
+     * @var User|null
      */
-    protected User $user;
+    protected ?User $user = null;
 
     /**
      * Score
      *
      * Score
-     * @var int
+     * @var int|null
      */
-    protected int $score;
+    protected ?int $score = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['position'])) {
-            $this->position = $data['position'];
-        }
-        if (isset($data['user'])) {
-            $this->user = new User($data['user']);
-        }
-        if (isset($data['score'])) {
-            $this->score = $data['score'];
-        }
+    public function __construct(
+        ?int  $position = null,
+        ?User $user = null,
+        ?int  $score = null,
+    ) {
+        $this->position = $position;
+        $this->user = $user;
+        $this->score = $score;
     }
 
-    public function getPosition(): int {
+    public static function fromArray(array $data): GameHighScore {
+        $instance = new self();
+        if (isset($data['position'])) {
+            $instance->position = $data['position'];
+        }
+        if (isset($data['user'])) {
+            $instance->user = User::fromArray($data['user']);
+        }
+        if (isset($data['score'])) {
+            $instance->score = $data['score'];
+        }
+        return $instance;
+    }
+
+    public function getPosition(): ?int {
         return $this->position;
     }
 
-    public function getUser(): User {
+    public function setPosition(?int $value): self {
+        $this->position = $value;
+        return $this;
+    }
+
+    public function getUser(): ?User {
         return $this->user;
     }
 
-    public function getScore(): int {
+    public function setUser(?User $value): self {
+        $this->user = $value;
+        return $this;
+    }
+
+    public function getScore(): ?int {
         return $this->score;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setScore(?int $value): self {
+        $this->score = $value;
+        return $this;
     }
 
 }

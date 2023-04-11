@@ -2,47 +2,51 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ChatInviteLink {
+use Yabx\Telegram\ObjectTrait;
+
+final class ChatInviteLink {
+
+    use ObjectTrait;
 
     /**
      * Invite Link
      *
      * The invite link. If the link was created by another chat administrator, then the second part of the link will be replaced with “…”.
-     * @var string
+     * @var string|null
      */
-    protected string $inviteLink;
+    protected ?string $inviteLink = null;
 
     /**
      * Creator
      *
      * Creator of the link
-     * @var User
+     * @var User|null
      */
-    protected User $creator;
+    protected ?User $creator = null;
 
     /**
      * Creates Join Request
      *
      * True, if users joining the chat via the link need to be approved by chat administrators
-     * @var bool
+     * @var bool|null
      */
-    protected bool $createsJoinRequest;
+    protected ?bool $createsJoinRequest = null;
 
     /**
      * Is Primary
      *
      * True, if the link is primary
-     * @var bool
+     * @var bool|null
      */
-    protected bool $isPrimary;
+    protected ?bool $isPrimary = null;
 
     /**
      * Is Revoked
      *
      * True, if the link is revoked
-     * @var bool
+     * @var bool|null
      */
-    protected bool $isRevoked;
+    protected ?bool $isRevoked = null;
 
     /**
      * Name
@@ -76,77 +80,139 @@ class ChatInviteLink {
      */
     protected ?int $pendingJoinRequestCount = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['invite_link'])) {
-            $this->inviteLink = $data['invite_link'];
-        }
-        if (isset($data['creator'])) {
-            $this->creator = new User($data['creator']);
-        }
-        if (isset($data['creates_join_request'])) {
-            $this->createsJoinRequest = $data['creates_join_request'];
-        }
-        if (isset($data['is_primary'])) {
-            $this->isPrimary = $data['is_primary'];
-        }
-        if (isset($data['is_revoked'])) {
-            $this->isRevoked = $data['is_revoked'];
-        }
-        if (isset($data['name'])) {
-            $this->name = $data['name'];
-        }
-        if (isset($data['expire_date'])) {
-            $this->expireDate = $data['expire_date'];
-        }
-        if (isset($data['member_limit'])) {
-            $this->memberLimit = $data['member_limit'];
-        }
-        if (isset($data['pending_join_request_count'])) {
-            $this->pendingJoinRequestCount = $data['pending_join_request_count'];
-        }
+    public function __construct(
+        ?string $inviteLink = null,
+        ?User   $creator = null,
+        ?bool   $createsJoinRequest = null,
+        ?bool   $isPrimary = null,
+        ?bool   $isRevoked = null,
+        ?string $name = null,
+        ?int    $expireDate = null,
+        ?int    $memberLimit = null,
+        ?int    $pendingJoinRequestCount = null,
+    ) {
+        $this->inviteLink = $inviteLink;
+        $this->creator = $creator;
+        $this->createsJoinRequest = $createsJoinRequest;
+        $this->isPrimary = $isPrimary;
+        $this->isRevoked = $isRevoked;
+        $this->name = $name;
+        $this->expireDate = $expireDate;
+        $this->memberLimit = $memberLimit;
+        $this->pendingJoinRequestCount = $pendingJoinRequestCount;
     }
 
-    public function getInviteLink(): string {
+    public static function fromArray(array $data): ChatInviteLink {
+        $instance = new self();
+        if (isset($data['invite_link'])) {
+            $instance->inviteLink = $data['invite_link'];
+        }
+        if (isset($data['creator'])) {
+            $instance->creator = User::fromArray($data['creator']);
+        }
+        if (isset($data['creates_join_request'])) {
+            $instance->createsJoinRequest = $data['creates_join_request'];
+        }
+        if (isset($data['is_primary'])) {
+            $instance->isPrimary = $data['is_primary'];
+        }
+        if (isset($data['is_revoked'])) {
+            $instance->isRevoked = $data['is_revoked'];
+        }
+        if (isset($data['name'])) {
+            $instance->name = $data['name'];
+        }
+        if (isset($data['expire_date'])) {
+            $instance->expireDate = $data['expire_date'];
+        }
+        if (isset($data['member_limit'])) {
+            $instance->memberLimit = $data['member_limit'];
+        }
+        if (isset($data['pending_join_request_count'])) {
+            $instance->pendingJoinRequestCount = $data['pending_join_request_count'];
+        }
+        return $instance;
+    }
+
+    public function getInviteLink(): ?string {
         return $this->inviteLink;
     }
 
-    public function getCreator(): User {
+    public function setInviteLink(?string $value): self {
+        $this->inviteLink = $value;
+        return $this;
+    }
+
+    public function getCreator(): ?User {
         return $this->creator;
     }
 
-    public function getCreatesJoinRequest(): bool {
+    public function setCreator(?User $value): self {
+        $this->creator = $value;
+        return $this;
+    }
+
+    public function getCreatesJoinRequest(): ?bool {
         return $this->createsJoinRequest;
     }
 
-    public function getIsPrimary(): bool {
+    public function setCreatesJoinRequest(?bool $value): self {
+        $this->createsJoinRequest = $value;
+        return $this;
+    }
+
+    public function getIsPrimary(): ?bool {
         return $this->isPrimary;
     }
 
-    public function getIsRevoked(): bool {
+    public function setIsPrimary(?bool $value): self {
+        $this->isPrimary = $value;
+        return $this;
+    }
+
+    public function getIsRevoked(): ?bool {
         return $this->isRevoked;
+    }
+
+    public function setIsRevoked(?bool $value): self {
+        $this->isRevoked = $value;
+        return $this;
     }
 
     public function getName(): ?string {
         return $this->name;
     }
 
+    public function setName(?string $value): self {
+        $this->name = $value;
+        return $this;
+    }
+
     public function getExpireDate(): ?int {
         return $this->expireDate;
+    }
+
+    public function setExpireDate(?int $value): self {
+        $this->expireDate = $value;
+        return $this;
     }
 
     public function getMemberLimit(): ?int {
         return $this->memberLimit;
     }
 
+    public function setMemberLimit(?int $value): self {
+        $this->memberLimit = $value;
+        return $this;
+    }
+
     public function getPendingJoinRequestCount(): ?int {
         return $this->pendingJoinRequestCount;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setPendingJoinRequestCount(?int $value): self {
+        $this->pendingJoinRequestCount = $value;
+        return $this;
     }
 
 }

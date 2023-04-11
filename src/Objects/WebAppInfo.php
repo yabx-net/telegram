@@ -2,31 +2,41 @@
 
 namespace Yabx\Telegram\Objects;
 
-class WebAppInfo {
+use Yabx\Telegram\ObjectTrait;
+
+final class WebAppInfo {
+
+    use ObjectTrait;
 
     /**
      * Url
      *
      * An HTTPS URL of a Web App to be opened with additional data as specified in Initializing Web Apps
-     * @var string
+     * @var string|null
      */
-    protected string $url;
+    protected ?string $url = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['url'])) {
-            $this->url = $data['url'];
-        }
+    public function __construct(
+        ?string $url = null,
+    ) {
+        $this->url = $url;
     }
 
-    public function getUrl(): string {
+    public static function fromArray(array $data): WebAppInfo {
+        $instance = new self();
+        if (isset($data['url'])) {
+            $instance->url = $data['url'];
+        }
+        return $instance;
+    }
+
+    public function getUrl(): ?string {
         return $this->url;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setUrl(?string $value): self {
+        $this->url = $value;
+        return $this;
     }
 
 }

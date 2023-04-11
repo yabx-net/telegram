@@ -2,46 +2,63 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ChatMemberMember {
+use Yabx\Telegram\ObjectTrait;
+
+final class ChatMemberMember {
+
+    use ObjectTrait;
 
     /**
      * Status
      *
      * The member's status in the chat, always “member”
-     * @var string
+     * @var string|null
      */
-    protected string $status;
+    protected ?string $status = null;
 
     /**
      * User
      *
      * Information about the user
-     * @var User
+     * @var User|null
      */
-    protected User $user;
+    protected ?User $user = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['status'])) {
-            $this->status = $data['status'];
-        }
-        if (isset($data['user'])) {
-            $this->user = new User($data['user']);
-        }
+    public function __construct(
+        ?string $status = null,
+        ?User   $user = null,
+    ) {
+        $this->status = $status;
+        $this->user = $user;
     }
 
-    public function getStatus(): string {
+    public static function fromArray(array $data): ChatMemberMember {
+        $instance = new self();
+        if (isset($data['status'])) {
+            $instance->status = $data['status'];
+        }
+        if (isset($data['user'])) {
+            $instance->user = User::fromArray($data['user']);
+        }
+        return $instance;
+    }
+
+    public function getStatus(): ?string {
         return $this->status;
     }
 
-    public function getUser(): User {
+    public function setStatus(?string $value): self {
+        $this->status = $value;
+        return $this;
+    }
+
+    public function getUser(): ?User {
         return $this->user;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setUser(?User $value): self {
+        $this->user = $value;
+        return $this;
     }
 
 }

@@ -2,31 +2,41 @@
 
 namespace Yabx\Telegram\Objects;
 
-class MessageId {
+use Yabx\Telegram\ObjectTrait;
+
+final class MessageId {
+
+    use ObjectTrait;
 
     /**
      * Message Id
      *
      * Unique message identifier
-     * @var int
+     * @var int|null
      */
-    protected int $messageId;
+    protected ?int $messageId = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['message_id'])) {
-            $this->messageId = $data['message_id'];
-        }
+    public function __construct(
+        ?int $messageId = null,
+    ) {
+        $this->messageId = $messageId;
     }
 
-    public function getMessageId(): int {
+    public static function fromArray(array $data): MessageId {
+        $instance = new self();
+        if (isset($data['message_id'])) {
+            $instance->messageId = $data['message_id'];
+        }
+        return $instance;
+    }
+
+    public function getMessageId(): ?int {
         return $this->messageId;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setMessageId(?int $value): self {
+        $this->messageId = $value;
+        return $this;
     }
 
 }

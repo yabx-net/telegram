@@ -2,46 +2,63 @@
 
 namespace Yabx\Telegram\Objects;
 
-class BotCommand {
+use Yabx\Telegram\ObjectTrait;
+
+final class BotCommand {
+
+    use ObjectTrait;
 
     /**
      * Command
      *
      * Text of the command; 1-32 characters. Can contain only lowercase English letters, digits and underscores.
-     * @var string
+     * @var string|null
      */
-    protected string $command;
+    protected ?string $command = null;
 
     /**
      * Description
      *
      * Description of the command; 1-256 characters.
-     * @var string
+     * @var string|null
      */
-    protected string $description;
+    protected ?string $description = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['command'])) {
-            $this->command = $data['command'];
-        }
-        if (isset($data['description'])) {
-            $this->description = $data['description'];
-        }
+    public function __construct(
+        ?string $command = null,
+        ?string $description = null,
+    ) {
+        $this->command = $command;
+        $this->description = $description;
     }
 
-    public function getCommand(): string {
+    public static function fromArray(array $data): BotCommand {
+        $instance = new self();
+        if (isset($data['command'])) {
+            $instance->command = $data['command'];
+        }
+        if (isset($data['description'])) {
+            $instance->description = $data['description'];
+        }
+        return $instance;
+    }
+
+    public function getCommand(): ?string {
         return $this->command;
     }
 
-    public function getDescription(): string {
+    public function setCommand(?string $value): self {
+        $this->command = $value;
+        return $this;
+    }
+
+    public function getDescription(): ?string {
         return $this->description;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setDescription(?string $value): self {
+        $this->description = $value;
+        return $this;
     }
 
 }

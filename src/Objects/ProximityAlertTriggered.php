@@ -2,61 +2,85 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ProximityAlertTriggered {
+use Yabx\Telegram\ObjectTrait;
+
+final class ProximityAlertTriggered {
+
+    use ObjectTrait;
 
     /**
      * Traveler
      *
      * User that triggered the alert
-     * @var User
+     * @var User|null
      */
-    protected User $traveler;
+    protected ?User $traveler = null;
 
     /**
      * Watcher
      *
      * User that set the alert
-     * @var User
+     * @var User|null
      */
-    protected User $watcher;
+    protected ?User $watcher = null;
 
     /**
      * Distance
      *
      * The distance between the users
-     * @var int
+     * @var int|null
      */
-    protected int $distance;
+    protected ?int $distance = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['traveler'])) {
-            $this->traveler = new User($data['traveler']);
-        }
-        if (isset($data['watcher'])) {
-            $this->watcher = new User($data['watcher']);
-        }
-        if (isset($data['distance'])) {
-            $this->distance = $data['distance'];
-        }
+    public function __construct(
+        ?User $traveler = null,
+        ?User $watcher = null,
+        ?int  $distance = null,
+    ) {
+        $this->traveler = $traveler;
+        $this->watcher = $watcher;
+        $this->distance = $distance;
     }
 
-    public function getTraveler(): User {
+    public static function fromArray(array $data): ProximityAlertTriggered {
+        $instance = new self();
+        if (isset($data['traveler'])) {
+            $instance->traveler = User::fromArray($data['traveler']);
+        }
+        if (isset($data['watcher'])) {
+            $instance->watcher = User::fromArray($data['watcher']);
+        }
+        if (isset($data['distance'])) {
+            $instance->distance = $data['distance'];
+        }
+        return $instance;
+    }
+
+    public function getTraveler(): ?User {
         return $this->traveler;
     }
 
-    public function getWatcher(): User {
+    public function setTraveler(?User $value): self {
+        $this->traveler = $value;
+        return $this;
+    }
+
+    public function getWatcher(): ?User {
         return $this->watcher;
     }
 
-    public function getDistance(): int {
+    public function setWatcher(?User $value): self {
+        $this->watcher = $value;
+        return $this;
+    }
+
+    public function getDistance(): ?int {
         return $this->distance;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setDistance(?int $value): self {
+        $this->distance = $value;
+        return $this;
     }
 
 }

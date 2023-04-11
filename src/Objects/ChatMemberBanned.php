@@ -2,61 +2,85 @@
 
 namespace Yabx\Telegram\Objects;
 
-class ChatMemberBanned {
+use Yabx\Telegram\ObjectTrait;
+
+final class ChatMemberBanned {
+
+    use ObjectTrait;
 
     /**
      * Status
      *
      * The member's status in the chat, always “kicked”
-     * @var string
+     * @var string|null
      */
-    protected string $status;
+    protected ?string $status = null;
 
     /**
      * User
      *
      * Information about the user
-     * @var User
+     * @var User|null
      */
-    protected User $user;
+    protected ?User $user = null;
 
     /**
      * Until Date
      *
      * Date when restrictions will be lifted for this user; unix time. If 0, then the user is banned forever
-     * @var int
+     * @var int|null
      */
-    protected int $untilDate;
+    protected ?int $untilDate = null;
 
-    protected array $rawData;
-
-    public function __construct(array $data) {
-        $this->rawData = $data;
-        if (isset($data['status'])) {
-            $this->status = $data['status'];
-        }
-        if (isset($data['user'])) {
-            $this->user = new User($data['user']);
-        }
-        if (isset($data['until_date'])) {
-            $this->untilDate = $data['until_date'];
-        }
+    public function __construct(
+        ?string $status = null,
+        ?User   $user = null,
+        ?int    $untilDate = null,
+    ) {
+        $this->status = $status;
+        $this->user = $user;
+        $this->untilDate = $untilDate;
     }
 
-    public function getStatus(): string {
+    public static function fromArray(array $data): ChatMemberBanned {
+        $instance = new self();
+        if (isset($data['status'])) {
+            $instance->status = $data['status'];
+        }
+        if (isset($data['user'])) {
+            $instance->user = User::fromArray($data['user']);
+        }
+        if (isset($data['until_date'])) {
+            $instance->untilDate = $data['until_date'];
+        }
+        return $instance;
+    }
+
+    public function getStatus(): ?string {
         return $this->status;
     }
 
-    public function getUser(): User {
+    public function setStatus(?string $value): self {
+        $this->status = $value;
+        return $this;
+    }
+
+    public function getUser(): ?User {
         return $this->user;
     }
 
-    public function getUntilDate(): int {
+    public function setUser(?User $value): self {
+        $this->user = $value;
+        return $this;
+    }
+
+    public function getUntilDate(): ?int {
         return $this->untilDate;
     }
 
-    public function getRawData(): array {
-        return $this->rawData;
+    public function setUntilDate(?int $value): self {
+        $this->untilDate = $value;
+        return $this;
     }
 
 }
