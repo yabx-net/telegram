@@ -3,9 +3,13 @@
 namespace Yabx\Telegram;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\RequestOptions;
+use Yabx\Telegram\Enum\ChatAction;
 use Yabx\Telegram\Objects\File;
 use Yabx\Telegram\Objects\Message;
 use Yabx\Telegram\Objects\Update;
+use Yabx\Telegram\Objects\User;
 use Yabx\Telegram\Objects\WebhookInfo;
 
 class BotApi {
@@ -43,6 +47,53 @@ class BotApi {
 		]);
     }
 
+    /**
+     * Direct call Telegram Bot Api
+     * @link https://core.telegram.org/bots/api#available-methods
+     * @param string $method
+     * @param array $params
+     * @param bool $multipart
+     * @return mixed
+     * @throws Exception
+     * @throws GuzzleException
+     */
+
+    public function request(string $method, array $params = [], bool $multipart = false): mixed {
+        if($multipart) {
+            $multipart = [];
+            foreach ($params as $key => $value) {
+                $multipart[] = ['name' => $key, 'contents' => $value];
+            }
+            $res = $this->client->post($method, [RequestOptions::MULTIPART => $multipart]);
+        } else {
+            $res = $this->client->post($method, [RequestOptions::JSON => $params]);
+        }
+        $json = json_decode($res->getBody()->__toString(), true);
+        if($json['ok'] ?? false) return $json['result'];
+        throw new Exception($json['description'] ?? 'Unknown error', $json['code'] ?? 500);
+    }
+
+    /**
+     * A simple method for testing your bot's authentication token. Requires no parameters.
+     * Returns basic information about the bot in form of a User object.
+     * @link https://core.telegram.org/bots/api#getme
+     * @return User
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getMe(): User {
+        return new User($this->request('getMe'));
+    }
+
+    /**
+     * Use this method to send text messages. On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#sendmessage
+     * @param int|string $chatId
+     * @param string $text
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     */
 	public function sendMessage(int|string $chatId, string $text, array $options = []): Message {
         $text = str_replace('\n', "\n", $text);
 		$data = self::request('sendMessage', [
@@ -54,6 +105,309 @@ class BotApi {
 		]);
         return new Message($data);
 	}
+
+    /**
+     * Use this method to forward messages of any kind. Service messages can't be forwarded.
+     * On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#forwardmessage
+     * @param int $messageId
+     * @param int|string $fromChatId
+     * @param int|string $chatId
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function forwardMessage(int|string $chatId, int|string $fromChatId, int $messageId, array $options = []): Message {
+        $data = $this->request('forwardMessage', [
+            'chat_id' => $chatId,
+            'from_chat_id' => $fromChatId,
+            'message_id' => $messageId,
+            ...$options
+        ]);
+        return new Message($data);
+    }
+
+    /**
+     * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied.
+     * A quiz poll can be copied only if the value of the field correct_option_id is known to the bot.
+     * The method is analogous to the method forwardMessage, but the copied message doesn't have a link to the
+     * original message. Returns the MessageId of the sent message on success.
+     * @link https://core.telegram.org/bots/api#copymessage
+     * @param int $messageId
+     * @param int|string $fromChatId
+     * @param int|string $chatId
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function copyMessage(int|string $chatId, int|string $fromChatId, int $messageId, array $options = []): Message {
+        $data = $this->request('copyMessage', [
+            'chat_id' => $chatId,
+            'from_chat_id' => $fromChatId,
+            'message_id' => $messageId,
+            ...$options
+        ]);
+        return new Message($data);
+    }
+
+    /**
+     * Use this method to send photos. On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#sendphoto
+     * @param int|string $chatId
+     * @param string $photo file_id, url or path to local file
+     * @param string|null $caption
+     * @param array $options
+     * @return Message
+     */
+    public function sendPhoto(int|string $chatId, string $photo, ?string $caption = null, array $options = []): Message {
+        return $this->sendAttachment('sendPhoto', 'photo', $chatId, $photo, $caption, null, $options);
+    }
+
+    /**
+     * Use this method to send audio files, if you want Telegram clients to display them in the music player.
+     * Your audio must be in the .MP3 or .M4A format. On success, the sent Message is returned.
+     * Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+     * For sending voice messages, use the sendVoice method instead.
+     * @link https://core.telegram.org/bots/api#sendaudio
+     * @param int|string $chatId
+     * @param string $audio file_id, url or path to local file
+     * @param string|null $caption
+     * @param string|null $thumbnail
+     * @param array $options
+     * @return Message
+     */
+    public function sendAudio(int|string $chatId, string $audio, ?string $caption = null, ?string $thumbnail = null, array $options = []): Message {
+        return $this->sendAttachment('sendAudio', 'audio', $chatId, $audio, $caption, $thumbnail, $options);
+    }
+
+    /**
+     * Use this method to send general files. On success, the sent Message is returned. Bots can currently send files
+     * of any type of up to 50 MB in size, this limit may be changed in the future.
+     * @link https://core.telegram.org/bots/api#senddocument
+     * @param int|string $chatId
+     * @param string $document file_id, url or path to local file
+     * @param string|null $caption
+     * @param string|null $thumbnail
+     * @param array $options
+     * @return Message
+     */
+    public function sendDocument(int|string $chatId, string $document, ?string $caption = null, ?string $thumbnail = null, array $options = []): Message {
+        return $this->sendAttachment('sendDocument', 'document', $chatId, $document, $caption, $thumbnail, $options);
+    }
+
+    /**
+     * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may be sent as
+     * Document). On success, the sent Message is returned. Bots can currently send video files of up to 50 MB in size,
+     * this limit may be changed in the future.
+     * @link https://core.telegram.org/bots/api#sendvideo
+     * @param int|string $chatId
+     * @param string $video file_id, url or path to local file
+     * @param string|null $caption
+     * @param string|null $thumbnail
+     * @param array $options
+     * @return Message
+     */
+    public function sendVideo(int|string $chatId, string $video, ?string $caption = null, ?string $thumbnail = null, array $options = []): Message {
+        return $this->sendAttachment('sendVideo', 'video', $chatId, $video, $caption, $thumbnail, $options);
+    }
+
+    /**
+     * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success, the sent
+     * Message is returned. Bots can currently send animation files of up to 50 MB in size, this limit may be changed
+     * in the future.
+     * @link https://core.telegram.org/bots/api#sendanimation
+     * @param int|string $chatId
+     * @param string $animation file_id, url or path to local file
+     * @param string|null $caption
+     * @param string|null $thumbnail
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function sendAnimation(int|string $chatId, string $animation, ?string $caption = null, ?string $thumbnail = null, array $options = []): Message {
+        return $this->sendAttachment('sendAnimation', 'animation', $chatId, $animation, $caption, $thumbnail, $options);
+    }
+
+    /**
+     * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice
+     * message. For this to work, your audio must be in an .OGG file encoded with OPUS (other formats may be sent as
+     * Audio or Document). On success, the sent Message is returned. Bots can currently send voice messages of up to
+     * 50 MB in size, this limit may be changed in the future.
+     * @link https://core.telegram.org/bots/api#sendvoice
+     * @param int|string $chatId
+     * @param string $voice file_id, url or path to local file
+     * @param string|null $caption
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function sendVoice(int|string $chatId, string $voice, ?string $caption = null, array $options = []): Message {
+        return $this->sendAttachment('sendVoice', 'voice', $chatId, $voice, $caption, null, $options);
+    }
+
+    /**
+     * As of v.4.0, Telegram clients support rounded square MPEG4 videos of up to 1 minute long. Use this method to
+     * send video messages. On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#sendvideonote
+     * @param int|string $chatId
+     * @param string $voice
+     * @param string|null $thumbnail
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function sendVideoNote(int|string $chatId, string $voice, ?string $thumbnail = null, array $options = []): Message {
+        return $this->sendAttachment('sendVideoNote', 'video_note', $chatId, $voice, null, $thumbnail, $options);
+    }
+
+    /**
+     * Use this method to send point on the map. On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#sendlocation
+     * @param int|string $chatId
+     * @param float $latitude
+     * @param float $longitude
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function sendLocation(int|string $chatId, float $latitude, float $longitude, array $options = []): Message {
+        $data = $this->request('sendLocation', [
+            'chat_id' => $chatId,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            ...$options
+        ]);
+        return new Message($data);
+    }
+
+    /**
+     * Use this method to send information about a venue. On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#sendvenue
+     * @param int|string $chatId
+     * @param float $latitude
+     * @param float $longitude
+     * @param string $title
+     * @param string $address
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function sendVenue(int|string $chatId, float $latitude, float $longitude, string $title, string $address, array $options = []): Message {
+        $data = $this->request('sendVenue', [
+            'chat_id' => $chatId,
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'title' => $title,
+            'address' => $address,
+            ...$options
+        ]);
+        return new Message($data);
+    }
+
+    /**
+     * Use this method to send phone contacts. On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#sendcontact
+     * @link https://en.wikipedia.org/wiki/VCard
+     * @param int|string $chatId
+     * @param string $phoneNumber
+     * @param string $firstName
+     * @param string $lastName
+     * @param string|null $vcard
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function sendContact(int|string $chatId, string $phoneNumber, string $firstName, string $lastName, ?string $vcard = null, array $options = []): Message {
+        $data = $this->request('sendContact', [
+            'chat_id' => $chatId,
+            'phone_number' => $phoneNumber,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'vcard' => $vcard,
+            ...$options
+        ]);
+        return new Message($data);
+    }
+
+
+    /**
+     * Use this method when you need to tell the user that something is happening on the bot's side. The status is set
+     * for 5 seconds or less (when a message arrives from your bot, Telegram clients clear its typing status).
+     * Returns True on success.
+     * @param int|string $chatId
+     * @param ChatAction $action
+     * @param array $options
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function sendChatAction(int|string $chatId, ChatAction $action, array $options = []): bool {
+        return $this->request('sendChatAction', [
+            'chat_id' => $chatId,
+            'action' => $action->value,
+            ...$options
+        ]);
+    }
+
+    /**
+     * Use this method to delete a message, including service messages, with the following limitations:
+     * - A message can only be deleted if it was sent less than 48 hours ago.
+     * - Service messages about a supergroup, channel, or forum topic creation can't be deleted.
+     * - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.
+     * - Bots can delete outgoing messages in private chats, groups, and supergroups.
+     * - Bots can delete incoming messages in private chats.
+     * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+     * - If the bot is an administrator of a group, it can delete any message there.
+     * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+     * Returns True on success.
+     * @link https://core.telegram.org/bots/api#deletemessage
+     * @param int|string $chatId
+     * @param int $messageId
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function deleteMessage(int|string $chatId, int $messageId): bool {
+        return $this->request('deleteMessage', [
+            'chat_id' => $chatId,
+            'message_id' => $messageId
+        ]);
+    }
+
+    /**
+     * @param string $method
+     * @param string $key
+     * @param int|string $chatId
+     * @param string $attachment
+     * @param string|null $caption
+     * @param string|null $thumbnail
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    protected function sendAttachment(string $method, string $key, int|string $chatId, string $attachment, ?string $caption = null, ?string $thumbnail = null, array $options = []): Message {
+        if(file_exists($attachment)) $attachment = fopen($attachment, 'r');
+        if(file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
+        $data = $this->request($method, [
+            'chat_id' => $chatId,
+            $key => $attachment,
+            'caption' => $caption,
+            'thumbnail' => $thumbnail,
+            ...$options
+        ], multipart: is_resource($attachment) || is_resource($thumbnail));
+        if(is_resource($attachment)) fclose($attachment);
+        if(is_resource($thumbnail)) fclose($thumbnail);
+        return new Message($data);
+    }
 
     public function getFile(string $fileId, string $savePath): void {
         $data = $this->request('getFile', ['file_id' => $fileId]);
@@ -82,13 +436,6 @@ class BotApi {
 	public function getWebhookInfo(): WebhookInfo {
         $data = self::request('getWebhookInfo');
         return new WebhookInfo($data);
-	}
-
-	public function request(string $method, array $params = []): mixed {
-        $res = $this->client->post($method, ['json' => $params]);
-        $json = json_decode($res->getBody()->__toString(), true);
-        if($json['ok'] ?? false) return $json['result'];
-        throw new Exception($json['description'] ?? 'Unknown error', $json['code'] ?? 500);
 	}
 
 }
