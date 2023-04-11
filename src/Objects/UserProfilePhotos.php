@@ -20,8 +20,10 @@ class UserProfilePhotos {
      */
     protected array $photos;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['total_count'])) {
             $this->totalCount = $data['total_count'];
         }
@@ -41,5 +43,8 @@ class UserProfilePhotos {
         return $this->photos;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

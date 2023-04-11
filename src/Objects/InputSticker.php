@@ -8,9 +8,9 @@ class InputSticker {
      * Sticker
      *
      * The added sticker. Pass a file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get a file from the Internet, upload a new one using multipart/form-data, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. Animated and video stickers can't be uploaded via HTTP URL. More information on Sending Files »
-     * @var InputFile|string
+     * @var string
      */
-    protected InputFile|string $sticker;
+    protected string $sticker;
 
     /**
      * Emoji List
@@ -36,10 +36,12 @@ class InputSticker {
      */
     protected ?array $keywords = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['sticker'])) {
-            $this->sticker = new InputFile | string($data['sticker']);
+            $this->sticker = $data['sticker'];
         }
         if (isset($data['emoji_list'])) {
             $this->emojiList = [];
@@ -58,7 +60,7 @@ class InputSticker {
         }
     }
 
-    public function getSticker(): InputFile|string {
+    public function getSticker(): string {
         return $this->sticker;
     }
 
@@ -74,5 +76,8 @@ class InputSticker {
         return $this->keywords;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

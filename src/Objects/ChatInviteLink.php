@@ -76,8 +76,10 @@ class ChatInviteLink {
      */
     protected ?int $pendingJoinRequestCount = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['invite_link'])) {
             $this->inviteLink = $data['invite_link'];
         }
@@ -143,5 +145,8 @@ class ChatInviteLink {
         return $this->pendingJoinRequestCount;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

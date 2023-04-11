@@ -60,8 +60,10 @@ class PreCheckoutQuery {
      */
     protected ?OrderInfo $orderInfo = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['id'])) {
             $this->id = $data['id'];
         }
@@ -113,5 +115,8 @@ class PreCheckoutQuery {
         return $this->orderInfo;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

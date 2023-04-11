@@ -148,8 +148,10 @@ class ChatMemberRestricted {
      */
     protected int $untilDate;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['status'])) {
             $this->status = $data['status'];
         }
@@ -278,5 +280,8 @@ class ChatMemberRestricted {
         return $this->untilDate;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

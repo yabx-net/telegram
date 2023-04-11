@@ -60,8 +60,10 @@ class KeyboardButton {
      */
     protected ?WebAppInfo $webApp = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['text'])) {
             $this->text = $data['text'];
         }
@@ -113,5 +115,8 @@ class KeyboardButton {
         return $this->webApp;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

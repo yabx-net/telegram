@@ -68,8 +68,10 @@ class InputVenueMessageContent {
      */
     protected ?string $googlePlaceType = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['latitude'])) {
             $this->latitude = $data['latitude'];
         }
@@ -128,5 +130,8 @@ class InputVenueMessageContent {
         return $this->googlePlaceType;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

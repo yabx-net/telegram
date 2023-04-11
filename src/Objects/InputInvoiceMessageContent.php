@@ -164,8 +164,10 @@ class InputInvoiceMessageContent {
      */
     protected ?bool $isFlexible = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['title'])) {
             $this->title = $data['title'];
         }
@@ -314,5 +316,8 @@ class InputInvoiceMessageContent {
         return $this->isFlexible;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

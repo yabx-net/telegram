@@ -19,6 +19,9 @@
   "require": {
     "php": ">=8.0",
     "ext-json": "*",
+    "guzzlehttp/guzzle": "^7.5"
+  },
+  "require-dev": {
     "ext-mbstring": "*"
   }
 }

@@ -36,8 +36,10 @@ class ForumTopic {
      */
     protected ?string $iconCustomEmojiId = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['message_thread_id'])) {
             $this->messageThreadId = $data['message_thread_id'];
         }
@@ -68,5 +70,8 @@ class ForumTopic {
         return $this->iconCustomEmojiId;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -20,8 +20,10 @@ class BotCommandScopeChat {
      */
     protected int|string $chatId;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['type'])) {
             $this->type = $data['type'];
         }
@@ -38,5 +40,8 @@ class BotCommandScopeChat {
         return $this->chatId;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

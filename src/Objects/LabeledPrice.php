@@ -20,8 +20,10 @@ class LabeledPrice {
      */
     protected int $amount;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['label'])) {
             $this->label = $data['label'];
         }
@@ -38,5 +40,8 @@ class LabeledPrice {
         return $this->amount;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

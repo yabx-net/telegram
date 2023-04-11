@@ -28,8 +28,10 @@ class PollAnswer {
      */
     protected array $optionIds;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['poll_id'])) {
             $this->pollId = $data['poll_id'];
         }
@@ -56,5 +58,8 @@ class PollAnswer {
         return $this->optionIds;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

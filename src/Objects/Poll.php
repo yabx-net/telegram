@@ -108,8 +108,10 @@ class Poll {
      */
     protected ?int $closeDate = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['id'])) {
             $this->id = $data['id'];
         }
@@ -209,5 +211,8 @@ class Poll {
         return $this->closeDate;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

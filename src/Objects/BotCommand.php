@@ -20,8 +20,10 @@ class BotCommand {
      */
     protected string $description;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['command'])) {
             $this->command = $data['command'];
         }
@@ -38,5 +40,8 @@ class BotCommand {
         return $this->description;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

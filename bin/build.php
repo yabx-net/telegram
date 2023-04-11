@@ -2,10 +2,11 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Yabx\Telegram\StringUtils;
+use Yabx\Telegram\Utils;
+
+exec('rm ' . __DIR__ . '/../src/Objects/*.php');
 
 $doc = file_get_contents('https://core.telegram.org/bots/api');
-
 $doc = str_replace('<h4>', '-----<h4>', $doc);
 $docs = explode('-----', $doc);
 
@@ -18,6 +19,8 @@ $types = [
     'InputFile' => '',
     'True' => 'bool',
 ];
+
+
 
 foreach ($docs as $doc) {
     $doc = trim($doc);
@@ -59,11 +62,12 @@ foreach ($docs as $doc) {
         $type = str_replace('Array of ', '', $type);
         $type = str_replace(' or ', '|', $type);
 
-        $objectKey = StringUtils::toCamelCase($key);
+        $objectKey = Utils::toCamelCase($key);
         $optional = str_contains(strtolower($description), 'optional');
 
         $type = str_replace('Integer', 'int', $type);
         $type = str_replace('String', 'string', $type);
+        $type = trim(str_replace('InputFile', '', $type), " |");
 
         $phpType = $type;
         if($isArray) $phpType = 'array';
@@ -71,6 +75,7 @@ foreach ($docs as $doc) {
             if(str_contains($type, '|')) $phpType .= '|null';
             else $phpType = '?' . $phpType;
         }
+        $newType = trim(explode('|', $type)[0]);
 
         $props[] = '/**';
         $props[] = ' * ' . mb_convert_case(str_replace('_', ' ', $key), MB_CASE_TITLE);
@@ -87,34 +92,42 @@ foreach ($docs as $doc) {
         if($isArray) {
             $constructor[] = '    $this->' . $objectKey . ' = [];';
             $constructor[] = '    foreach($data[\'' . $key . '\'] as $item) {';
-            $constructor[] = '        $this->' . $objectKey . '[] = ' . ($isObj ? 'new ' . $type . '($item)' : '$item') . ';';
+            $constructor[] = '        $this->' . $objectKey . '[] = ' . ($isObj ? 'new ' . $newType . '($item)' : '$item') . ';';
             $constructor[] = '    }';
         } else {
-            $constructor[] = '    $this->' . $objectKey . ' = ' . ($isObj ? ' new ' . $type . '($data[\'' . $key . '\'])' : '$data[\'' . $key . '\']') . ';';
+            $constructor[] = '    $this->' . $objectKey . ' = ' . ($isObj ? 'new ' . $newType . '($data[\'' . $key . '\'])' : '$data[\'' . $key . '\']') . ';';
         }
         $constructor[] = '}';
 
-        $methods[] = 'public function ' . StringUtils::toCamelCase('get_' . $key) . '(): ' . $phpType . ' {';
+        $methods[] = 'public function ' . Utils::toCamelCase('get_' . $key) . '(): ' . $phpType . ' {';
         $methods[] = "\treturn \$this->{$objectKey};";
         $methods[] = '}' . PHP_EOL;
 
     }
 
+    $props[] = 'protected array $rawData;' . PHP_EOL;
+
     foreach ($props as $prop) {
         fwrite($f, "\t{$prop}\n");
     }
 
-    fwrite($f, "\n\tpublic function __construct(array \$data) {\n");
+    fwrite($f, "\tpublic function __construct(array \$data) {\n");
+    fwrite($f, "\t\t\$this->rawData = \$data;\n");
     foreach ($constructor as $line) {
         fwrite($f, "\t\t{$line}\n");
     }
     fwrite($f, "\t}\n\n");
 
+    $methods[] = 'public function getRawData(): array {';
+    $methods[] = "\treturn \$this->rawData;";
+    $methods[] = '}' . PHP_EOL;
+
     foreach ($methods as $line) {
         fwrite($f, "\t{$line}\n");
     }
 
-    fwrite($f, "\n}\n");
+
+    fwrite($f, "}\n");
     fclose($f);
 
     //if(!$props) unlink($path);

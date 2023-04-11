@@ -12,8 +12,10 @@ class VideoChatScheduled {
      */
     protected int $startDate;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['start_date'])) {
             $this->startDate = $data['start_date'];
         }
@@ -23,5 +25,8 @@ class VideoChatScheduled {
         return $this->startDate;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

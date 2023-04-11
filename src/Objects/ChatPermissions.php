@@ -116,8 +116,10 @@ class ChatPermissions {
      */
     protected ?bool $canManageTopics = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['can_send_messages'])) {
             $this->canSendMessages = $data['can_send_messages'];
         }
@@ -218,5 +220,8 @@ class ChatPermissions {
         return $this->canManageTopics;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

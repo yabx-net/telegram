@@ -60,8 +60,10 @@ class SuccessfulPayment {
      */
     protected string $providerPaymentChargeId;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['currency'])) {
             $this->currency = $data['currency'];
         }
@@ -113,5 +115,8 @@ class SuccessfulPayment {
         return $this->providerPaymentChargeId;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

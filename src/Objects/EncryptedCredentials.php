@@ -28,8 +28,10 @@ class EncryptedCredentials {
      */
     protected string $secret;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['data'])) {
             $this->data = $data['data'];
         }
@@ -53,5 +55,8 @@ class EncryptedCredentials {
         return $this->secret;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

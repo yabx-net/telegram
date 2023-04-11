@@ -20,8 +20,10 @@ class WebAppData {
      */
     protected string $buttonText;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['data'])) {
             $this->data = $data['data'];
         }
@@ -38,5 +40,8 @@ class WebAppData {
         return $this->buttonText;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

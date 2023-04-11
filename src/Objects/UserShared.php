@@ -20,8 +20,10 @@ class UserShared {
      */
     protected int $userId;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['request_id'])) {
             $this->requestId = $data['request_id'];
         }
@@ -38,5 +40,8 @@ class UserShared {
         return $this->userId;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -12,8 +12,10 @@ class SentWebAppMessage {
      */
     protected ?string $inlineMessageId = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['inline_message_id'])) {
             $this->inlineMessageId = $data['inline_message_id'];
         }
@@ -23,5 +25,8 @@ class SentWebAppMessage {
         return $this->inlineMessageId;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

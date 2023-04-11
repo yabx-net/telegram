@@ -36,8 +36,10 @@ class PassportElementErrorTranslationFiles {
      */
     protected string $message;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['source'])) {
             $this->source = $data['source'];
         }
@@ -71,5 +73,8 @@ class PassportElementErrorTranslationFiles {
         return $this->message;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -12,8 +12,10 @@ class BotDescription {
      */
     protected string $description;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['description'])) {
             $this->description = $data['description'];
         }
@@ -23,5 +25,8 @@ class BotDescription {
         return $this->description;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

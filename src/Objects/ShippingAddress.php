@@ -52,8 +52,10 @@ class ShippingAddress {
      */
     protected string $postCode;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['country_code'])) {
             $this->countryCode = $data['country_code'];
         }
@@ -98,5 +100,8 @@ class ShippingAddress {
         return $this->postCode;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

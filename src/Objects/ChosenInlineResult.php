@@ -44,8 +44,10 @@ class ChosenInlineResult {
      */
     protected string $query;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['result_id'])) {
             $this->resultId = $data['result_id'];
         }
@@ -83,5 +85,8 @@ class ChosenInlineResult {
         return $this->query;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

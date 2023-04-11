@@ -28,8 +28,10 @@ class KeyboardButtonRequestUser {
      */
     protected ?bool $userIsPremium = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['request_id'])) {
             $this->requestId = $data['request_id'];
         }
@@ -53,5 +55,8 @@ class KeyboardButtonRequestUser {
         return $this->userIsPremium;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

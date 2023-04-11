@@ -20,8 +20,10 @@ class ReplyKeyboardRemove {
      */
     protected ?bool $selective = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['remove_keyboard'])) {
             $this->removeKeyboard = $data['remove_keyboard'];
         }
@@ -38,5 +40,8 @@ class ReplyKeyboardRemove {
         return $this->selective;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

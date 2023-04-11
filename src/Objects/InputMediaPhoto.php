@@ -52,8 +52,10 @@ class InputMediaPhoto {
      */
     protected ?bool $hasSpoiler = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['type'])) {
             $this->type = $data['type'];
         }
@@ -101,5 +103,8 @@ class InputMediaPhoto {
         return $this->hasSpoiler;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

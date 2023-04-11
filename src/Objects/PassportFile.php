@@ -36,8 +36,10 @@ class PassportFile {
      */
     protected int $fileDate;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['file_id'])) {
             $this->fileId = $data['file_id'];
         }
@@ -68,5 +70,8 @@ class PassportFile {
         return $this->fileDate;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

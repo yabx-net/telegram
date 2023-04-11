@@ -12,8 +12,10 @@ class VideoChatParticipantsInvited {
      */
     protected array $users;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['users'])) {
             $this->users = [];
             foreach ($data['users'] as $item) {
@@ -26,5 +28,8 @@ class VideoChatParticipantsInvited {
         return $this->users;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

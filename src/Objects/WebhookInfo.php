@@ -76,8 +76,10 @@ class WebhookInfo {
      */
     protected ?array $allowedUpdates = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['url'])) {
             $this->url = $data['url'];
         }
@@ -146,5 +148,8 @@ class WebhookInfo {
         return $this->allowedUpdates;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

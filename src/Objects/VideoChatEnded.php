@@ -12,8 +12,10 @@ class VideoChatEnded {
      */
     protected int $duration;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['duration'])) {
             $this->duration = $data['duration'];
         }
@@ -23,5 +25,8 @@ class VideoChatEnded {
         return $this->duration;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

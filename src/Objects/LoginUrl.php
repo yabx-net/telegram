@@ -36,8 +36,10 @@ class LoginUrl {
      */
     protected ?bool $requestWriteAccess = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['url'])) {
             $this->url = $data['url'];
         }
@@ -68,5 +70,8 @@ class LoginUrl {
         return $this->requestWriteAccess;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

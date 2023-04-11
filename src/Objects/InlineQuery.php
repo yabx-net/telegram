@@ -52,8 +52,10 @@ class InlineQuery {
      */
     protected ?Location $location = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['id'])) {
             $this->id = $data['id'];
         }
@@ -98,5 +100,8 @@ class InlineQuery {
         return $this->location;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

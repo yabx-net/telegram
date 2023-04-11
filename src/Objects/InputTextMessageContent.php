@@ -36,8 +36,10 @@ class InputTextMessageContent {
      */
     protected ?bool $disableWebPagePreview = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['message_text'])) {
             $this->messageText = $data['message_text'];
         }
@@ -71,5 +73,8 @@ class InputTextMessageContent {
         return $this->disableWebPagePreview;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -24,9 +24,9 @@ class InputMediaAnimation {
      * Thumbnail
      *
      * Optional. Thumbnail of the file sent; can be ignored if thumbnail generation for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't be reused and can be only uploaded as a new file, so you can pass “attach://<file_attach_name>” if the thumbnail was uploaded using multipart/form-data under <file_attach_name>. More information on Sending Files »
-     * @var InputFile|string|null
+     * @var string|null
      */
-    protected InputFile|string|null $thumbnail = null;
+    protected ?string $thumbnail = null;
 
     /**
      * Caption
@@ -84,8 +84,10 @@ class InputMediaAnimation {
      */
     protected ?bool $hasSpoiler = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['type'])) {
             $this->type = $data['type'];
         }
@@ -93,7 +95,7 @@ class InputMediaAnimation {
             $this->media = $data['media'];
         }
         if (isset($data['thumbnail'])) {
-            $this->thumbnail = new InputFile | string($data['thumbnail']);
+            $this->thumbnail = $data['thumbnail'];
         }
         if (isset($data['caption'])) {
             $this->caption = $data['caption'];
@@ -129,7 +131,7 @@ class InputMediaAnimation {
         return $this->media;
     }
 
-    public function getThumbnail(): InputFile|string|null {
+    public function getThumbnail(): ?string {
         return $this->thumbnail;
     }
 
@@ -161,5 +163,8 @@ class InputMediaAnimation {
         return $this->hasSpoiler;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

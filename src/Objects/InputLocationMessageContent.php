@@ -52,8 +52,10 @@ class InputLocationMessageContent {
      */
     protected ?int $proximityAlertRadius = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['latitude'])) {
             $this->latitude = $data['latitude'];
         }
@@ -98,5 +100,8 @@ class InputLocationMessageContent {
         return $this->proximityAlertRadius;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

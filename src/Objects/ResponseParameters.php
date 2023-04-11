@@ -20,8 +20,10 @@ class ResponseParameters {
      */
     protected ?int $retryAfter = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['migrate_to_chat_id'])) {
             $this->migrateToChatId = $data['migrate_to_chat_id'];
         }
@@ -38,5 +40,8 @@ class ResponseParameters {
         return $this->retryAfter;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

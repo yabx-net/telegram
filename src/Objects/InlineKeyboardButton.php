@@ -76,8 +76,10 @@ class InlineKeyboardButton {
      */
     protected ?bool $pay = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['text'])) {
             $this->text = $data['text'];
         }
@@ -143,5 +145,8 @@ class InlineKeyboardButton {
         return $this->pay;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -12,8 +12,10 @@ class InlineKeyboardMarkup {
      */
     protected array $inlineKeyboard;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['inline_keyboard'])) {
             $this->inlineKeyboard = [];
             foreach ($data['inline_keyboard'] as $item) {
@@ -26,5 +28,8 @@ class InlineKeyboardMarkup {
         return $this->inlineKeyboard;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

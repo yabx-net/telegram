@@ -12,8 +12,10 @@ class WebAppInfo {
      */
     protected string $url;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['url'])) {
             $this->url = $data['url'];
         }
@@ -23,5 +25,8 @@ class WebAppInfo {
         return $this->url;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

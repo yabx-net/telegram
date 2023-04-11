@@ -20,8 +20,10 @@ class PassportData {
      */
     protected EncryptedCredentials $credentials;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['data'])) {
             $this->data = [];
             foreach ($data['data'] as $item) {
@@ -41,5 +43,8 @@ class PassportData {
         return $this->credentials;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

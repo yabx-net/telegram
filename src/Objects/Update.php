@@ -124,8 +124,10 @@ class Update {
      */
     protected ?ChatJoinRequest $chatJoinRequest = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['update_id'])) {
             $this->updateId = $data['update_id'];
         }
@@ -233,5 +235,8 @@ class Update {
         return $this->chatJoinRequest;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

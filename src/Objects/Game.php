@@ -52,8 +52,10 @@ class Game {
      */
     protected ?Animation $animation = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['title'])) {
             $this->title = $data['title'];
         }
@@ -104,5 +106,8 @@ class Game {
         return $this->animation;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -28,8 +28,10 @@ class ShippingOption {
      */
     protected array $prices;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['id'])) {
             $this->id = $data['id'];
         }
@@ -56,5 +58,8 @@ class ShippingOption {
         return $this->prices;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -36,8 +36,10 @@ class ChatPhoto {
      */
     protected string $bigFileUniqueId;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['small_file_id'])) {
             $this->smallFileId = $data['small_file_id'];
         }
@@ -68,5 +70,8 @@ class ChatPhoto {
         return $this->bigFileUniqueId;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

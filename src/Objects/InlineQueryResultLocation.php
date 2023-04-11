@@ -116,8 +116,10 @@ class InlineQueryResultLocation {
      */
     protected ?int $thumbnailHeight = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['type'])) {
             $this->type = $data['type'];
         }
@@ -218,5 +220,8 @@ class InlineQueryResultLocation {
         return $this->thumbnailHeight;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

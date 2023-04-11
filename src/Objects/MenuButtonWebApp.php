@@ -28,8 +28,10 @@ class MenuButtonWebApp {
      */
     protected WebAppInfo $webApp;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['type'])) {
             $this->type = $data['type'];
         }
@@ -53,5 +55,8 @@ class MenuButtonWebApp {
         return $this->webApp;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -2,7 +2,7 @@
 
 namespace Yabx\Telegram;
 
-class StringUtils {
+class Utils {
 
     public static function toSnakeCase(string $str): string {
         preg_match_all('/[A-Z]{1}/', $str, $m);

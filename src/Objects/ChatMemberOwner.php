@@ -36,8 +36,10 @@ class ChatMemberOwner {
      */
     protected ?string $customTitle = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['status'])) {
             $this->status = $data['status'];
         }
@@ -68,5 +70,8 @@ class ChatMemberOwner {
         return $this->customTitle;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

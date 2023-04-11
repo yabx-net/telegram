@@ -44,8 +44,10 @@ class Invoice {
      */
     protected int $totalAmount;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['title'])) {
             $this->title = $data['title'];
         }
@@ -83,5 +85,8 @@ class Invoice {
         return $this->totalAmount;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

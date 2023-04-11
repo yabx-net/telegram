@@ -28,8 +28,10 @@ class ForumTopicCreated {
      */
     protected ?string $iconCustomEmojiId = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['name'])) {
             $this->name = $data['name'];
         }
@@ -53,5 +55,8 @@ class ForumTopicCreated {
         return $this->iconCustomEmojiId;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -28,8 +28,10 @@ class ForceReply {
      */
     protected ?bool $selective = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['force_reply'])) {
             $this->forceReply = $data['force_reply'];
         }
@@ -53,5 +55,8 @@ class ForceReply {
         return $this->selective;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -28,8 +28,10 @@ class GameHighScore {
      */
     protected int $score;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['position'])) {
             $this->position = $data['position'];
         }
@@ -53,5 +55,8 @@ class GameHighScore {
         return $this->score;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

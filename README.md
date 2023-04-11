@@ -6,12 +6,12 @@ composer req yabx/telegram
 Simple usage
 ------------
 ```php
-use Yabx\Telegram\Service;
+use Yabx\Telegram\BotApi;
 
 // Parse telegram webhook
-$update = Service::fromRequest();
+$update = BotApi::getUpdateFromRequest();
 // or
-$update = Service::fromJson($json);
+$update = BotApi::getUpdateFromJson($json);
 
 // Get Message object
 $message = $update->getMessage();
@@ -25,4 +25,16 @@ $text = $message->getText();
 $video = $message->getVideo();
 $photos = $message->getPhotos();
 $document = $message->getDocument();
+
+// Create an BotApi client instance
+$tg = new BotApi('123:qwe');
+
+// Set webhook
+$tg->setWebhook('https://tg.myservice.com/bot123');
+
+// Get current webhook info
+$webhook = $tg->getWebhookInfo();
+
+// Sending message
+$message = $tg->sendMessage(12345, 'Hello World!');
 ```

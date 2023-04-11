@@ -92,8 +92,10 @@ class User {
      */
     protected ?bool $supportsInlineQueries = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['id'])) {
             $this->id = $data['id'];
         }
@@ -173,5 +175,8 @@ class User {
         return $this->supportsInlineQueries;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

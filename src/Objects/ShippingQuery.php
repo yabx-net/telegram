@@ -36,8 +36,10 @@ class ShippingQuery {
      */
     protected ShippingAddress $shippingAddress;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['id'])) {
             $this->id = $data['id'];
         }
@@ -68,5 +70,8 @@ class ShippingQuery {
         return $this->shippingAddress;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

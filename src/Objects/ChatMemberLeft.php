@@ -20,8 +20,10 @@ class ChatMemberLeft {
      */
     protected User $user;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['status'])) {
             $this->status = $data['status'];
         }
@@ -38,5 +40,8 @@ class ChatMemberLeft {
         return $this->user;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

@@ -28,8 +28,10 @@ class ProximityAlertTriggered {
      */
     protected int $distance;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['traveler'])) {
             $this->traveler = new User($data['traveler']);
         }
@@ -53,5 +55,8 @@ class ProximityAlertTriggered {
         return $this->distance;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

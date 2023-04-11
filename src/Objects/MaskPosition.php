@@ -36,8 +36,10 @@ class MaskPosition {
      */
     protected float $scale;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['point'])) {
             $this->point = $data['point'];
         }
@@ -68,5 +70,8 @@ class MaskPosition {
         return $this->scale;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

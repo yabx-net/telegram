@@ -100,8 +100,10 @@ class ChatAdministratorRights {
      */
     protected ?bool $canManageTopics = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['is_anonymous'])) {
             $this->isAnonymous = $data['is_anonymous'];
         }
@@ -188,5 +190,8 @@ class ChatAdministratorRights {
         return $this->canManageTopics;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

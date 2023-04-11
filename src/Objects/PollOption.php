@@ -20,8 +20,10 @@ class PollOption {
      */
     protected int $voterCount;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['text'])) {
             $this->text = $data['text'];
         }
@@ -38,5 +40,8 @@ class PollOption {
         return $this->voterCount;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

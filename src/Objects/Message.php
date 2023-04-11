@@ -572,8 +572,10 @@ class Message {
      */
     protected ?InlineKeyboardMarkup $replyMarkup = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['message_id'])) {
             $this->messageId = $data['message_id'];
         }
@@ -1088,5 +1090,8 @@ class Message {
         return $this->replyMarkup;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

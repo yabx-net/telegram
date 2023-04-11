@@ -12,8 +12,10 @@ class MessageAutoDeleteTimerChanged {
      */
     protected int $messageAutoDeleteTime;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['message_auto_delete_time'])) {
             $this->messageAutoDeleteTime = $data['message_auto_delete_time'];
         }
@@ -23,5 +25,8 @@ class MessageAutoDeleteTimerChanged {
         return $this->messageAutoDeleteTime;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

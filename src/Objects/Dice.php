@@ -20,8 +20,10 @@ class Dice {
      */
     protected int $value;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['emoji'])) {
             $this->emoji = $data['emoji'];
         }
@@ -38,5 +40,8 @@ class Dice {
         return $this->value;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

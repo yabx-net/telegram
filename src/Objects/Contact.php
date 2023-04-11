@@ -44,8 +44,10 @@ class Contact {
      */
     protected ?string $vcard = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['phone_number'])) {
             $this->phoneNumber = $data['phone_number'];
         }
@@ -83,5 +85,8 @@ class Contact {
         return $this->vcard;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

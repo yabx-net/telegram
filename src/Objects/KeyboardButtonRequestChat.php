@@ -68,8 +68,10 @@ class KeyboardButtonRequestChat {
      */
     protected ?bool $botIsMember = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['request_id'])) {
             $this->requestId = $data['request_id'];
         }
@@ -128,5 +130,8 @@ class KeyboardButtonRequestChat {
         return $this->botIsMember;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

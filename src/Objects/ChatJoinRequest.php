@@ -52,8 +52,10 @@ class ChatJoinRequest {
      */
     protected ?ChatInviteLink $inviteLink = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['chat'])) {
             $this->chat = new Chat($data['chat']);
         }
@@ -98,5 +100,8 @@ class ChatJoinRequest {
         return $this->inviteLink;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }

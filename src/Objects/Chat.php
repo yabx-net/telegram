@@ -228,8 +228,10 @@ class Chat {
      */
     protected ?ChatLocation $location = null;
 
+    protected array $rawData;
 
     public function __construct(array $data) {
+        $this->rawData = $data;
         if (isset($data['id'])) {
             $this->id = $data['id'];
         }
@@ -431,5 +433,8 @@ class Chat {
         return $this->location;
     }
 
+    public function getRawData(): array {
+        return $this->rawData;
+    }
 
 }
