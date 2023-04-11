@@ -1,7 +1,8 @@
 {
   "name": "yabx/telegram",
   "version": "0.3.0",
-  "description": "Telegram Bot API",
+  "description": "Telegram Bot API SDK for PHP 8.1+",
+  "keywords": ["telegram", "bot", "api", "php", "sdk"],
   "type": "library",
   "license": "MIT",
   "autoload": {
@@ -19,6 +20,7 @@
   "require": {
     "php": ">=8.1",
     "ext-json": "*",
+    "ext-curl": "*",
     "guzzlehttp/guzzle": "^7.5"
   },
   "require-dev": {

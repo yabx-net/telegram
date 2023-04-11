@@ -1,10 +1,40 @@
+Telegram Bot API SDK for PHP 8.1+
+---------------------------------
+
 Installation
 ------------
 ```shell
 composer req yabx/telegram
 ```
-Simple usage
-------------
+
+Sending messages
+----------------
+```php
+use Yabx\Telegram\BotApi;
+
+// Create an BotApi client instance
+$tg = new BotApi('123:qwe');
+
+// Sending message
+$message = $tg->sendMessage(12345, 'Hello World!');
+```
+Working with webhooks
+---------------------
+```php
+use Yabx\Telegram\BotApi;
+
+// Create an BotApi client instance
+$tg = new BotApi('123:qwe');
+
+// Set webhook
+$tg->setWebhook('https://tg.myservice.com/bot123');
+
+// Get webhook info
+$webhook = $tg->getWebhookInfo();
+```
+
+Receiving updates
+-----------------
 ```php
 use Yabx\Telegram\BotApi;
 
@@ -25,16 +55,4 @@ $text = $message->getText();
 $video = $message->getVideo();
 $photos = $message->getPhotos();
 $document = $message->getDocument();
-
-// Create an BotApi client instance
-$tg = new BotApi('123:qwe');
-
-// Set webhook
-$tg->setWebhook('https://tg.myservice.com/bot123');
-
-// Get current webhook info
-$webhook = $tg->getWebhookInfo();
-
-// Sending message
-$message = $tg->sendMessage(12345, 'Hello World!');
 ```

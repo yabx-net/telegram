@@ -7,9 +7,14 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Yabx\Telegram\Enum\ChatAction;
 use Yabx\Telegram\Objects\File;
+use Yabx\Telegram\Objects\ForceReply;
+use Yabx\Telegram\Objects\InlineKeyboardMarkup;
 use Yabx\Telegram\Objects\Message;
+use Yabx\Telegram\Objects\ReplyKeyboardMarkup;
+use Yabx\Telegram\Objects\ReplyKeyboardRemove;
 use Yabx\Telegram\Objects\Update;
 use Yabx\Telegram\Objects\User;
+use Yabx\Telegram\Objects\UserProfilePhotos;
 use Yabx\Telegram\Objects\WebhookInfo;
 
 class BotApi {
@@ -19,7 +24,7 @@ class BotApi {
     private string $fileBaseUri;
 
     public static function getUpdatefromRequest(): Update {
-        if($body = file_get_contents('php://input')) {
+        if ($body = file_get_contents('php://input')) {
             return self::getUpdateFromJson($body);
         } else {
             throw new Exception('Empty body');
@@ -30,7 +35,7 @@ class BotApi {
      * @throws Exception
      */
     public static function getUpdateFromJson(string $json): Update {
-        if($data = json_decode($json, true)) {
+        if ($data = json_decode($json, true)) {
             return new Update($data);
         } else {
             throw new Exception('Malformed JSON: ' . json_last_error_msg());
@@ -41,10 +46,10 @@ class BotApi {
         $this->apiBaseUri = sprintf('https://api.telegram.org/bot%s/', $token);
         $this->fileBaseUri = sprintf('https://api.telegram.org/file/bot%s/', $token);
         $this->client = new Client([
-			'base_uri' => $this->apiBaseUri,
+            'base_uri' => $this->apiBaseUri,
             'http_errors' => false,
             ...$guzzleOptions
-		]);
+        ]);
     }
 
     /**
@@ -59,7 +64,7 @@ class BotApi {
      */
 
     public function request(string $method, array $params = [], bool $multipart = false): mixed {
-        if($multipart) {
+        if ($multipart) {
             $multipart = [];
             foreach ($params as $key => $value) {
                 $multipart[] = ['name' => $key, 'contents' => $value];
@@ -69,7 +74,7 @@ class BotApi {
             $res = $this->client->post($method, [RequestOptions::JSON => $params]);
         }
         $json = json_decode($res->getBody()->__toString(), true);
-        if($json['ok'] ?? false) return $json['result'];
+        if ($json['ok'] ?? false) return $json['result'];
         throw new Exception($json['description'] ?? 'Unknown error', $json['code'] ?? 500);
     }
 
@@ -90,21 +95,24 @@ class BotApi {
      * @link https://core.telegram.org/bots/api#sendmessage
      * @param int|string $chatId
      * @param string $text
+     * @param ForceReply|ReplyKeyboardRemove|InlineKeyboardMarkup|ReplyKeyboardMarkup|null $replyMarkup
      * @param array $options
      * @return Message
      * @throws Exception
+     * @throws GuzzleException
      */
-	public function sendMessage(int|string $chatId, string $text, array $options = []): Message {
+    public function sendMessage(int|string $chatId, string $text, ForceReply|ReplyKeyboardRemove|InlineKeyboardMarkup|ReplyKeyboardMarkup|null $replyMarkup = null,array $options = []): Message {
         $text = str_replace('\n', "\n", $text);
-		$data = self::request('sendMessage', [
-			'chat_id' => $chatId,
-			'text' => $text,
-			'parse_mode' => 'html',
-			'disable_web_page_preview' => 1,
-			...$options
-		]);
+        $data = self::request('sendMessage', [
+            'chat_id' => $chatId,
+            'text' => $text,
+            'parse_mode' => 'html',
+            'disable_web_page_preview' => 1,
+            'reply_markup' => $replyMarkup?->getRawData(),
+            ...$options
+        ]);
         return new Message($data);
-	}
+    }
 
     /**
      * Use this method to forward messages of any kind. Service messages can't be forwarded.
@@ -383,6 +391,25 @@ class BotApi {
     }
 
     /**
+     * Use this method to get a list of profile pictures for a user. Returns a UserProfilePhotos object.
+     * @link https://core.telegram.org/bots/api#getuserprofilephotos
+     * @param int $userId
+     * @param int $offset
+     * @param int $limit
+     * @return UserProfilePhotos
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getUserProfilePhotos(int $userId, int $offset = 0, int $limit = 100): UserProfilePhotos {
+        $data = $this->request('getUserProfilePhotos', [
+            'user_id' => $userId,
+            'offset' => $offset,
+            'limit' => $limit
+        ]);
+        return new UserProfilePhotos($data);
+    }
+
+    /**
      * @param string $method
      * @param string $key
      * @param int|string $chatId
@@ -395,8 +422,8 @@ class BotApi {
      * @throws GuzzleException
      */
     protected function sendAttachment(string $method, string $key, int|string $chatId, string $attachment, ?string $caption = null, ?string $thumbnail = null, array $options = []): Message {
-        if(file_exists($attachment)) $attachment = fopen($attachment, 'r');
-        if(file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
+        if (file_exists($attachment)) $attachment = fopen($attachment, 'r');
+        if ($thumbnail && file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
         $data = $this->request($method, [
             'chat_id' => $chatId,
             $key => $attachment,
@@ -404,8 +431,8 @@ class BotApi {
             'thumbnail' => $thumbnail,
             ...$options
         ], multipart: is_resource($attachment) || is_resource($thumbnail));
-        if(is_resource($attachment)) fclose($attachment);
-        if(is_resource($thumbnail)) fclose($thumbnail);
+        if (is_resource($attachment)) fclose($attachment);
+        if (is_resource($thumbnail)) fclose($thumbnail);
         return new Message($data);
     }
 
@@ -415,8 +442,8 @@ class BotApi {
         $tmpPath = '/tmp/' . uniqid($fileId) . '.tmp';
         $res = $this->client->get($this->fileBaseUri . $file->getFilePath(), ['sink' => $tmpPath]);
         $code = $res->getStatusCode();
-        if($code === 200) {
-            if(!@rename($tmpPath, $savePath)) {
+        if ($code === 200) {
+            if (!@rename($tmpPath, $savePath)) {
                 @unlink($tmpPath);
                 throw new Exception('Failed to save file to ' . $savePath);
             }
@@ -426,16 +453,16 @@ class BotApi {
         }
     }
 
-	public function setWebhook(string $url, array $options = []): void {
+    public function setWebhook(string $url, array $options = []): void {
         self::request('setWebhook', [
-			'url' => $url,
+            'url' => $url,
             ...$options
-		]);
-	}
+        ]);
+    }
 
-	public function getWebhookInfo(): WebhookInfo {
+    public function getWebhookInfo(): WebhookInfo {
         $data = self::request('getWebhookInfo');
         return new WebhookInfo($data);
-	}
+    }
 
 }
