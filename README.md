@@ -1,5 +1,10 @@
 Telegram Bot API SDK for PHP 8.1+
 ---------------------------------
+- HTTP-Client based on Guzzle
+- Full support of all available types according https://core.telegram.org/bots/api#available-types
+- Most necessary methods for sending messages, videos, documents, etc. have been implemented.
+- We are working on implementing all other methods.
+- Any Telegram API Bot method can be called directly using the official documentation.
 
 Installation
 ------------
