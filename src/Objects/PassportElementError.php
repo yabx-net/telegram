@@ -10,7 +10,7 @@ abstract class PassportElementError {
     use ObjectTrait;
 
     public static function fromArray(array $data): PassportElementError {
-        return match ($data['type'] ?? null) {
+        return match ($data['source'] ?? null) {
             'data' => PassportElementErrorDataField::fromArray($data),
             'file' => PassportElementErrorFile::fromArray($data),
             'files' => PassportElementErrorFiles::fromArray($data),
