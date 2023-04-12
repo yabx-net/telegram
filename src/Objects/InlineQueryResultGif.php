@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InlineQueryResultGif {
-
-    use ObjectTrait;
+final class InlineQueryResultGif extends InlineQueryResult {
 
     /**
      * Type

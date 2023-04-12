@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class PassportElementErrorFrontSide {
-
-    use ObjectTrait;
+final class PassportElementErrorFrontSide extends PassportElementError {
 
     /**
      * Source

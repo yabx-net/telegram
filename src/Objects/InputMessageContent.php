@@ -2,17 +2,20 @@
 
 namespace Yabx\Telegram\Objects;
 
+use Yabx\Telegram\Exception;
 use Yabx\Telegram\ObjectTrait;
 
-final class InputMessageContent {
+abstract class InputMessageContent {
 
     use ObjectTrait;
 
-    public function __construct() {}
-
     public static function fromArray(array $data): InputMessageContent {
-        $instance = new self();
-        return $instance;
+        if(key_exists('message_text', $data)) return InputTextMessageContent::fromArray($data);
+        if(key_exists('latitude', $data) && key_exists('title', $data)) return InputVenueMessageContent::fromArray($data);
+        if(key_exists('latitude', $data)) return InputLocationMessageContent::fromArray($data);
+        if(key_exists('phone_number', $data)) return InputContactMessageContent::fromArray($data);
+        if(key_exists('currency', $data)) return InputInvoiceMessageContent::fromArray($data);
+        throw new Exception('Failed to create InputMessageContent');
     }
 
 }

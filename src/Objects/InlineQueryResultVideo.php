@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InlineQueryResultVideo {
-
-    use ObjectTrait;
+final class InlineQueryResultVideo extends InlineQueryResult {
 
     /**
      * Type

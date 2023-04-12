@@ -2,17 +2,22 @@
 
 namespace Yabx\Telegram\Objects;
 
+use Yabx\Telegram\Exception;
 use Yabx\Telegram\ObjectTrait;
 
-final class InputMedia {
+abstract class InputMedia {
 
     use ObjectTrait;
 
-    public function __construct() {}
-
     public static function fromArray(array $data): InputMedia {
-        $instance = new self();
-        return $instance;
+        return match ($data['type'] ?? null) {
+            'animation' => InputMediaAnimation::fromArray($data),
+            'audio' => InputMediaAudio::fromArray($data),
+            'document' => InputMediaDocument::fromArray($data),
+            'photo' => InputMediaPhoto::fromArray($data),
+            'video' => InputMediaVideo::fromArray($data),
+            default => throw new Exception('Failed to create InputMedia')
+        };
     }
 
 }

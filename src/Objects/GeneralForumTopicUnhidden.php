@@ -1,18 +1,19 @@
-<?php
+<?php /** @noinspection PhpUnusedParameterInspection */
 
 namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\ObjectTrait;
 
+/**
+ * This object represents a service message about General forum topic unhidden in the chat.
+ * Currently holds no information.
+ */
 final class GeneralForumTopicUnhidden {
 
     use ObjectTrait;
 
-    public function __construct() {}
-
     public static function fromArray(array $data): GeneralForumTopicUnhidden {
-        $instance = new self();
-        return $instance;
+        return new self();
     }
 
 }

@@ -1,18 +1,19 @@
-<?php
+<?php /** @noinspection PhpUnusedParameterInspection */
 
 namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\ObjectTrait;
 
+/**
+ * This object represents a service message about a video chat started in the chat.
+ * Currently holds no information.
+ */
 final class VideoChatStarted {
 
     use ObjectTrait;
 
-    public function __construct() {}
-
     public static function fromArray(array $data): VideoChatStarted {
-        $instance = new self();
-        return $instance;
+        return new self();
     }
 
 }

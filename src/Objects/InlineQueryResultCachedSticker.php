@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InlineQueryResultCachedSticker {
-
-    use ObjectTrait;
+final class InlineQueryResultCachedSticker extends InlineQueryResult {
 
     /**
      * Type

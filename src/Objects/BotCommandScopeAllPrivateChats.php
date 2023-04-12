@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class BotCommandScopeAllPrivateChats {
-
-    use ObjectTrait;
+final class BotCommandScopeAllPrivateChats extends BotCommandScope {
 
     /**
      * Type

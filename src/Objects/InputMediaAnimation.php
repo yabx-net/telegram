@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InputMediaAnimation {
-
-    use ObjectTrait;
+final class InputMediaAnimation extends InputMedia {
 
     /**
      * Type

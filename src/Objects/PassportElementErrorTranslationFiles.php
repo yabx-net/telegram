@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class PassportElementErrorTranslationFiles {
-
-    use ObjectTrait;
+final class PassportElementErrorTranslationFiles extends PassportElementError {
 
     /**
      * Source

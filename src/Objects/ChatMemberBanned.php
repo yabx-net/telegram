@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ChatMemberBanned {
-
-    use ObjectTrait;
+final class ChatMemberBanned extends ChatMember {
 
     /**
      * Status

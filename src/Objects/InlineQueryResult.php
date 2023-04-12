@@ -2,17 +2,28 @@
 
 namespace Yabx\Telegram\Objects;
 
+use Yabx\Telegram\Exception;
 use Yabx\Telegram\ObjectTrait;
 
-final class InlineQueryResult {
+abstract class InlineQueryResult {
 
     use ObjectTrait;
 
-    public function __construct() {}
-
     public static function fromArray(array $data): InlineQueryResult {
-        $instance = new self();
-        return $instance;
+        return match ($data['type'] ?? null) {
+            'article' => InlineQueryResultArticle::fromArray($data),
+            'audio' => InlineQueryResultAudio::fromArray($data),
+            'contact' => InlineQueryResultContact::fromArray($data),
+            'document' => InlineQueryResultDocument::fromArray($data),
+            'game' => InlineQueryResultGame::fromArray($data),
+            'gif' => InlineQueryResultGif::fromArray($data),
+            'location' => InlineQueryResultLocation::fromArray($data),
+            'photo' => InlineQueryResultPhoto::fromArray($data),
+            'venue' => InlineQueryResultVenue::fromArray($data),
+            'video' => InlineQueryResultVideo::fromArray($data),
+            'voice' => InlineQueryResultVoice::fromArray($data),
+            default => throw new Exception('Failed to create InlineQueryResult')
+        };
     }
 
 }
