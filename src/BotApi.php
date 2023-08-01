@@ -100,14 +100,15 @@ class BotApi {
      */
     public function sendMessage(int|string $chatId, string $text, ?ReplyMarkup $replyMarkup = null, array $options = []): Message {
         $text = str_replace('\n', "\n", $text);
-        $data = self::request('sendMessage', [
+        $params = [
             'chat_id' => $chatId,
             'text' => $text,
             'parse_mode' => 'html',
             'disable_web_page_preview' => 1,
-            'reply_markup' => $replyMarkup?->toArray(),
             ...$options
-        ]);
+        ];
+        if($replyMarkup) $params['reply_markup'] = $replyMarkup->toArray();
+        $data = self::request('sendMessage', $params);
         return Message::fromArray($data);
     }
 
