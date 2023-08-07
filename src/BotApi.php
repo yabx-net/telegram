@@ -433,6 +433,33 @@ class BotApi {
         return Message::fromArray($data);
     }
 
+    /**
+     * Use this method to send answers to callback queries sent from inline keyboards. The answer will be displayed
+     * to the user as a notification at the top of the chat screen or as an alert. On success, True is returned.
+     * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first
+     * create a game for your bot via @BotFather and accept the terms. Otherwise, you may use links like
+     * t.me/your_bot?start=XXXX that open your bot with a parameter.
+     * @link https://core.telegram.org/bots/api#answercallbackquery
+     * @param int $callbackQueryId
+     * @param string|null $text
+     * @param bool|null $showAlert
+     * @param string|null $url
+     * @param int $cacheTime
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function answerCallbackQuery(int $callbackQueryId, ?string $text = null, ?bool $showAlert = false, ?string $url = null, int $cacheTime = 0): bool {
+        $params = [
+            'callback_query_id' => $callbackQueryId,
+            'show_alert' => $showAlert,
+            'cache_time' => $cacheTime
+        ];
+        if($text) $params['text'] = $text;
+        if($url) $params['url'] = $url;
+        return $this->request('answerCallbackQuery', $params);
+    }
+
     public function getFile(string $fileId, string $savePath): void {
         $data = $this->request('getFile', ['file_id' => $fileId]);
         $file = File::fromArray($data);

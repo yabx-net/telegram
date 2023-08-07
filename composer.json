@@ -1,6 +1,6 @@
 {
   "name": "yabx/telegram",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Telegram Bot API SDK for PHP 8.1+",
   "keywords": ["telegram", "bot", "api", "sdk", "telegram bot", "telegram bot api", "telegram sdk", "telegram php"],
   "type": "library",
