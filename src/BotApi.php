@@ -5,6 +5,7 @@ namespace Yabx\Telegram;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use Psr\Log\NullLogger;
 use Yabx\Telegram\Enum\ChatAction;
 use Yabx\Telegram\Objects\File;
 use Yabx\Telegram\Objects\Message;
@@ -13,9 +14,11 @@ use Yabx\Telegram\Objects\Update;
 use Yabx\Telegram\Objects\User;
 use Yabx\Telegram\Objects\UserProfilePhotos;
 use Yabx\Telegram\Objects\WebhookInfo;
+use Psr\Log\LoggerInterface;
 
 class BotApi {
 
+    protected ?LoggerInterface $logger;
     private Client $client;
     private string $apiBaseUri;
     private string $fileBaseUri;
@@ -39,7 +42,7 @@ class BotApi {
         }
     }
 
-    public function __construct(string $token, array $guzzleOptions = []) {
+    public function __construct(string $token, array $guzzleOptions = [], LoggerInterface $logger = null) {
         $this->apiBaseUri = sprintf('https://api.telegram.org/bot%s/', $token);
         $this->fileBaseUri = sprintf('https://api.telegram.org/file/bot%s/', $token);
         $this->client = new Client([
@@ -47,6 +50,7 @@ class BotApi {
             'http_errors' => false,
             ...$guzzleOptions
         ]);
+        $this->logger = $logger ?? new NullLogger;
     }
 
     /**
@@ -61,6 +65,7 @@ class BotApi {
      */
 
     public function request(string $method, array $params = [], bool $multipart = false): mixed {
+        $this->logger->debug('REQUEST: ' . $method, $params);
         if ($multipart) {
             $multipart = [];
             foreach ($params as $key => $value) {
@@ -71,8 +76,13 @@ class BotApi {
             $res = $this->client->post($method, [RequestOptions::JSON => $params]);
         }
         $json = json_decode($res->getBody()->__toString(), true);
-        if ($json['ok'] ?? false) return $json['result'];
-        throw new Exception($json['description'] ?? 'Unknown error', $json['code'] ?? 500);
+        if ($json['ok'] ?? false) {
+            $this->logger->debug('RESPONSE', $json);
+            return $json['result'];
+        } else {
+            $this->logger->debug('ERROR', $json);
+            throw new Exception($json['description'] ?? 'Unknown error', $json['code'] ?? 500);
+        }
     }
 
     /**
