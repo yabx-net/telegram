@@ -487,6 +487,34 @@ class BotApi {
         }
     }
 
+    /**
+     * Use this method to edit text and game messages. On success, if the edited message is not an inline message,
+     * the edited Message is returned, otherwise True is returned.
+     * @link https://core.telegram.org/bots/api#editmessagetext
+     * @param int|string $chatId
+     * @param int $messageId
+     * @param string $text
+     * @param ReplyMarkup|null $replyMarkup
+     * @param array $options
+     * @return Message
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function editMessageText(int|string $chatId, int $messageId, string $text, ?ReplyMarkup $replyMarkup = null, array $options = []): Message {
+        $text = str_replace('\n', "\n", $text);
+        $params = [
+            'chat_id' => $chatId,
+            'message_id' => $messageId,
+            'text' => $text,
+            'parse_mode' => 'html',
+            'disable_web_page_preview' => 1,
+            ...$options
+        ];
+        if($replyMarkup) $params['reply_markup'] = $replyMarkup->toArray();
+        $data = self::request('editMessageText', $params);
+        return Message::fromArray($data);
+    }
+
     public function setWebhook(string $url, array $options = []): void {
         self::request('setWebhook', [
             'url' => $url,
