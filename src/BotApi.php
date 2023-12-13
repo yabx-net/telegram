@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Psr\Log\NullLogger;
 use Yabx\Telegram\Enum\ChatAction;
+use Yabx\Telegram\Objects\Chat;
 use Yabx\Telegram\Objects\File;
 use Yabx\Telegram\Objects\Message;
 use Yabx\Telegram\Objects\ReplyMarkup;
@@ -95,6 +96,21 @@ class BotApi {
      */
     public function getMe(): User {
         return User::fromArray($this->request('getMe'));
+    }
+
+    /**
+     * Use this method to get up to date information about the chat (current name of the user for one-on-one
+     * conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
+     * @link https://core.telegram.org/bots/api#getchat
+     * @param int|string $chatId
+     * @return Chat
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getChat(int|string $chatId): Chat {
+        return Chat::fromArray($this->request('getChat', [
+            'chat_id' => $chatId
+        ]));
     }
 
     /**
