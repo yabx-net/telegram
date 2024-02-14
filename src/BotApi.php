@@ -99,6 +99,95 @@ class BotApi {
     }
 
     /**
+     * Use this method to get the current bot name for the given user language. Returns BotName on success.
+     * @link https://core.telegram.org/bots/api#getmyname
+     * @param string|null $languageCode
+     * @return string
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getMyName(?string $languageCode = null): string {
+        $params = [];
+        if($languageCode) $params['language_code'] = $languageCode;
+        return $this->request('getMyName', $params)['name'];
+    }
+
+    /**
+     * Use this method to change the bot's name. Returns True on success.
+     * @link https://core.telegram.org/bots/api#setmyname
+     * @param string $name
+     * @param string|null $languageCode
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function setMyName(string $name, ?string $languageCode = null): bool {
+        $params = ['name' => $name];
+        if($languageCode) $params['language_code'] = $languageCode;
+        return $this->request('setMyName', $params);
+    }
+
+    /**
+     * Use this method to get the current bot description for the given user language. Returns BotDescription on success.
+     * @link https://core.telegram.org/bots/api#getmydescription
+     * @param string|null $languageCode
+     * @return string
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getMyDescription(?string $languageCode = null): string {
+        $params = [];
+        if($languageCode) $params['language_code'] = $languageCode;
+        return $this->request('getMyDescription', $params)['description'];
+    }
+
+    /**
+     * Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty.
+     * Returns True on success.
+     * @link https://core.telegram.org/bots/api#setmydescription
+     * @param string $description
+     * @param string|null $languageCode
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function setMyDescription(string $description, ?string $languageCode = null): bool {
+        $params = ['description' => $description];
+        if($languageCode) $params['language_code'] = $languageCode;
+        return $this->request('setMyDescription', $params);
+    }
+
+    /**
+     * Use this method to get the current bot short description for the given user language. Returns BotShortDescription on success.
+     * @link https://core.telegram.org/bots/api#getmyshortdescription
+     * @param string|null $languageCode
+     * @return string
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getMyShortDescription(?string $languageCode = null): string {
+        $params = [];
+        if($languageCode) $params['language_code'] = $languageCode;
+        return $this->request('getMyShortDescription', $params)['short_description'];
+    }
+
+    /**
+     * Use this method to change the bot's short description, which is shown on the bot's profile page and is sent
+     * together with the link when users share the bot. Returns True on success.
+     * @link https://core.telegram.org/bots/api#setmyshortdescription
+     * @param string $description
+     * @param string|null $languageCode
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function setMyShortDescription(string $description, ?string $languageCode = null): bool {
+        $params = ['short_description' => $description];
+        if($languageCode) $params['language_code'] = $languageCode;
+        return $this->request('setMyShortDescription', $params);
+    }
+
+    /**
      * Use this method to get up to date information about the chat (current name of the user for one-on-one
      * conversations, current username of a user, group or channel, etc.). Returns a Chat object on success.
      * @link https://core.telegram.org/bots/api#getchat
