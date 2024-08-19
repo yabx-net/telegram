@@ -9,6 +9,7 @@ use Psr\Log\NullLogger;
 use Yabx\Telegram\Enum\ChatAction;
 use Yabx\Telegram\Objects\Chat;
 use Yabx\Telegram\Objects\File;
+use Yabx\Telegram\Objects\Invoice;
 use Yabx\Telegram\Objects\Message;
 use Yabx\Telegram\Objects\ReplyMarkup;
 use Yabx\Telegram\Objects\Update;
@@ -618,6 +619,39 @@ class BotApi {
         if($replyMarkup) $params['reply_markup'] = $replyMarkup->toArray();
         $data = self::request('editMessageText', $params);
         return Message::fromArray($data);
+    }
+
+    /**
+     * Use this method to send invoices. On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#sendinvoice
+     * @param int|string $chatId
+     * @param string $title
+     * @param string $description
+     * @param string $payload
+     * @param array $prices
+     * @param string $currency
+     * @param array $options
+     * @return Invoice
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function sendInvoice(int|string $chatId, string $title, string $description, string $payload, array $prices = [], string $currency = 'XTR', array $options = []): Invoice {
+        $data = $this->request('sendInvoice', [
+            'chat_id' => $chatId,
+            'title' => $title,
+            'description' => $description,
+            'payload' => $payload,
+            'prices' => $prices,
+            'currency' => $currency,
+            ...$options
+        ]);
+        return Invoice::fromArray($data);
+    }
+
+    public function answerPreCheckoutQuery(string $preCheckoutQueryId, bool $ok, ?string $errorMessage = null): bool {
+        $params = ['pre_checkout_query_id' => $preCheckoutQueryId, 'ok' => $ok,];
+        if($errorMessage) $params['error_message'] = $errorMessage;
+        return $this->request('answerPreCheckoutQuery', $params);
     }
 
     public function setWebhook(string $url, array $options = []): void {
