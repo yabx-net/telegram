@@ -43,9 +43,9 @@ class BotApi {
         }
     }
 
-    public function __construct(string $token, array $guzzleOptions = [], LoggerInterface $logger = null) {
-        $this->apiBaseUri = sprintf('https://api.telegram.org/bot%s/', $token);
-        $this->fileBaseUri = sprintf('https://api.telegram.org/file/bot%s/', $token);
+    public function __construct(string $token, array $guzzleOptions = [], LoggerInterface $logger = null, string $apiUrl = 'https://api.telegram.org') {
+        $this->apiBaseUri = sprintf('%s/bot%s/', $apiUrl, $token);
+        $this->fileBaseUri = sprintf('%s/file/bot%s/', $apiUrl, $token);
         $this->client = new Client([
             'base_uri' => $this->apiBaseUri,
             'http_errors' => false,
