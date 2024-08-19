@@ -21,6 +21,7 @@ final class InlineKeyboardMarkup extends ReplyMarkup {
         if (isset($data['inline_keyboard'])) {
             $instance->inlineKeyboard = [];
             foreach ($data['inline_keyboard'] as $item) {
+                if(!$item) continue;
                 $instance->inlineKeyboard[] = InlineKeyboardButton::fromArray($item);
             }
         }
