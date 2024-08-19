@@ -4,7 +4,7 @@ namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\ObjectTrait;
 
-final class InlineKeyboardMarkup {
+final class InlineKeyboardMarkup extends ReplyMarkup {
 
     use ObjectTrait;
 

@@ -4,7 +4,7 @@ namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\ObjectTrait;
 
-final class ForceReply {
+final class ForceReply extends ReplyMarkup {
 
     use ObjectTrait;
 
