@@ -24,14 +24,6 @@ final class UserProfilePhotos {
      */
     protected ?array $photos = null;
 
-    public function __construct(
-        ?int   $totalCount = null,
-        ?array $photos = null,
-    ) {
-        $this->totalCount = $totalCount;
-        $this->photos = $photos;
-    }
-
     public static function fromArray(array $data): UserProfilePhotos {
         $instance = new self();
         if (isset($data['total_count'])) {
@@ -44,6 +36,14 @@ final class UserProfilePhotos {
             }
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?int   $totalCount = null,
+        ?array $photos = null,
+    ) {
+        $this->totalCount = $totalCount;
+        $this->photos = $photos;
     }
 
     public function getTotalCount(): ?int {

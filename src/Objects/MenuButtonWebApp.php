@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class MenuButtonWebApp extends MenuButton {
+use Yabx\Telegram\ObjectTrait;
+
+final class MenuButtonWebApp {
+
+    use ObjectTrait;
 
     /**
      * Type
@@ -23,20 +27,10 @@ final class MenuButtonWebApp extends MenuButton {
     /**
      * Web App
      *
-     * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery.
+     * Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Alternatively, a t.me link to a Web App of the bot can be specified in the object instead of the Web App's URL, in which case the Web App will be opened as if the user pressed the link.
      * @var WebAppInfo|null
      */
     protected ?WebAppInfo $webApp = null;
-
-    public function __construct(
-        ?string     $type = null,
-        ?string     $text = null,
-        ?WebAppInfo $webApp = null,
-    ) {
-        $this->type = $type;
-        $this->text = $text;
-        $this->webApp = $webApp;
-    }
 
     public static function fromArray(array $data): MenuButtonWebApp {
         $instance = new self();
@@ -50,6 +44,16 @@ final class MenuButtonWebApp extends MenuButton {
             $instance->webApp = WebAppInfo::fromArray($data['web_app']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string     $type = null,
+        ?string     $text = null,
+        ?WebAppInfo $webApp = null,
+    ) {
+        $this->type = $type;
+        $this->text = $text;
+        $this->webApp = $webApp;
     }
 
     public function getType(): ?string {

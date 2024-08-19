@@ -56,22 +56,6 @@ final class Game {
      */
     protected ?Animation $animation = null;
 
-    public function __construct(
-        ?string    $title = null,
-        ?string    $description = null,
-        ?array     $photo = null,
-        ?string    $text = null,
-        ?array     $textEntities = null,
-        ?Animation $animation = null,
-    ) {
-        $this->title = $title;
-        $this->description = $description;
-        $this->photo = $photo;
-        $this->text = $text;
-        $this->textEntities = $textEntities;
-        $this->animation = $animation;
-    }
-
     public static function fromArray(array $data): Game {
         $instance = new self();
         if (isset($data['title'])) {
@@ -99,6 +83,22 @@ final class Game {
             $instance->animation = Animation::fromArray($data['animation']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string    $title = null,
+        ?string    $description = null,
+        ?array     $photo = null,
+        ?string    $text = null,
+        ?array     $textEntities = null,
+        ?Animation $animation = null,
+    ) {
+        $this->title = $title;
+        $this->description = $description;
+        $this->photo = $photo;
+        $this->text = $text;
+        $this->textEntities = $textEntities;
+        $this->animation = $animation;
     }
 
     public function getTitle(): ?string {

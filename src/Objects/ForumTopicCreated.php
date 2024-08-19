@@ -32,16 +32,6 @@ final class ForumTopicCreated {
      */
     protected ?string $iconCustomEmojiId = null;
 
-    public function __construct(
-        ?string $name = null,
-        ?int    $iconColor = null,
-        ?string $iconCustomEmojiId = null,
-    ) {
-        $this->name = $name;
-        $this->iconColor = $iconColor;
-        $this->iconCustomEmojiId = $iconCustomEmojiId;
-    }
-
     public static function fromArray(array $data): ForumTopicCreated {
         $instance = new self();
         if (isset($data['name'])) {
@@ -54,6 +44,16 @@ final class ForumTopicCreated {
             $instance->iconCustomEmojiId = $data['icon_custom_emoji_id'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $name = null,
+        ?int    $iconColor = null,
+        ?string $iconCustomEmojiId = null,
+    ) {
+        $this->name = $name;
+        $this->iconColor = $iconColor;
+        $this->iconCustomEmojiId = $iconCustomEmojiId;
     }
 
     public function getName(): ?string {

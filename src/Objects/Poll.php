@@ -25,6 +25,14 @@ final class Poll {
     protected ?string $question = null;
 
     /**
+     * Question Entities
+     *
+     * Optional. Special entities that appear in the question. Currently, only custom emoji entities are allowed in poll questions
+     * @var MessageEntity[]|null
+     */
+    protected ?array $questionEntities = null;
+
+    /**
      * Options
      *
      * List of poll options
@@ -112,36 +120,6 @@ final class Poll {
      */
     protected ?int $closeDate = null;
 
-    public function __construct(
-        ?string $id = null,
-        ?string $question = null,
-        ?array  $options = null,
-        ?int    $totalVoterCount = null,
-        ?bool   $isClosed = null,
-        ?bool   $isAnonymous = null,
-        ?string $type = null,
-        ?bool   $allowsMultipleAnswers = null,
-        ?int    $correctOptionId = null,
-        ?string $explanation = null,
-        ?array  $explanationEntities = null,
-        ?int    $openPeriod = null,
-        ?int    $closeDate = null,
-    ) {
-        $this->id = $id;
-        $this->question = $question;
-        $this->options = $options;
-        $this->totalVoterCount = $totalVoterCount;
-        $this->isClosed = $isClosed;
-        $this->isAnonymous = $isAnonymous;
-        $this->type = $type;
-        $this->allowsMultipleAnswers = $allowsMultipleAnswers;
-        $this->correctOptionId = $correctOptionId;
-        $this->explanation = $explanation;
-        $this->explanationEntities = $explanationEntities;
-        $this->openPeriod = $openPeriod;
-        $this->closeDate = $closeDate;
-    }
-
     public static function fromArray(array $data): Poll {
         $instance = new self();
         if (isset($data['id'])) {
@@ -149,6 +127,12 @@ final class Poll {
         }
         if (isset($data['question'])) {
             $instance->question = $data['question'];
+        }
+        if (isset($data['question_entities'])) {
+            $instance->questionEntities = [];
+            foreach ($data['question_entities'] as $item) {
+                $instance->questionEntities[] = MessageEntity::fromArray($item);
+            }
         }
         if (isset($data['options'])) {
             $instance->options = [];
@@ -192,6 +176,38 @@ final class Poll {
         return $instance;
     }
 
+    public function __construct(
+        ?string $id = null,
+        ?string $question = null,
+        ?array  $questionEntities = null,
+        ?array  $options = null,
+        ?int    $totalVoterCount = null,
+        ?bool   $isClosed = null,
+        ?bool   $isAnonymous = null,
+        ?string $type = null,
+        ?bool   $allowsMultipleAnswers = null,
+        ?int    $correctOptionId = null,
+        ?string $explanation = null,
+        ?array  $explanationEntities = null,
+        ?int    $openPeriod = null,
+        ?int    $closeDate = null,
+    ) {
+        $this->id = $id;
+        $this->question = $question;
+        $this->questionEntities = $questionEntities;
+        $this->options = $options;
+        $this->totalVoterCount = $totalVoterCount;
+        $this->isClosed = $isClosed;
+        $this->isAnonymous = $isAnonymous;
+        $this->type = $type;
+        $this->allowsMultipleAnswers = $allowsMultipleAnswers;
+        $this->correctOptionId = $correctOptionId;
+        $this->explanation = $explanation;
+        $this->explanationEntities = $explanationEntities;
+        $this->openPeriod = $openPeriod;
+        $this->closeDate = $closeDate;
+    }
+
     public function getId(): ?string {
         return $this->id;
     }
@@ -207,6 +223,15 @@ final class Poll {
 
     public function setQuestion(?string $value): self {
         $this->question = $value;
+        return $this;
+    }
+
+    public function getQuestionEntities(): ?array {
+        return $this->questionEntities;
+    }
+
+    public function setQuestionEntities(?array $value): self {
+        $this->questionEntities = $value;
         return $this;
     }
 

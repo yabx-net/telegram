@@ -24,14 +24,6 @@ final class PassportData {
      */
     protected ?EncryptedCredentials $credentials = null;
 
-    public function __construct(
-        ?array                $data = null,
-        ?EncryptedCredentials $credentials = null,
-    ) {
-        $this->data = $data;
-        $this->credentials = $credentials;
-    }
-
     public static function fromArray(array $data): PassportData {
         $instance = new self();
         if (isset($data['data'])) {
@@ -44,6 +36,14 @@ final class PassportData {
             $instance->credentials = EncryptedCredentials::fromArray($data['credentials']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?array                $data = null,
+        ?EncryptedCredentials $credentials = null,
+    ) {
+        $this->data = $data;
+        $this->credentials = $credentials;
     }
 
     public function getData(): ?array {

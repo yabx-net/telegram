@@ -11,7 +11,7 @@ final class Update {
     /**
      * Update Id
      *
-     * The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This ID becomes especially handy if you're using webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
+     * The update's unique identifier. Update identifiers start from a certain positive number and increase sequentially. This identifier becomes especially handy if you're using webhooks, since it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order. If there are no new updates for at least a week, then identifier of the next update will be chosen randomly instead of sequentially.
      * @var int|null
      */
     protected ?int $updateId = null;
@@ -27,7 +27,7 @@ final class Update {
     /**
      * Edited Message
      *
-     * Optional. New version of a message that is known to the bot and was edited
+     * Optional. New version of a message that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
      * @var Message|null
      */
     protected ?Message $editedMessage = null;
@@ -43,10 +43,58 @@ final class Update {
     /**
      * Edited Channel Post
      *
-     * Optional. New version of a channel post that is known to the bot and was edited
+     * Optional. New version of a channel post that is known to the bot and was edited. This update may at times be triggered by changes to message fields that are either unavailable or not actively used by your bot.
      * @var Message|null
      */
     protected ?Message $editedChannelPost = null;
+
+    /**
+     * Business Connection
+     *
+     * Optional. The bot was connected to or disconnected from a business account, or a user edited an existing connection with the bot
+     * @var BusinessConnection|null
+     */
+    protected ?BusinessConnection $businessConnection = null;
+
+    /**
+     * Business Message
+     *
+     * Optional. New message from a connected business account
+     * @var Message|null
+     */
+    protected ?Message $businessMessage = null;
+
+    /**
+     * Edited Business Message
+     *
+     * Optional. New version of a message from a connected business account
+     * @var Message|null
+     */
+    protected ?Message $editedBusinessMessage = null;
+
+    /**
+     * Deleted Business Messages
+     *
+     * Optional. Messages were deleted from a connected business account
+     * @var BusinessMessagesDeleted|null
+     */
+    protected ?BusinessMessagesDeleted $deletedBusinessMessages = null;
+
+    /**
+     * Message Reaction
+     *
+     * Optional. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots.
+     * @var MessageReactionUpdated|null
+     */
+    protected ?MessageReactionUpdated $messageReaction = null;
+
+    /**
+     * Message Reaction Count
+     *
+     * Optional. Reactions to a message with anonymous reactions were changed. The bot must be an administrator in the chat and must explicitly specify "message_reaction_count" in the list of allowed_updates to receive these updates. The updates are grouped and can be sent with delay up to a few minutes.
+     * @var MessageReactionCountUpdated|null
+     */
+    protected ?MessageReactionCountUpdated $messageReactionCount = null;
 
     /**
      * Inline Query
@@ -91,7 +139,7 @@ final class Update {
     /**
      * Poll
      *
-     * Optional. New poll state. Bots receive only updates about stopped polls and polls, which are sent by the bot
+     * Optional. New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot
      * @var Poll|null
      */
     protected ?Poll $poll = null;
@@ -115,7 +163,7 @@ final class Update {
     /**
      * Chat Member
      *
-     * Optional. A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify “chat_member” in the list of allowed_updates to receive these updates.
+     * Optional. A chat member's status was updated in a chat. The bot must be an administrator in the chat and must explicitly specify "chat_member" in the list of allowed_updates to receive these updates.
      * @var ChatMemberUpdated|null
      */
     protected ?ChatMemberUpdated $chatMember = null;
@@ -128,39 +176,21 @@ final class Update {
      */
     protected ?ChatJoinRequest $chatJoinRequest = null;
 
-    public function __construct(
-        ?int                $updateId = null,
-        ?Message            $message = null,
-        ?Message            $editedMessage = null,
-        ?Message            $channelPost = null,
-        ?Message            $editedChannelPost = null,
-        ?InlineQuery        $inlineQuery = null,
-        ?ChosenInlineResult $chosenInlineResult = null,
-        ?CallbackQuery      $callbackQuery = null,
-        ?ShippingQuery      $shippingQuery = null,
-        ?PreCheckoutQuery   $preCheckoutQuery = null,
-        ?Poll               $poll = null,
-        ?PollAnswer         $pollAnswer = null,
-        ?ChatMemberUpdated  $myChatMember = null,
-        ?ChatMemberUpdated  $chatMember = null,
-        ?ChatJoinRequest    $chatJoinRequest = null,
-    ) {
-        $this->updateId = $updateId;
-        $this->message = $message;
-        $this->editedMessage = $editedMessage;
-        $this->channelPost = $channelPost;
-        $this->editedChannelPost = $editedChannelPost;
-        $this->inlineQuery = $inlineQuery;
-        $this->chosenInlineResult = $chosenInlineResult;
-        $this->callbackQuery = $callbackQuery;
-        $this->shippingQuery = $shippingQuery;
-        $this->preCheckoutQuery = $preCheckoutQuery;
-        $this->poll = $poll;
-        $this->pollAnswer = $pollAnswer;
-        $this->myChatMember = $myChatMember;
-        $this->chatMember = $chatMember;
-        $this->chatJoinRequest = $chatJoinRequest;
-    }
+    /**
+     * Chat Boost
+     *
+     * Optional. A chat boost was added or changed. The bot must be an administrator in the chat to receive these updates.
+     * @var ChatBoostUpdated|null
+     */
+    protected ?ChatBoostUpdated $chatBoost = null;
+
+    /**
+     * Removed Chat Boost
+     *
+     * Optional. A boost was removed from a chat. The bot must be an administrator in the chat to receive these updates.
+     * @var ChatBoostRemoved|null
+     */
+    protected ?ChatBoostRemoved $removedChatBoost = null;
 
     public static function fromArray(array $data): Update {
         $instance = new self();
@@ -178,6 +208,24 @@ final class Update {
         }
         if (isset($data['edited_channel_post'])) {
             $instance->editedChannelPost = Message::fromArray($data['edited_channel_post']);
+        }
+        if (isset($data['business_connection'])) {
+            $instance->businessConnection = BusinessConnection::fromArray($data['business_connection']);
+        }
+        if (isset($data['business_message'])) {
+            $instance->businessMessage = Message::fromArray($data['business_message']);
+        }
+        if (isset($data['edited_business_message'])) {
+            $instance->editedBusinessMessage = Message::fromArray($data['edited_business_message']);
+        }
+        if (isset($data['deleted_business_messages'])) {
+            $instance->deletedBusinessMessages = BusinessMessagesDeleted::fromArray($data['deleted_business_messages']);
+        }
+        if (isset($data['message_reaction'])) {
+            $instance->messageReaction = MessageReactionUpdated::fromArray($data['message_reaction']);
+        }
+        if (isset($data['message_reaction_count'])) {
+            $instance->messageReactionCount = MessageReactionCountUpdated::fromArray($data['message_reaction_count']);
         }
         if (isset($data['inline_query'])) {
             $instance->inlineQuery = InlineQuery::fromArray($data['inline_query']);
@@ -209,7 +257,63 @@ final class Update {
         if (isset($data['chat_join_request'])) {
             $instance->chatJoinRequest = ChatJoinRequest::fromArray($data['chat_join_request']);
         }
+        if (isset($data['chat_boost'])) {
+            $instance->chatBoost = ChatBoostUpdated::fromArray($data['chat_boost']);
+        }
+        if (isset($data['removed_chat_boost'])) {
+            $instance->removedChatBoost = ChatBoostRemoved::fromArray($data['removed_chat_boost']);
+        }
         return $instance;
+    }
+
+    public function __construct(
+        ?int                         $updateId = null,
+        ?Message                     $message = null,
+        ?Message                     $editedMessage = null,
+        ?Message                     $channelPost = null,
+        ?Message                     $editedChannelPost = null,
+        ?BusinessConnection          $businessConnection = null,
+        ?Message                     $businessMessage = null,
+        ?Message                     $editedBusinessMessage = null,
+        ?BusinessMessagesDeleted     $deletedBusinessMessages = null,
+        ?MessageReactionUpdated      $messageReaction = null,
+        ?MessageReactionCountUpdated $messageReactionCount = null,
+        ?InlineQuery                 $inlineQuery = null,
+        ?ChosenInlineResult          $chosenInlineResult = null,
+        ?CallbackQuery               $callbackQuery = null,
+        ?ShippingQuery               $shippingQuery = null,
+        ?PreCheckoutQuery            $preCheckoutQuery = null,
+        ?Poll                        $poll = null,
+        ?PollAnswer                  $pollAnswer = null,
+        ?ChatMemberUpdated           $myChatMember = null,
+        ?ChatMemberUpdated           $chatMember = null,
+        ?ChatJoinRequest             $chatJoinRequest = null,
+        ?ChatBoostUpdated            $chatBoost = null,
+        ?ChatBoostRemoved            $removedChatBoost = null,
+    ) {
+        $this->updateId = $updateId;
+        $this->message = $message;
+        $this->editedMessage = $editedMessage;
+        $this->channelPost = $channelPost;
+        $this->editedChannelPost = $editedChannelPost;
+        $this->businessConnection = $businessConnection;
+        $this->businessMessage = $businessMessage;
+        $this->editedBusinessMessage = $editedBusinessMessage;
+        $this->deletedBusinessMessages = $deletedBusinessMessages;
+        $this->messageReaction = $messageReaction;
+        $this->messageReactionCount = $messageReactionCount;
+        $this->inlineQuery = $inlineQuery;
+        $this->chosenInlineResult = $chosenInlineResult;
+        $this->callbackQuery = $callbackQuery;
+        $this->shippingQuery = $shippingQuery;
+        $this->preCheckoutQuery = $preCheckoutQuery;
+        $this->poll = $poll;
+        $this->pollAnswer = $pollAnswer;
+        $this->myChatMember = $myChatMember;
+        $this->chatMember = $chatMember;
+        $this->chatJoinRequest = $chatJoinRequest;
+        $this->chatBoost = $chatBoost;
+        $this->removedChatBoost = $removedChatBoost;
     }
 
     public function getUpdateId(): ?int {
@@ -254,6 +358,60 @@ final class Update {
 
     public function setEditedChannelPost(?Message $value): self {
         $this->editedChannelPost = $value;
+        return $this;
+    }
+
+    public function getBusinessConnection(): ?BusinessConnection {
+        return $this->businessConnection;
+    }
+
+    public function setBusinessConnection(?BusinessConnection $value): self {
+        $this->businessConnection = $value;
+        return $this;
+    }
+
+    public function getBusinessMessage(): ?Message {
+        return $this->businessMessage;
+    }
+
+    public function setBusinessMessage(?Message $value): self {
+        $this->businessMessage = $value;
+        return $this;
+    }
+
+    public function getEditedBusinessMessage(): ?Message {
+        return $this->editedBusinessMessage;
+    }
+
+    public function setEditedBusinessMessage(?Message $value): self {
+        $this->editedBusinessMessage = $value;
+        return $this;
+    }
+
+    public function getDeletedBusinessMessages(): ?BusinessMessagesDeleted {
+        return $this->deletedBusinessMessages;
+    }
+
+    public function setDeletedBusinessMessages(?BusinessMessagesDeleted $value): self {
+        $this->deletedBusinessMessages = $value;
+        return $this;
+    }
+
+    public function getMessageReaction(): ?MessageReactionUpdated {
+        return $this->messageReaction;
+    }
+
+    public function setMessageReaction(?MessageReactionUpdated $value): self {
+        $this->messageReaction = $value;
+        return $this;
+    }
+
+    public function getMessageReactionCount(): ?MessageReactionCountUpdated {
+        return $this->messageReactionCount;
+    }
+
+    public function setMessageReactionCount(?MessageReactionCountUpdated $value): self {
+        $this->messageReactionCount = $value;
         return $this;
     }
 
@@ -344,6 +502,24 @@ final class Update {
 
     public function setChatJoinRequest(?ChatJoinRequest $value): self {
         $this->chatJoinRequest = $value;
+        return $this;
+    }
+
+    public function getChatBoost(): ?ChatBoostUpdated {
+        return $this->chatBoost;
+    }
+
+    public function setChatBoost(?ChatBoostUpdated $value): self {
+        $this->chatBoost = $value;
+        return $this;
+    }
+
+    public function getRemovedChatBoost(): ?ChatBoostRemoved {
+        return $this->removedChatBoost;
+    }
+
+    public function setRemovedChatBoost(?ChatBoostRemoved $value): self {
+        $this->removedChatBoost = $value;
         return $this;
     }
 

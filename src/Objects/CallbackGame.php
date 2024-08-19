@@ -1,13 +1,9 @@
-<?php /** @noinspection PhpUnusedParameterInspection */
+<?php
 
 namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\ObjectTrait;
 
-/**
- * A placeholder, currently holds no information.
- * Use BotFather to set up your game.
- */
 final class CallbackGame {
 
     use ObjectTrait;

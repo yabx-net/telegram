@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class PassportElementErrorUnspecified extends PassportElementError {
+use Yabx\Telegram\ObjectTrait;
+
+final class PassportElementErrorUnspecified {
+
+    use ObjectTrait;
 
     /**
      * Source
@@ -36,18 +40,6 @@ final class PassportElementErrorUnspecified extends PassportElementError {
      */
     protected ?string $message = null;
 
-    public function __construct(
-        ?string $source = null,
-        ?string $type = null,
-        ?string $elementHash = null,
-        ?string $message = null,
-    ) {
-        $this->source = $source;
-        $this->type = $type;
-        $this->elementHash = $elementHash;
-        $this->message = $message;
-    }
-
     public static function fromArray(array $data): PassportElementErrorUnspecified {
         $instance = new self();
         if (isset($data['source'])) {
@@ -63,6 +55,18 @@ final class PassportElementErrorUnspecified extends PassportElementError {
             $instance->message = $data['message'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $source = null,
+        ?string $type = null,
+        ?string $elementHash = null,
+        ?string $message = null,
+    ) {
+        $this->source = $source;
+        $this->type = $type;
+        $this->elementHash = $elementHash;
+        $this->message = $message;
     }
 
     public function getSource(): ?string {

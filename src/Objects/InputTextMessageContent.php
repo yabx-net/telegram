@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class InputTextMessageContent extends InputMessageContent {
+use Yabx\Telegram\ObjectTrait;
+
+final class InputTextMessageContent {
+
+    use ObjectTrait;
 
     /**
      * Message Text
@@ -29,24 +33,12 @@ final class InputTextMessageContent extends InputMessageContent {
     protected ?array $entities = null;
 
     /**
-     * Disable Web Page Preview
+     * Link Preview Options
      *
-     * Optional. Disables link previews for links in the sent message
-     * @var bool|null
+     * Optional. Link preview generation options for the message
+     * @var LinkPreviewOptions|null
      */
-    protected ?bool $disableWebPagePreview = null;
-
-    public function __construct(
-        ?string $messageText = null,
-        ?string $parseMode = null,
-        ?array  $entities = null,
-        ?bool   $disableWebPagePreview = null,
-    ) {
-        $this->messageText = $messageText;
-        $this->parseMode = $parseMode;
-        $this->entities = $entities;
-        $this->disableWebPagePreview = $disableWebPagePreview;
-    }
+    protected ?LinkPreviewOptions $linkPreviewOptions = null;
 
     public static function fromArray(array $data): InputTextMessageContent {
         $instance = new self();
@@ -62,10 +54,22 @@ final class InputTextMessageContent extends InputMessageContent {
                 $instance->entities[] = MessageEntity::fromArray($item);
             }
         }
-        if (isset($data['disable_web_page_preview'])) {
-            $instance->disableWebPagePreview = $data['disable_web_page_preview'];
+        if (isset($data['link_preview_options'])) {
+            $instance->linkPreviewOptions = LinkPreviewOptions::fromArray($data['link_preview_options']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string             $messageText = null,
+        ?string             $parseMode = null,
+        ?array              $entities = null,
+        ?LinkPreviewOptions $linkPreviewOptions = null,
+    ) {
+        $this->messageText = $messageText;
+        $this->parseMode = $parseMode;
+        $this->entities = $entities;
+        $this->linkPreviewOptions = $linkPreviewOptions;
     }
 
     public function getMessageText(): ?string {
@@ -95,12 +99,12 @@ final class InputTextMessageContent extends InputMessageContent {
         return $this;
     }
 
-    public function getDisableWebPagePreview(): ?bool {
-        return $this->disableWebPagePreview;
+    public function getLinkPreviewOptions(): ?LinkPreviewOptions {
+        return $this->linkPreviewOptions;
     }
 
-    public function setDisableWebPagePreview(?bool $value): self {
-        $this->disableWebPagePreview = $value;
+    public function setLinkPreviewOptions(?LinkPreviewOptions $value): self {
+        $this->linkPreviewOptions = $value;
         return $this;
     }
 

@@ -96,31 +96,21 @@ final class User {
      */
     protected ?bool $supportsInlineQueries = null;
 
-    public function __construct(
-        ?int    $id = null,
-        ?bool   $isBot = null,
-        ?string $firstName = null,
-        ?string $lastName = null,
-        ?string $username = null,
-        ?string $languageCode = null,
-        ?bool   $isPremium = null,
-        ?bool   $addedToAttachmentMenu = null,
-        ?bool   $canJoinGroups = null,
-        ?bool   $canReadAllGroupMessages = null,
-        ?bool   $supportsInlineQueries = null,
-    ) {
-        $this->id = $id;
-        $this->isBot = $isBot;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->username = $username;
-        $this->languageCode = $languageCode;
-        $this->isPremium = $isPremium;
-        $this->addedToAttachmentMenu = $addedToAttachmentMenu;
-        $this->canJoinGroups = $canJoinGroups;
-        $this->canReadAllGroupMessages = $canReadAllGroupMessages;
-        $this->supportsInlineQueries = $supportsInlineQueries;
-    }
+    /**
+     * Can Connect To Business
+     *
+     * Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.
+     * @var bool|null
+     */
+    protected ?bool $canConnectToBusiness = null;
+
+    /**
+     * Has Main Web App
+     *
+     * Optional. True, if the bot has a main Web App. Returned only in getMe.
+     * @var bool|null
+     */
+    protected ?bool $hasMainWebApp = null;
 
     public static function fromArray(array $data): User {
         $instance = new self();
@@ -157,7 +147,43 @@ final class User {
         if (isset($data['supports_inline_queries'])) {
             $instance->supportsInlineQueries = $data['supports_inline_queries'];
         }
+        if (isset($data['can_connect_to_business'])) {
+            $instance->canConnectToBusiness = $data['can_connect_to_business'];
+        }
+        if (isset($data['has_main_web_app'])) {
+            $instance->hasMainWebApp = $data['has_main_web_app'];
+        }
         return $instance;
+    }
+
+    public function __construct(
+        ?int    $id = null,
+        ?bool   $isBot = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?string $username = null,
+        ?string $languageCode = null,
+        ?bool   $isPremium = null,
+        ?bool   $addedToAttachmentMenu = null,
+        ?bool   $canJoinGroups = null,
+        ?bool   $canReadAllGroupMessages = null,
+        ?bool   $supportsInlineQueries = null,
+        ?bool   $canConnectToBusiness = null,
+        ?bool   $hasMainWebApp = null,
+    ) {
+        $this->id = $id;
+        $this->isBot = $isBot;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->username = $username;
+        $this->languageCode = $languageCode;
+        $this->isPremium = $isPremium;
+        $this->addedToAttachmentMenu = $addedToAttachmentMenu;
+        $this->canJoinGroups = $canJoinGroups;
+        $this->canReadAllGroupMessages = $canReadAllGroupMessages;
+        $this->supportsInlineQueries = $supportsInlineQueries;
+        $this->canConnectToBusiness = $canConnectToBusiness;
+        $this->hasMainWebApp = $hasMainWebApp;
     }
 
     public function getId(): ?int {
@@ -256,6 +282,24 @@ final class User {
 
     public function setSupportsInlineQueries(?bool $value): self {
         $this->supportsInlineQueries = $value;
+        return $this;
+    }
+
+    public function getCanConnectToBusiness(): ?bool {
+        return $this->canConnectToBusiness;
+    }
+
+    public function setCanConnectToBusiness(?bool $value): self {
+        $this->canConnectToBusiness = $value;
+        return $this;
+    }
+
+    public function getHasMainWebApp(): ?bool {
+        return $this->hasMainWebApp;
+    }
+
+    public function setHasMainWebApp(?bool $value): self {
+        $this->hasMainWebApp = $value;
         return $this;
     }
 

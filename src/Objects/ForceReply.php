@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class ForceReply extends ReplyMarkup {
+use Yabx\Telegram\ObjectTrait;
+
+final class ForceReply {
+
+    use ObjectTrait;
 
     /**
      * Force Reply
@@ -23,20 +27,10 @@ final class ForceReply extends ReplyMarkup {
     /**
      * Selective
      *
-     * Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.
+     * Optional. Use this parameter if you want to force reply from specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.
      * @var bool|null
      */
     protected ?bool $selective = null;
-
-    public function __construct(
-        ?bool   $forceReply = null,
-        ?string $inputFieldPlaceholder = null,
-        ?bool   $selective = null,
-    ) {
-        $this->forceReply = $forceReply;
-        $this->inputFieldPlaceholder = $inputFieldPlaceholder;
-        $this->selective = $selective;
-    }
 
     public static function fromArray(array $data): ForceReply {
         $instance = new self();
@@ -50,6 +44,16 @@ final class ForceReply extends ReplyMarkup {
             $instance->selective = $data['selective'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?bool   $forceReply = null,
+        ?string $inputFieldPlaceholder = null,
+        ?bool   $selective = null,
+    ) {
+        $this->forceReply = $forceReply;
+        $this->inputFieldPlaceholder = $inputFieldPlaceholder;
+        $this->selective = $selective;
     }
 
     public function getForceReply(): ?bool {

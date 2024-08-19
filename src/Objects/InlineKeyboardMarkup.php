@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class InlineKeyboardMarkup extends ReplyMarkup {
+use Yabx\Telegram\ObjectTrait;
+
+final class InlineKeyboardMarkup {
+
+    use ObjectTrait;
 
     /**
      * Inline Keyboard
@@ -11,12 +15,6 @@ final class InlineKeyboardMarkup extends ReplyMarkup {
      * @var InlineKeyboardButton[]|null
      */
     protected ?array $inlineKeyboard = null;
-
-    public function __construct(
-        ?array $inlineKeyboard = null,
-    ) {
-        $this->inlineKeyboard = $inlineKeyboard;
-    }
 
     public static function fromArray(array $data): InlineKeyboardMarkup {
         $instance = new self();
@@ -27,6 +25,12 @@ final class InlineKeyboardMarkup extends ReplyMarkup {
             }
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?array $inlineKeyboard = null,
+    ) {
+        $this->inlineKeyboard = $inlineKeyboard;
     }
 
     public function getInlineKeyboard(): ?array {

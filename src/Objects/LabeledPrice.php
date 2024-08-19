@@ -24,14 +24,6 @@ final class LabeledPrice {
      */
     protected ?int $amount = null;
 
-    public function __construct(
-        ?string $label = null,
-        ?int    $amount = null,
-    ) {
-        $this->label = $label;
-        $this->amount = $amount;
-    }
-
     public static function fromArray(array $data): LabeledPrice {
         $instance = new self();
         if (isset($data['label'])) {
@@ -41,6 +33,14 @@ final class LabeledPrice {
             $instance->amount = $data['amount'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $label = null,
+        ?int    $amount = null,
+    ) {
+        $this->label = $label;
+        $this->amount = $amount;
     }
 
     public function getLabel(): ?string {

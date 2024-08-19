@@ -33,22 +33,6 @@ final class StickerSet {
     protected ?string $stickerType = null;
 
     /**
-     * Is Animated
-     *
-     * True, if the sticker set contains animated stickers
-     * @var bool|null
-     */
-    protected ?bool $isAnimated = null;
-
-    /**
-     * Is Video
-     *
-     * True, if the sticker set contains video stickers
-     * @var bool|null
-     */
-    protected ?bool $isVideo = null;
-
-    /**
      * Stickers
      *
      * List of all set stickers
@@ -64,24 +48,6 @@ final class StickerSet {
      */
     protected ?PhotoSize $thumbnail = null;
 
-    public function __construct(
-        ?string    $name = null,
-        ?string    $title = null,
-        ?string    $stickerType = null,
-        ?bool      $isAnimated = null,
-        ?bool      $isVideo = null,
-        ?array     $stickers = null,
-        ?PhotoSize $thumbnail = null,
-    ) {
-        $this->name = $name;
-        $this->title = $title;
-        $this->stickerType = $stickerType;
-        $this->isAnimated = $isAnimated;
-        $this->isVideo = $isVideo;
-        $this->stickers = $stickers;
-        $this->thumbnail = $thumbnail;
-    }
-
     public static function fromArray(array $data): StickerSet {
         $instance = new self();
         if (isset($data['name'])) {
@@ -93,12 +59,6 @@ final class StickerSet {
         if (isset($data['sticker_type'])) {
             $instance->stickerType = $data['sticker_type'];
         }
-        if (isset($data['is_animated'])) {
-            $instance->isAnimated = $data['is_animated'];
-        }
-        if (isset($data['is_video'])) {
-            $instance->isVideo = $data['is_video'];
-        }
         if (isset($data['stickers'])) {
             $instance->stickers = [];
             foreach ($data['stickers'] as $item) {
@@ -109,6 +69,20 @@ final class StickerSet {
             $instance->thumbnail = PhotoSize::fromArray($data['thumbnail']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string    $name = null,
+        ?string    $title = null,
+        ?string    $stickerType = null,
+        ?array     $stickers = null,
+        ?PhotoSize $thumbnail = null,
+    ) {
+        $this->name = $name;
+        $this->title = $title;
+        $this->stickerType = $stickerType;
+        $this->stickers = $stickers;
+        $this->thumbnail = $thumbnail;
     }
 
     public function getName(): ?string {
@@ -135,24 +109,6 @@ final class StickerSet {
 
     public function setStickerType(?string $value): self {
         $this->stickerType = $value;
-        return $this;
-    }
-
-    public function getIsAnimated(): ?bool {
-        return $this->isAnimated;
-    }
-
-    public function setIsAnimated(?bool $value): self {
-        $this->isAnimated = $value;
-        return $this;
-    }
-
-    public function getIsVideo(): ?bool {
-        return $this->isVideo;
-    }
-
-    public function setIsVideo(?bool $value): self {
-        $this->isVideo = $value;
         return $this;
     }
 

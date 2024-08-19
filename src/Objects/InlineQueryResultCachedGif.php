@@ -2,7 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class InlineQueryResultCachedGif extends InlineQueryResult  {
+final class InlineQueryResultCachedGif extends InlineQueryResult {
 
     /**
      * Type

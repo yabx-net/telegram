@@ -40,18 +40,6 @@ final class MaskPosition {
      */
     protected ?float $scale = null;
 
-    public function __construct(
-        ?string $point = null,
-        ?float  $xShift = null,
-        ?float  $yShift = null,
-        ?float  $scale = null,
-    ) {
-        $this->point = $point;
-        $this->xShift = $xShift;
-        $this->yShift = $yShift;
-        $this->scale = $scale;
-    }
-
     public static function fromArray(array $data): MaskPosition {
         $instance = new self();
         if (isset($data['point'])) {
@@ -67,6 +55,18 @@ final class MaskPosition {
             $instance->scale = $data['scale'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $point = null,
+        ?float  $xShift = null,
+        ?float  $yShift = null,
+        ?float  $scale = null,
+    ) {
+        $this->point = $point;
+        $this->xShift = $xShift;
+        $this->yShift = $yShift;
+        $this->scale = $scale;
     }
 
     public function getPoint(): ?string {

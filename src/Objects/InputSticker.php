@@ -17,6 +17,14 @@ final class InputSticker {
     protected ?string $sticker = null;
 
     /**
+     * Format
+     *
+     * Format of the added sticker, must be one of “static” for a .WEBP or .PNG image, “animated” for a .TGS animation, “video” for a WEBM video
+     * @var string|null
+     */
+    protected ?string $format = null;
+
+    /**
      * Emoji List
      *
      * List of 1-20 emoji associated with the sticker
@@ -40,22 +48,13 @@ final class InputSticker {
      */
     protected ?array $keywords = null;
 
-    public function __construct(
-        ?string       $sticker = null,
-        ?array        $emojiList = null,
-        ?MaskPosition $maskPosition = null,
-        ?array        $keywords = null,
-    ) {
-        $this->sticker = $sticker;
-        $this->emojiList = $emojiList;
-        $this->maskPosition = $maskPosition;
-        $this->keywords = $keywords;
-    }
-
     public static function fromArray(array $data): InputSticker {
         $instance = new self();
         if (isset($data['sticker'])) {
             $instance->sticker = $data['sticker'];
+        }
+        if (isset($data['format'])) {
+            $instance->format = $data['format'];
         }
         if (isset($data['emoji_list'])) {
             $instance->emojiList = [];
@@ -75,12 +74,35 @@ final class InputSticker {
         return $instance;
     }
 
+    public function __construct(
+        ?string       $sticker = null,
+        ?string       $format = null,
+        ?array        $emojiList = null,
+        ?MaskPosition $maskPosition = null,
+        ?array        $keywords = null,
+    ) {
+        $this->sticker = $sticker;
+        $this->format = $format;
+        $this->emojiList = $emojiList;
+        $this->maskPosition = $maskPosition;
+        $this->keywords = $keywords;
+    }
+
     public function getSticker(): ?string {
         return $this->sticker;
     }
 
     public function setSticker(?string $value): self {
         $this->sticker = $value;
+        return $this;
+    }
+
+    public function getFormat(): ?string {
+        return $this->format;
+    }
+
+    public function setFormat(?string $value): self {
+        $this->format = $value;
         return $this;
     }
 

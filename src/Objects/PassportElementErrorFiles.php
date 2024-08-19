@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class PassportElementErrorFiles extends PassportElementError {
+use Yabx\Telegram\ObjectTrait;
+
+final class PassportElementErrorFiles {
+
+    use ObjectTrait;
 
     /**
      * Source
@@ -36,18 +40,6 @@ final class PassportElementErrorFiles extends PassportElementError {
      */
     protected ?string $message = null;
 
-    public function __construct(
-        ?string $source = null,
-        ?string $type = null,
-        ?array  $fileHashes = null,
-        ?string $message = null,
-    ) {
-        $this->source = $source;
-        $this->type = $type;
-        $this->fileHashes = $fileHashes;
-        $this->message = $message;
-    }
-
     public static function fromArray(array $data): PassportElementErrorFiles {
         $instance = new self();
         if (isset($data['source'])) {
@@ -66,6 +58,18 @@ final class PassportElementErrorFiles extends PassportElementError {
             $instance->message = $data['message'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $source = null,
+        ?string $type = null,
+        ?array  $fileHashes = null,
+        ?string $message = null,
+    ) {
+        $this->source = $source;
+        $this->type = $type;
+        $this->fileHashes = $fileHashes;
+        $this->message = $message;
     }
 
     public function getSource(): ?string {

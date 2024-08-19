@@ -27,10 +27,10 @@ final class CallbackQuery {
     /**
      * Message
      *
-     * Optional. Message with the callback button that originated the query. Note that message content and message date will not be available if the message is too old
-     * @var Message|null
+     * Optional. Message sent by the bot with the callback button that originated the query
+     * @var MaybeInaccessibleMessage|null
      */
-    protected ?Message $message = null;
+    protected ?MaybeInaccessibleMessage $message = null;
 
     /**
      * Inline Message Id
@@ -64,24 +64,6 @@ final class CallbackQuery {
      */
     protected ?string $gameShortName = null;
 
-    public function __construct(
-        ?string  $id = null,
-        ?User    $from = null,
-        ?Message $message = null,
-        ?string  $inlineMessageId = null,
-        ?string  $chatInstance = null,
-        ?string  $data = null,
-        ?string  $gameShortName = null,
-    ) {
-        $this->id = $id;
-        $this->from = $from;
-        $this->message = $message;
-        $this->inlineMessageId = $inlineMessageId;
-        $this->chatInstance = $chatInstance;
-        $this->data = $data;
-        $this->gameShortName = $gameShortName;
-    }
-
     public static function fromArray(array $data): CallbackQuery {
         $instance = new self();
         if (isset($data['id'])) {
@@ -91,7 +73,7 @@ final class CallbackQuery {
             $instance->from = User::fromArray($data['from']);
         }
         if (isset($data['message'])) {
-            $instance->message = Message::fromArray($data['message']);
+            $instance->message = MaybeInaccessibleMessage::fromArray($data['message']);
         }
         if (isset($data['inline_message_id'])) {
             $instance->inlineMessageId = $data['inline_message_id'];
@@ -106,6 +88,24 @@ final class CallbackQuery {
             $instance->gameShortName = $data['game_short_name'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string                   $id = null,
+        ?User                     $from = null,
+        ?MaybeInaccessibleMessage $message = null,
+        ?string                   $inlineMessageId = null,
+        ?string                   $chatInstance = null,
+        ?string                   $data = null,
+        ?string                   $gameShortName = null,
+    ) {
+        $this->id = $id;
+        $this->from = $from;
+        $this->message = $message;
+        $this->inlineMessageId = $inlineMessageId;
+        $this->chatInstance = $chatInstance;
+        $this->data = $data;
+        $this->gameShortName = $gameShortName;
     }
 
     public function getId(): ?string {
@@ -126,11 +126,11 @@ final class CallbackQuery {
         return $this;
     }
 
-    public function getMessage(): ?Message {
+    public function getMessage(): ?MaybeInaccessibleMessage {
         return $this->message;
     }
 
-    public function setMessage(?Message $value): self {
+    public function setMessage(?MaybeInaccessibleMessage $value): self {
         $this->message = $value;
         return $this;
     }

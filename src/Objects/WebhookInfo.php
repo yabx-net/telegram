@@ -80,28 +80,6 @@ final class WebhookInfo {
      */
     protected ?array $allowedUpdates = null;
 
-    public function __construct(
-        ?string $url = null,
-        ?bool   $hasCustomCertificate = null,
-        ?int    $pendingUpdateCount = null,
-        ?string $ipAddress = null,
-        ?int    $lastErrorDate = null,
-        ?string $lastErrorMessage = null,
-        ?int    $lastSynchronizationErrorDate = null,
-        ?int    $maxConnections = null,
-        ?array  $allowedUpdates = null,
-    ) {
-        $this->url = $url;
-        $this->hasCustomCertificate = $hasCustomCertificate;
-        $this->pendingUpdateCount = $pendingUpdateCount;
-        $this->ipAddress = $ipAddress;
-        $this->lastErrorDate = $lastErrorDate;
-        $this->lastErrorMessage = $lastErrorMessage;
-        $this->lastSynchronizationErrorDate = $lastSynchronizationErrorDate;
-        $this->maxConnections = $maxConnections;
-        $this->allowedUpdates = $allowedUpdates;
-    }
-
     public static function fromArray(array $data): WebhookInfo {
         $instance = new self();
         if (isset($data['url'])) {
@@ -135,6 +113,28 @@ final class WebhookInfo {
             }
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $url = null,
+        ?bool   $hasCustomCertificate = null,
+        ?int    $pendingUpdateCount = null,
+        ?string $ipAddress = null,
+        ?int    $lastErrorDate = null,
+        ?string $lastErrorMessage = null,
+        ?int    $lastSynchronizationErrorDate = null,
+        ?int    $maxConnections = null,
+        ?array  $allowedUpdates = null,
+    ) {
+        $this->url = $url;
+        $this->hasCustomCertificate = $hasCustomCertificate;
+        $this->pendingUpdateCount = $pendingUpdateCount;
+        $this->ipAddress = $ipAddress;
+        $this->lastErrorDate = $lastErrorDate;
+        $this->lastErrorMessage = $lastErrorMessage;
+        $this->lastSynchronizationErrorDate = $lastSynchronizationErrorDate;
+        $this->maxConnections = $maxConnections;
+        $this->allowedUpdates = $allowedUpdates;
     }
 
     public function getUrl(): ?string {

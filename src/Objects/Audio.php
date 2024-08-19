@@ -27,7 +27,7 @@ final class Audio {
     /**
      * Duration
      *
-     * Duration of the audio in seconds as defined by sender
+     * Duration of the audio in seconds as defined by the sender
      * @var int|null
      */
     protected ?int $duration = null;
@@ -35,7 +35,7 @@ final class Audio {
     /**
      * Performer
      *
-     * Optional. Performer of the audio as defined by sender or by audio tags
+     * Optional. Performer of the audio as defined by the sender or by audio tags
      * @var string|null
      */
     protected ?string $performer = null;
@@ -43,7 +43,7 @@ final class Audio {
     /**
      * Title
      *
-     * Optional. Title of the audio as defined by sender or by audio tags
+     * Optional. Title of the audio as defined by the sender or by audio tags
      * @var string|null
      */
     protected ?string $title = null;
@@ -51,7 +51,7 @@ final class Audio {
     /**
      * File Name
      *
-     * Optional. Original filename as defined by sender
+     * Optional. Original filename as defined by the sender
      * @var string|null
      */
     protected ?string $fileName = null;
@@ -59,7 +59,7 @@ final class Audio {
     /**
      * Mime Type
      *
-     * Optional. MIME type of the file as defined by sender
+     * Optional. MIME type of the file as defined by the sender
      * @var string|null
      */
     protected ?string $mimeType = null;
@@ -79,28 +79,6 @@ final class Audio {
      * @var PhotoSize|null
      */
     protected ?PhotoSize $thumbnail = null;
-
-    public function __construct(
-        ?string    $fileId = null,
-        ?string    $fileUniqueId = null,
-        ?int       $duration = null,
-        ?string    $performer = null,
-        ?string    $title = null,
-        ?string    $fileName = null,
-        ?string    $mimeType = null,
-        ?int       $fileSize = null,
-        ?PhotoSize $thumbnail = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->duration = $duration;
-        $this->performer = $performer;
-        $this->title = $title;
-        $this->fileName = $fileName;
-        $this->mimeType = $mimeType;
-        $this->fileSize = $fileSize;
-        $this->thumbnail = $thumbnail;
-    }
 
     public static function fromArray(array $data): Audio {
         $instance = new self();
@@ -132,6 +110,28 @@ final class Audio {
             $instance->thumbnail = PhotoSize::fromArray($data['thumbnail']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string    $fileId = null,
+        ?string    $fileUniqueId = null,
+        ?int       $duration = null,
+        ?string    $performer = null,
+        ?string    $title = null,
+        ?string    $fileName = null,
+        ?string    $mimeType = null,
+        ?int       $fileSize = null,
+        ?PhotoSize $thumbnail = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->duration = $duration;
+        $this->performer = $performer;
+        $this->title = $title;
+        $this->fileName = $fileName;
+        $this->mimeType = $mimeType;
+        $this->fileSize = $fileSize;
+        $this->thumbnail = $thumbnail;
     }
 
     public function getFileId(): ?string {

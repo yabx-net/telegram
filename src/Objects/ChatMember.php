@@ -10,7 +10,7 @@ abstract class ChatMember {
     use ObjectTrait;
 
     public static function fromArray(array $data): ChatMember {
-        return match($data['status'] ?? null) {
+        return match ($data['status'] ?? null) {
             'administrator' => ChatMemberAdministrator::fromArray($data),
             'kicked' => ChatMemberBanned::fromArray($data),
             'left' => ChatMemberLeft::fromArray($data),

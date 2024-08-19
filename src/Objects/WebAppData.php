@@ -24,14 +24,6 @@ final class WebAppData {
      */
     protected ?string $buttonText = null;
 
-    public function __construct(
-        ?string $data = null,
-        ?string $buttonText = null,
-    ) {
-        $this->data = $data;
-        $this->buttonText = $buttonText;
-    }
-
     public static function fromArray(array $data): WebAppData {
         $instance = new self();
         if (isset($data['data'])) {
@@ -41,6 +33,14 @@ final class WebAppData {
             $instance->buttonText = $data['button_text'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $data = null,
+        ?string $buttonText = null,
+    ) {
+        $this->data = $data;
+        $this->buttonText = $buttonText;
     }
 
     public function getData(): ?string {

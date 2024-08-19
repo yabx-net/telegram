@@ -27,7 +27,7 @@ final class Voice {
     /**
      * Duration
      *
-     * Duration of the audio in seconds as defined by sender
+     * Duration of the audio in seconds as defined by the sender
      * @var int|null
      */
     protected ?int $duration = null;
@@ -35,7 +35,7 @@ final class Voice {
     /**
      * Mime Type
      *
-     * Optional. MIME type of the file as defined by sender
+     * Optional. MIME type of the file as defined by the sender
      * @var string|null
      */
     protected ?string $mimeType = null;
@@ -47,20 +47,6 @@ final class Voice {
      * @var int|null
      */
     protected ?int $fileSize = null;
-
-    public function __construct(
-        ?string $fileId = null,
-        ?string $fileUniqueId = null,
-        ?int    $duration = null,
-        ?string $mimeType = null,
-        ?int    $fileSize = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->duration = $duration;
-        $this->mimeType = $mimeType;
-        $this->fileSize = $fileSize;
-    }
 
     public static function fromArray(array $data): Voice {
         $instance = new self();
@@ -80,6 +66,20 @@ final class Voice {
             $instance->fileSize = $data['file_size'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $fileId = null,
+        ?string $fileUniqueId = null,
+        ?int    $duration = null,
+        ?string $mimeType = null,
+        ?int    $fileSize = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->duration = $duration;
+        $this->mimeType = $mimeType;
+        $this->fileSize = $fileSize;
     }
 
     public function getFileId(): ?string {

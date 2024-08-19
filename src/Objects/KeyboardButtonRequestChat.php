@@ -72,25 +72,29 @@ final class KeyboardButtonRequestChat {
      */
     protected ?bool $botIsMember = null;
 
-    public function __construct(
-        ?int                     $requestId = null,
-        ?bool                    $chatIsChannel = null,
-        ?bool                    $chatIsForum = null,
-        ?bool                    $chatHasUsername = null,
-        ?bool                    $chatIsCreated = null,
-        ?ChatAdministratorRights $userAdministratorRights = null,
-        ?ChatAdministratorRights $botAdministratorRights = null,
-        ?bool                    $botIsMember = null,
-    ) {
-        $this->requestId = $requestId;
-        $this->chatIsChannel = $chatIsChannel;
-        $this->chatIsForum = $chatIsForum;
-        $this->chatHasUsername = $chatHasUsername;
-        $this->chatIsCreated = $chatIsCreated;
-        $this->userAdministratorRights = $userAdministratorRights;
-        $this->botAdministratorRights = $botAdministratorRights;
-        $this->botIsMember = $botIsMember;
-    }
+    /**
+     * Request Title
+     *
+     * Optional. Pass True to request the chat's title
+     * @var bool|null
+     */
+    protected ?bool $requestTitle = null;
+
+    /**
+     * Request Username
+     *
+     * Optional. Pass True to request the chat's username
+     * @var bool|null
+     */
+    protected ?bool $requestUsername = null;
+
+    /**
+     * Request Photo
+     *
+     * Optional. Pass True to request the chat's photo
+     * @var bool|null
+     */
+    protected ?bool $requestPhoto = null;
 
     public static function fromArray(array $data): KeyboardButtonRequestChat {
         $instance = new self();
@@ -118,7 +122,42 @@ final class KeyboardButtonRequestChat {
         if (isset($data['bot_is_member'])) {
             $instance->botIsMember = $data['bot_is_member'];
         }
+        if (isset($data['request_title'])) {
+            $instance->requestTitle = $data['request_title'];
+        }
+        if (isset($data['request_username'])) {
+            $instance->requestUsername = $data['request_username'];
+        }
+        if (isset($data['request_photo'])) {
+            $instance->requestPhoto = $data['request_photo'];
+        }
         return $instance;
+    }
+
+    public function __construct(
+        ?int                     $requestId = null,
+        ?bool                    $chatIsChannel = null,
+        ?bool                    $chatIsForum = null,
+        ?bool                    $chatHasUsername = null,
+        ?bool                    $chatIsCreated = null,
+        ?ChatAdministratorRights $userAdministratorRights = null,
+        ?ChatAdministratorRights $botAdministratorRights = null,
+        ?bool                    $botIsMember = null,
+        ?bool                    $requestTitle = null,
+        ?bool                    $requestUsername = null,
+        ?bool                    $requestPhoto = null,
+    ) {
+        $this->requestId = $requestId;
+        $this->chatIsChannel = $chatIsChannel;
+        $this->chatIsForum = $chatIsForum;
+        $this->chatHasUsername = $chatHasUsername;
+        $this->chatIsCreated = $chatIsCreated;
+        $this->userAdministratorRights = $userAdministratorRights;
+        $this->botAdministratorRights = $botAdministratorRights;
+        $this->botIsMember = $botIsMember;
+        $this->requestTitle = $requestTitle;
+        $this->requestUsername = $requestUsername;
+        $this->requestPhoto = $requestPhoto;
     }
 
     public function getRequestId(): ?int {
@@ -190,6 +229,33 @@ final class KeyboardButtonRequestChat {
 
     public function setBotIsMember(?bool $value): self {
         $this->botIsMember = $value;
+        return $this;
+    }
+
+    public function getRequestTitle(): ?bool {
+        return $this->requestTitle;
+    }
+
+    public function setRequestTitle(?bool $value): self {
+        $this->requestTitle = $value;
+        return $this;
+    }
+
+    public function getRequestUsername(): ?bool {
+        return $this->requestUsername;
+    }
+
+    public function setRequestUsername(?bool $value): self {
+        $this->requestUsername = $value;
+        return $this;
+    }
+
+    public function getRequestPhoto(): ?bool {
+        return $this->requestPhoto;
+    }
+
+    public function setRequestPhoto(?bool $value): self {
+        $this->requestPhoto = $value;
         return $this;
     }
 

@@ -17,12 +17,12 @@ final class KeyboardButton {
     protected ?string $text = null;
 
     /**
-     * Request User
+     * Request Users
      *
-     * Optional. If specified, pressing the button will open a list of suitable users. Tapping on any user will send their identifier to the bot in a “user_shared” service message. Available in private chats only.
-     * @var KeyboardButtonRequestUser|null
+     * Optional. If specified, pressing the button will open a list of suitable users. Identifiers of selected users will be sent to the bot in a “users_shared” service message. Available in private chats only.
+     * @var KeyboardButtonRequestUsers|null
      */
-    protected ?KeyboardButtonRequestUser $requestUser = null;
+    protected ?KeyboardButtonRequestUsers $requestUsers = null;
 
     /**
      * Request Chat
@@ -64,31 +64,13 @@ final class KeyboardButton {
      */
     protected ?WebAppInfo $webApp = null;
 
-    public function __construct(
-        ?string                    $text = null,
-        ?KeyboardButtonRequestUser $requestUser = null,
-        ?KeyboardButtonRequestChat $requestChat = null,
-        ?bool                      $requestContact = null,
-        ?bool                      $requestLocation = null,
-        ?KeyboardButtonPollType    $requestPoll = null,
-        ?WebAppInfo                $webApp = null,
-    ) {
-        $this->text = $text;
-        $this->requestUser = $requestUser;
-        $this->requestChat = $requestChat;
-        $this->requestContact = $requestContact;
-        $this->requestLocation = $requestLocation;
-        $this->requestPoll = $requestPoll;
-        $this->webApp = $webApp;
-    }
-
     public static function fromArray(array $data): KeyboardButton {
         $instance = new self();
         if (isset($data['text'])) {
             $instance->text = $data['text'];
         }
-        if (isset($data['request_user'])) {
-            $instance->requestUser = KeyboardButtonRequestUser::fromArray($data['request_user']);
+        if (isset($data['request_users'])) {
+            $instance->requestUsers = KeyboardButtonRequestUsers::fromArray($data['request_users']);
         }
         if (isset($data['request_chat'])) {
             $instance->requestChat = KeyboardButtonRequestChat::fromArray($data['request_chat']);
@@ -108,6 +90,24 @@ final class KeyboardButton {
         return $instance;
     }
 
+    public function __construct(
+        ?string                     $text = null,
+        ?KeyboardButtonRequestUsers $requestUsers = null,
+        ?KeyboardButtonRequestChat  $requestChat = null,
+        ?bool                       $requestContact = null,
+        ?bool                       $requestLocation = null,
+        ?KeyboardButtonPollType     $requestPoll = null,
+        ?WebAppInfo                 $webApp = null,
+    ) {
+        $this->text = $text;
+        $this->requestUsers = $requestUsers;
+        $this->requestChat = $requestChat;
+        $this->requestContact = $requestContact;
+        $this->requestLocation = $requestLocation;
+        $this->requestPoll = $requestPoll;
+        $this->webApp = $webApp;
+    }
+
     public function getText(): ?string {
         return $this->text;
     }
@@ -117,12 +117,12 @@ final class KeyboardButton {
         return $this;
     }
 
-    public function getRequestUser(): ?KeyboardButtonRequestUser {
-        return $this->requestUser;
+    public function getRequestUsers(): ?KeyboardButtonRequestUsers {
+        return $this->requestUsers;
     }
 
-    public function setRequestUser(?KeyboardButtonRequestUser $value): self {
-        $this->requestUser = $value;
+    public function setRequestUsers(?KeyboardButtonRequestUsers $value): self {
+        $this->requestUsers = $value;
         return $this;
     }
 

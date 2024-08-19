@@ -17,6 +17,14 @@ final class PollOption {
     protected ?string $text = null;
 
     /**
+     * Text Entities
+     *
+     * Optional. Special entities that appear in the option text. Currently, only custom emoji entities are allowed in poll option texts
+     * @var MessageEntity[]|null
+     */
+    protected ?array $textEntities = null;
+
+    /**
      * Voter Count
      *
      * Number of users that voted for this option
@@ -24,23 +32,31 @@ final class PollOption {
      */
     protected ?int $voterCount = null;
 
-    public function __construct(
-        ?string $text = null,
-        ?int    $voterCount = null,
-    ) {
-        $this->text = $text;
-        $this->voterCount = $voterCount;
-    }
-
     public static function fromArray(array $data): PollOption {
         $instance = new self();
         if (isset($data['text'])) {
             $instance->text = $data['text'];
         }
+        if (isset($data['text_entities'])) {
+            $instance->textEntities = [];
+            foreach ($data['text_entities'] as $item) {
+                $instance->textEntities[] = MessageEntity::fromArray($item);
+            }
+        }
         if (isset($data['voter_count'])) {
             $instance->voterCount = $data['voter_count'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $text = null,
+        ?array  $textEntities = null,
+        ?int    $voterCount = null,
+    ) {
+        $this->text = $text;
+        $this->textEntities = $textEntities;
+        $this->voterCount = $voterCount;
     }
 
     public function getText(): ?string {
@@ -49,6 +65,15 @@ final class PollOption {
 
     public function setText(?string $value): self {
         $this->text = $value;
+        return $this;
+    }
+
+    public function getTextEntities(): ?array {
+        return $this->textEntities;
+    }
+
+    public function setTextEntities(?array $value): self {
+        $this->textEntities = $value;
         return $this;
     }
 

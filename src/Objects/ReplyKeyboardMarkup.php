@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class ReplyKeyboardMarkup extends ReplyMarkup {
+use Yabx\Telegram\ObjectTrait;
+
+final class ReplyKeyboardMarkup {
+
+    use ObjectTrait;
 
     /**
      * Keyboard
@@ -47,26 +51,10 @@ final class ReplyKeyboardMarkup extends ReplyMarkup {
     /**
      * Selective
      *
-     * Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply (has reply_to_message_id), sender of the original message.Example: A user requests to change the bot's language, bot replies to the request with a keyboard to select the new language. Other users in the group don't see the keyboard.
+     * Optional. Use this parameter if you want to show the keyboard to specific users only. Targets: 1) users that are @mentioned in the text of the Message object; 2) if the bot's message is a reply to a message in the same chat and forum topic, sender of the original message.Example: A user requests to change the bot's language, bot replies to the request with a keyboard to select the new language. Other users in the group don't see the keyboard.
      * @var bool|null
      */
     protected ?bool $selective = null;
-
-    public function __construct(
-        ?array  $keyboard = null,
-        ?bool   $isPersistent = null,
-        ?bool   $resizeKeyboard = null,
-        ?bool   $oneTimeKeyboard = null,
-        ?string $inputFieldPlaceholder = null,
-        ?bool   $selective = null,
-    ) {
-        $this->keyboard = $keyboard;
-        $this->isPersistent = $isPersistent;
-        $this->resizeKeyboard = $resizeKeyboard;
-        $this->oneTimeKeyboard = $oneTimeKeyboard;
-        $this->inputFieldPlaceholder = $inputFieldPlaceholder;
-        $this->selective = $selective;
-    }
 
     public static function fromArray(array $data): ReplyKeyboardMarkup {
         $instance = new self();
@@ -92,6 +80,22 @@ final class ReplyKeyboardMarkup extends ReplyMarkup {
             $instance->selective = $data['selective'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?array  $keyboard = null,
+        ?bool   $isPersistent = null,
+        ?bool   $resizeKeyboard = null,
+        ?bool   $oneTimeKeyboard = null,
+        ?string $inputFieldPlaceholder = null,
+        ?bool   $selective = null,
+    ) {
+        $this->keyboard = $keyboard;
+        $this->isPersistent = $isPersistent;
+        $this->resizeKeyboard = $resizeKeyboard;
+        $this->oneTimeKeyboard = $oneTimeKeyboard;
+        $this->inputFieldPlaceholder = $inputFieldPlaceholder;
+        $this->selective = $selective;
     }
 
     public function getKeyboard(): ?array {

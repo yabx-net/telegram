@@ -32,16 +32,6 @@ final class GameHighScore {
      */
     protected ?int $score = null;
 
-    public function __construct(
-        ?int  $position = null,
-        ?User $user = null,
-        ?int  $score = null,
-    ) {
-        $this->position = $position;
-        $this->user = $user;
-        $this->score = $score;
-    }
-
     public static function fromArray(array $data): GameHighScore {
         $instance = new self();
         if (isset($data['position'])) {
@@ -54,6 +44,16 @@ final class GameHighScore {
             $instance->score = $data['score'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?int  $position = null,
+        ?User $user = null,
+        ?int  $score = null,
+    ) {
+        $this->position = $position;
+        $this->user = $user;
+        $this->score = $score;
     }
 
     public function getPosition(): ?int {

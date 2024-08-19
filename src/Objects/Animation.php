@@ -27,7 +27,7 @@ final class Animation {
     /**
      * Width
      *
-     * Video width as defined by sender
+     * Video width as defined by the sender
      * @var int|null
      */
     protected ?int $width = null;
@@ -35,7 +35,7 @@ final class Animation {
     /**
      * Height
      *
-     * Video height as defined by sender
+     * Video height as defined by the sender
      * @var int|null
      */
     protected ?int $height = null;
@@ -43,7 +43,7 @@ final class Animation {
     /**
      * Duration
      *
-     * Duration of the video in seconds as defined by sender
+     * Duration of the video in seconds as defined by the sender
      * @var int|null
      */
     protected ?int $duration = null;
@@ -51,7 +51,7 @@ final class Animation {
     /**
      * Thumbnail
      *
-     * Optional. Animation thumbnail as defined by sender
+     * Optional. Animation thumbnail as defined by the sender
      * @var PhotoSize|null
      */
     protected ?PhotoSize $thumbnail = null;
@@ -59,7 +59,7 @@ final class Animation {
     /**
      * File Name
      *
-     * Optional. Original animation filename as defined by sender
+     * Optional. Original animation filename as defined by the sender
      * @var string|null
      */
     protected ?string $fileName = null;
@@ -67,7 +67,7 @@ final class Animation {
     /**
      * Mime Type
      *
-     * Optional. MIME type of the file as defined by sender
+     * Optional. MIME type of the file as defined by the sender
      * @var string|null
      */
     protected ?string $mimeType = null;
@@ -79,28 +79,6 @@ final class Animation {
      * @var int|null
      */
     protected ?int $fileSize = null;
-
-    public function __construct(
-        ?string    $fileId = null,
-        ?string    $fileUniqueId = null,
-        ?int       $width = null,
-        ?int       $height = null,
-        ?int       $duration = null,
-        ?PhotoSize $thumbnail = null,
-        ?string    $fileName = null,
-        ?string    $mimeType = null,
-        ?int       $fileSize = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->width = $width;
-        $this->height = $height;
-        $this->duration = $duration;
-        $this->thumbnail = $thumbnail;
-        $this->fileName = $fileName;
-        $this->mimeType = $mimeType;
-        $this->fileSize = $fileSize;
-    }
 
     public static function fromArray(array $data): Animation {
         $instance = new self();
@@ -132,6 +110,28 @@ final class Animation {
             $instance->fileSize = $data['file_size'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string    $fileId = null,
+        ?string    $fileUniqueId = null,
+        ?int       $width = null,
+        ?int       $height = null,
+        ?int       $duration = null,
+        ?PhotoSize $thumbnail = null,
+        ?string    $fileName = null,
+        ?string    $mimeType = null,
+        ?int       $fileSize = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->width = $width;
+        $this->height = $height;
+        $this->duration = $duration;
+        $this->thumbnail = $thumbnail;
+        $this->fileName = $fileName;
+        $this->mimeType = $mimeType;
+        $this->fileSize = $fileSize;
     }
 
     public function getFileId(): ?string {

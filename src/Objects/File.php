@@ -40,18 +40,6 @@ final class File {
      */
     protected ?string $filePath = null;
 
-    public function __construct(
-        ?string $fileId = null,
-        ?string $fileUniqueId = null,
-        ?int    $fileSize = null,
-        ?string $filePath = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->fileSize = $fileSize;
-        $this->filePath = $filePath;
-    }
-
     public static function fromArray(array $data): File {
         $instance = new self();
         if (isset($data['file_id'])) {
@@ -67,6 +55,18 @@ final class File {
             $instance->filePath = $data['file_path'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $fileId = null,
+        ?string $fileUniqueId = null,
+        ?int    $fileSize = null,
+        ?string $filePath = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->fileSize = $fileSize;
+        $this->filePath = $filePath;
     }
 
     public function getFileId(): ?string {

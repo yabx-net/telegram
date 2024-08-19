@@ -27,7 +27,7 @@ final class Document {
     /**
      * Thumbnail
      *
-     * Optional. Document thumbnail as defined by sender
+     * Optional. Document thumbnail as defined by the sender
      * @var PhotoSize|null
      */
     protected ?PhotoSize $thumbnail = null;
@@ -35,7 +35,7 @@ final class Document {
     /**
      * File Name
      *
-     * Optional. Original filename as defined by sender
+     * Optional. Original filename as defined by the sender
      * @var string|null
      */
     protected ?string $fileName = null;
@@ -43,7 +43,7 @@ final class Document {
     /**
      * Mime Type
      *
-     * Optional. MIME type of the file as defined by sender
+     * Optional. MIME type of the file as defined by the sender
      * @var string|null
      */
     protected ?string $mimeType = null;
@@ -55,22 +55,6 @@ final class Document {
      * @var int|null
      */
     protected ?int $fileSize = null;
-
-    public function __construct(
-        ?string    $fileId = null,
-        ?string    $fileUniqueId = null,
-        ?PhotoSize $thumbnail = null,
-        ?string    $fileName = null,
-        ?string    $mimeType = null,
-        ?int       $fileSize = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->thumbnail = $thumbnail;
-        $this->fileName = $fileName;
-        $this->mimeType = $mimeType;
-        $this->fileSize = $fileSize;
-    }
 
     public static function fromArray(array $data): Document {
         $instance = new self();
@@ -93,6 +77,22 @@ final class Document {
             $instance->fileSize = $data['file_size'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string    $fileId = null,
+        ?string    $fileUniqueId = null,
+        ?PhotoSize $thumbnail = null,
+        ?string    $fileName = null,
+        ?string    $mimeType = null,
+        ?int       $fileSize = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->thumbnail = $thumbnail;
+        $this->fileName = $fileName;
+        $this->mimeType = $mimeType;
+        $this->fileSize = $fileSize;
     }
 
     public function getFileId(): ?string {

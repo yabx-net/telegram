@@ -11,7 +11,7 @@ final class MessageEntity {
     /**
      * Type
      *
-     * Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers)
+     * Type of the entity. Currently, can be “mention” (@username), “hashtag” (#hashtag), “cashtag” ($USD), “bot_command” (/start@jobs_bot), “url” (https://telegram.org), “email” (do-not-reply@telegram.org), “phone_number” (+1-212-555-0123), “bold” (bold text), “italic” (italic text), “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler” (spoiler message), “blockquote” (block quotation), “expandable_blockquote” (collapsed-by-default block quotation), “code” (monowidth string), “pre” (monowidth block), “text_link” (for clickable text URLs), “text_mention” (for users without usernames), “custom_emoji” (for inline custom emoji stickers)
      * @var string|null
      */
     protected ?string $type = null;
@@ -64,24 +64,6 @@ final class MessageEntity {
      */
     protected ?string $customEmojiId = null;
 
-    public function __construct(
-        ?string $type = null,
-        ?int    $offset = null,
-        ?int    $length = null,
-        ?string $url = null,
-        ?User   $user = null,
-        ?string $language = null,
-        ?string $customEmojiId = null,
-    ) {
-        $this->type = $type;
-        $this->offset = $offset;
-        $this->length = $length;
-        $this->url = $url;
-        $this->user = $user;
-        $this->language = $language;
-        $this->customEmojiId = $customEmojiId;
-    }
-
     public static function fromArray(array $data): MessageEntity {
         $instance = new self();
         if (isset($data['type'])) {
@@ -106,6 +88,24 @@ final class MessageEntity {
             $instance->customEmojiId = $data['custom_emoji_id'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $type = null,
+        ?int    $offset = null,
+        ?int    $length = null,
+        ?string $url = null,
+        ?User   $user = null,
+        ?string $language = null,
+        ?string $customEmojiId = null,
+    ) {
+        $this->type = $type;
+        $this->offset = $offset;
+        $this->length = $length;
+        $this->url = $url;
+        $this->user = $user;
+        $this->language = $language;
+        $this->customEmojiId = $customEmojiId;
     }
 
     public function getType(): ?string {

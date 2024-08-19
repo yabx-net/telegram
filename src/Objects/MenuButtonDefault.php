@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class MenuButtonDefault extends MenuButton {
+use Yabx\Telegram\ObjectTrait;
+
+final class MenuButtonDefault {
+
+    use ObjectTrait;
 
     /**
      * Type
@@ -12,18 +16,18 @@ final class MenuButtonDefault extends MenuButton {
      */
     protected ?string $type = null;
 
-    public function __construct(
-        ?string $type = null,
-    ) {
-        $this->type = $type;
-    }
-
     public static function fromArray(array $data): MenuButtonDefault {
         $instance = new self();
         if (isset($data['type'])) {
             $instance->type = $data['type'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $type = null,
+    ) {
+        $this->type = $type;
     }
 
     public function getType(): ?string {

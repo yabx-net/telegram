@@ -27,7 +27,7 @@ final class PreCheckoutQuery {
     /**
      * Currency
      *
-     * Three-letter ISO 4217 currency code
+     * Three-letter ISO 4217 currency code, or “XTR” for payments in Telegram Stars
      * @var string|null
      */
     protected ?string $currency = null;
@@ -43,7 +43,7 @@ final class PreCheckoutQuery {
     /**
      * Invoice Payload
      *
-     * Bot specified invoice payload
+     * Bot-specified invoice payload
      * @var string|null
      */
     protected ?string $invoicePayload = null;
@@ -63,24 +63,6 @@ final class PreCheckoutQuery {
      * @var OrderInfo|null
      */
     protected ?OrderInfo $orderInfo = null;
-
-    public function __construct(
-        ?string    $id = null,
-        ?User      $from = null,
-        ?string    $currency = null,
-        ?int       $totalAmount = null,
-        ?string    $invoicePayload = null,
-        ?string    $shippingOptionId = null,
-        ?OrderInfo $orderInfo = null,
-    ) {
-        $this->id = $id;
-        $this->from = $from;
-        $this->currency = $currency;
-        $this->totalAmount = $totalAmount;
-        $this->invoicePayload = $invoicePayload;
-        $this->shippingOptionId = $shippingOptionId;
-        $this->orderInfo = $orderInfo;
-    }
 
     public static function fromArray(array $data): PreCheckoutQuery {
         $instance = new self();
@@ -106,6 +88,24 @@ final class PreCheckoutQuery {
             $instance->orderInfo = OrderInfo::fromArray($data['order_info']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string    $id = null,
+        ?User      $from = null,
+        ?string    $currency = null,
+        ?int       $totalAmount = null,
+        ?string    $invoicePayload = null,
+        ?string    $shippingOptionId = null,
+        ?OrderInfo $orderInfo = null,
+    ) {
+        $this->id = $id;
+        $this->from = $from;
+        $this->currency = $currency;
+        $this->totalAmount = $totalAmount;
+        $this->invoicePayload = $invoicePayload;
+        $this->shippingOptionId = $shippingOptionId;
+        $this->orderInfo = $orderInfo;
     }
 
     public function getId(): ?string {

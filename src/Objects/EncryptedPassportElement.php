@@ -19,7 +19,7 @@ final class EncryptedPassportElement {
     /**
      * Data
      *
-     * Optional. Base64-encoded encrypted Telegram Passport element data provided by the user, available for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying EncryptedCredentials.
+     * Optional. Base64-encoded encrypted Telegram Passport element data provided by the user; available only for “personal_details”, “passport”, “driver_license”, “identity_card”, “internal_passport” and “address” types. Can be decrypted and verified using the accompanying EncryptedCredentials.
      * @var string|null
      */
     protected ?string $data = null;
@@ -27,7 +27,7 @@ final class EncryptedPassportElement {
     /**
      * Phone Number
      *
-     * Optional. User's verified phone number, available only for “phone_number” type
+     * Optional. User's verified phone number; available only for “phone_number” type
      * @var string|null
      */
     protected ?string $phoneNumber = null;
@@ -35,7 +35,7 @@ final class EncryptedPassportElement {
     /**
      * Email
      *
-     * Optional. User's verified email address, available only for “email” type
+     * Optional. User's verified email address; available only for “email” type
      * @var string|null
      */
     protected ?string $email = null;
@@ -43,7 +43,7 @@ final class EncryptedPassportElement {
     /**
      * Files
      *
-     * Optional. Array of encrypted files with documents provided by the user, available for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying EncryptedCredentials.
+     * Optional. Array of encrypted files with documents provided by the user; available only for “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying EncryptedCredentials.
      * @var PassportFile[]|null
      */
     protected ?array $files = null;
@@ -51,7 +51,7 @@ final class EncryptedPassportElement {
     /**
      * Front Side
      *
-     * Optional. Encrypted file with the front side of the document, provided by the user. Available for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying EncryptedCredentials.
+     * Optional. Encrypted file with the front side of the document, provided by the user; available only for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying EncryptedCredentials.
      * @var PassportFile|null
      */
     protected ?PassportFile $frontSide = null;
@@ -59,7 +59,7 @@ final class EncryptedPassportElement {
     /**
      * Reverse Side
      *
-     * Optional. Encrypted file with the reverse side of the document, provided by the user. Available for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying EncryptedCredentials.
+     * Optional. Encrypted file with the reverse side of the document, provided by the user; available only for “driver_license” and “identity_card”. The file can be decrypted and verified using the accompanying EncryptedCredentials.
      * @var PassportFile|null
      */
     protected ?PassportFile $reverseSide = null;
@@ -67,7 +67,7 @@ final class EncryptedPassportElement {
     /**
      * Selfie
      *
-     * Optional. Encrypted file with the selfie of the user holding a document, provided by the user; available for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying EncryptedCredentials.
+     * Optional. Encrypted file with the selfie of the user holding a document, provided by the user; available if requested for “passport”, “driver_license”, “identity_card” and “internal_passport”. The file can be decrypted and verified using the accompanying EncryptedCredentials.
      * @var PassportFile|null
      */
     protected ?PassportFile $selfie = null;
@@ -75,7 +75,7 @@ final class EncryptedPassportElement {
     /**
      * Translation
      *
-     * Optional. Array of encrypted files with translated versions of documents provided by the user. Available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying EncryptedCredentials.
+     * Optional. Array of encrypted files with translated versions of documents provided by the user; available if requested for “passport”, “driver_license”, “identity_card”, “internal_passport”, “utility_bill”, “bank_statement”, “rental_agreement”, “passport_registration” and “temporary_registration” types. Files can be decrypted and verified using the accompanying EncryptedCredentials.
      * @var PassportFile[]|null
      */
     protected ?array $translation = null;
@@ -87,30 +87,6 @@ final class EncryptedPassportElement {
      * @var string|null
      */
     protected ?string $hash = null;
-
-    public function __construct(
-        ?string       $type = null,
-        ?string       $data = null,
-        ?string       $phoneNumber = null,
-        ?string       $email = null,
-        ?array        $files = null,
-        ?PassportFile $frontSide = null,
-        ?PassportFile $reverseSide = null,
-        ?PassportFile $selfie = null,
-        ?array        $translation = null,
-        ?string       $hash = null,
-    ) {
-        $this->type = $type;
-        $this->data = $data;
-        $this->phoneNumber = $phoneNumber;
-        $this->email = $email;
-        $this->files = $files;
-        $this->frontSide = $frontSide;
-        $this->reverseSide = $reverseSide;
-        $this->selfie = $selfie;
-        $this->translation = $translation;
-        $this->hash = $hash;
-    }
 
     public static function fromArray(array $data): EncryptedPassportElement {
         $instance = new self();
@@ -151,6 +127,30 @@ final class EncryptedPassportElement {
             $instance->hash = $data['hash'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string       $type = null,
+        ?string       $data = null,
+        ?string       $phoneNumber = null,
+        ?string       $email = null,
+        ?array        $files = null,
+        ?PassportFile $frontSide = null,
+        ?PassportFile $reverseSide = null,
+        ?PassportFile $selfie = null,
+        ?array        $translation = null,
+        ?string       $hash = null,
+    ) {
+        $this->type = $type;
+        $this->data = $data;
+        $this->phoneNumber = $phoneNumber;
+        $this->email = $email;
+        $this->files = $files;
+        $this->frontSide = $frontSide;
+        $this->reverseSide = $reverseSide;
+        $this->selfie = $selfie;
+        $this->translation = $translation;
+        $this->hash = $hash;
     }
 
     public function getType(): ?string {

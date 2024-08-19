@@ -40,18 +40,6 @@ final class ChatPhoto {
      */
     protected ?string $bigFileUniqueId = null;
 
-    public function __construct(
-        ?string $smallFileId = null,
-        ?string $smallFileUniqueId = null,
-        ?string $bigFileId = null,
-        ?string $bigFileUniqueId = null,
-    ) {
-        $this->smallFileId = $smallFileId;
-        $this->smallFileUniqueId = $smallFileUniqueId;
-        $this->bigFileId = $bigFileId;
-        $this->bigFileUniqueId = $bigFileUniqueId;
-    }
-
     public static function fromArray(array $data): ChatPhoto {
         $instance = new self();
         if (isset($data['small_file_id'])) {
@@ -67,6 +55,18 @@ final class ChatPhoto {
             $instance->bigFileUniqueId = $data['big_file_unique_id'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $smallFileId = null,
+        ?string $smallFileUniqueId = null,
+        ?string $bigFileId = null,
+        ?string $bigFileUniqueId = null,
+    ) {
+        $this->smallFileId = $smallFileId;
+        $this->smallFileUniqueId = $smallFileUniqueId;
+        $this->bigFileId = $bigFileId;
+        $this->bigFileUniqueId = $bigFileUniqueId;
     }
 
     public function getSmallFileId(): ?string {

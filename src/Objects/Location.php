@@ -9,20 +9,20 @@ final class Location {
     use ObjectTrait;
 
     /**
-     * Longitude
-     *
-     * Longitude as defined by sender
-     * @var float|null
-     */
-    protected ?float $longitude = null;
-
-    /**
      * Latitude
      *
-     * Latitude as defined by sender
+     * Latitude as defined by the sender
      * @var float|null
      */
     protected ?float $latitude = null;
+
+    /**
+     * Longitude
+     *
+     * Longitude as defined by the sender
+     * @var float|null
+     */
+    protected ?float $longitude = null;
 
     /**
      * Horizontal Accuracy
@@ -56,29 +56,13 @@ final class Location {
      */
     protected ?int $proximityAlertRadius = null;
 
-    public function __construct(
-        ?float $longitude = null,
-        ?float $latitude = null,
-        ?float $horizontalAccuracy = null,
-        ?int   $livePeriod = null,
-        ?int   $heading = null,
-        ?int   $proximityAlertRadius = null,
-    ) {
-        $this->longitude = $longitude;
-        $this->latitude = $latitude;
-        $this->horizontalAccuracy = $horizontalAccuracy;
-        $this->livePeriod = $livePeriod;
-        $this->heading = $heading;
-        $this->proximityAlertRadius = $proximityAlertRadius;
-    }
-
     public static function fromArray(array $data): Location {
         $instance = new self();
-        if (isset($data['longitude'])) {
-            $instance->longitude = $data['longitude'];
-        }
         if (isset($data['latitude'])) {
             $instance->latitude = $data['latitude'];
+        }
+        if (isset($data['longitude'])) {
+            $instance->longitude = $data['longitude'];
         }
         if (isset($data['horizontal_accuracy'])) {
             $instance->horizontalAccuracy = $data['horizontal_accuracy'];
@@ -95,13 +79,20 @@ final class Location {
         return $instance;
     }
 
-    public function getLongitude(): ?float {
-        return $this->longitude;
-    }
-
-    public function setLongitude(?float $value): self {
-        $this->longitude = $value;
-        return $this;
+    public function __construct(
+        ?float $latitude = null,
+        ?float $longitude = null,
+        ?float $horizontalAccuracy = null,
+        ?int   $livePeriod = null,
+        ?int   $heading = null,
+        ?int   $proximityAlertRadius = null,
+    ) {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->horizontalAccuracy = $horizontalAccuracy;
+        $this->livePeriod = $livePeriod;
+        $this->heading = $heading;
+        $this->proximityAlertRadius = $proximityAlertRadius;
     }
 
     public function getLatitude(): ?float {
@@ -110,6 +101,15 @@ final class Location {
 
     public function setLatitude(?float $value): self {
         $this->latitude = $value;
+        return $this;
+    }
+
+    public function getLongitude(): ?float {
+        return $this->longitude;
+    }
+
+    public function setLongitude(?float $value): self {
+        $this->longitude = $value;
         return $this;
     }
 

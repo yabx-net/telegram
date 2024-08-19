@@ -16,18 +16,18 @@ final class BotShortDescription {
      */
     protected ?string $shortDescription = null;
 
-    public function __construct(
-        ?string $shortDescription = null,
-    ) {
-        $this->shortDescription = $shortDescription;
-    }
-
     public static function fromArray(array $data): BotShortDescription {
         $instance = new self();
         if (isset($data['short_description'])) {
             $instance->shortDescription = $data['short_description'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $shortDescription = null,
+    ) {
+        $this->shortDescription = $shortDescription;
     }
 
     public function getShortDescription(): ?string {

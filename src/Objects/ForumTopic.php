@@ -40,18 +40,6 @@ final class ForumTopic {
      */
     protected ?string $iconCustomEmojiId = null;
 
-    public function __construct(
-        ?int    $messageThreadId = null,
-        ?string $name = null,
-        ?int    $iconColor = null,
-        ?string $iconCustomEmojiId = null,
-    ) {
-        $this->messageThreadId = $messageThreadId;
-        $this->name = $name;
-        $this->iconColor = $iconColor;
-        $this->iconCustomEmojiId = $iconCustomEmojiId;
-    }
-
     public static function fromArray(array $data): ForumTopic {
         $instance = new self();
         if (isset($data['message_thread_id'])) {
@@ -67,6 +55,18 @@ final class ForumTopic {
             $instance->iconCustomEmojiId = $data['icon_custom_emoji_id'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?int    $messageThreadId = null,
+        ?string $name = null,
+        ?int    $iconColor = null,
+        ?string $iconCustomEmojiId = null,
+    ) {
+        $this->messageThreadId = $messageThreadId;
+        $this->name = $name;
+        $this->iconColor = $iconColor;
+        $this->iconCustomEmojiId = $iconCustomEmojiId;
     }
 
     public function getMessageThreadId(): ?int {

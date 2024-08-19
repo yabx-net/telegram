@@ -35,7 +35,7 @@ final class Invoice {
     /**
      * Currency
      *
-     * Three-letter ISO 4217 currency code
+     * Three-letter ISO 4217 currency code, or “XTR” for payments in Telegram Stars
      * @var string|null
      */
     protected ?string $currency = null;
@@ -47,20 +47,6 @@ final class Invoice {
      * @var int|null
      */
     protected ?int $totalAmount = null;
-
-    public function __construct(
-        ?string $title = null,
-        ?string $description = null,
-        ?string $startParameter = null,
-        ?string $currency = null,
-        ?int    $totalAmount = null,
-    ) {
-        $this->title = $title;
-        $this->description = $description;
-        $this->startParameter = $startParameter;
-        $this->currency = $currency;
-        $this->totalAmount = $totalAmount;
-    }
 
     public static function fromArray(array $data): Invoice {
         $instance = new self();
@@ -80,6 +66,20 @@ final class Invoice {
             $instance->totalAmount = $data['total_amount'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $title = null,
+        ?string $description = null,
+        ?string $startParameter = null,
+        ?string $currency = null,
+        ?int    $totalAmount = null,
+    ) {
+        $this->title = $title;
+        $this->description = $description;
+        $this->startParameter = $startParameter;
+        $this->currency = $currency;
+        $this->totalAmount = $totalAmount;
     }
 
     public function getTitle(): ?string {

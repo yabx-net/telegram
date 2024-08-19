@@ -56,21 +56,21 @@ final class ChatMemberUpdated {
      */
     protected ?ChatInviteLink $inviteLink = null;
 
-    public function __construct(
-        ?Chat           $chat = null,
-        ?User           $from = null,
-        ?int            $date = null,
-        ?ChatMember     $oldChatMember = null,
-        ?ChatMember     $newChatMember = null,
-        ?ChatInviteLink $inviteLink = null,
-    ) {
-        $this->chat = $chat;
-        $this->from = $from;
-        $this->date = $date;
-        $this->oldChatMember = $oldChatMember;
-        $this->newChatMember = $newChatMember;
-        $this->inviteLink = $inviteLink;
-    }
+    /**
+     * Via Join Request
+     *
+     * Optional. True, if the user joined the chat after sending a direct join request without using an invite link and being approved by an administrator
+     * @var bool|null
+     */
+    protected ?bool $viaJoinRequest = null;
+
+    /**
+     * Via Chat Folder Invite Link
+     *
+     * Optional. True, if the user joined the chat via a chat folder invite link
+     * @var bool|null
+     */
+    protected ?bool $viaChatFolderInviteLink = null;
 
     public static function fromArray(array $data): ChatMemberUpdated {
         $instance = new self();
@@ -92,7 +92,33 @@ final class ChatMemberUpdated {
         if (isset($data['invite_link'])) {
             $instance->inviteLink = ChatInviteLink::fromArray($data['invite_link']);
         }
+        if (isset($data['via_join_request'])) {
+            $instance->viaJoinRequest = $data['via_join_request'];
+        }
+        if (isset($data['via_chat_folder_invite_link'])) {
+            $instance->viaChatFolderInviteLink = $data['via_chat_folder_invite_link'];
+        }
         return $instance;
+    }
+
+    public function __construct(
+        ?Chat           $chat = null,
+        ?User           $from = null,
+        ?int            $date = null,
+        ?ChatMember     $oldChatMember = null,
+        ?ChatMember     $newChatMember = null,
+        ?ChatInviteLink $inviteLink = null,
+        ?bool           $viaJoinRequest = null,
+        ?bool           $viaChatFolderInviteLink = null,
+    ) {
+        $this->chat = $chat;
+        $this->from = $from;
+        $this->date = $date;
+        $this->oldChatMember = $oldChatMember;
+        $this->newChatMember = $newChatMember;
+        $this->inviteLink = $inviteLink;
+        $this->viaJoinRequest = $viaJoinRequest;
+        $this->viaChatFolderInviteLink = $viaChatFolderInviteLink;
     }
 
     public function getChat(): ?Chat {
@@ -146,6 +172,24 @@ final class ChatMemberUpdated {
 
     public function setInviteLink(?ChatInviteLink $value): self {
         $this->inviteLink = $value;
+        return $this;
+    }
+
+    public function getViaJoinRequest(): ?bool {
+        return $this->viaJoinRequest;
+    }
+
+    public function setViaJoinRequest(?bool $value): self {
+        $this->viaJoinRequest = $value;
+        return $this;
+    }
+
+    public function getViaChatFolderInviteLink(): ?bool {
+        return $this->viaChatFolderInviteLink;
+    }
+
+    public function setViaChatFolderInviteLink(?bool $value): self {
+        $this->viaChatFolderInviteLink = $value;
         return $this;
     }
 

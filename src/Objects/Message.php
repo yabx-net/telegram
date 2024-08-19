@@ -27,7 +27,7 @@ final class Message {
     /**
      * From
      *
-     * Optional. Sender of the message; empty for messages sent to channels. For backward compatibility, the field contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
+     * Optional. Sender of the message; may be empty for messages sent to channels. For backward compatibility, if the message was sent on behalf of a chat, the field contains a fake sender user in non-channel chats
      * @var User|null
      */
     protected ?User $from = null;
@@ -35,74 +35,58 @@ final class Message {
     /**
      * Sender Chat
      *
-     * Optional. Sender of the message, sent on behalf of a chat. For example, the channel itself for channel posts, the supergroup itself for messages from anonymous group administrators, the linked channel for messages automatically forwarded to the discussion group. For backward compatibility, the field from contains a fake sender user in non-channel chats, if the message was sent on behalf of a chat.
+     * Optional. Sender of the message when sent on behalf of a chat. For example, the supergroup itself for messages sent by its anonymous administrators or a linked channel for messages automatically forwarded to the channel's discussion group. For backward compatibility, if the message was sent on behalf of a chat, the field from contains a fake sender user in non-channel chats.
      * @var Chat|null
      */
     protected ?Chat $senderChat = null;
 
     /**
+     * Sender Boost Count
+     *
+     * Optional. If the sender of the message boosted the chat, the number of boosts added by the user
+     * @var int|null
+     */
+    protected ?int $senderBoostCount = null;
+
+    /**
+     * Sender Business Bot
+     *
+     * Optional. The bot that actually sent the message on behalf of the business account. Available only for outgoing messages sent on behalf of the connected business account.
+     * @var User|null
+     */
+    protected ?User $senderBusinessBot = null;
+
+    /**
      * Date
      *
-     * Date the message was sent in Unix time
+     * Date the message was sent in Unix time. It is always a positive number, representing a valid date.
      * @var int|null
      */
     protected ?int $date = null;
 
     /**
+     * Business Connection Id
+     *
+     * Optional. Unique identifier of the business connection from which the message was received. If non-empty, the message belongs to a chat of the corresponding business account that is independent from any potential bot chat which might share the same identifier.
+     * @var string|null
+     */
+    protected ?string $businessConnectionId = null;
+
+    /**
      * Chat
      *
-     * Conversation the message belongs to
+     * Chat the message belongs to
      * @var Chat|null
      */
     protected ?Chat $chat = null;
 
     /**
-     * Forward From
+     * Forward Origin
      *
-     * Optional. For forwarded messages, sender of the original message
-     * @var User|null
+     * Optional. Information about the original message for forwarded messages
+     * @var MessageOrigin|null
      */
-    protected ?User $forwardFrom = null;
-
-    /**
-     * Forward From Chat
-     *
-     * Optional. For messages forwarded from channels or from anonymous administrators, information about the original sender chat
-     * @var Chat|null
-     */
-    protected ?Chat $forwardFromChat = null;
-
-    /**
-     * Forward From Message Id
-     *
-     * Optional. For messages forwarded from channels, identifier of the original message in the channel
-     * @var int|null
-     */
-    protected ?int $forwardFromMessageId = null;
-
-    /**
-     * Forward Signature
-     *
-     * Optional. For forwarded messages that were originally sent in channels or by an anonymous chat administrator, signature of the message sender if present
-     * @var string|null
-     */
-    protected ?string $forwardSignature = null;
-
-    /**
-     * Forward Sender Name
-     *
-     * Optional. Sender's name for messages forwarded from users who disallow adding a link to their account in forwarded messages
-     * @var string|null
-     */
-    protected ?string $forwardSenderName = null;
-
-    /**
-     * Forward Date
-     *
-     * Optional. For forwarded messages, date the original message was sent in Unix time
-     * @var int|null
-     */
-    protected ?int $forwardDate = null;
+    protected ?MessageOrigin $forwardOrigin = null;
 
     /**
      * Is Topic Message
@@ -123,10 +107,34 @@ final class Message {
     /**
      * Reply To Message
      *
-     * Optional. For replies, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+     * Optional. For replies in the same chat and message thread, the original message. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
      * @var Message|null
      */
     protected ?Message $replyToMessage = null;
+
+    /**
+     * External Reply
+     *
+     * Optional. Information about the message that is being replied to, which may come from another chat or forum topic
+     * @var ExternalReplyInfo|null
+     */
+    protected ?ExternalReplyInfo $externalReply = null;
+
+    /**
+     * Quote
+     *
+     * Optional. For replies that quote part of the original message, the quoted part of the message
+     * @var TextQuote|null
+     */
+    protected ?TextQuote $quote = null;
+
+    /**
+     * Reply To Story
+     *
+     * Optional. For replies to a story, the original story
+     * @var Story|null
+     */
+    protected ?Story $replyToStory = null;
 
     /**
      * Via Bot
@@ -151,6 +159,14 @@ final class Message {
      * @var bool|null
      */
     protected ?bool $hasProtectedContent = null;
+
+    /**
+     * Is From Offline
+     *
+     * Optional. True, if the message was sent by an implicit action, for example, as an away or a greeting business message, or as a scheduled message
+     * @var bool|null
+     */
+    protected ?bool $isFromOffline = null;
 
     /**
      * Media Group Id
@@ -185,6 +201,22 @@ final class Message {
     protected ?array $entities = null;
 
     /**
+     * Link Preview Options
+     *
+     * Optional. Options used for link preview generation for the message, if it is a text message and link preview options were changed
+     * @var LinkPreviewOptions|null
+     */
+    protected ?LinkPreviewOptions $linkPreviewOptions = null;
+
+    /**
+     * Effect Id
+     *
+     * Optional. Unique identifier of the message effect added to the message
+     * @var string|null
+     */
+    protected ?string $effectId = null;
+
+    /**
      * Animation
      *
      * Optional. Message is an animation, information about the animation. For backward compatibility, when this field is set, the document field will also be set
@@ -209,6 +241,14 @@ final class Message {
     protected ?Document $document = null;
 
     /**
+     * Paid Media
+     *
+     * Optional. Message contains paid media; information about the paid media
+     * @var PaidMediaInfo|null
+     */
+    protected ?PaidMediaInfo $paidMedia = null;
+
+    /**
      * Photo
      *
      * Optional. Message is a photo, available sizes of the photo
@@ -223,6 +263,14 @@ final class Message {
      * @var Sticker|null
      */
     protected ?Sticker $sticker = null;
+
+    /**
+     * Story
+     *
+     * Optional. Message is a forwarded story
+     * @var Story|null
+     */
+    protected ?Story $story = null;
 
     /**
      * Video
@@ -251,7 +299,7 @@ final class Message {
     /**
      * Caption
      *
-     * Optional. Caption for the animation, audio, document, photo, video or voice
+     * Optional. Caption for the animation, audio, document, paid media, photo, video or voice
      * @var string|null
      */
     protected ?string $caption = null;
@@ -263,6 +311,14 @@ final class Message {
      * @var MessageEntity[]|null
      */
     protected ?array $captionEntities = null;
+
+    /**
+     * Show Caption Above Media
+     *
+     * Optional. True, if the caption must be shown above the message media
+     * @var bool|null
+     */
+    protected ?bool $showCaptionAboveMedia = null;
 
     /**
      * Has Media Spoiler
@@ -411,10 +467,10 @@ final class Message {
     /**
      * Pinned Message
      *
-     * Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it is itself a reply.
-     * @var Message|null
+     * Optional. Specified message was pinned. Note that the Message object in this field will not contain further reply_to_message fields even if it itself is a reply.
+     * @var MaybeInaccessibleMessage|null
      */
-    protected ?Message $pinnedMessage = null;
+    protected ?MaybeInaccessibleMessage $pinnedMessage = null;
 
     /**
      * Invoice
@@ -433,12 +489,20 @@ final class Message {
     protected ?SuccessfulPayment $successfulPayment = null;
 
     /**
-     * User Shared
+     * Refunded Payment
      *
-     * Optional. Service message: a user was shared with the bot
-     * @var UserShared|null
+     * Optional. Message is a service message about a refunded payment, information about the payment. More about payments »
+     * @var RefundedPayment|null
      */
-    protected ?UserShared $userShared = null;
+    protected ?RefundedPayment $refundedPayment = null;
+
+    /**
+     * Users Shared
+     *
+     * Optional. Service message: users were shared with the bot
+     * @var UsersShared|null
+     */
+    protected ?UsersShared $usersShared = null;
 
     /**
      * Chat Shared
@@ -459,7 +523,7 @@ final class Message {
     /**
      * Write Access Allowed
      *
-     * Optional. Service message: the user allowed the bot added to the attachment menu to write messages
+     * Optional. Service message: the user allowed the bot to write messages after adding it to the attachment or side menu, launching a Web App from a link, or accepting an explicit request from a Web App sent by the method requestWriteAccess
      * @var WriteAccessAllowed|null
      */
     protected ?WriteAccessAllowed $writeAccessAllowed = null;
@@ -479,6 +543,22 @@ final class Message {
      * @var ProximityAlertTriggered|null
      */
     protected ?ProximityAlertTriggered $proximityAlertTriggered = null;
+
+    /**
+     * Boost Added
+     *
+     * Optional. Service message: user boosted the chat
+     * @var ChatBoostAdded|null
+     */
+    protected ?ChatBoostAdded $boostAdded = null;
+
+    /**
+     * Chat Background Set
+     *
+     * Optional. Service message: chat background set
+     * @var ChatBackground|null
+     */
+    protected ?ChatBackground $chatBackgroundSet = null;
 
     /**
      * Forum Topic Created
@@ -529,6 +609,38 @@ final class Message {
     protected ?GeneralForumTopicUnhidden $generalForumTopicUnhidden = null;
 
     /**
+     * Giveaway Created
+     *
+     * Optional. Service message: a scheduled giveaway was created
+     * @var GiveawayCreated|null
+     */
+    protected ?GiveawayCreated $giveawayCreated = null;
+
+    /**
+     * Giveaway
+     *
+     * Optional. The message is a scheduled giveaway message
+     * @var Giveaway|null
+     */
+    protected ?Giveaway $giveaway = null;
+
+    /**
+     * Giveaway Winners
+     *
+     * Optional. A giveaway with public winners was completed
+     * @var GiveawayWinners|null
+     */
+    protected ?GiveawayWinners $giveawayWinners = null;
+
+    /**
+     * Giveaway Completed
+     *
+     * Optional. Service message: a giveaway without public winners was completed
+     * @var GiveawayCompleted|null
+     */
+    protected ?GiveawayCompleted $giveawayCompleted = null;
+
+    /**
      * Video Chat Scheduled
      *
      * Optional. Service message: video chat scheduled
@@ -576,152 +688,6 @@ final class Message {
      */
     protected ?InlineKeyboardMarkup $replyMarkup = null;
 
-    public function __construct(
-        ?int                           $messageId = null,
-        ?int                           $messageThreadId = null,
-        ?User                          $from = null,
-        ?Chat                          $senderChat = null,
-        ?int                           $date = null,
-        ?Chat                          $chat = null,
-        ?User                          $forwardFrom = null,
-        ?Chat                          $forwardFromChat = null,
-        ?int                           $forwardFromMessageId = null,
-        ?string                        $forwardSignature = null,
-        ?string                        $forwardSenderName = null,
-        ?int                           $forwardDate = null,
-        ?bool                          $isTopicMessage = null,
-        ?bool                          $isAutomaticForward = null,
-        ?Message                       $replyToMessage = null,
-        ?User                          $viaBot = null,
-        ?int                           $editDate = null,
-        ?bool                          $hasProtectedContent = null,
-        ?string                        $mediaGroupId = null,
-        ?string                        $authorSignature = null,
-        ?string                        $text = null,
-        ?array                         $entities = null,
-        ?Animation                     $animation = null,
-        ?Audio                         $audio = null,
-        ?Document                      $document = null,
-        ?array                         $photo = null,
-        ?Sticker                       $sticker = null,
-        ?Video                         $video = null,
-        ?VideoNote                     $videoNote = null,
-        ?Voice                         $voice = null,
-        ?string                        $caption = null,
-        ?array                         $captionEntities = null,
-        ?bool                          $hasMediaSpoiler = null,
-        ?Contact                       $contact = null,
-        ?Dice                          $dice = null,
-        ?Game                          $game = null,
-        ?Poll                          $poll = null,
-        ?Venue                         $venue = null,
-        ?Location                      $location = null,
-        ?array                         $newChatMembers = null,
-        ?User                          $leftChatMember = null,
-        ?string                        $newChatTitle = null,
-        ?array                         $newChatPhoto = null,
-        ?bool                          $deleteChatPhoto = null,
-        ?bool                          $groupChatCreated = null,
-        ?bool                          $supergroupChatCreated = null,
-        ?bool                          $channelChatCreated = null,
-        ?MessageAutoDeleteTimerChanged $messageAutoDeleteTimerChanged = null,
-        ?int                           $migrateToChatId = null,
-        ?int                           $migrateFromChatId = null,
-        ?Message                       $pinnedMessage = null,
-        ?Invoice                       $invoice = null,
-        ?SuccessfulPayment             $successfulPayment = null,
-        ?UserShared                    $userShared = null,
-        ?ChatShared                    $chatShared = null,
-        ?string                        $connectedWebsite = null,
-        ?WriteAccessAllowed            $writeAccessAllowed = null,
-        ?PassportData                  $passportData = null,
-        ?ProximityAlertTriggered       $proximityAlertTriggered = null,
-        ?ForumTopicCreated             $forumTopicCreated = null,
-        ?ForumTopicEdited              $forumTopicEdited = null,
-        ?ForumTopicClosed              $forumTopicClosed = null,
-        ?ForumTopicReopened            $forumTopicReopened = null,
-        ?GeneralForumTopicHidden       $generalForumTopicHidden = null,
-        ?GeneralForumTopicUnhidden     $generalForumTopicUnhidden = null,
-        ?VideoChatScheduled            $videoChatScheduled = null,
-        ?VideoChatStarted              $videoChatStarted = null,
-        ?VideoChatEnded                $videoChatEnded = null,
-        ?VideoChatParticipantsInvited  $videoChatParticipantsInvited = null,
-        ?WebAppData                    $webAppData = null,
-        ?InlineKeyboardMarkup          $replyMarkup = null,
-    ) {
-        $this->messageId = $messageId;
-        $this->messageThreadId = $messageThreadId;
-        $this->from = $from;
-        $this->senderChat = $senderChat;
-        $this->date = $date;
-        $this->chat = $chat;
-        $this->forwardFrom = $forwardFrom;
-        $this->forwardFromChat = $forwardFromChat;
-        $this->forwardFromMessageId = $forwardFromMessageId;
-        $this->forwardSignature = $forwardSignature;
-        $this->forwardSenderName = $forwardSenderName;
-        $this->forwardDate = $forwardDate;
-        $this->isTopicMessage = $isTopicMessage;
-        $this->isAutomaticForward = $isAutomaticForward;
-        $this->replyToMessage = $replyToMessage;
-        $this->viaBot = $viaBot;
-        $this->editDate = $editDate;
-        $this->hasProtectedContent = $hasProtectedContent;
-        $this->mediaGroupId = $mediaGroupId;
-        $this->authorSignature = $authorSignature;
-        $this->text = $text;
-        $this->entities = $entities;
-        $this->animation = $animation;
-        $this->audio = $audio;
-        $this->document = $document;
-        $this->photo = $photo;
-        $this->sticker = $sticker;
-        $this->video = $video;
-        $this->videoNote = $videoNote;
-        $this->voice = $voice;
-        $this->caption = $caption;
-        $this->captionEntities = $captionEntities;
-        $this->hasMediaSpoiler = $hasMediaSpoiler;
-        $this->contact = $contact;
-        $this->dice = $dice;
-        $this->game = $game;
-        $this->poll = $poll;
-        $this->venue = $venue;
-        $this->location = $location;
-        $this->newChatMembers = $newChatMembers;
-        $this->leftChatMember = $leftChatMember;
-        $this->newChatTitle = $newChatTitle;
-        $this->newChatPhoto = $newChatPhoto;
-        $this->deleteChatPhoto = $deleteChatPhoto;
-        $this->groupChatCreated = $groupChatCreated;
-        $this->supergroupChatCreated = $supergroupChatCreated;
-        $this->channelChatCreated = $channelChatCreated;
-        $this->messageAutoDeleteTimerChanged = $messageAutoDeleteTimerChanged;
-        $this->migrateToChatId = $migrateToChatId;
-        $this->migrateFromChatId = $migrateFromChatId;
-        $this->pinnedMessage = $pinnedMessage;
-        $this->invoice = $invoice;
-        $this->successfulPayment = $successfulPayment;
-        $this->userShared = $userShared;
-        $this->chatShared = $chatShared;
-        $this->connectedWebsite = $connectedWebsite;
-        $this->writeAccessAllowed = $writeAccessAllowed;
-        $this->passportData = $passportData;
-        $this->proximityAlertTriggered = $proximityAlertTriggered;
-        $this->forumTopicCreated = $forumTopicCreated;
-        $this->forumTopicEdited = $forumTopicEdited;
-        $this->forumTopicClosed = $forumTopicClosed;
-        $this->forumTopicReopened = $forumTopicReopened;
-        $this->generalForumTopicHidden = $generalForumTopicHidden;
-        $this->generalForumTopicUnhidden = $generalForumTopicUnhidden;
-        $this->videoChatScheduled = $videoChatScheduled;
-        $this->videoChatStarted = $videoChatStarted;
-        $this->videoChatEnded = $videoChatEnded;
-        $this->videoChatParticipantsInvited = $videoChatParticipantsInvited;
-        $this->webAppData = $webAppData;
-        $this->replyMarkup = $replyMarkup;
-    }
-
     public static function fromArray(array $data): Message {
         $instance = new self();
         if (isset($data['message_id'])) {
@@ -736,29 +702,23 @@ final class Message {
         if (isset($data['sender_chat'])) {
             $instance->senderChat = Chat::fromArray($data['sender_chat']);
         }
+        if (isset($data['sender_boost_count'])) {
+            $instance->senderBoostCount = $data['sender_boost_count'];
+        }
+        if (isset($data['sender_business_bot'])) {
+            $instance->senderBusinessBot = User::fromArray($data['sender_business_bot']);
+        }
         if (isset($data['date'])) {
             $instance->date = $data['date'];
+        }
+        if (isset($data['business_connection_id'])) {
+            $instance->businessConnectionId = $data['business_connection_id'];
         }
         if (isset($data['chat'])) {
             $instance->chat = Chat::fromArray($data['chat']);
         }
-        if (isset($data['forward_from'])) {
-            $instance->forwardFrom = User::fromArray($data['forward_from']);
-        }
-        if (isset($data['forward_from_chat'])) {
-            $instance->forwardFromChat = Chat::fromArray($data['forward_from_chat']);
-        }
-        if (isset($data['forward_from_message_id'])) {
-            $instance->forwardFromMessageId = $data['forward_from_message_id'];
-        }
-        if (isset($data['forward_signature'])) {
-            $instance->forwardSignature = $data['forward_signature'];
-        }
-        if (isset($data['forward_sender_name'])) {
-            $instance->forwardSenderName = $data['forward_sender_name'];
-        }
-        if (isset($data['forward_date'])) {
-            $instance->forwardDate = $data['forward_date'];
+        if (isset($data['forward_origin'])) {
+            $instance->forwardOrigin = MessageOrigin::fromArray($data['forward_origin']);
         }
         if (isset($data['is_topic_message'])) {
             $instance->isTopicMessage = $data['is_topic_message'];
@@ -769,6 +729,15 @@ final class Message {
         if (isset($data['reply_to_message'])) {
             $instance->replyToMessage = Message::fromArray($data['reply_to_message']);
         }
+        if (isset($data['external_reply'])) {
+            $instance->externalReply = ExternalReplyInfo::fromArray($data['external_reply']);
+        }
+        if (isset($data['quote'])) {
+            $instance->quote = TextQuote::fromArray($data['quote']);
+        }
+        if (isset($data['reply_to_story'])) {
+            $instance->replyToStory = Story::fromArray($data['reply_to_story']);
+        }
         if (isset($data['via_bot'])) {
             $instance->viaBot = User::fromArray($data['via_bot']);
         }
@@ -777,6 +746,9 @@ final class Message {
         }
         if (isset($data['has_protected_content'])) {
             $instance->hasProtectedContent = $data['has_protected_content'];
+        }
+        if (isset($data['is_from_offline'])) {
+            $instance->isFromOffline = $data['is_from_offline'];
         }
         if (isset($data['media_group_id'])) {
             $instance->mediaGroupId = $data['media_group_id'];
@@ -793,6 +765,12 @@ final class Message {
                 $instance->entities[] = MessageEntity::fromArray($item);
             }
         }
+        if (isset($data['link_preview_options'])) {
+            $instance->linkPreviewOptions = LinkPreviewOptions::fromArray($data['link_preview_options']);
+        }
+        if (isset($data['effect_id'])) {
+            $instance->effectId = $data['effect_id'];
+        }
         if (isset($data['animation'])) {
             $instance->animation = Animation::fromArray($data['animation']);
         }
@@ -802,6 +780,9 @@ final class Message {
         if (isset($data['document'])) {
             $instance->document = Document::fromArray($data['document']);
         }
+        if (isset($data['paid_media'])) {
+            $instance->paidMedia = PaidMediaInfo::fromArray($data['paid_media']);
+        }
         if (isset($data['photo'])) {
             $instance->photo = [];
             foreach ($data['photo'] as $item) {
@@ -810,6 +791,9 @@ final class Message {
         }
         if (isset($data['sticker'])) {
             $instance->sticker = Sticker::fromArray($data['sticker']);
+        }
+        if (isset($data['story'])) {
+            $instance->story = Story::fromArray($data['story']);
         }
         if (isset($data['video'])) {
             $instance->video = Video::fromArray($data['video']);
@@ -828,6 +812,9 @@ final class Message {
             foreach ($data['caption_entities'] as $item) {
                 $instance->captionEntities[] = MessageEntity::fromArray($item);
             }
+        }
+        if (isset($data['show_caption_above_media'])) {
+            $instance->showCaptionAboveMedia = $data['show_caption_above_media'];
         }
         if (isset($data['has_media_spoiler'])) {
             $instance->hasMediaSpoiler = $data['has_media_spoiler'];
@@ -890,7 +877,7 @@ final class Message {
             $instance->migrateFromChatId = $data['migrate_from_chat_id'];
         }
         if (isset($data['pinned_message'])) {
-            $instance->pinnedMessage = Message::fromArray($data['pinned_message']);
+            $instance->pinnedMessage = MaybeInaccessibleMessage::fromArray($data['pinned_message']);
         }
         if (isset($data['invoice'])) {
             $instance->invoice = Invoice::fromArray($data['invoice']);
@@ -898,8 +885,11 @@ final class Message {
         if (isset($data['successful_payment'])) {
             $instance->successfulPayment = SuccessfulPayment::fromArray($data['successful_payment']);
         }
-        if (isset($data['user_shared'])) {
-            $instance->userShared = UserShared::fromArray($data['user_shared']);
+        if (isset($data['refunded_payment'])) {
+            $instance->refundedPayment = RefundedPayment::fromArray($data['refunded_payment']);
+        }
+        if (isset($data['users_shared'])) {
+            $instance->usersShared = UsersShared::fromArray($data['users_shared']);
         }
         if (isset($data['chat_shared'])) {
             $instance->chatShared = ChatShared::fromArray($data['chat_shared']);
@@ -915,6 +905,12 @@ final class Message {
         }
         if (isset($data['proximity_alert_triggered'])) {
             $instance->proximityAlertTriggered = ProximityAlertTriggered::fromArray($data['proximity_alert_triggered']);
+        }
+        if (isset($data['boost_added'])) {
+            $instance->boostAdded = ChatBoostAdded::fromArray($data['boost_added']);
+        }
+        if (isset($data['chat_background_set'])) {
+            $instance->chatBackgroundSet = ChatBackground::fromArray($data['chat_background_set']);
         }
         if (isset($data['forum_topic_created'])) {
             $instance->forumTopicCreated = ForumTopicCreated::fromArray($data['forum_topic_created']);
@@ -933,6 +929,18 @@ final class Message {
         }
         if (isset($data['general_forum_topic_unhidden'])) {
             $instance->generalForumTopicUnhidden = GeneralForumTopicUnhidden::fromArray($data['general_forum_topic_unhidden']);
+        }
+        if (isset($data['giveaway_created'])) {
+            $instance->giveawayCreated = GiveawayCreated::fromArray($data['giveaway_created']);
+        }
+        if (isset($data['giveaway'])) {
+            $instance->giveaway = Giveaway::fromArray($data['giveaway']);
+        }
+        if (isset($data['giveaway_winners'])) {
+            $instance->giveawayWinners = GiveawayWinners::fromArray($data['giveaway_winners']);
+        }
+        if (isset($data['giveaway_completed'])) {
+            $instance->giveawayCompleted = GiveawayCompleted::fromArray($data['giveaway_completed']);
         }
         if (isset($data['video_chat_scheduled'])) {
             $instance->videoChatScheduled = VideoChatScheduled::fromArray($data['video_chat_scheduled']);
@@ -953,6 +961,180 @@ final class Message {
             $instance->replyMarkup = InlineKeyboardMarkup::fromArray($data['reply_markup']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?int                           $messageId = null,
+        ?int                           $messageThreadId = null,
+        ?User                          $from = null,
+        ?Chat                          $senderChat = null,
+        ?int                           $senderBoostCount = null,
+        ?User                          $senderBusinessBot = null,
+        ?int                           $date = null,
+        ?string                        $businessConnectionId = null,
+        ?Chat                          $chat = null,
+        ?MessageOrigin                 $forwardOrigin = null,
+        ?bool                          $isTopicMessage = null,
+        ?bool                          $isAutomaticForward = null,
+        ?Message                       $replyToMessage = null,
+        ?ExternalReplyInfo             $externalReply = null,
+        ?TextQuote                     $quote = null,
+        ?Story                         $replyToStory = null,
+        ?User                          $viaBot = null,
+        ?int                           $editDate = null,
+        ?bool                          $hasProtectedContent = null,
+        ?bool                          $isFromOffline = null,
+        ?string                        $mediaGroupId = null,
+        ?string                        $authorSignature = null,
+        ?string                        $text = null,
+        ?array                         $entities = null,
+        ?LinkPreviewOptions            $linkPreviewOptions = null,
+        ?string                        $effectId = null,
+        ?Animation                     $animation = null,
+        ?Audio                         $audio = null,
+        ?Document                      $document = null,
+        ?PaidMediaInfo                 $paidMedia = null,
+        ?array                         $photo = null,
+        ?Sticker                       $sticker = null,
+        ?Story                         $story = null,
+        ?Video                         $video = null,
+        ?VideoNote                     $videoNote = null,
+        ?Voice                         $voice = null,
+        ?string                        $caption = null,
+        ?array                         $captionEntities = null,
+        ?bool                          $showCaptionAboveMedia = null,
+        ?bool                          $hasMediaSpoiler = null,
+        ?Contact                       $contact = null,
+        ?Dice                          $dice = null,
+        ?Game                          $game = null,
+        ?Poll                          $poll = null,
+        ?Venue                         $venue = null,
+        ?Location                      $location = null,
+        ?array                         $newChatMembers = null,
+        ?User                          $leftChatMember = null,
+        ?string                        $newChatTitle = null,
+        ?array                         $newChatPhoto = null,
+        ?bool                          $deleteChatPhoto = null,
+        ?bool                          $groupChatCreated = null,
+        ?bool                          $supergroupChatCreated = null,
+        ?bool                          $channelChatCreated = null,
+        ?MessageAutoDeleteTimerChanged $messageAutoDeleteTimerChanged = null,
+        ?int                           $migrateToChatId = null,
+        ?int                           $migrateFromChatId = null,
+        ?MaybeInaccessibleMessage      $pinnedMessage = null,
+        ?Invoice                       $invoice = null,
+        ?SuccessfulPayment             $successfulPayment = null,
+        ?RefundedPayment               $refundedPayment = null,
+        ?UsersShared                   $usersShared = null,
+        ?ChatShared                    $chatShared = null,
+        ?string                        $connectedWebsite = null,
+        ?WriteAccessAllowed            $writeAccessAllowed = null,
+        ?PassportData                  $passportData = null,
+        ?ProximityAlertTriggered       $proximityAlertTriggered = null,
+        ?ChatBoostAdded                $boostAdded = null,
+        ?ChatBackground                $chatBackgroundSet = null,
+        ?ForumTopicCreated             $forumTopicCreated = null,
+        ?ForumTopicEdited              $forumTopicEdited = null,
+        ?ForumTopicClosed              $forumTopicClosed = null,
+        ?ForumTopicReopened            $forumTopicReopened = null,
+        ?GeneralForumTopicHidden       $generalForumTopicHidden = null,
+        ?GeneralForumTopicUnhidden     $generalForumTopicUnhidden = null,
+        ?GiveawayCreated               $giveawayCreated = null,
+        ?Giveaway                      $giveaway = null,
+        ?GiveawayWinners               $giveawayWinners = null,
+        ?GiveawayCompleted             $giveawayCompleted = null,
+        ?VideoChatScheduled            $videoChatScheduled = null,
+        ?VideoChatStarted              $videoChatStarted = null,
+        ?VideoChatEnded                $videoChatEnded = null,
+        ?VideoChatParticipantsInvited  $videoChatParticipantsInvited = null,
+        ?WebAppData                    $webAppData = null,
+        ?InlineKeyboardMarkup          $replyMarkup = null,
+    ) {
+        $this->messageId = $messageId;
+        $this->messageThreadId = $messageThreadId;
+        $this->from = $from;
+        $this->senderChat = $senderChat;
+        $this->senderBoostCount = $senderBoostCount;
+        $this->senderBusinessBot = $senderBusinessBot;
+        $this->date = $date;
+        $this->businessConnectionId = $businessConnectionId;
+        $this->chat = $chat;
+        $this->forwardOrigin = $forwardOrigin;
+        $this->isTopicMessage = $isTopicMessage;
+        $this->isAutomaticForward = $isAutomaticForward;
+        $this->replyToMessage = $replyToMessage;
+        $this->externalReply = $externalReply;
+        $this->quote = $quote;
+        $this->replyToStory = $replyToStory;
+        $this->viaBot = $viaBot;
+        $this->editDate = $editDate;
+        $this->hasProtectedContent = $hasProtectedContent;
+        $this->isFromOffline = $isFromOffline;
+        $this->mediaGroupId = $mediaGroupId;
+        $this->authorSignature = $authorSignature;
+        $this->text = $text;
+        $this->entities = $entities;
+        $this->linkPreviewOptions = $linkPreviewOptions;
+        $this->effectId = $effectId;
+        $this->animation = $animation;
+        $this->audio = $audio;
+        $this->document = $document;
+        $this->paidMedia = $paidMedia;
+        $this->photo = $photo;
+        $this->sticker = $sticker;
+        $this->story = $story;
+        $this->video = $video;
+        $this->videoNote = $videoNote;
+        $this->voice = $voice;
+        $this->caption = $caption;
+        $this->captionEntities = $captionEntities;
+        $this->showCaptionAboveMedia = $showCaptionAboveMedia;
+        $this->hasMediaSpoiler = $hasMediaSpoiler;
+        $this->contact = $contact;
+        $this->dice = $dice;
+        $this->game = $game;
+        $this->poll = $poll;
+        $this->venue = $venue;
+        $this->location = $location;
+        $this->newChatMembers = $newChatMembers;
+        $this->leftChatMember = $leftChatMember;
+        $this->newChatTitle = $newChatTitle;
+        $this->newChatPhoto = $newChatPhoto;
+        $this->deleteChatPhoto = $deleteChatPhoto;
+        $this->groupChatCreated = $groupChatCreated;
+        $this->supergroupChatCreated = $supergroupChatCreated;
+        $this->channelChatCreated = $channelChatCreated;
+        $this->messageAutoDeleteTimerChanged = $messageAutoDeleteTimerChanged;
+        $this->migrateToChatId = $migrateToChatId;
+        $this->migrateFromChatId = $migrateFromChatId;
+        $this->pinnedMessage = $pinnedMessage;
+        $this->invoice = $invoice;
+        $this->successfulPayment = $successfulPayment;
+        $this->refundedPayment = $refundedPayment;
+        $this->usersShared = $usersShared;
+        $this->chatShared = $chatShared;
+        $this->connectedWebsite = $connectedWebsite;
+        $this->writeAccessAllowed = $writeAccessAllowed;
+        $this->passportData = $passportData;
+        $this->proximityAlertTriggered = $proximityAlertTriggered;
+        $this->boostAdded = $boostAdded;
+        $this->chatBackgroundSet = $chatBackgroundSet;
+        $this->forumTopicCreated = $forumTopicCreated;
+        $this->forumTopicEdited = $forumTopicEdited;
+        $this->forumTopicClosed = $forumTopicClosed;
+        $this->forumTopicReopened = $forumTopicReopened;
+        $this->generalForumTopicHidden = $generalForumTopicHidden;
+        $this->generalForumTopicUnhidden = $generalForumTopicUnhidden;
+        $this->giveawayCreated = $giveawayCreated;
+        $this->giveaway = $giveaway;
+        $this->giveawayWinners = $giveawayWinners;
+        $this->giveawayCompleted = $giveawayCompleted;
+        $this->videoChatScheduled = $videoChatScheduled;
+        $this->videoChatStarted = $videoChatStarted;
+        $this->videoChatEnded = $videoChatEnded;
+        $this->videoChatParticipantsInvited = $videoChatParticipantsInvited;
+        $this->webAppData = $webAppData;
+        $this->replyMarkup = $replyMarkup;
     }
 
     public function getMessageId(): ?int {
@@ -991,12 +1173,39 @@ final class Message {
         return $this;
     }
 
+    public function getSenderBoostCount(): ?int {
+        return $this->senderBoostCount;
+    }
+
+    public function setSenderBoostCount(?int $value): self {
+        $this->senderBoostCount = $value;
+        return $this;
+    }
+
+    public function getSenderBusinessBot(): ?User {
+        return $this->senderBusinessBot;
+    }
+
+    public function setSenderBusinessBot(?User $value): self {
+        $this->senderBusinessBot = $value;
+        return $this;
+    }
+
     public function getDate(): ?int {
         return $this->date;
     }
 
     public function setDate(?int $value): self {
         $this->date = $value;
+        return $this;
+    }
+
+    public function getBusinessConnectionId(): ?string {
+        return $this->businessConnectionId;
+    }
+
+    public function setBusinessConnectionId(?string $value): self {
+        $this->businessConnectionId = $value;
         return $this;
     }
 
@@ -1009,57 +1218,12 @@ final class Message {
         return $this;
     }
 
-    public function getForwardFrom(): ?User {
-        return $this->forwardFrom;
+    public function getForwardOrigin(): ?MessageOrigin {
+        return $this->forwardOrigin;
     }
 
-    public function setForwardFrom(?User $value): self {
-        $this->forwardFrom = $value;
-        return $this;
-    }
-
-    public function getForwardFromChat(): ?Chat {
-        return $this->forwardFromChat;
-    }
-
-    public function setForwardFromChat(?Chat $value): self {
-        $this->forwardFromChat = $value;
-        return $this;
-    }
-
-    public function getForwardFromMessageId(): ?int {
-        return $this->forwardFromMessageId;
-    }
-
-    public function setForwardFromMessageId(?int $value): self {
-        $this->forwardFromMessageId = $value;
-        return $this;
-    }
-
-    public function getForwardSignature(): ?string {
-        return $this->forwardSignature;
-    }
-
-    public function setForwardSignature(?string $value): self {
-        $this->forwardSignature = $value;
-        return $this;
-    }
-
-    public function getForwardSenderName(): ?string {
-        return $this->forwardSenderName;
-    }
-
-    public function setForwardSenderName(?string $value): self {
-        $this->forwardSenderName = $value;
-        return $this;
-    }
-
-    public function getForwardDate(): ?int {
-        return $this->forwardDate;
-    }
-
-    public function setForwardDate(?int $value): self {
-        $this->forwardDate = $value;
+    public function setForwardOrigin(?MessageOrigin $value): self {
+        $this->forwardOrigin = $value;
         return $this;
     }
 
@@ -1090,6 +1254,33 @@ final class Message {
         return $this;
     }
 
+    public function getExternalReply(): ?ExternalReplyInfo {
+        return $this->externalReply;
+    }
+
+    public function setExternalReply(?ExternalReplyInfo $value): self {
+        $this->externalReply = $value;
+        return $this;
+    }
+
+    public function getQuote(): ?TextQuote {
+        return $this->quote;
+    }
+
+    public function setQuote(?TextQuote $value): self {
+        $this->quote = $value;
+        return $this;
+    }
+
+    public function getReplyToStory(): ?Story {
+        return $this->replyToStory;
+    }
+
+    public function setReplyToStory(?Story $value): self {
+        $this->replyToStory = $value;
+        return $this;
+    }
+
     public function getViaBot(): ?User {
         return $this->viaBot;
     }
@@ -1114,6 +1305,15 @@ final class Message {
 
     public function setHasProtectedContent(?bool $value): self {
         $this->hasProtectedContent = $value;
+        return $this;
+    }
+
+    public function getIsFromOffline(): ?bool {
+        return $this->isFromOffline;
+    }
+
+    public function setIsFromOffline(?bool $value): self {
+        $this->isFromOffline = $value;
         return $this;
     }
 
@@ -1153,6 +1353,24 @@ final class Message {
         return $this;
     }
 
+    public function getLinkPreviewOptions(): ?LinkPreviewOptions {
+        return $this->linkPreviewOptions;
+    }
+
+    public function setLinkPreviewOptions(?LinkPreviewOptions $value): self {
+        $this->linkPreviewOptions = $value;
+        return $this;
+    }
+
+    public function getEffectId(): ?string {
+        return $this->effectId;
+    }
+
+    public function setEffectId(?string $value): self {
+        $this->effectId = $value;
+        return $this;
+    }
+
     public function getAnimation(): ?Animation {
         return $this->animation;
     }
@@ -1180,6 +1398,15 @@ final class Message {
         return $this;
     }
 
+    public function getPaidMedia(): ?PaidMediaInfo {
+        return $this->paidMedia;
+    }
+
+    public function setPaidMedia(?PaidMediaInfo $value): self {
+        $this->paidMedia = $value;
+        return $this;
+    }
+
     public function getPhoto(): ?array {
         return $this->photo;
     }
@@ -1195,6 +1422,15 @@ final class Message {
 
     public function setSticker(?Sticker $value): self {
         $this->sticker = $value;
+        return $this;
+    }
+
+    public function getStory(): ?Story {
+        return $this->story;
+    }
+
+    public function setStory(?Story $value): self {
+        $this->story = $value;
         return $this;
     }
 
@@ -1240,6 +1476,15 @@ final class Message {
 
     public function setCaptionEntities(?array $value): self {
         $this->captionEntities = $value;
+        return $this;
+    }
+
+    public function getShowCaptionAboveMedia(): ?bool {
+        return $this->showCaptionAboveMedia;
+    }
+
+    public function setShowCaptionAboveMedia(?bool $value): self {
+        $this->showCaptionAboveMedia = $value;
         return $this;
     }
 
@@ -1405,11 +1650,11 @@ final class Message {
         return $this;
     }
 
-    public function getPinnedMessage(): ?Message {
+    public function getPinnedMessage(): ?MaybeInaccessibleMessage {
         return $this->pinnedMessage;
     }
 
-    public function setPinnedMessage(?Message $value): self {
+    public function setPinnedMessage(?MaybeInaccessibleMessage $value): self {
         $this->pinnedMessage = $value;
         return $this;
     }
@@ -1432,12 +1677,21 @@ final class Message {
         return $this;
     }
 
-    public function getUserShared(): ?UserShared {
-        return $this->userShared;
+    public function getRefundedPayment(): ?RefundedPayment {
+        return $this->refundedPayment;
     }
 
-    public function setUserShared(?UserShared $value): self {
-        $this->userShared = $value;
+    public function setRefundedPayment(?RefundedPayment $value): self {
+        $this->refundedPayment = $value;
+        return $this;
+    }
+
+    public function getUsersShared(): ?UsersShared {
+        return $this->usersShared;
+    }
+
+    public function setUsersShared(?UsersShared $value): self {
+        $this->usersShared = $value;
         return $this;
     }
 
@@ -1483,6 +1737,24 @@ final class Message {
 
     public function setProximityAlertTriggered(?ProximityAlertTriggered $value): self {
         $this->proximityAlertTriggered = $value;
+        return $this;
+    }
+
+    public function getBoostAdded(): ?ChatBoostAdded {
+        return $this->boostAdded;
+    }
+
+    public function setBoostAdded(?ChatBoostAdded $value): self {
+        $this->boostAdded = $value;
+        return $this;
+    }
+
+    public function getChatBackgroundSet(): ?ChatBackground {
+        return $this->chatBackgroundSet;
+    }
+
+    public function setChatBackgroundSet(?ChatBackground $value): self {
+        $this->chatBackgroundSet = $value;
         return $this;
     }
 
@@ -1537,6 +1809,42 @@ final class Message {
 
     public function setGeneralForumTopicUnhidden(?GeneralForumTopicUnhidden $value): self {
         $this->generalForumTopicUnhidden = $value;
+        return $this;
+    }
+
+    public function getGiveawayCreated(): ?GiveawayCreated {
+        return $this->giveawayCreated;
+    }
+
+    public function setGiveawayCreated(?GiveawayCreated $value): self {
+        $this->giveawayCreated = $value;
+        return $this;
+    }
+
+    public function getGiveaway(): ?Giveaway {
+        return $this->giveaway;
+    }
+
+    public function setGiveaway(?Giveaway $value): self {
+        $this->giveaway = $value;
+        return $this;
+    }
+
+    public function getGiveawayWinners(): ?GiveawayWinners {
+        return $this->giveawayWinners;
+    }
+
+    public function setGiveawayWinners(?GiveawayWinners $value): self {
+        $this->giveawayWinners = $value;
+        return $this;
+    }
+
+    public function getGiveawayCompleted(): ?GiveawayCompleted {
+        return $this->giveawayCompleted;
+    }
+
+    public function setGiveawayCompleted(?GiveawayCompleted $value): self {
+        $this->giveawayCompleted = $value;
         return $this;
     }
 

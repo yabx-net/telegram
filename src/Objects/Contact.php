@@ -48,20 +48,6 @@ final class Contact {
      */
     protected ?string $vcard = null;
 
-    public function __construct(
-        ?string $phoneNumber = null,
-        ?string $firstName = null,
-        ?string $lastName = null,
-        ?int    $userId = null,
-        ?string $vcard = null,
-    ) {
-        $this->phoneNumber = $phoneNumber;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->userId = $userId;
-        $this->vcard = $vcard;
-    }
-
     public static function fromArray(array $data): Contact {
         $instance = new self();
         if (isset($data['phone_number'])) {
@@ -80,6 +66,20 @@ final class Contact {
             $instance->vcard = $data['vcard'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $phoneNumber = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?int    $userId = null,
+        ?string $vcard = null,
+    ) {
+        $this->phoneNumber = $phoneNumber;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->userId = $userId;
+        $this->vcard = $vcard;
     }
 
     public function getPhoneNumber(): ?string {

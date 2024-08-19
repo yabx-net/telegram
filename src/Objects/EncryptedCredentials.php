@@ -32,16 +32,6 @@ final class EncryptedCredentials {
      */
     protected ?string $secret = null;
 
-    public function __construct(
-        ?string $data = null,
-        ?string $hash = null,
-        ?string $secret = null,
-    ) {
-        $this->data = $data;
-        $this->hash = $hash;
-        $this->secret = $secret;
-    }
-
     public static function fromArray(array $data): EncryptedCredentials {
         $instance = new self();
         if (isset($data['data'])) {
@@ -54,6 +44,16 @@ final class EncryptedCredentials {
             $instance->secret = $data['secret'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $data = null,
+        ?string $hash = null,
+        ?string $secret = null,
+    ) {
+        $this->data = $data;
+        $this->hash = $hash;
+        $this->secret = $secret;
     }
 
     public function getData(): ?string {

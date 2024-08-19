@@ -24,14 +24,6 @@ final class Dice {
      */
     protected ?int $value = null;
 
-    public function __construct(
-        ?string $emoji = null,
-        ?int    $value = null,
-    ) {
-        $this->emoji = $emoji;
-        $this->value = $value;
-    }
-
     public static function fromArray(array $data): Dice {
         $instance = new self();
         if (isset($data['emoji'])) {
@@ -41,6 +33,14 @@ final class Dice {
             $instance->value = $data['value'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $emoji = null,
+        ?int    $value = null,
+    ) {
+        $this->emoji = $emoji;
+        $this->value = $value;
     }
 
     public function getEmoji(): ?string {

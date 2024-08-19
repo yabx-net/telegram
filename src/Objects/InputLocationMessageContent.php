@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class InputLocationMessageContent extends InputMessageContent {
+use Yabx\Telegram\ObjectTrait;
+
+final class InputLocationMessageContent {
+
+    use ObjectTrait;
 
     /**
      * Latitude
@@ -31,7 +35,7 @@ final class InputLocationMessageContent extends InputMessageContent {
     /**
      * Live Period
      *
-     * Optional. Period in seconds for which the location can be updated, should be between 60 and 86400.
+     * Optional. Period in seconds during which the location can be updated, should be between 60 and 86400, or 0x7FFFFFFF for live locations that can be edited indefinitely.
      * @var int|null
      */
     protected ?int $livePeriod = null;
@@ -51,22 +55,6 @@ final class InputLocationMessageContent extends InputMessageContent {
      * @var int|null
      */
     protected ?int $proximityAlertRadius = null;
-
-    public function __construct(
-        ?float $latitude = null,
-        ?float $longitude = null,
-        ?float $horizontalAccuracy = null,
-        ?int   $livePeriod = null,
-        ?int   $heading = null,
-        ?int   $proximityAlertRadius = null,
-    ) {
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
-        $this->horizontalAccuracy = $horizontalAccuracy;
-        $this->livePeriod = $livePeriod;
-        $this->heading = $heading;
-        $this->proximityAlertRadius = $proximityAlertRadius;
-    }
 
     public static function fromArray(array $data): InputLocationMessageContent {
         $instance = new self();
@@ -89,6 +77,22 @@ final class InputLocationMessageContent extends InputMessageContent {
             $instance->proximityAlertRadius = $data['proximity_alert_radius'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?float $latitude = null,
+        ?float $longitude = null,
+        ?float $horizontalAccuracy = null,
+        ?int   $livePeriod = null,
+        ?int   $heading = null,
+        ?int   $proximityAlertRadius = null,
+    ) {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->horizontalAccuracy = $horizontalAccuracy;
+        $this->livePeriod = $livePeriod;
+        $this->heading = $heading;
+        $this->proximityAlertRadius = $proximityAlertRadius;
     }
 
     public function getLatitude(): ?float {

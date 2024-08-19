@@ -16,18 +16,18 @@ final class WebAppInfo {
      */
     protected ?string $url = null;
 
-    public function __construct(
-        ?string $url = null,
-    ) {
-        $this->url = $url;
-    }
-
     public static function fromArray(array $data): WebAppInfo {
         $instance = new self();
         if (isset($data['url'])) {
             $instance->url = $data['url'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $url = null,
+    ) {
+        $this->url = $url;
     }
 
     public function getUrl(): ?string {

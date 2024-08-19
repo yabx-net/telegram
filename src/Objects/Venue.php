@@ -64,24 +64,6 @@ final class Venue {
      */
     protected ?string $googlePlaceType = null;
 
-    public function __construct(
-        ?Location $location = null,
-        ?string   $title = null,
-        ?string   $address = null,
-        ?string   $foursquareId = null,
-        ?string   $foursquareType = null,
-        ?string   $googlePlaceId = null,
-        ?string   $googlePlaceType = null,
-    ) {
-        $this->location = $location;
-        $this->title = $title;
-        $this->address = $address;
-        $this->foursquareId = $foursquareId;
-        $this->foursquareType = $foursquareType;
-        $this->googlePlaceId = $googlePlaceId;
-        $this->googlePlaceType = $googlePlaceType;
-    }
-
     public static function fromArray(array $data): Venue {
         $instance = new self();
         if (isset($data['location'])) {
@@ -106,6 +88,24 @@ final class Venue {
             $instance->googlePlaceType = $data['google_place_type'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?Location $location = null,
+        ?string   $title = null,
+        ?string   $address = null,
+        ?string   $foursquareId = null,
+        ?string   $foursquareType = null,
+        ?string   $googlePlaceId = null,
+        ?string   $googlePlaceType = null,
+    ) {
+        $this->location = $location;
+        $this->title = $title;
+        $this->address = $address;
+        $this->foursquareId = $foursquareId;
+        $this->foursquareType = $foursquareType;
+        $this->googlePlaceId = $googlePlaceId;
+        $this->googlePlaceType = $googlePlaceType;
     }
 
     public function getLocation(): ?Location {
