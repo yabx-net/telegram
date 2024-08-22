@@ -1,10 +1,9 @@
 Telegram Bot API SDK for PHP 8.1+
 ---------------------------------
+- Bot API 7.9 (August 14, 2024)
 - HTTP-Client based on Guzzle
 - Full support of all available types according https://core.telegram.org/bots/api#available-types
-- Most necessary methods for sending messages, videos, documents, etc. have been implemented.
-- We are working on implementing all other methods.
-- Any Telegram API Bot method can be called directly using the official documentation.
+- Full support of all available methods according https://core.telegram.org/bots/api#available-methods
 
 Installation
 ------------
@@ -38,8 +37,8 @@ $tg->setWebhook('https://tg.myservice.com/bot123');
 $webhook = $tg->getWebhookInfo();
 ```
 
-Receiving updates
------------------
+Receiving updates from webhook
+------------------------------
 ```php
 use Yabx\Telegram\BotApi;
 

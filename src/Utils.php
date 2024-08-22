@@ -40,8 +40,4 @@ class Utils {
         return $authData;
     }
 
-    public static function arrayOf(array $array, string $class): array{
-        return array_map(fn(mixed $item) => call_user_func([$class, 'fromArray'], $item), $array);
-    }
-
 }

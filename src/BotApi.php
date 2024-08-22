@@ -83,13 +83,22 @@ class BotApi {
         }
     }
 
-    public function getUpdates(?int $offset = null, ?int $limit = null, ?int $timeout = null, ?array $allowedUpdates = null): Update {
+    /**
+     * @param int|null $offset
+     * @param int|null $limit
+     * @param int|null $timeout
+     * @param array|null $allowedUpdates
+     * @return Update[]
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getUpdates(?int $offset = null, ?int $limit = null, ?int $timeout = null, ?array $allowedUpdates = null): array {
         $params = [];
         if (isset($offset)) $params['offset'] = $offset;
         if (isset($limit)) $params['limit'] = $limit;
         if (isset($timeout)) $params['timeout'] = $timeout;
         if (isset($allowedUpdates)) $params['allowed_updates'] = $allowedUpdates;
-        return Update::fromArray($this->request('getUpdates', $params));
+        return Update::arrayOf($this->request('getUpdates', $params));
     }
 
     /**
@@ -104,6 +113,7 @@ class BotApi {
      */
 
     public function request(string $method, array $params = [], bool $multipart = false): mixed {
+        $params = array_map(fn(mixed $param) => is_object($param) && method_exists($param, 'toArray') ? call_user_func([$param, 'toArray']) : $param, $params);
         $this->logger->debug('REQUEST: ' . $method, $params);
         $endpoint = sprintf('%s/bot%s/', $this->apiUrl, $this->token);
         if ($multipart) {
@@ -195,6 +205,17 @@ class BotApi {
         return Message::fromArray($this->request('forwardMessage', $params));
     }
 
+    /**
+     * @param int|string $chatId
+     * @param int|string $fromChatId
+     * @param array $messageIds
+     * @param int|null $messageThreadId
+     * @param bool|null $disableNotification
+     * @param bool|null $protectContent
+     * @return MessageId[]
+     * @throws Exception
+     * @throws GuzzleException
+     */
     public function forwardMessages(int|string $chatId, int|string $fromChatId, array $messageIds, ?int $messageThreadId = null, ?bool $disableNotification = null, ?bool $protectContent = null): array {
         $params = [];
         $params['chat_id'] = $chatId;
@@ -203,7 +224,7 @@ class BotApi {
         $params['message_ids'] = $messageIds;
         if (isset($disableNotification)) $params['disable_notification'] = $disableNotification;
         if (isset($protectContent)) $params['protect_content'] = $protectContent;
-        return Utils::arrayOf($this->request('forwardMessages', $params), MessageId::class);
+        return MessageId::arrayOf($this->request('forwardMessages', $params));
     }
 
     public function copyMessage(int|string $chatId, int|string $fromChatId, int $messageId, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null): MessageId {
@@ -223,6 +244,18 @@ class BotApi {
         return MessageId::fromArray($this->request('copyMessage', $params));
     }
 
+    /**
+     * @param int|string $chatId
+     * @param int|string $fromChatId
+     * @param array $messageIds
+     * @param int|null $messageThreadId
+     * @param bool|null $disableNotification
+     * @param bool|null $protectContent
+     * @param bool|null $removeCaption
+     * @return MessageId[]
+     * @throws Exception
+     * @throws GuzzleException
+     */
     public function copyMessages(int|string $chatId, int|string $fromChatId, array $messageIds, ?int $messageThreadId = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?bool $removeCaption = null): array {
         $params = [];
         $params['chat_id'] = $chatId;
@@ -232,7 +265,7 @@ class BotApi {
         if (isset($disableNotification)) $params['disable_notification'] = $disableNotification;
         if (isset($protectContent)) $params['protect_content'] = $protectContent;
         if (isset($removeCaption)) $params['remove_caption'] = $removeCaption;
-        return Utils::arrayOf($this->request('copyMessages', $params), MessageId::class);
+        return MessageId::arrayOf($this->request('copyMessages', $params));
     }
 
     public function sendPhoto(int|string $chatId, string $photo, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $hasSpoiler = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null): Message {
@@ -411,6 +444,19 @@ class BotApi {
         return Message::fromArray($this->request('sendPaidMedia', $params));
     }
 
+    /**
+     * @param int|string $chatId
+     * @param array $media
+     * @param string|null $businessConnectionId
+     * @param int|null $messageThreadId
+     * @param bool|null $disableNotification
+     * @param bool|null $protectContent
+     * @param string|null $messageEffectId
+     * @param ReplyParameters|null $replyParameters
+     * @return Message[]
+     * @throws Exception
+     * @throws GuzzleException
+     */
     public function sendMediaGroup(int|string $chatId, array $media, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null): array {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
@@ -421,7 +467,7 @@ class BotApi {
         if (isset($protectContent)) $params['protect_content'] = $protectContent;
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
-        return Utils::arrayOf($this->request('sendMediaGroup', $params), Message::class);
+        return Message::arrayOf($this->request('sendMediaGroup', $params));
     }
 
     public function sendLocation(int|string $chatId, float $latitude, float $longitude, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?float $horizontalAccuracy = null, ?int $livePeriod = null, ?int $heading = null, ?int $proximityAlertRadius = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null): Message {
@@ -760,10 +806,16 @@ class BotApi {
         return ChatFullInfo::fromArray($this->request('getChat', $params));
     }
 
-    public function getChatAdministrators(int|string $chatId): ChatMember {
+    /**
+     * @param int|string $chatId
+     * @return ChatMember[]
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getChatAdministrators(int|string $chatId): array {
         $params = [];
         $params['chat_id'] = $chatId;
-        return ChatMember::fromArray($this->request('getChatAdministrators', $params));
+        return ChatMember::arrayOf($this->request('getChatAdministrators', $params));
     }
 
     public function getChatMemberCount(int|string $chatId): int {
@@ -792,10 +844,9 @@ class BotApi {
         return $this->request('deleteChatStickerSet', $params);
     }
 
-    public function getForumTopicIconStickers(): Sticker {
+    public function getForumTopicIconStickers(): array {
         $params = [];
-
-        return Sticker::fromArray($this->request('getForumTopicIconStickers', $params));
+        return Sticker::arrayOf($this->request('getForumTopicIconStickers', $params));
     }
 
     public function createForumTopic(int|string $chatId, string $name, ?int $iconColor = null, ?string $iconCustomEmojiId = null): ForumTopic {
@@ -919,11 +970,18 @@ class BotApi {
         return $this->request('deleteMyCommands', $params);
     }
 
-    public function getMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): BotCommand {
+    /**
+     * @param BotCommandScope|null $scope
+     * @param string|null $languageCode
+     * @return BotCommand[]
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): array {
         $params = [];
         if (isset($scope)) $params['scope'] = $scope;
         if (isset($languageCode)) $params['language_code'] = $languageCode;
-        return BotCommand::fromArray($this->request('getMyCommands', $params));
+        return BotCommand::arrayOf($this->request('getMyCommands', $params));
     }
 
     public function setMyName(?string $name = null, ?string $languageCode = null): bool {
@@ -1110,10 +1168,16 @@ class BotApi {
         return StickerSet::fromArray($this->request('getStickerSet', $params));
     }
 
-    public function getCustomEmojiStickers(array $customEmojiIds): Sticker {
+    /**
+     * @param array $customEmojiIds
+     * @return Sticker[]
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getCustomEmojiStickers(array $customEmojiIds): array {
         $params = [];
         $params['custom_emoji_ids'] = $customEmojiIds;
-        return Sticker::fromArray($this->request('getCustomEmojiStickers', $params));
+        return Sticker::arrayOf($this->request('getCustomEmojiStickers', $params));
     }
 
     public function uploadStickerFile(int $userId, string $sticker, string $stickerFormat): File {
@@ -1355,13 +1419,22 @@ class BotApi {
         return Message::fromArray($this->request('setGameScore', $params));
     }
 
-    public function getGameHighScores(int $userId, ?int $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null): GameHighScore {
+    /**
+     * @param int $userId
+     * @param int|null $chatId
+     * @param int|null $messageId
+     * @param string|null $inlineMessageId
+     * @return GameHighScore[]
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function getGameHighScores(int $userId, ?int $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null): array {
         $params = [];
         $params['user_id'] = $userId;
         if (isset($chatId)) $params['chat_id'] = $chatId;
         if (isset($messageId)) $params['message_id'] = $messageId;
         if (isset($inlineMessageId)) $params['inline_message_id'] = $inlineMessageId;
-        return GameHighScore::fromArray($this->request('getGameHighScores', $params));
+        return GameHighScore::arrayOf($this->request('getGameHighScores', $params));
     }
 
     public function downloadFile(string|File $file, string $savePath): void {
