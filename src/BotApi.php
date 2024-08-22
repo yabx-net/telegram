@@ -119,7 +119,7 @@ class BotApi {
         if ($multipart) {
             $multipart = [];
             foreach ($params as $key => $value) {
-                $multipart[] = ['name' => $key, 'contents' => $value];
+                $multipart[] = ['name' => $key, 'contents' => is_array($value) ? json_encode($value) : $value];
             }
             $res = $this->client->post($endpoint . $method, [RequestOptions::MULTIPART => $multipart]);
         } else {
