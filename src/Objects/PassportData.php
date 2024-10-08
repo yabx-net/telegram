@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class PassportData {
-
-    use ObjectTrait;
+final class PassportData extends AbstractObject {
 
     /**
      * Data

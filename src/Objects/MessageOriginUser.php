@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
 final class MessageOriginUser extends MessageOrigin {
-
-    use ObjectTrait;
 
     /**
      * Type

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class MaybeInaccessibleMessage {
-
-    use ObjectTrait;
+final class MaybeInaccessibleMessage extends AbstractObject {
 
     private ?Message $message = null;
     private ?InaccessibleMessage $inaccessibleMessage = null;

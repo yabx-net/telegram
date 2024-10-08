@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
 final class TransactionPartnerUser extends TransactionPartner {
-
-    use ObjectTrait;
 
     /**
      * Type

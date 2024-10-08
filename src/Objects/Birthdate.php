@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class Birthdate {
-
-    use ObjectTrait;
+final class Birthdate extends AbstractObject {
 
     /**
      * Day

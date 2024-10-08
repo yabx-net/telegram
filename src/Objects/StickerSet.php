@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class StickerSet {
-
-    use ObjectTrait;
+final class StickerSet extends AbstractObject {
 
     /**
      * Name

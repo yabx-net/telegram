@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class Poll {
-
-    use ObjectTrait;
+final class Poll extends AbstractObject {
 
     /**
      * Id

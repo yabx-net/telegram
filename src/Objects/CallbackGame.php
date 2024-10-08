@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class CallbackGame {
-
-    use ObjectTrait;
+final class CallbackGame extends AbstractObject {
 
     public static function fromArray(array $data): CallbackGame {
         return new self();

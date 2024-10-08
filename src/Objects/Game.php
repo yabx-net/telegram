@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class Game {
-
-    use ObjectTrait;
+final class Game extends AbstractObject {
 
     /**
      * Title

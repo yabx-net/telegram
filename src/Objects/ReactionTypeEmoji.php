@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
 final class ReactionTypeEmoji extends ReactionType {
-
-    use ObjectTrait;
 
     /**
      * Type

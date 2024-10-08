@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class VideoChatParticipantsInvited {
-
-    use ObjectTrait;
+final class VideoChatParticipantsInvited extends AbstractObject {
 
     /**
      * Users

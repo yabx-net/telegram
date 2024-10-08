@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class OrderInfo {
-
-    use ObjectTrait;
+final class OrderInfo extends AbstractObject {
 
     /**
      * Name

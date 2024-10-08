@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InputLocationMessageContent {
-
-    use ObjectTrait;
+final class InputLocationMessageContent extends AbstractObject {
 
     /**
      * Latitude

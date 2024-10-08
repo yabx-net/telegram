@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class Animation {
-
-    use ObjectTrait;
+final class Animation extends AbstractObject {
 
     /**
      * File Id

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class Audio {
-
-    use ObjectTrait;
+final class Audio extends AbstractObject {
 
     /**
      * File Id

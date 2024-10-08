@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class SharedUser {
-
-    use ObjectTrait;
+final class SharedUser extends AbstractObject {
 
     /**
      * User Id

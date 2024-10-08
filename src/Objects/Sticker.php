@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class Sticker {
-
-    use ObjectTrait;
+final class Sticker extends AbstractObject {
 
     /**
      * File Id

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class VideoChatScheduled {
-
-    use ObjectTrait;
+final class VideoChatScheduled extends AbstractObject {
 
     /**
      * Start Date

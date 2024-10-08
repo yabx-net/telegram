@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class UserProfilePhotos {
-
-    use ObjectTrait;
+final class UserProfilePhotos extends AbstractObject {
 
     /**
      * Total Count

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InlineQueryResultsButton {
-
-    use ObjectTrait;
+final class InlineQueryResultsButton extends AbstractObject {
 
     /**
      * Text

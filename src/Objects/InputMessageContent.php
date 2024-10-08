@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\Exception;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class InputMessageContent {
 
-    use ObjectTrait;
+abstract class InputMessageContent extends AbstractObject {
 
     public static function fromArray(array $data): mixed {
         if (key_exists('message_text', $data)) return InputTextMessageContent::fromArray($data);

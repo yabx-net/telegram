@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class MaskPosition {
-
-    use ObjectTrait;
+final class MaskPosition extends AbstractObject {
 
     /**
      * Point

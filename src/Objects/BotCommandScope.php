@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\Exception;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class BotCommandScope {
 
-    use ObjectTrait;
+abstract class BotCommandScope extends AbstractObject {
 
     public static function fromArray(array $data): BotCommandScope {
         return match ($data['type'] ?? null) {

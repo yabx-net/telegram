@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class MessageAutoDeleteTimerChanged {
-
-    use ObjectTrait;
+final class MessageAutoDeleteTimerChanged extends AbstractObject {
 
     /**
      * Message Auto Delete Time

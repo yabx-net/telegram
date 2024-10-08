@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class BusinessMessagesDeleted {
-
-    use ObjectTrait;
+final class BusinessMessagesDeleted extends AbstractObject {
 
     /**
      * Business Connection Id

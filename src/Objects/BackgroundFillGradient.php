@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class BackgroundFillGradient {
-
-    use ObjectTrait;
+final class BackgroundFillGradient extends AbstractObject {
 
     /**
      * Type

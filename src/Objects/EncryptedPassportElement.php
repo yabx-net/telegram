@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class EncryptedPassportElement {
-
-    use ObjectTrait;
+final class EncryptedPassportElement extends AbstractObject {
 
     /**
      * Type

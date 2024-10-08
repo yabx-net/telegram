@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ProximityAlertTriggered {
-
-    use ObjectTrait;
+final class ProximityAlertTriggered extends AbstractObject {
 
     /**
      * Traveler

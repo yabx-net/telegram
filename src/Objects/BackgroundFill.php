@@ -3,10 +3,8 @@
 namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\Exception;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class BackgroundFill {
-    use ObjectTrait;
+abstract class BackgroundFill extends AbstractObject {
 
     public static function fromArray(array $data): BackgroundFill {
         return match ($data['type'] ?? null) {

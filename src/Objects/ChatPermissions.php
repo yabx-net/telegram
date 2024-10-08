@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ChatPermissions {
-
-    use ObjectTrait;
+final class ChatPermissions extends AbstractObject {
 
     /**
      * Can Send Messages

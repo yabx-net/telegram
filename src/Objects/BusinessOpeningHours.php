@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class BusinessOpeningHours {
-
-    use ObjectTrait;
+final class BusinessOpeningHours extends AbstractObject {
 
     /**
      * Time Zone Name

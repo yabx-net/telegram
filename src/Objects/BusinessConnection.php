@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class BusinessConnection {
-
-    use ObjectTrait;
+final class BusinessConnection extends AbstractObject {
 
     /**
      * Id

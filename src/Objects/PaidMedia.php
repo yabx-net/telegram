@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use InvalidArgumentException;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class PaidMedia {
 
-    use ObjectTrait;
+abstract class PaidMedia extends AbstractObject {
 
     public static function fromArray(array $data): PaidMedia {
         return match ($data['type']) {

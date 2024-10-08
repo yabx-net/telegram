@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class WriteAccessAllowed {
-
-    use ObjectTrait;
+final class WriteAccessAllowed extends AbstractObject {
 
     /**
      * From Request

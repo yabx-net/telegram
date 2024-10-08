@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class KeyboardButtonPollType {
-
-    use ObjectTrait;
+final class KeyboardButtonPollType extends AbstractObject {
 
     /**
      * Type

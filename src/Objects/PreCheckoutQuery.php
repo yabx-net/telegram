@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class PreCheckoutQuery {
-
-    use ObjectTrait;
+final class PreCheckoutQuery extends AbstractObject {
 
     /**
      * Id

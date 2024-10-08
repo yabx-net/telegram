@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
 final class InputPaidMediaVideo extends InputPaidMedia {
-
-    use ObjectTrait;
 
     /**
      * Type

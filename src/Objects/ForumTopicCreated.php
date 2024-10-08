@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ForumTopicCreated {
-
-    use ObjectTrait;
+final class ForumTopicCreated extends AbstractObject {
 
     /**
      * Name

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class VideoChatEnded {
-
-    use ObjectTrait;
+final class VideoChatEnded extends AbstractObject {
 
     /**
      * Duration

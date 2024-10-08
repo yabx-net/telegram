@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ResponseParameters {
-
-    use ObjectTrait;
+final class ResponseParameters extends AbstractObject {
 
     /**
      * Migrate To Chat Id

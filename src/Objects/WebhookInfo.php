@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class WebhookInfo {
-
-    use ObjectTrait;
+final class WebhookInfo extends AbstractObject {
 
     /**
      * Url

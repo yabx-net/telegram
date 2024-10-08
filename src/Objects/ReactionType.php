@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use InvalidArgumentException;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class ReactionType {
 
-    use ObjectTrait;
+abstract class ReactionType extends AbstractObject {
 
     public static function fromArray(array $data): ReactionType {
         return match ($data['type']) {

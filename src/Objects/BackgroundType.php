@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\Exception;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class BackgroundType {
 
-    use ObjectTrait;
+abstract class BackgroundType extends AbstractObject {
 
     public static function fromArray(array $data): BackgroundType {
         return match ($data['type'] ?? null) {

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ChatAdministratorRights {
-
-    use ObjectTrait;
+final class ChatAdministratorRights extends AbstractObject {
 
     /**
      * Is Anonymous

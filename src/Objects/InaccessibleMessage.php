@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InaccessibleMessage {
-
-    use ObjectTrait;
+final class InaccessibleMessage extends AbstractObject {
 
     /**
      * Chat

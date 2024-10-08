@@ -1,8 +1,10 @@
 <?php
 
-namespace Yabx\Telegram;
+namespace Yabx\Telegram\Objects;
 
-trait ObjectTrait {
+use Yabx\Telegram\Utils;
+
+abstract class AbstractObject {
 
     public static function arrayOf(array $array): array {
         return array_map(fn(mixed $item) => call_user_func([get_called_class(), 'fromArray'], $item), $array);

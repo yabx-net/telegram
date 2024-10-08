@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ChosenInlineResult {
-
-    use ObjectTrait;
+final class ChosenInlineResult extends AbstractObject {
 
     /**
      * Result Id

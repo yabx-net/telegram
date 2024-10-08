@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class SentWebAppMessage {
-
-    use ObjectTrait;
+final class SentWebAppMessage extends AbstractObject {
 
     /**
      * Inline Message Id

@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\Exception;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class MenuButton {
 
-    use ObjectTrait;
+abstract class MenuButton extends AbstractObject {
 
     public static function fromArray(array $data): MenuButton {
         return match ($data['type']) {

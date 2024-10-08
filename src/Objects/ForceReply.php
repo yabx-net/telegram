@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ForceReply {
-
-    use ObjectTrait;
+final class ForceReply extends AbstractObject {
 
     /**
      * Force Reply

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
 final class RevenueWithdrawalStatePending extends RevenueWithdrawalState {
-
-    use ObjectTrait;
 
     /**
      * Type

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class Update {
-
-    use ObjectTrait;
+final class Update extends AbstractObject {
 
     /**
      * Update Id

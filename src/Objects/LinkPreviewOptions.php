@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class LinkPreviewOptions {
-
-    use ObjectTrait;
+final class LinkPreviewOptions extends AbstractObject {
 
     /**
      * Is Disabled

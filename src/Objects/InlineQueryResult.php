@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\Exception;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class InlineQueryResult {
 
-    use ObjectTrait;
+abstract class InlineQueryResult extends AbstractObject {
 
     public static function fromArray(array $data): InlineQueryResult {
         return match ($data['type'] ?? null) {

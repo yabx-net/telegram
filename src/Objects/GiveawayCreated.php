@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class GiveawayCreated {
-
-    use ObjectTrait;
+final class GiveawayCreated extends AbstractObject {
 
     /**
      * Prize Star Count

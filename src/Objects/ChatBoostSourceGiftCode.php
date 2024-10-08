@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ChatBoostSourceGiftCode {
-
-    use ObjectTrait;
+final class ChatBoostSourceGiftCode extends AbstractObject {
 
     /**
      * Source

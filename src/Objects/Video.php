@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class Video {
-
-    use ObjectTrait;
+final class Video extends AbstractObject {
 
     /**
      * File Id

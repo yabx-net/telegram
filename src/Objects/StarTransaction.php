@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class StarTransaction {
-
-    use ObjectTrait;
+final class StarTransaction extends AbstractObject {
 
     /**
      * Id

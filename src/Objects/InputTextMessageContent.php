@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InputTextMessageContent {
-
-    use ObjectTrait;
+final class InputTextMessageContent extends AbstractObject {
 
     /**
      * Message Text

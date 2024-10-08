@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ReactionCount {
-
-    use ObjectTrait;
+final class ReactionCount extends AbstractObject {
 
     /**
      * Type

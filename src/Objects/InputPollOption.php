@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InputPollOption {
-
-    use ObjectTrait;
+final class InputPollOption extends AbstractObject {
 
     /**
      * Text

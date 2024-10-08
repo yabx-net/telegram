@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class SwitchInlineQueryChosenChat {
-
-    use ObjectTrait;
+final class SwitchInlineQueryChosenChat extends AbstractObject {
 
     /**
      * Query

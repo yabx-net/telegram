@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class PaidMediaPurchased {
-
-    use ObjectTrait;
+final class PaidMediaPurchased extends AbstractObject {
 
     /**
      * From

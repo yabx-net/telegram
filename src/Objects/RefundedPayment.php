@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class RefundedPayment {
-
-    use ObjectTrait;
+final class RefundedPayment extends AbstractObject {
 
     /**
      * Currency

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class GeneralForumTopicUnhidden {
-
-    use ObjectTrait;
+final class GeneralForumTopicUnhidden extends AbstractObject {
 
     public static function fromArray(array $data): GeneralForumTopicUnhidden {
         return new self();

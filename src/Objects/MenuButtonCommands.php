@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
 final class MenuButtonCommands extends MenuButton {
-
-    use ObjectTrait;
 
     /**
      * Type

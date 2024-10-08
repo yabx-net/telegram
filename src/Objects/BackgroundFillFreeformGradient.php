@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
 final class BackgroundFillFreeformGradient extends BackgroundFill {
-
-    use ObjectTrait;
 
     /**
      * Type

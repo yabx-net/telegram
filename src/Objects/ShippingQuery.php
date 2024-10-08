@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ShippingQuery {
-
-    use ObjectTrait;
+final class ShippingQuery extends AbstractObject {
 
     /**
      * Id

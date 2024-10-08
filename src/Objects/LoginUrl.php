@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class LoginUrl {
-
-    use ObjectTrait;
+final class LoginUrl extends AbstractObject {
 
     /**
      * Url

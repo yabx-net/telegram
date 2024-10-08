@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ChatPhoto {
-
-    use ObjectTrait;
+final class ChatPhoto extends AbstractObject {
 
     /**
      * Small File Id

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class WebAppData {
-
-    use ObjectTrait;
+final class WebAppData extends AbstractObject {
 
     /**
      * Data

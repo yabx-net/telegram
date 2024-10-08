@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ForumTopic {
-
-    use ObjectTrait;
+final class ForumTopic extends AbstractObject {
 
     /**
      * Message Thread Id

@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class Venue {
-
-    use ObjectTrait;
+final class Venue extends AbstractObject {
 
     /**
      * Location

@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use Exception;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class ChatMember {
 
-    use ObjectTrait;
+abstract class ChatMember extends AbstractObject {
 
     public static function fromArray(array $data): ChatMember {
         return match ($data['status'] ?? null) {

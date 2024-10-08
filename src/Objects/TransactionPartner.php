@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use InvalidArgumentException;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class TransactionPartner {
 
-    use ObjectTrait;
+abstract class TransactionPartner extends AbstractObject {
 
     public static function fromArray(array $data): TransactionPartner {
         return match ($data['type']) {

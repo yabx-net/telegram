@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class KeyboardButtonRequestUsers {
-
-    use ObjectTrait;
+final class KeyboardButtonRequestUsers extends AbstractObject {
 
     /**
      * Request Id

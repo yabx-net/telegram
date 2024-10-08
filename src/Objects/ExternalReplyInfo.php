@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ExternalReplyInfo {
-
-    use ObjectTrait;
+final class ExternalReplyInfo extends AbstractObject {
 
     /**
      * Origin

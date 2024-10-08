@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InputSticker {
-
-    use ObjectTrait;
+final class InputSticker extends AbstractObject {
 
     /**
      * Sticker

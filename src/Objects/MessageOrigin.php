@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use InvalidArgumentException;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class MessageOrigin {
 
-    use ObjectTrait;
+abstract class MessageOrigin extends AbstractObject {
 
     public static function fromArray(array $data): MessageOrigin {
         return match ($data['type']) {

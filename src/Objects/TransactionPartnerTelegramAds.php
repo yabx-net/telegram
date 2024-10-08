@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
 final class TransactionPartnerTelegramAds extends TransactionPartner {
-
-    use ObjectTrait;
 
     /**
      * Type

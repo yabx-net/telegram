@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use InvalidArgumentException;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class PassportElementError {
 
-    use ObjectTrait;
+abstract class PassportElementError extends AbstractObject {
 
     public static function fromArray(array $data): PassportElementError {
         return match ($data['source']) {

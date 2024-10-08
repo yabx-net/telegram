@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class TextQuote {
-
-    use ObjectTrait;
+final class TextQuote extends AbstractObject {
 
     /**
      * Text

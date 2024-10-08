@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ChatBackground {
-
-    use ObjectTrait;
+final class ChatBackground extends AbstractObject {
 
     /**
      * Type

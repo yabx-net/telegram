@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ChatMemberUpdated {
-
-    use ObjectTrait;
+final class ChatMemberUpdated extends AbstractObject {
 
     /**
      * Chat

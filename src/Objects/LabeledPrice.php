@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class LabeledPrice {
-
-    use ObjectTrait;
+final class LabeledPrice extends AbstractObject {
 
     /**
      * Label

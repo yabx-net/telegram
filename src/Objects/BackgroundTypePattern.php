@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
 final class BackgroundTypePattern extends BackgroundType {
-
-    use ObjectTrait;
 
     /**
      * Type

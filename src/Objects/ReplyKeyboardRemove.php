@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ReplyKeyboardRemove {
-
-    use ObjectTrait;
+final class ReplyKeyboardRemove extends AbstractObject {
 
     /**
      * Remove Keyboard

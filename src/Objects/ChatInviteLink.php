@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ChatInviteLink {
-
-    use ObjectTrait;
+final class ChatInviteLink extends AbstractObject {
 
     /**
      * Invite Link

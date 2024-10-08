@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
 final class ReactionTypePaid extends ReactionType {
-
-    use ObjectTrait;
 
     /**
      * Type

@@ -3,11 +3,9 @@
 namespace Yabx\Telegram\Objects;
 
 use InvalidArgumentException;
-use Yabx\Telegram\ObjectTrait;
 
-abstract class RevenueWithdrawalState {
 
-    use ObjectTrait;
+abstract class RevenueWithdrawalState extends AbstractObject {
 
     public static function fromArray(array $data): RevenueWithdrawalState {
         return match ($data['type']) {

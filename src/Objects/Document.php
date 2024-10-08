@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class Document {
-
-    use ObjectTrait;
+final class Document extends AbstractObject {
 
     /**
      * File Id

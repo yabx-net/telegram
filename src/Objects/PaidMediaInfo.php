@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class PaidMediaInfo {
-
-    use ObjectTrait;
+final class PaidMediaInfo extends AbstractObject {
 
     /**
      * Star Count

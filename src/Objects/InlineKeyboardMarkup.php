@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InlineKeyboardMarkup {
-
-    use ObjectTrait;
+final class InlineKeyboardMarkup extends AbstractObject {
 
     /**
      * Inline Keyboard

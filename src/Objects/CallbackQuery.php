@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class CallbackQuery {
-
-    use ObjectTrait;
+final class CallbackQuery extends AbstractObject {
 
     /**
      * Id

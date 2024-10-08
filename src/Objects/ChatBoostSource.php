@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class ChatBoostSource {
-
-    use ObjectTrait;
+final class ChatBoostSource extends AbstractObject {
 
     public static function fromArray(array $data): ChatBoostSource {
         return new self();

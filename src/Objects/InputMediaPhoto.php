@@ -2,11 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-use Yabx\Telegram\ObjectTrait;
-
-final class InputMediaPhoto {
-
-    use ObjectTrait;
+final class InputMediaPhoto extends AbstractObject {
 
     /**
      * Type
