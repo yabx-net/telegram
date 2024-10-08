@@ -40,6 +40,18 @@ final class BackgroundFillGradient {
      */
     protected ?int $rotationAngle = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?int    $topColor = null,
+        ?int    $bottomColor = null,
+        ?int    $rotationAngle = null,
+    ) {
+        $this->type = $type;
+        $this->topColor = $topColor;
+        $this->bottomColor = $bottomColor;
+        $this->rotationAngle = $rotationAngle;
+    }
+
     public static function fromArray(array $data): BackgroundFillGradient {
         $instance = new self();
         if (isset($data['type'])) {
@@ -55,18 +67,6 @@ final class BackgroundFillGradient {
             $instance->rotationAngle = $data['rotation_angle'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?int    $topColor = null,
-        ?int    $bottomColor = null,
-        ?int    $rotationAngle = null,
-    ) {
-        $this->type = $type;
-        $this->topColor = $topColor;
-        $this->bottomColor = $bottomColor;
-        $this->rotationAngle = $rotationAngle;
     }
 
     public function getType(): ?string {

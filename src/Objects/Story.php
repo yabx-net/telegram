@@ -24,6 +24,14 @@ final class Story {
      */
     protected ?int $id = null;
 
+    public function __construct(
+        ?Chat $chat = null,
+        ?int  $id = null,
+    ) {
+        $this->chat = $chat;
+        $this->id = $id;
+    }
+
     public static function fromArray(array $data): Story {
         $instance = new self();
         if (isset($data['chat'])) {
@@ -33,14 +41,6 @@ final class Story {
             $instance->id = $data['id'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?Chat $chat = null,
-        ?int  $id = null,
-    ) {
-        $this->chat = $chat;
-        $this->id = $id;
     }
 
     public function getChat(): ?Chat {

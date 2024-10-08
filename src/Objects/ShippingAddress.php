@@ -56,6 +56,22 @@ final class ShippingAddress {
      */
     protected ?string $postCode = null;
 
+    public function __construct(
+        ?string $countryCode = null,
+        ?string $state = null,
+        ?string $city = null,
+        ?string $streetLine1 = null,
+        ?string $streetLine2 = null,
+        ?string $postCode = null,
+    ) {
+        $this->countryCode = $countryCode;
+        $this->state = $state;
+        $this->city = $city;
+        $this->streetLine1 = $streetLine1;
+        $this->streetLine2 = $streetLine2;
+        $this->postCode = $postCode;
+    }
+
     public static function fromArray(array $data): ShippingAddress {
         $instance = new self();
         if (isset($data['country_code'])) {
@@ -77,22 +93,6 @@ final class ShippingAddress {
             $instance->postCode = $data['post_code'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $countryCode = null,
-        ?string $state = null,
-        ?string $city = null,
-        ?string $streetLine1 = null,
-        ?string $streetLine2 = null,
-        ?string $postCode = null,
-    ) {
-        $this->countryCode = $countryCode;
-        $this->state = $state;
-        $this->city = $city;
-        $this->streetLine1 = $streetLine1;
-        $this->streetLine2 = $streetLine2;
-        $this->postCode = $postCode;
     }
 
     public function getCountryCode(): ?string {

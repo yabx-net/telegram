@@ -32,6 +32,16 @@ final class ProximityAlertTriggered {
      */
     protected ?int $distance = null;
 
+    public function __construct(
+        ?User $traveler = null,
+        ?User $watcher = null,
+        ?int  $distance = null,
+    ) {
+        $this->traveler = $traveler;
+        $this->watcher = $watcher;
+        $this->distance = $distance;
+    }
+
     public static function fromArray(array $data): ProximityAlertTriggered {
         $instance = new self();
         if (isset($data['traveler'])) {
@@ -44,16 +54,6 @@ final class ProximityAlertTriggered {
             $instance->distance = $data['distance'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?User $traveler = null,
-        ?User $watcher = null,
-        ?int  $distance = null,
-    ) {
-        $this->traveler = $traveler;
-        $this->watcher = $watcher;
-        $this->distance = $distance;
     }
 
     public function getTraveler(): ?User {

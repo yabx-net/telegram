@@ -40,6 +40,18 @@ final class OrderInfo {
      */
     protected ?ShippingAddress $shippingAddress = null;
 
+    public function __construct(
+        ?string          $name = null,
+        ?string          $phoneNumber = null,
+        ?string          $email = null,
+        ?ShippingAddress $shippingAddress = null,
+    ) {
+        $this->name = $name;
+        $this->phoneNumber = $phoneNumber;
+        $this->email = $email;
+        $this->shippingAddress = $shippingAddress;
+    }
+
     public static function fromArray(array $data): OrderInfo {
         $instance = new self();
         if (isset($data['name'])) {
@@ -55,18 +67,6 @@ final class OrderInfo {
             $instance->shippingAddress = ShippingAddress::fromArray($data['shipping_address']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string          $name = null,
-        ?string          $phoneNumber = null,
-        ?string          $email = null,
-        ?ShippingAddress $shippingAddress = null,
-    ) {
-        $this->name = $name;
-        $this->phoneNumber = $phoneNumber;
-        $this->email = $email;
-        $this->shippingAddress = $shippingAddress;
     }
 
     public function getName(): ?string {

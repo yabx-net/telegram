@@ -24,6 +24,14 @@ final class PaidMediaInfo {
      */
     protected ?array $paidMedia = null;
 
+    public function __construct(
+        ?int   $starCount = null,
+        ?array $paidMedia = null,
+    ) {
+        $this->starCount = $starCount;
+        $this->paidMedia = $paidMedia;
+    }
+
     public static function fromArray(array $data): PaidMediaInfo {
         $instance = new self();
         if (isset($data['star_count'])) {
@@ -36,14 +44,6 @@ final class PaidMediaInfo {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int   $starCount = null,
-        ?array $paidMedia = null,
-    ) {
-        $this->starCount = $starCount;
-        $this->paidMedia = $paidMedia;
     }
 
     public function getStarCount(): ?int {

@@ -40,6 +40,18 @@ final class PollAnswer {
      */
     protected ?array $optionIds = null;
 
+    public function __construct(
+        ?string $pollId = null,
+        ?Chat   $voterChat = null,
+        ?User   $user = null,
+        ?array  $optionIds = null,
+    ) {
+        $this->pollId = $pollId;
+        $this->voterChat = $voterChat;
+        $this->user = $user;
+        $this->optionIds = $optionIds;
+    }
+
     public static function fromArray(array $data): PollAnswer {
         $instance = new self();
         if (isset($data['poll_id'])) {
@@ -58,18 +70,6 @@ final class PollAnswer {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $pollId = null,
-        ?Chat   $voterChat = null,
-        ?User   $user = null,
-        ?array  $optionIds = null,
-    ) {
-        $this->pollId = $pollId;
-        $this->voterChat = $voterChat;
-        $this->user = $user;
-        $this->optionIds = $optionIds;
     }
 
     public function getPollId(): ?string {

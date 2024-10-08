@@ -32,6 +32,16 @@ final class ShippingOption {
      */
     protected ?array $prices = null;
 
+    public function __construct(
+        ?string $id = null,
+        ?string $title = null,
+        ?array  $prices = null,
+    ) {
+        $this->id = $id;
+        $this->title = $title;
+        $this->prices = $prices;
+    }
+
     public static function fromArray(array $data): ShippingOption {
         $instance = new self();
         if (isset($data['id'])) {
@@ -47,16 +57,6 @@ final class ShippingOption {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $id = null,
-        ?string $title = null,
-        ?array  $prices = null,
-    ) {
-        $this->id = $id;
-        $this->title = $title;
-        $this->prices = $prices;
     }
 
     public function getId(): ?string {

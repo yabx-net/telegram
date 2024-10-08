@@ -32,6 +32,16 @@ final class InaccessibleMessage {
      */
     protected ?int $date = null;
 
+    public function __construct(
+        ?Chat $chat = null,
+        ?int  $messageId = null,
+        ?int  $date = null,
+    ) {
+        $this->chat = $chat;
+        $this->messageId = $messageId;
+        $this->date = $date;
+    }
+
     public static function fromArray(array $data): InaccessibleMessage {
         $instance = new self();
         if (isset($data['chat'])) {
@@ -44,16 +54,6 @@ final class InaccessibleMessage {
             $instance->date = $data['date'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?Chat $chat = null,
-        ?int  $messageId = null,
-        ?int  $date = null,
-    ) {
-        $this->chat = $chat;
-        $this->messageId = $messageId;
-        $this->date = $date;
     }
 
     public function getChat(): ?Chat {

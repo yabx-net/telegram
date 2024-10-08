@@ -72,6 +72,26 @@ final class Giveaway {
      */
     protected ?int $premiumSubscriptionMonthCount = null;
 
+    public function __construct(
+        ?array  $chats = null,
+        ?int    $winnersSelectionDate = null,
+        ?int    $winnerCount = null,
+        ?bool   $onlyNewMembers = null,
+        ?bool   $hasPublicWinners = null,
+        ?string $prizeDescription = null,
+        ?array  $countryCodes = null,
+        ?int    $premiumSubscriptionMonthCount = null,
+    ) {
+        $this->chats = $chats;
+        $this->winnersSelectionDate = $winnersSelectionDate;
+        $this->winnerCount = $winnerCount;
+        $this->onlyNewMembers = $onlyNewMembers;
+        $this->hasPublicWinners = $hasPublicWinners;
+        $this->prizeDescription = $prizeDescription;
+        $this->countryCodes = $countryCodes;
+        $this->premiumSubscriptionMonthCount = $premiumSubscriptionMonthCount;
+    }
+
     public static function fromArray(array $data): Giveaway {
         $instance = new self();
         if (isset($data['chats'])) {
@@ -105,26 +125,6 @@ final class Giveaway {
             $instance->premiumSubscriptionMonthCount = $data['premium_subscription_month_count'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?array  $chats = null,
-        ?int    $winnersSelectionDate = null,
-        ?int    $winnerCount = null,
-        ?bool   $onlyNewMembers = null,
-        ?bool   $hasPublicWinners = null,
-        ?string $prizeDescription = null,
-        ?array  $countryCodes = null,
-        ?int    $premiumSubscriptionMonthCount = null,
-    ) {
-        $this->chats = $chats;
-        $this->winnersSelectionDate = $winnersSelectionDate;
-        $this->winnerCount = $winnerCount;
-        $this->onlyNewMembers = $onlyNewMembers;
-        $this->hasPublicWinners = $hasPublicWinners;
-        $this->prizeDescription = $prizeDescription;
-        $this->countryCodes = $countryCodes;
-        $this->premiumSubscriptionMonthCount = $premiumSubscriptionMonthCount;
     }
 
     public function getChats(): ?array {

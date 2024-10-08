@@ -48,6 +48,20 @@ final class ChatShared {
      */
     protected ?array $photo = null;
 
+    public function __construct(
+        ?int    $requestId = null,
+        ?int    $chatId = null,
+        ?string $title = null,
+        ?string $username = null,
+        ?array  $photo = null,
+    ) {
+        $this->requestId = $requestId;
+        $this->chatId = $chatId;
+        $this->title = $title;
+        $this->username = $username;
+        $this->photo = $photo;
+    }
+
     public static function fromArray(array $data): ChatShared {
         $instance = new self();
         if (isset($data['request_id'])) {
@@ -69,20 +83,6 @@ final class ChatShared {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int    $requestId = null,
-        ?int    $chatId = null,
-        ?string $title = null,
-        ?string $username = null,
-        ?array  $photo = null,
-    ) {
-        $this->requestId = $requestId;
-        $this->chatId = $chatId;
-        $this->title = $title;
-        $this->username = $username;
-        $this->photo = $photo;
     }
 
     public function getRequestId(): ?int {

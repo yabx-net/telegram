@@ -32,6 +32,16 @@ final class WriteAccessAllowed {
      */
     protected ?bool $fromAttachmentMenu = null;
 
+    public function __construct(
+        ?bool   $fromRequest = null,
+        ?string $webAppName = null,
+        ?bool   $fromAttachmentMenu = null,
+    ) {
+        $this->fromRequest = $fromRequest;
+        $this->webAppName = $webAppName;
+        $this->fromAttachmentMenu = $fromAttachmentMenu;
+    }
+
     public static function fromArray(array $data): WriteAccessAllowed {
         $instance = new self();
         if (isset($data['from_request'])) {
@@ -44,16 +54,6 @@ final class WriteAccessAllowed {
             $instance->fromAttachmentMenu = $data['from_attachment_menu'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?bool   $fromRequest = null,
-        ?string $webAppName = null,
-        ?bool   $fromAttachmentMenu = null,
-    ) {
-        $this->fromRequest = $fromRequest;
-        $this->webAppName = $webAppName;
-        $this->fromAttachmentMenu = $fromAttachmentMenu;
     }
 
     public function getFromRequest(): ?bool {

@@ -16,6 +16,12 @@ final class UserChatBoosts {
      */
     protected ?array $boosts = null;
 
+    public function __construct(
+        ?array $boosts = null,
+    ) {
+        $this->boosts = $boosts;
+    }
+
     public static function fromArray(array $data): UserChatBoosts {
         $instance = new self();
         if (isset($data['boosts'])) {
@@ -25,12 +31,6 @@ final class UserChatBoosts {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?array $boosts = null,
-    ) {
-        $this->boosts = $boosts;
     }
 
     public function getBoosts(): ?array {

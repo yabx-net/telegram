@@ -48,6 +48,20 @@ final class SharedUser {
      */
     protected ?array $photo = null;
 
+    public function __construct(
+        ?int    $userId = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?string $username = null,
+        ?array  $photo = null,
+    ) {
+        $this->userId = $userId;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->username = $username;
+        $this->photo = $photo;
+    }
+
     public static function fromArray(array $data): SharedUser {
         $instance = new self();
         if (isset($data['user_id'])) {
@@ -69,20 +83,6 @@ final class SharedUser {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int    $userId = null,
-        ?string $firstName = null,
-        ?string $lastName = null,
-        ?string $username = null,
-        ?array  $photo = null,
-    ) {
-        $this->userId = $userId;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->username = $username;
-        $this->photo = $photo;
     }
 
     public function getUserId(): ?int {

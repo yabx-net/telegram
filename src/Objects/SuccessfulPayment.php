@@ -64,6 +64,24 @@ final class SuccessfulPayment {
      */
     protected ?string $providerPaymentChargeId = null;
 
+    public function __construct(
+        ?string    $currency = null,
+        ?int       $totalAmount = null,
+        ?string    $invoicePayload = null,
+        ?string    $shippingOptionId = null,
+        ?OrderInfo $orderInfo = null,
+        ?string    $telegramPaymentChargeId = null,
+        ?string    $providerPaymentChargeId = null,
+    ) {
+        $this->currency = $currency;
+        $this->totalAmount = $totalAmount;
+        $this->invoicePayload = $invoicePayload;
+        $this->shippingOptionId = $shippingOptionId;
+        $this->orderInfo = $orderInfo;
+        $this->telegramPaymentChargeId = $telegramPaymentChargeId;
+        $this->providerPaymentChargeId = $providerPaymentChargeId;
+    }
+
     public static function fromArray(array $data): SuccessfulPayment {
         $instance = new self();
         if (isset($data['currency'])) {
@@ -88,24 +106,6 @@ final class SuccessfulPayment {
             $instance->providerPaymentChargeId = $data['provider_payment_charge_id'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string    $currency = null,
-        ?int       $totalAmount = null,
-        ?string    $invoicePayload = null,
-        ?string    $shippingOptionId = null,
-        ?OrderInfo $orderInfo = null,
-        ?string    $telegramPaymentChargeId = null,
-        ?string    $providerPaymentChargeId = null,
-    ) {
-        $this->currency = $currency;
-        $this->totalAmount = $totalAmount;
-        $this->invoicePayload = $invoicePayload;
-        $this->shippingOptionId = $shippingOptionId;
-        $this->orderInfo = $orderInfo;
-        $this->telegramPaymentChargeId = $telegramPaymentChargeId;
-        $this->providerPaymentChargeId = $providerPaymentChargeId;
     }
 
     public function getCurrency(): ?string {

@@ -64,6 +64,24 @@ final class Chat {
      */
     protected ?bool $isForum = null;
 
+    public function __construct(
+        ?int    $id = null,
+        ?string $type = null,
+        ?string $title = null,
+        ?string $username = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?bool   $isForum = null,
+    ) {
+        $this->id = $id;
+        $this->type = $type;
+        $this->title = $title;
+        $this->username = $username;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->isForum = $isForum;
+    }
+
     public static function fromArray(array $data): Chat {
         $instance = new self();
         if (isset($data['id'])) {
@@ -88,24 +106,6 @@ final class Chat {
             $instance->isForum = $data['is_forum'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int    $id = null,
-        ?string $type = null,
-        ?string $title = null,
-        ?string $username = null,
-        ?string $firstName = null,
-        ?string $lastName = null,
-        ?bool   $isForum = null,
-    ) {
-        $this->id = $id;
-        $this->type = $type;
-        $this->title = $title;
-        $this->username = $username;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->isForum = $isForum;
     }
 
     public function getId(): ?int {

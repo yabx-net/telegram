@@ -56,6 +56,22 @@ final class Document {
      */
     protected ?int $fileSize = null;
 
+    public function __construct(
+        ?string    $fileId = null,
+        ?string    $fileUniqueId = null,
+        ?PhotoSize $thumbnail = null,
+        ?string    $fileName = null,
+        ?string    $mimeType = null,
+        ?int       $fileSize = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->thumbnail = $thumbnail;
+        $this->fileName = $fileName;
+        $this->mimeType = $mimeType;
+        $this->fileSize = $fileSize;
+    }
+
     public static function fromArray(array $data): Document {
         $instance = new self();
         if (isset($data['file_id'])) {
@@ -77,22 +93,6 @@ final class Document {
             $instance->fileSize = $data['file_size'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string    $fileId = null,
-        ?string    $fileUniqueId = null,
-        ?PhotoSize $thumbnail = null,
-        ?string    $fileName = null,
-        ?string    $mimeType = null,
-        ?int       $fileSize = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->thumbnail = $thumbnail;
-        $this->fileName = $fileName;
-        $this->mimeType = $mimeType;
-        $this->fileSize = $fileSize;
     }
 
     public function getFileId(): ?string {

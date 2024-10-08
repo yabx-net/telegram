@@ -24,6 +24,14 @@ final class InputPaidMediaPhoto extends InputPaidMedia {
      */
     protected ?string $media = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?string $media = null,
+    ) {
+        $this->type = $type;
+        $this->media = $media;
+    }
+
     public static function fromArray(array $data): InputPaidMediaPhoto {
         $instance = new self();
         if (isset($data['type'])) {
@@ -33,14 +41,6 @@ final class InputPaidMediaPhoto extends InputPaidMedia {
             $instance->media = $data['media'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?string $media = null,
-    ) {
-        $this->type = $type;
-        $this->media = $media;
     }
 
     public function getType(): ?string {

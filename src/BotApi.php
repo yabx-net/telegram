@@ -314,10 +314,10 @@ class BotApi {
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
-        if(file_exists($document)) $document = fopen($document, 'r');
+        if (file_exists($document)) $document = fopen($document, 'r');
         $params['document'] = $document;
         if (isset($thumbnail)) {
-            if(file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
+            if (file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
             $params['thumbnail'] = $thumbnail;
         }
         if (isset($caption)) $params['caption'] = $caption;
@@ -337,13 +337,13 @@ class BotApi {
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
-        if(file_exists($video)) $video = fopen($video, 'r');
+        if (file_exists($video)) $video = fopen($video, 'r');
         $params['video'] = $video;
         if (isset($duration)) $params['duration'] = $duration;
         if (isset($width)) $params['width'] = $width;
         if (isset($height)) $params['height'] = $height;
         if (isset($thumbnail)) {
-            if(file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
+            if (file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
             $params['thumbnail'] = $thumbnail;
         }
         if (isset($caption)) $params['caption'] = $caption;
@@ -365,13 +365,13 @@ class BotApi {
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
-        if(file_exists($animation)) $animation = fopen($animation, 'r');
+        if (file_exists($animation)) $animation = fopen($animation, 'r');
         $params['animation'] = $animation;
         if (isset($duration)) $params['duration'] = $duration;
         if (isset($width)) $params['width'] = $width;
         if (isset($height)) $params['height'] = $height;
         if (isset($thumbnail)) {
-            if(file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
+            if (file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
             $params['thumbnail'] = $thumbnail;
         }
         if (isset($caption)) $params['caption'] = $caption;
@@ -392,7 +392,7 @@ class BotApi {
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
-        if(file_exists($voice)) $voice = fopen($voice, 'r');
+        if (file_exists($voice)) $voice = fopen($voice, 'r');
         $params['voice'] = $voice;
         if (isset($caption)) $params['caption'] = $caption;
         if (isset($parseMode)) $params['parse_mode'] = $parseMode;
@@ -411,12 +411,12 @@ class BotApi {
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
-        if(file_exists($videoNote)) $videoNote = fopen($videoNote, 'r');
+        if (file_exists($videoNote)) $videoNote = fopen($videoNote, 'r');
         $params['video_note'] = $videoNote;
         if (isset($duration)) $params['duration'] = $duration;
         if (isset($length)) $params['length'] = $length;
         if (isset($thumbnail)) {
-            if(file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
+            if (file_exists($thumbnail)) $thumbnail = fopen($thumbnail, 'r');
             $params['thumbnail'] = $thumbnail;
         }
         if (isset($disableNotification)) $params['disable_notification'] = $disableNotification;
@@ -592,12 +592,6 @@ class BotApi {
         if (isset($offset)) $params['offset'] = $offset;
         if (isset($limit)) $params['limit'] = $limit;
         return UserProfilePhotos::fromArray($this->request('getUserProfilePhotos', $params));
-    }
-
-    public function getFile(string $fileId): File {
-        $params = [];
-        $params['file_id'] = $fileId;
-        return File::fromArray($this->request('getFile', $params));
     }
 
     public function banChatMember(int|string $chatId, int $userId, ?int $untilDate = null, ?bool $revokeMessages = null): bool {
@@ -1290,7 +1284,7 @@ class BotApi {
         return $this->request('answerInlineQuery', $params);
     }
 
-    public function answerWebAppQuery(string $webAppQueryId, InlineQueryResult $result):  SentWebAppMessage {
+    public function answerWebAppQuery(string $webAppQueryId, InlineQueryResult $result): SentWebAppMessage {
         $params = [];
         $params['web_app_query_id'] = $webAppQueryId;
         $params['result'] = $result;
@@ -1438,7 +1432,7 @@ class BotApi {
     }
 
     public function downloadFile(string|File $file, string $savePath): void {
-        if(is_string($file)) $file = $this->getFile($file);
+        if (is_string($file)) $file = $this->getFile($file);
         $tmpPath = '/tmp/' . uniqid($file->getFileId()) . '.tmp';
         $res = $this->client->get(sprintf('%s/file/bot%s/', $this->apiUrl, $this->token) . $file->getFilePath(), ['sink' => $tmpPath]);
         $code = $res->getStatusCode();
@@ -1451,6 +1445,12 @@ class BotApi {
             @unlink($tmpPath);
             throw new Exception('Failed to download file', $code);
         }
+    }
+
+    public function getFile(string $fileId): File {
+        $params = [];
+        $params['file_id'] = $fileId;
+        return File::fromArray($this->request('getFile', $params));
     }
 
     public function getApiUrl(): string {

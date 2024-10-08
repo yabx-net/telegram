@@ -192,6 +192,56 @@ final class Update {
      */
     protected ?ChatBoostRemoved $removedChatBoost = null;
 
+    public function __construct(
+        ?int                         $updateId = null,
+        ?Message                     $message = null,
+        ?Message                     $editedMessage = null,
+        ?Message                     $channelPost = null,
+        ?Message                     $editedChannelPost = null,
+        ?BusinessConnection          $businessConnection = null,
+        ?Message                     $businessMessage = null,
+        ?Message                     $editedBusinessMessage = null,
+        ?BusinessMessagesDeleted     $deletedBusinessMessages = null,
+        ?MessageReactionUpdated      $messageReaction = null,
+        ?MessageReactionCountUpdated $messageReactionCount = null,
+        ?InlineQuery                 $inlineQuery = null,
+        ?ChosenInlineResult          $chosenInlineResult = null,
+        ?CallbackQuery               $callbackQuery = null,
+        ?ShippingQuery               $shippingQuery = null,
+        ?PreCheckoutQuery            $preCheckoutQuery = null,
+        ?Poll                        $poll = null,
+        ?PollAnswer                  $pollAnswer = null,
+        ?ChatMemberUpdated           $myChatMember = null,
+        ?ChatMemberUpdated           $chatMember = null,
+        ?ChatJoinRequest             $chatJoinRequest = null,
+        ?ChatBoostUpdated            $chatBoost = null,
+        ?ChatBoostRemoved            $removedChatBoost = null,
+    ) {
+        $this->updateId = $updateId;
+        $this->message = $message;
+        $this->editedMessage = $editedMessage;
+        $this->channelPost = $channelPost;
+        $this->editedChannelPost = $editedChannelPost;
+        $this->businessConnection = $businessConnection;
+        $this->businessMessage = $businessMessage;
+        $this->editedBusinessMessage = $editedBusinessMessage;
+        $this->deletedBusinessMessages = $deletedBusinessMessages;
+        $this->messageReaction = $messageReaction;
+        $this->messageReactionCount = $messageReactionCount;
+        $this->inlineQuery = $inlineQuery;
+        $this->chosenInlineResult = $chosenInlineResult;
+        $this->callbackQuery = $callbackQuery;
+        $this->shippingQuery = $shippingQuery;
+        $this->preCheckoutQuery = $preCheckoutQuery;
+        $this->poll = $poll;
+        $this->pollAnswer = $pollAnswer;
+        $this->myChatMember = $myChatMember;
+        $this->chatMember = $chatMember;
+        $this->chatJoinRequest = $chatJoinRequest;
+        $this->chatBoost = $chatBoost;
+        $this->removedChatBoost = $removedChatBoost;
+    }
+
     public static function fromArray(array $data): Update {
         $instance = new self();
         if (isset($data['update_id'])) {
@@ -264,56 +314,6 @@ final class Update {
             $instance->removedChatBoost = ChatBoostRemoved::fromArray($data['removed_chat_boost']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int                         $updateId = null,
-        ?Message                     $message = null,
-        ?Message                     $editedMessage = null,
-        ?Message                     $channelPost = null,
-        ?Message                     $editedChannelPost = null,
-        ?BusinessConnection          $businessConnection = null,
-        ?Message                     $businessMessage = null,
-        ?Message                     $editedBusinessMessage = null,
-        ?BusinessMessagesDeleted     $deletedBusinessMessages = null,
-        ?MessageReactionUpdated      $messageReaction = null,
-        ?MessageReactionCountUpdated $messageReactionCount = null,
-        ?InlineQuery                 $inlineQuery = null,
-        ?ChosenInlineResult          $chosenInlineResult = null,
-        ?CallbackQuery               $callbackQuery = null,
-        ?ShippingQuery               $shippingQuery = null,
-        ?PreCheckoutQuery            $preCheckoutQuery = null,
-        ?Poll                        $poll = null,
-        ?PollAnswer                  $pollAnswer = null,
-        ?ChatMemberUpdated           $myChatMember = null,
-        ?ChatMemberUpdated           $chatMember = null,
-        ?ChatJoinRequest             $chatJoinRequest = null,
-        ?ChatBoostUpdated            $chatBoost = null,
-        ?ChatBoostRemoved            $removedChatBoost = null,
-    ) {
-        $this->updateId = $updateId;
-        $this->message = $message;
-        $this->editedMessage = $editedMessage;
-        $this->channelPost = $channelPost;
-        $this->editedChannelPost = $editedChannelPost;
-        $this->businessConnection = $businessConnection;
-        $this->businessMessage = $businessMessage;
-        $this->editedBusinessMessage = $editedBusinessMessage;
-        $this->deletedBusinessMessages = $deletedBusinessMessages;
-        $this->messageReaction = $messageReaction;
-        $this->messageReactionCount = $messageReactionCount;
-        $this->inlineQuery = $inlineQuery;
-        $this->chosenInlineResult = $chosenInlineResult;
-        $this->callbackQuery = $callbackQuery;
-        $this->shippingQuery = $shippingQuery;
-        $this->preCheckoutQuery = $preCheckoutQuery;
-        $this->poll = $poll;
-        $this->pollAnswer = $pollAnswer;
-        $this->myChatMember = $myChatMember;
-        $this->chatMember = $chatMember;
-        $this->chatJoinRequest = $chatJoinRequest;
-        $this->chatBoost = $chatBoost;
-        $this->removedChatBoost = $removedChatBoost;
     }
 
     public function getUpdateId(): ?int {

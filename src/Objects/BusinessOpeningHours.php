@@ -24,6 +24,14 @@ final class BusinessOpeningHours {
      */
     protected ?array $openingHours = null;
 
+    public function __construct(
+        ?string $timeZoneName = null,
+        ?array  $openingHours = null,
+    ) {
+        $this->timeZoneName = $timeZoneName;
+        $this->openingHours = $openingHours;
+    }
+
     public static function fromArray(array $data): BusinessOpeningHours {
         $instance = new self();
         if (isset($data['time_zone_name'])) {
@@ -36,14 +44,6 @@ final class BusinessOpeningHours {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $timeZoneName = null,
-        ?array  $openingHours = null,
-    ) {
-        $this->timeZoneName = $timeZoneName;
-        $this->openingHours = $openingHours;
     }
 
     public function getTimeZoneName(): ?string {

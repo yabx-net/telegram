@@ -40,6 +40,18 @@ final class TransactionPartnerUser extends TransactionPartner {
      */
     protected ?array $paidMedia = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?User   $user = null,
+        ?string $invoicePayload = null,
+        ?array  $paidMedia = null,
+    ) {
+        $this->type = $type;
+        $this->user = $user;
+        $this->invoicePayload = $invoicePayload;
+        $this->paidMedia = $paidMedia;
+    }
+
     public static function fromArray(array $data): TransactionPartnerUser {
         $instance = new self();
         if (isset($data['type'])) {
@@ -58,18 +70,6 @@ final class TransactionPartnerUser extends TransactionPartner {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?User   $user = null,
-        ?string $invoicePayload = null,
-        ?array  $paidMedia = null,
-    ) {
-        $this->type = $type;
-        $this->user = $user;
-        $this->invoicePayload = $invoicePayload;
-        $this->paidMedia = $paidMedia;
     }
 
     public function getType(): ?string {

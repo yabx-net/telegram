@@ -96,6 +96,32 @@ final class GiveawayWinners {
      */
     protected ?string $prizeDescription = null;
 
+    public function __construct(
+        ?Chat   $chat = null,
+        ?int    $giveawayMessageId = null,
+        ?int    $winnersSelectionDate = null,
+        ?int    $winnerCount = null,
+        ?array  $winners = null,
+        ?int    $additionalChatCount = null,
+        ?int    $premiumSubscriptionMonthCount = null,
+        ?int    $unclaimedPrizeCount = null,
+        ?bool   $onlyNewMembers = null,
+        ?bool   $wasRefunded = null,
+        ?string $prizeDescription = null,
+    ) {
+        $this->chat = $chat;
+        $this->giveawayMessageId = $giveawayMessageId;
+        $this->winnersSelectionDate = $winnersSelectionDate;
+        $this->winnerCount = $winnerCount;
+        $this->winners = $winners;
+        $this->additionalChatCount = $additionalChatCount;
+        $this->premiumSubscriptionMonthCount = $premiumSubscriptionMonthCount;
+        $this->unclaimedPrizeCount = $unclaimedPrizeCount;
+        $this->onlyNewMembers = $onlyNewMembers;
+        $this->wasRefunded = $wasRefunded;
+        $this->prizeDescription = $prizeDescription;
+    }
+
     public static function fromArray(array $data): GiveawayWinners {
         $instance = new self();
         if (isset($data['chat'])) {
@@ -135,32 +161,6 @@ final class GiveawayWinners {
             $instance->prizeDescription = $data['prize_description'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?Chat   $chat = null,
-        ?int    $giveawayMessageId = null,
-        ?int    $winnersSelectionDate = null,
-        ?int    $winnerCount = null,
-        ?array  $winners = null,
-        ?int    $additionalChatCount = null,
-        ?int    $premiumSubscriptionMonthCount = null,
-        ?int    $unclaimedPrizeCount = null,
-        ?bool   $onlyNewMembers = null,
-        ?bool   $wasRefunded = null,
-        ?string $prizeDescription = null,
-    ) {
-        $this->chat = $chat;
-        $this->giveawayMessageId = $giveawayMessageId;
-        $this->winnersSelectionDate = $winnersSelectionDate;
-        $this->winnerCount = $winnerCount;
-        $this->winners = $winners;
-        $this->additionalChatCount = $additionalChatCount;
-        $this->premiumSubscriptionMonthCount = $premiumSubscriptionMonthCount;
-        $this->unclaimedPrizeCount = $unclaimedPrizeCount;
-        $this->onlyNewMembers = $onlyNewMembers;
-        $this->wasRefunded = $wasRefunded;
-        $this->prizeDescription = $prizeDescription;
     }
 
     public function getChat(): ?Chat {

@@ -56,6 +56,22 @@ final class VideoNote {
      */
     protected ?int $fileSize = null;
 
+    public function __construct(
+        ?string    $fileId = null,
+        ?string    $fileUniqueId = null,
+        ?int       $length = null,
+        ?int       $duration = null,
+        ?PhotoSize $thumbnail = null,
+        ?int       $fileSize = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->length = $length;
+        $this->duration = $duration;
+        $this->thumbnail = $thumbnail;
+        $this->fileSize = $fileSize;
+    }
+
     public static function fromArray(array $data): VideoNote {
         $instance = new self();
         if (isset($data['file_id'])) {
@@ -77,22 +93,6 @@ final class VideoNote {
             $instance->fileSize = $data['file_size'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string    $fileId = null,
-        ?string    $fileUniqueId = null,
-        ?int       $length = null,
-        ?int       $duration = null,
-        ?PhotoSize $thumbnail = null,
-        ?int       $fileSize = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->length = $length;
-        $this->duration = $duration;
-        $this->thumbnail = $thumbnail;
-        $this->fileSize = $fileSize;
     }
 
     public function getFileId(): ?string {

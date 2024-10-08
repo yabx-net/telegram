@@ -24,6 +24,14 @@ final class UsersShared {
      */
     protected ?array $users = null;
 
+    public function __construct(
+        ?int   $requestId = null,
+        ?array $users = null,
+    ) {
+        $this->requestId = $requestId;
+        $this->users = $users;
+    }
+
     public static function fromArray(array $data): UsersShared {
         $instance = new self();
         if (isset($data['request_id'])) {
@@ -36,14 +44,6 @@ final class UsersShared {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int   $requestId = null,
-        ?array $users = null,
-    ) {
-        $this->requestId = $requestId;
-        $this->users = $users;
     }
 
     public function getRequestId(): ?int {

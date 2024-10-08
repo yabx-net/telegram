@@ -32,6 +32,16 @@ final class BusinessMessagesDeleted {
      */
     protected ?array $messageIds = null;
 
+    public function __construct(
+        ?string $businessConnectionId = null,
+        ?Chat   $chat = null,
+        ?array  $messageIds = null,
+    ) {
+        $this->businessConnectionId = $businessConnectionId;
+        $this->chat = $chat;
+        $this->messageIds = $messageIds;
+    }
+
     public static function fromArray(array $data): BusinessMessagesDeleted {
         $instance = new self();
         if (isset($data['business_connection_id'])) {
@@ -47,16 +57,6 @@ final class BusinessMessagesDeleted {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $businessConnectionId = null,
-        ?Chat   $chat = null,
-        ?array  $messageIds = null,
-    ) {
-        $this->businessConnectionId = $businessConnectionId;
-        $this->chat = $chat;
-        $this->messageIds = $messageIds;
     }
 
     public function getBusinessConnectionId(): ?string {

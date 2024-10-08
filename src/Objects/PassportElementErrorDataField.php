@@ -48,6 +48,20 @@ final class PassportElementErrorDataField {
      */
     protected ?string $message = null;
 
+    public function __construct(
+        ?string $source = null,
+        ?string $type = null,
+        ?string $fieldName = null,
+        ?string $dataHash = null,
+        ?string $message = null,
+    ) {
+        $this->source = $source;
+        $this->type = $type;
+        $this->fieldName = $fieldName;
+        $this->dataHash = $dataHash;
+        $this->message = $message;
+    }
+
     public static function fromArray(array $data): PassportElementErrorDataField {
         $instance = new self();
         if (isset($data['source'])) {
@@ -66,20 +80,6 @@ final class PassportElementErrorDataField {
             $instance->message = $data['message'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $source = null,
-        ?string $type = null,
-        ?string $fieldName = null,
-        ?string $dataHash = null,
-        ?string $message = null,
-    ) {
-        $this->source = $source;
-        $this->type = $type;
-        $this->fieldName = $fieldName;
-        $this->dataHash = $dataHash;
-        $this->message = $message;
     }
 
     public function getSource(): ?string {

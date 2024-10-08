@@ -32,6 +32,16 @@ final class ForceReply extends ReplyMarkup {
      */
     protected ?bool $selective = null;
 
+    public function __construct(
+        ?bool   $forceReply = null,
+        ?string $inputFieldPlaceholder = null,
+        ?bool   $selective = null,
+    ) {
+        $this->forceReply = $forceReply;
+        $this->inputFieldPlaceholder = $inputFieldPlaceholder;
+        $this->selective = $selective;
+    }
+
     public static function fromArray(array $data): ForceReply {
         $instance = new self();
         if (isset($data['force_reply'])) {
@@ -44,16 +54,6 @@ final class ForceReply extends ReplyMarkup {
             $instance->selective = $data['selective'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?bool   $forceReply = null,
-        ?string $inputFieldPlaceholder = null,
-        ?bool   $selective = null,
-    ) {
-        $this->forceReply = $forceReply;
-        $this->inputFieldPlaceholder = $inputFieldPlaceholder;
-        $this->selective = $selective;
     }
 
     public function getForceReply(): ?bool {

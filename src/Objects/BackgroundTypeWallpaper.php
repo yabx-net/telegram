@@ -48,6 +48,20 @@ final class BackgroundTypeWallpaper extends BackgroundType {
      */
     protected ?bool $isMoving = null;
 
+    public function __construct(
+        ?string   $type = null,
+        ?Document $document = null,
+        ?int      $darkThemeDimming = null,
+        ?bool     $isBlurred = null,
+        ?bool     $isMoving = null,
+    ) {
+        $this->type = $type;
+        $this->document = $document;
+        $this->darkThemeDimming = $darkThemeDimming;
+        $this->isBlurred = $isBlurred;
+        $this->isMoving = $isMoving;
+    }
+
     public static function fromArray(array $data): BackgroundTypeWallpaper {
         $instance = new self();
         if (isset($data['type'])) {
@@ -66,20 +80,6 @@ final class BackgroundTypeWallpaper extends BackgroundType {
             $instance->isMoving = $data['is_moving'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string   $type = null,
-        ?Document $document = null,
-        ?int      $darkThemeDimming = null,
-        ?bool     $isBlurred = null,
-        ?bool     $isMoving = null,
-    ) {
-        $this->type = $type;
-        $this->document = $document;
-        $this->darkThemeDimming = $darkThemeDimming;
-        $this->isBlurred = $isBlurred;
-        $this->isMoving = $isMoving;
     }
 
     public function getType(): ?string {

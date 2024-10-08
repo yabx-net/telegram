@@ -32,6 +32,16 @@ final class MessageOriginHiddenUser extends MessageOrigin {
      */
     protected ?string $senderUserName = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?int    $date = null,
+        ?string $senderUserName = null,
+    ) {
+        $this->type = $type;
+        $this->date = $date;
+        $this->senderUserName = $senderUserName;
+    }
+
     public static function fromArray(array $data): MessageOriginHiddenUser {
         $instance = new self();
         if (isset($data['type'])) {
@@ -44,16 +54,6 @@ final class MessageOriginHiddenUser extends MessageOrigin {
             $instance->senderUserName = $data['sender_user_name'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?int    $date = null,
-        ?string $senderUserName = null,
-    ) {
-        $this->type = $type;
-        $this->date = $date;
-        $this->senderUserName = $senderUserName;
     }
 
     public function getType(): ?string {

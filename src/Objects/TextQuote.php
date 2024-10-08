@@ -40,6 +40,18 @@ final class TextQuote {
      */
     protected ?bool $isManual = null;
 
+    public function __construct(
+        ?string $text = null,
+        ?array  $entities = null,
+        ?int    $position = null,
+        ?bool   $isManual = null,
+    ) {
+        $this->text = $text;
+        $this->entities = $entities;
+        $this->position = $position;
+        $this->isManual = $isManual;
+    }
+
     public static function fromArray(array $data): TextQuote {
         $instance = new self();
         if (isset($data['text'])) {
@@ -58,18 +70,6 @@ final class TextQuote {
             $instance->isManual = $data['is_manual'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $text = null,
-        ?array  $entities = null,
-        ?int    $position = null,
-        ?bool   $isManual = null,
-    ) {
-        $this->text = $text;
-        $this->entities = $entities;
-        $this->position = $position;
-        $this->isManual = $isManual;
     }
 
     public function getText(): ?string {

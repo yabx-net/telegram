@@ -40,6 +40,18 @@ final class ShippingQuery {
      */
     protected ?ShippingAddress $shippingAddress = null;
 
+    public function __construct(
+        ?string          $id = null,
+        ?User            $from = null,
+        ?string          $invoicePayload = null,
+        ?ShippingAddress $shippingAddress = null,
+    ) {
+        $this->id = $id;
+        $this->from = $from;
+        $this->invoicePayload = $invoicePayload;
+        $this->shippingAddress = $shippingAddress;
+    }
+
     public static function fromArray(array $data): ShippingQuery {
         $instance = new self();
         if (isset($data['id'])) {
@@ -55,18 +67,6 @@ final class ShippingQuery {
             $instance->shippingAddress = ShippingAddress::fromArray($data['shipping_address']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string          $id = null,
-        ?User            $from = null,
-        ?string          $invoicePayload = null,
-        ?ShippingAddress $shippingAddress = null,
-    ) {
-        $this->id = $id;
-        $this->from = $from;
-        $this->invoicePayload = $invoicePayload;
-        $this->shippingAddress = $shippingAddress;
     }
 
     public function getId(): ?string {

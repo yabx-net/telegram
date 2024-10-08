@@ -40,6 +40,18 @@ final class InputTextMessageContent {
      */
     protected ?LinkPreviewOptions $linkPreviewOptions = null;
 
+    public function __construct(
+        ?string             $messageText = null,
+        ?string             $parseMode = null,
+        ?array              $entities = null,
+        ?LinkPreviewOptions $linkPreviewOptions = null,
+    ) {
+        $this->messageText = $messageText;
+        $this->parseMode = $parseMode;
+        $this->entities = $entities;
+        $this->linkPreviewOptions = $linkPreviewOptions;
+    }
+
     public static function fromArray(array $data): InputTextMessageContent {
         $instance = new self();
         if (isset($data['message_text'])) {
@@ -58,18 +70,6 @@ final class InputTextMessageContent {
             $instance->linkPreviewOptions = LinkPreviewOptions::fromArray($data['link_preview_options']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string             $messageText = null,
-        ?string             $parseMode = null,
-        ?array              $entities = null,
-        ?LinkPreviewOptions $linkPreviewOptions = null,
-    ) {
-        $this->messageText = $messageText;
-        $this->parseMode = $parseMode;
-        $this->entities = $entities;
-        $this->linkPreviewOptions = $linkPreviewOptions;
     }
 
     public function getMessageText(): ?string {

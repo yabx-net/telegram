@@ -80,6 +80,28 @@ final class Video {
      */
     protected ?int $fileSize = null;
 
+    public function __construct(
+        ?string    $fileId = null,
+        ?string    $fileUniqueId = null,
+        ?int       $width = null,
+        ?int       $height = null,
+        ?int       $duration = null,
+        ?PhotoSize $thumbnail = null,
+        ?string    $fileName = null,
+        ?string    $mimeType = null,
+        ?int       $fileSize = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->width = $width;
+        $this->height = $height;
+        $this->duration = $duration;
+        $this->thumbnail = $thumbnail;
+        $this->fileName = $fileName;
+        $this->mimeType = $mimeType;
+        $this->fileSize = $fileSize;
+    }
+
     public static function fromArray(array $data): Video {
         $instance = new self();
         if (isset($data['file_id'])) {
@@ -110,28 +132,6 @@ final class Video {
             $instance->fileSize = $data['file_size'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string    $fileId = null,
-        ?string    $fileUniqueId = null,
-        ?int       $width = null,
-        ?int       $height = null,
-        ?int       $duration = null,
-        ?PhotoSize $thumbnail = null,
-        ?string    $fileName = null,
-        ?string    $mimeType = null,
-        ?int       $fileSize = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->width = $width;
-        $this->height = $height;
-        $this->duration = $duration;
-        $this->thumbnail = $thumbnail;
-        $this->fileName = $fileName;
-        $this->mimeType = $mimeType;
-        $this->fileSize = $fileSize;
     }
 
     public function getFileId(): ?string {

@@ -112,6 +112,36 @@ final class User {
      */
     protected ?bool $hasMainWebApp = null;
 
+    public function __construct(
+        ?int    $id = null,
+        ?bool   $isBot = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?string $username = null,
+        ?string $languageCode = null,
+        ?bool   $isPremium = null,
+        ?bool   $addedToAttachmentMenu = null,
+        ?bool   $canJoinGroups = null,
+        ?bool   $canReadAllGroupMessages = null,
+        ?bool   $supportsInlineQueries = null,
+        ?bool   $canConnectToBusiness = null,
+        ?bool   $hasMainWebApp = null,
+    ) {
+        $this->id = $id;
+        $this->isBot = $isBot;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->username = $username;
+        $this->languageCode = $languageCode;
+        $this->isPremium = $isPremium;
+        $this->addedToAttachmentMenu = $addedToAttachmentMenu;
+        $this->canJoinGroups = $canJoinGroups;
+        $this->canReadAllGroupMessages = $canReadAllGroupMessages;
+        $this->supportsInlineQueries = $supportsInlineQueries;
+        $this->canConnectToBusiness = $canConnectToBusiness;
+        $this->hasMainWebApp = $hasMainWebApp;
+    }
+
     public static function fromArray(array $data): User {
         $instance = new self();
         if (isset($data['id'])) {
@@ -154,36 +184,6 @@ final class User {
             $instance->hasMainWebApp = $data['has_main_web_app'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int    $id = null,
-        ?bool   $isBot = null,
-        ?string $firstName = null,
-        ?string $lastName = null,
-        ?string $username = null,
-        ?string $languageCode = null,
-        ?bool   $isPremium = null,
-        ?bool   $addedToAttachmentMenu = null,
-        ?bool   $canJoinGroups = null,
-        ?bool   $canReadAllGroupMessages = null,
-        ?bool   $supportsInlineQueries = null,
-        ?bool   $canConnectToBusiness = null,
-        ?bool   $hasMainWebApp = null,
-    ) {
-        $this->id = $id;
-        $this->isBot = $isBot;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->username = $username;
-        $this->languageCode = $languageCode;
-        $this->isPremium = $isPremium;
-        $this->addedToAttachmentMenu = $addedToAttachmentMenu;
-        $this->canJoinGroups = $canJoinGroups;
-        $this->canReadAllGroupMessages = $canReadAllGroupMessages;
-        $this->supportsInlineQueries = $supportsInlineQueries;
-        $this->canConnectToBusiness = $canConnectToBusiness;
-        $this->hasMainWebApp = $hasMainWebApp;
     }
 
     public function getId(): ?int {

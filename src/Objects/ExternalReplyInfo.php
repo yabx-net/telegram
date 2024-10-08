@@ -200,6 +200,58 @@ final class ExternalReplyInfo {
      */
     protected ?Venue $venue = null;
 
+    public function __construct(
+        ?MessageOrigin      $origin = null,
+        ?Chat               $chat = null,
+        ?int                $messageId = null,
+        ?LinkPreviewOptions $linkPreviewOptions = null,
+        ?Animation          $animation = null,
+        ?Audio              $audio = null,
+        ?Document           $document = null,
+        ?PaidMediaInfo      $paidMedia = null,
+        ?array              $photo = null,
+        ?Sticker            $sticker = null,
+        ?Story              $story = null,
+        ?Video              $video = null,
+        ?VideoNote          $videoNote = null,
+        ?Voice              $voice = null,
+        ?bool               $hasMediaSpoiler = null,
+        ?Contact            $contact = null,
+        ?Dice               $dice = null,
+        ?Game               $game = null,
+        ?Giveaway           $giveaway = null,
+        ?GiveawayWinners    $giveawayWinners = null,
+        ?Invoice            $invoice = null,
+        ?Location           $location = null,
+        ?Poll               $poll = null,
+        ?Venue              $venue = null,
+    ) {
+        $this->origin = $origin;
+        $this->chat = $chat;
+        $this->messageId = $messageId;
+        $this->linkPreviewOptions = $linkPreviewOptions;
+        $this->animation = $animation;
+        $this->audio = $audio;
+        $this->document = $document;
+        $this->paidMedia = $paidMedia;
+        $this->photo = $photo;
+        $this->sticker = $sticker;
+        $this->story = $story;
+        $this->video = $video;
+        $this->videoNote = $videoNote;
+        $this->voice = $voice;
+        $this->hasMediaSpoiler = $hasMediaSpoiler;
+        $this->contact = $contact;
+        $this->dice = $dice;
+        $this->game = $game;
+        $this->giveaway = $giveaway;
+        $this->giveawayWinners = $giveawayWinners;
+        $this->invoice = $invoice;
+        $this->location = $location;
+        $this->poll = $poll;
+        $this->venue = $venue;
+    }
+
     public static function fromArray(array $data): ExternalReplyInfo {
         $instance = new self();
         if (isset($data['origin'])) {
@@ -278,58 +330,6 @@ final class ExternalReplyInfo {
             $instance->venue = Venue::fromArray($data['venue']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?MessageOrigin      $origin = null,
-        ?Chat               $chat = null,
-        ?int                $messageId = null,
-        ?LinkPreviewOptions $linkPreviewOptions = null,
-        ?Animation          $animation = null,
-        ?Audio              $audio = null,
-        ?Document           $document = null,
-        ?PaidMediaInfo      $paidMedia = null,
-        ?array              $photo = null,
-        ?Sticker            $sticker = null,
-        ?Story              $story = null,
-        ?Video              $video = null,
-        ?VideoNote          $videoNote = null,
-        ?Voice              $voice = null,
-        ?bool               $hasMediaSpoiler = null,
-        ?Contact            $contact = null,
-        ?Dice               $dice = null,
-        ?Game               $game = null,
-        ?Giveaway           $giveaway = null,
-        ?GiveawayWinners    $giveawayWinners = null,
-        ?Invoice            $invoice = null,
-        ?Location           $location = null,
-        ?Poll               $poll = null,
-        ?Venue              $venue = null,
-    ) {
-        $this->origin = $origin;
-        $this->chat = $chat;
-        $this->messageId = $messageId;
-        $this->linkPreviewOptions = $linkPreviewOptions;
-        $this->animation = $animation;
-        $this->audio = $audio;
-        $this->document = $document;
-        $this->paidMedia = $paidMedia;
-        $this->photo = $photo;
-        $this->sticker = $sticker;
-        $this->story = $story;
-        $this->video = $video;
-        $this->videoNote = $videoNote;
-        $this->voice = $voice;
-        $this->hasMediaSpoiler = $hasMediaSpoiler;
-        $this->contact = $contact;
-        $this->dice = $dice;
-        $this->game = $game;
-        $this->giveaway = $giveaway;
-        $this->giveawayWinners = $giveawayWinners;
-        $this->invoice = $invoice;
-        $this->location = $location;
-        $this->poll = $poll;
-        $this->venue = $venue;
     }
 
     public function getOrigin(): ?MessageOrigin {

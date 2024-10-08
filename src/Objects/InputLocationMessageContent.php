@@ -56,6 +56,22 @@ final class InputLocationMessageContent {
      */
     protected ?int $proximityAlertRadius = null;
 
+    public function __construct(
+        ?float $latitude = null,
+        ?float $longitude = null,
+        ?float $horizontalAccuracy = null,
+        ?int   $livePeriod = null,
+        ?int   $heading = null,
+        ?int   $proximityAlertRadius = null,
+    ) {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->horizontalAccuracy = $horizontalAccuracy;
+        $this->livePeriod = $livePeriod;
+        $this->heading = $heading;
+        $this->proximityAlertRadius = $proximityAlertRadius;
+    }
+
     public static function fromArray(array $data): InputLocationMessageContent {
         $instance = new self();
         if (isset($data['latitude'])) {
@@ -77,22 +93,6 @@ final class InputLocationMessageContent {
             $instance->proximityAlertRadius = $data['proximity_alert_radius'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?float $latitude = null,
-        ?float $longitude = null,
-        ?float $horizontalAccuracy = null,
-        ?int   $livePeriod = null,
-        ?int   $heading = null,
-        ?int   $proximityAlertRadius = null,
-    ) {
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
-        $this->horizontalAccuracy = $horizontalAccuracy;
-        $this->livePeriod = $livePeriod;
-        $this->heading = $heading;
-        $this->proximityAlertRadius = $proximityAlertRadius;
     }
 
     public function getLatitude(): ?float {

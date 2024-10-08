@@ -24,6 +24,14 @@ final class ChatBoostUpdated {
      */
     protected ?ChatBoost $boost = null;
 
+    public function __construct(
+        ?Chat      $chat = null,
+        ?ChatBoost $boost = null,
+    ) {
+        $this->chat = $chat;
+        $this->boost = $boost;
+    }
+
     public static function fromArray(array $data): ChatBoostUpdated {
         $instance = new self();
         if (isset($data['chat'])) {
@@ -33,14 +41,6 @@ final class ChatBoostUpdated {
             $instance->boost = ChatBoost::fromArray($data['boost']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?Chat      $chat = null,
-        ?ChatBoost $boost = null,
-    ) {
-        $this->chat = $chat;
-        $this->boost = $boost;
     }
 
     public function getChat(): ?Chat {

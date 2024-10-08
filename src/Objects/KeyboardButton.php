@@ -64,6 +64,24 @@ final class KeyboardButton {
      */
     protected ?WebAppInfo $webApp = null;
 
+    public function __construct(
+        ?string                     $text = null,
+        ?KeyboardButtonRequestUsers $requestUsers = null,
+        ?KeyboardButtonRequestChat  $requestChat = null,
+        ?bool                       $requestContact = null,
+        ?bool                       $requestLocation = null,
+        ?KeyboardButtonPollType     $requestPoll = null,
+        ?WebAppInfo                 $webApp = null,
+    ) {
+        $this->text = $text;
+        $this->requestUsers = $requestUsers;
+        $this->requestChat = $requestChat;
+        $this->requestContact = $requestContact;
+        $this->requestLocation = $requestLocation;
+        $this->requestPoll = $requestPoll;
+        $this->webApp = $webApp;
+    }
+
     public static function fromArray(array $data): KeyboardButton {
         $instance = new self();
         if (isset($data['text'])) {
@@ -88,24 +106,6 @@ final class KeyboardButton {
             $instance->webApp = WebAppInfo::fromArray($data['web_app']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string                     $text = null,
-        ?KeyboardButtonRequestUsers $requestUsers = null,
-        ?KeyboardButtonRequestChat  $requestChat = null,
-        ?bool                       $requestContact = null,
-        ?bool                       $requestLocation = null,
-        ?KeyboardButtonPollType     $requestPoll = null,
-        ?WebAppInfo                 $webApp = null,
-    ) {
-        $this->text = $text;
-        $this->requestUsers = $requestUsers;
-        $this->requestChat = $requestChat;
-        $this->requestContact = $requestContact;
-        $this->requestLocation = $requestLocation;
-        $this->requestPoll = $requestPoll;
-        $this->webApp = $webApp;
     }
 
     public function getText(): ?string {

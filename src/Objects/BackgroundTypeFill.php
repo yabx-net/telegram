@@ -32,6 +32,16 @@ final class BackgroundTypeFill extends BackgroundType {
      */
     protected ?int $darkThemeDimming = null;
 
+    public function __construct(
+        ?string         $type = null,
+        ?BackgroundFill $fill = null,
+        ?int            $darkThemeDimming = null,
+    ) {
+        $this->type = $type;
+        $this->fill = $fill;
+        $this->darkThemeDimming = $darkThemeDimming;
+    }
+
     public static function fromArray(array $data): BackgroundTypeFill {
         $instance = new self();
         if (isset($data['type'])) {
@@ -44,16 +54,6 @@ final class BackgroundTypeFill extends BackgroundType {
             $instance->darkThemeDimming = $data['dark_theme_dimming'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string         $type = null,
-        ?BackgroundFill $fill = null,
-        ?int            $darkThemeDimming = null,
-    ) {
-        $this->type = $type;
-        $this->fill = $fill;
-        $this->darkThemeDimming = $darkThemeDimming;
     }
 
     public function getType(): ?string {

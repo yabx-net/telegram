@@ -56,6 +56,22 @@ final class BusinessConnection {
      */
     protected ?bool $isEnabled = null;
 
+    public function __construct(
+        ?string $id = null,
+        ?User   $user = null,
+        ?int    $userChatId = null,
+        ?int    $date = null,
+        ?bool   $canReply = null,
+        ?bool   $isEnabled = null,
+    ) {
+        $this->id = $id;
+        $this->user = $user;
+        $this->userChatId = $userChatId;
+        $this->date = $date;
+        $this->canReply = $canReply;
+        $this->isEnabled = $isEnabled;
+    }
+
     public static function fromArray(array $data): BusinessConnection {
         $instance = new self();
         if (isset($data['id'])) {
@@ -77,22 +93,6 @@ final class BusinessConnection {
             $instance->isEnabled = $data['is_enabled'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $id = null,
-        ?User   $user = null,
-        ?int    $userChatId = null,
-        ?int    $date = null,
-        ?bool   $canReply = null,
-        ?bool   $isEnabled = null,
-    ) {
-        $this->id = $id;
-        $this->user = $user;
-        $this->userChatId = $userChatId;
-        $this->date = $date;
-        $this->canReply = $canReply;
-        $this->isEnabled = $isEnabled;
     }
 
     public function getId(): ?string {

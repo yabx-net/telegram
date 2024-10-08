@@ -16,18 +16,18 @@ final class MessageAutoDeleteTimerChanged {
      */
     protected ?int $messageAutoDeleteTime = null;
 
+    public function __construct(
+        ?int $messageAutoDeleteTime = null,
+    ) {
+        $this->messageAutoDeleteTime = $messageAutoDeleteTime;
+    }
+
     public static function fromArray(array $data): MessageAutoDeleteTimerChanged {
         $instance = new self();
         if (isset($data['message_auto_delete_time'])) {
             $instance->messageAutoDeleteTime = $data['message_auto_delete_time'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int $messageAutoDeleteTime = null,
-    ) {
-        $this->messageAutoDeleteTime = $messageAutoDeleteTime;
     }
 
     public function getMessageAutoDeleteTime(): ?int {

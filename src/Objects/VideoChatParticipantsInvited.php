@@ -16,6 +16,12 @@ final class VideoChatParticipantsInvited {
      */
     protected ?array $users = null;
 
+    public function __construct(
+        ?array $users = null,
+    ) {
+        $this->users = $users;
+    }
+
     public static function fromArray(array $data): VideoChatParticipantsInvited {
         $instance = new self();
         if (isset($data['users'])) {
@@ -25,12 +31,6 @@ final class VideoChatParticipantsInvited {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?array $users = null,
-    ) {
-        $this->users = $users;
     }
 
     public function getUsers(): ?array {

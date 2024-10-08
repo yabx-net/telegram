@@ -32,6 +32,16 @@ final class GiveawayCompleted {
      */
     protected ?Message $giveawayMessage = null;
 
+    public function __construct(
+        ?int     $winnerCount = null,
+        ?int     $unclaimedPrizeCount = null,
+        ?Message $giveawayMessage = null,
+    ) {
+        $this->winnerCount = $winnerCount;
+        $this->unclaimedPrizeCount = $unclaimedPrizeCount;
+        $this->giveawayMessage = $giveawayMessage;
+    }
+
     public static function fromArray(array $data): GiveawayCompleted {
         $instance = new self();
         if (isset($data['winner_count'])) {
@@ -44,16 +54,6 @@ final class GiveawayCompleted {
             $instance->giveawayMessage = Message::fromArray($data['giveaway_message']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int     $winnerCount = null,
-        ?int     $unclaimedPrizeCount = null,
-        ?Message $giveawayMessage = null,
-    ) {
-        $this->winnerCount = $winnerCount;
-        $this->unclaimedPrizeCount = $unclaimedPrizeCount;
-        $this->giveawayMessage = $giveawayMessage;
     }
 
     public function getWinnerCount(): ?int {

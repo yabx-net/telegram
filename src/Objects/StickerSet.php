@@ -48,6 +48,20 @@ final class StickerSet {
      */
     protected ?PhotoSize $thumbnail = null;
 
+    public function __construct(
+        ?string    $name = null,
+        ?string    $title = null,
+        ?string    $stickerType = null,
+        ?array     $stickers = null,
+        ?PhotoSize $thumbnail = null,
+    ) {
+        $this->name = $name;
+        $this->title = $title;
+        $this->stickerType = $stickerType;
+        $this->stickers = $stickers;
+        $this->thumbnail = $thumbnail;
+    }
+
     public static function fromArray(array $data): StickerSet {
         $instance = new self();
         if (isset($data['name'])) {
@@ -69,20 +83,6 @@ final class StickerSet {
             $instance->thumbnail = PhotoSize::fromArray($data['thumbnail']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string    $name = null,
-        ?string    $title = null,
-        ?string    $stickerType = null,
-        ?array     $stickers = null,
-        ?PhotoSize $thumbnail = null,
-    ) {
-        $this->name = $name;
-        $this->title = $title;
-        $this->stickerType = $stickerType;
-        $this->stickers = $stickers;
-        $this->thumbnail = $thumbnail;
     }
 
     public function getName(): ?string {

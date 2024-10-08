@@ -40,6 +40,18 @@ final class PassportElementErrorSelfie {
      */
     protected ?string $message = null;
 
+    public function __construct(
+        ?string $source = null,
+        ?string $type = null,
+        ?string $fileHash = null,
+        ?string $message = null,
+    ) {
+        $this->source = $source;
+        $this->type = $type;
+        $this->fileHash = $fileHash;
+        $this->message = $message;
+    }
+
     public static function fromArray(array $data): PassportElementErrorSelfie {
         $instance = new self();
         if (isset($data['source'])) {
@@ -55,18 +67,6 @@ final class PassportElementErrorSelfie {
             $instance->message = $data['message'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $source = null,
-        ?string $type = null,
-        ?string $fileHash = null,
-        ?string $message = null,
-    ) {
-        $this->source = $source;
-        $this->type = $type;
-        $this->fileHash = $fileHash;
-        $this->message = $message;
     }
 
     public function getSource(): ?string {

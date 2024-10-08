@@ -40,6 +40,18 @@ final class LoginUrl {
      */
     protected ?bool $requestWriteAccess = null;
 
+    public function __construct(
+        ?string $url = null,
+        ?string $forwardText = null,
+        ?string $botUsername = null,
+        ?bool   $requestWriteAccess = null,
+    ) {
+        $this->url = $url;
+        $this->forwardText = $forwardText;
+        $this->botUsername = $botUsername;
+        $this->requestWriteAccess = $requestWriteAccess;
+    }
+
     public static function fromArray(array $data): LoginUrl {
         $instance = new self();
         if (isset($data['url'])) {
@@ -55,18 +67,6 @@ final class LoginUrl {
             $instance->requestWriteAccess = $data['request_write_access'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $url = null,
-        ?string $forwardText = null,
-        ?string $botUsername = null,
-        ?bool   $requestWriteAccess = null,
-    ) {
-        $this->url = $url;
-        $this->forwardText = $forwardText;
-        $this->botUsername = $botUsername;
-        $this->requestWriteAccess = $requestWriteAccess;
     }
 
     public function getUrl(): ?string {

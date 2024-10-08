@@ -48,6 +48,20 @@ final class RefundedPayment {
      */
     protected ?string $providerPaymentChargeId = null;
 
+    public function __construct(
+        ?string $currency = null,
+        ?int    $totalAmount = null,
+        ?string $invoicePayload = null,
+        ?string $telegramPaymentChargeId = null,
+        ?string $providerPaymentChargeId = null,
+    ) {
+        $this->currency = $currency;
+        $this->totalAmount = $totalAmount;
+        $this->invoicePayload = $invoicePayload;
+        $this->telegramPaymentChargeId = $telegramPaymentChargeId;
+        $this->providerPaymentChargeId = $providerPaymentChargeId;
+    }
+
     public static function fromArray(array $data): RefundedPayment {
         $instance = new self();
         if (isset($data['currency'])) {
@@ -66,20 +80,6 @@ final class RefundedPayment {
             $instance->providerPaymentChargeId = $data['provider_payment_charge_id'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $currency = null,
-        ?int    $totalAmount = null,
-        ?string $invoicePayload = null,
-        ?string $telegramPaymentChargeId = null,
-        ?string $providerPaymentChargeId = null,
-    ) {
-        $this->currency = $currency;
-        $this->totalAmount = $totalAmount;
-        $this->invoicePayload = $invoicePayload;
-        $this->telegramPaymentChargeId = $telegramPaymentChargeId;
-        $this->providerPaymentChargeId = $providerPaymentChargeId;
     }
 
     public function getCurrency(): ?string {

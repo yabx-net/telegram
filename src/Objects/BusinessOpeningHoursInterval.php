@@ -24,6 +24,14 @@ final class BusinessOpeningHoursInterval {
      */
     protected ?int $closingMinute = null;
 
+    public function __construct(
+        ?int $openingMinute = null,
+        ?int $closingMinute = null,
+    ) {
+        $this->openingMinute = $openingMinute;
+        $this->closingMinute = $closingMinute;
+    }
+
     public static function fromArray(array $data): BusinessOpeningHoursInterval {
         $instance = new self();
         if (isset($data['opening_minute'])) {
@@ -33,14 +41,6 @@ final class BusinessOpeningHoursInterval {
             $instance->closingMinute = $data['closing_minute'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int $openingMinute = null,
-        ?int $closingMinute = null,
-    ) {
-        $this->openingMinute = $openingMinute;
-        $this->closingMinute = $closingMinute;
     }
 
     public function getOpeningMinute(): ?int {

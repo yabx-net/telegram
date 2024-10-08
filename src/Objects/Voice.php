@@ -48,6 +48,20 @@ final class Voice {
      */
     protected ?int $fileSize = null;
 
+    public function __construct(
+        ?string $fileId = null,
+        ?string $fileUniqueId = null,
+        ?int    $duration = null,
+        ?string $mimeType = null,
+        ?int    $fileSize = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->duration = $duration;
+        $this->mimeType = $mimeType;
+        $this->fileSize = $fileSize;
+    }
+
     public static function fromArray(array $data): Voice {
         $instance = new self();
         if (isset($data['file_id'])) {
@@ -66,20 +80,6 @@ final class Voice {
             $instance->fileSize = $data['file_size'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $fileId = null,
-        ?string $fileUniqueId = null,
-        ?int    $duration = null,
-        ?string $mimeType = null,
-        ?int    $fileSize = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->duration = $duration;
-        $this->mimeType = $mimeType;
-        $this->fileSize = $fileSize;
     }
 
     public function getFileId(): ?string {

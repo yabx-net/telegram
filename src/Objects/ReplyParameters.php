@@ -64,6 +64,24 @@ final class ReplyParameters {
      */
     protected ?int $quotePosition = null;
 
+    public function __construct(
+        ?int            $messageId = null,
+        int|string|null $chatId = null,
+        ?bool           $allowSendingWithoutReply = null,
+        ?string         $quote = null,
+        ?string         $quoteParseMode = null,
+        ?array          $quoteEntities = null,
+        ?int            $quotePosition = null,
+    ) {
+        $this->messageId = $messageId;
+        $this->chatId = $chatId;
+        $this->allowSendingWithoutReply = $allowSendingWithoutReply;
+        $this->quote = $quote;
+        $this->quoteParseMode = $quoteParseMode;
+        $this->quoteEntities = $quoteEntities;
+        $this->quotePosition = $quotePosition;
+    }
+
     public static function fromArray(array $data): ReplyParameters {
         $instance = new self();
         if (isset($data['message_id'])) {
@@ -91,24 +109,6 @@ final class ReplyParameters {
             $instance->quotePosition = $data['quote_position'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int            $messageId = null,
-        int|string|null $chatId = null,
-        ?bool           $allowSendingWithoutReply = null,
-        ?string         $quote = null,
-        ?string         $quoteParseMode = null,
-        ?array          $quoteEntities = null,
-        ?int            $quotePosition = null,
-    ) {
-        $this->messageId = $messageId;
-        $this->chatId = $chatId;
-        $this->allowSendingWithoutReply = $allowSendingWithoutReply;
-        $this->quote = $quote;
-        $this->quoteParseMode = $quoteParseMode;
-        $this->quoteEntities = $quoteEntities;
-        $this->quotePosition = $quotePosition;
     }
 
     public function getMessageId(): ?int {

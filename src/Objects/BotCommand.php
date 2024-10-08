@@ -24,6 +24,14 @@ final class BotCommand {
      */
     protected ?string $description = null;
 
+    public function __construct(
+        ?string $command = null,
+        ?string $description = null,
+    ) {
+        $this->command = $command;
+        $this->description = $description;
+    }
+
     public static function fromArray(array $data): BotCommand {
         $instance = new self();
         if (isset($data['command'])) {
@@ -33,14 +41,6 @@ final class BotCommand {
             $instance->description = $data['description'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $command = null,
-        ?string $description = null,
-    ) {
-        $this->command = $command;
-        $this->description = $description;
     }
 
     public function getCommand(): ?string {

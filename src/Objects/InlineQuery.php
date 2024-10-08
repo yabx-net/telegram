@@ -56,6 +56,22 @@ final class InlineQuery {
      */
     protected ?Location $location = null;
 
+    public function __construct(
+        ?string   $id = null,
+        ?User     $from = null,
+        ?string   $query = null,
+        ?string   $offset = null,
+        ?string   $chatType = null,
+        ?Location $location = null,
+    ) {
+        $this->id = $id;
+        $this->from = $from;
+        $this->query = $query;
+        $this->offset = $offset;
+        $this->chatType = $chatType;
+        $this->location = $location;
+    }
+
     public static function fromArray(array $data): InlineQuery {
         $instance = new self();
         if (isset($data['id'])) {
@@ -77,22 +93,6 @@ final class InlineQuery {
             $instance->location = Location::fromArray($data['location']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string   $id = null,
-        ?User     $from = null,
-        ?string   $query = null,
-        ?string   $offset = null,
-        ?string   $chatType = null,
-        ?Location $location = null,
-    ) {
-        $this->id = $id;
-        $this->from = $from;
-        $this->query = $query;
-        $this->offset = $offset;
-        $this->chatType = $chatType;
-        $this->location = $location;
     }
 
     public function getId(): ?string {

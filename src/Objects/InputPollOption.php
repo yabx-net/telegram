@@ -32,6 +32,16 @@ final class InputPollOption {
      */
     protected ?array $textEntities = null;
 
+    public function __construct(
+        ?string $text = null,
+        ?string $textParseMode = null,
+        ?array  $textEntities = null,
+    ) {
+        $this->text = $text;
+        $this->textParseMode = $textParseMode;
+        $this->textEntities = $textEntities;
+    }
+
     public static function fromArray(array $data): InputPollOption {
         $instance = new self();
         if (isset($data['text'])) {
@@ -47,16 +57,6 @@ final class InputPollOption {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $text = null,
-        ?string $textParseMode = null,
-        ?array  $textEntities = null,
-    ) {
-        $this->text = $text;
-        $this->textParseMode = $textParseMode;
-        $this->textEntities = $textEntities;
     }
 
     public function getText(): ?string {

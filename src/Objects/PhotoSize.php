@@ -48,6 +48,20 @@ final class PhotoSize {
      */
     protected ?int $fileSize = null;
 
+    public function __construct(
+        ?string $fileId = null,
+        ?string $fileUniqueId = null,
+        ?int    $width = null,
+        ?int    $height = null,
+        ?int    $fileSize = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->width = $width;
+        $this->height = $height;
+        $this->fileSize = $fileSize;
+    }
+
     public static function fromArray(array $data): PhotoSize {
         $instance = new self();
         if (isset($data['file_id'])) {
@@ -66,20 +80,6 @@ final class PhotoSize {
             $instance->fileSize = $data['file_size'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $fileId = null,
-        ?string $fileUniqueId = null,
-        ?int    $width = null,
-        ?int    $height = null,
-        ?int    $fileSize = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->width = $width;
-        $this->height = $height;
-        $this->fileSize = $fileSize;
     }
 
     public function getFileId(): ?string {

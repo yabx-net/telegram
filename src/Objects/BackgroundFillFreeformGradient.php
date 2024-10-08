@@ -24,6 +24,14 @@ final class BackgroundFillFreeformGradient extends BackgroundFill {
      */
     protected ?array $colors = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?array  $colors = null,
+    ) {
+        $this->type = $type;
+        $this->colors = $colors;
+    }
+
     public static function fromArray(array $data): BackgroundFillFreeformGradient {
         $instance = new self();
         if (isset($data['type'])) {
@@ -36,14 +44,6 @@ final class BackgroundFillFreeformGradient extends BackgroundFill {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?array  $colors = null,
-    ) {
-        $this->type = $type;
-        $this->colors = $colors;
     }
 
     public function getType(): ?string {

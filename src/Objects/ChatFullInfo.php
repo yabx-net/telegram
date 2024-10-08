@@ -360,6 +360,98 @@ final class ChatFullInfo {
      */
     protected ?ChatLocation $location = null;
 
+    public function __construct(
+        ?int                  $id = null,
+        ?string               $type = null,
+        ?string               $title = null,
+        ?string               $username = null,
+        ?string               $firstName = null,
+        ?string               $lastName = null,
+        ?bool                 $isForum = null,
+        ?int                  $accentColorId = null,
+        ?int                  $maxReactionCount = null,
+        ?ChatPhoto            $photo = null,
+        ?array                $activeUsernames = null,
+        ?Birthdate            $birthdate = null,
+        ?BusinessIntro        $businessIntro = null,
+        ?BusinessLocation     $businessLocation = null,
+        ?BusinessOpeningHours $businessOpeningHours = null,
+        ?Chat                 $personalChat = null,
+        ?array                $availableReactions = null,
+        ?string               $backgroundCustomEmojiId = null,
+        ?int                  $profileAccentColorId = null,
+        ?string               $profileBackgroundCustomEmojiId = null,
+        ?string               $emojiStatusCustomEmojiId = null,
+        ?int                  $emojiStatusExpirationDate = null,
+        ?string               $bio = null,
+        ?bool                 $hasPrivateForwards = null,
+        ?bool                 $hasRestrictedVoiceAndVideoMessages = null,
+        ?bool                 $joinToSendMessages = null,
+        ?bool                 $joinByRequest = null,
+        ?string               $description = null,
+        ?string               $inviteLink = null,
+        ?Message              $pinnedMessage = null,
+        ?ChatPermissions      $permissions = null,
+        ?bool                 $canSendPaidMedia = null,
+        ?int                  $slowModeDelay = null,
+        ?int                  $unrestrictBoostCount = null,
+        ?int                  $messageAutoDeleteTime = null,
+        ?bool                 $hasAggressiveAntiSpamEnabled = null,
+        ?bool                 $hasHiddenMembers = null,
+        ?bool                 $hasProtectedContent = null,
+        ?bool                 $hasVisibleHistory = null,
+        ?string               $stickerSetName = null,
+        ?bool                 $canSetStickerSet = null,
+        ?string               $customEmojiStickerSetName = null,
+        ?int                  $linkedChatId = null,
+        ?ChatLocation         $location = null,
+    ) {
+        $this->id = $id;
+        $this->type = $type;
+        $this->title = $title;
+        $this->username = $username;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->isForum = $isForum;
+        $this->accentColorId = $accentColorId;
+        $this->maxReactionCount = $maxReactionCount;
+        $this->photo = $photo;
+        $this->activeUsernames = $activeUsernames;
+        $this->birthdate = $birthdate;
+        $this->businessIntro = $businessIntro;
+        $this->businessLocation = $businessLocation;
+        $this->businessOpeningHours = $businessOpeningHours;
+        $this->personalChat = $personalChat;
+        $this->availableReactions = $availableReactions;
+        $this->backgroundCustomEmojiId = $backgroundCustomEmojiId;
+        $this->profileAccentColorId = $profileAccentColorId;
+        $this->profileBackgroundCustomEmojiId = $profileBackgroundCustomEmojiId;
+        $this->emojiStatusCustomEmojiId = $emojiStatusCustomEmojiId;
+        $this->emojiStatusExpirationDate = $emojiStatusExpirationDate;
+        $this->bio = $bio;
+        $this->hasPrivateForwards = $hasPrivateForwards;
+        $this->hasRestrictedVoiceAndVideoMessages = $hasRestrictedVoiceAndVideoMessages;
+        $this->joinToSendMessages = $joinToSendMessages;
+        $this->joinByRequest = $joinByRequest;
+        $this->description = $description;
+        $this->inviteLink = $inviteLink;
+        $this->pinnedMessage = $pinnedMessage;
+        $this->permissions = $permissions;
+        $this->canSendPaidMedia = $canSendPaidMedia;
+        $this->slowModeDelay = $slowModeDelay;
+        $this->unrestrictBoostCount = $unrestrictBoostCount;
+        $this->messageAutoDeleteTime = $messageAutoDeleteTime;
+        $this->hasAggressiveAntiSpamEnabled = $hasAggressiveAntiSpamEnabled;
+        $this->hasHiddenMembers = $hasHiddenMembers;
+        $this->hasProtectedContent = $hasProtectedContent;
+        $this->hasVisibleHistory = $hasVisibleHistory;
+        $this->stickerSetName = $stickerSetName;
+        $this->canSetStickerSet = $canSetStickerSet;
+        $this->customEmojiStickerSetName = $customEmojiStickerSetName;
+        $this->linkedChatId = $linkedChatId;
+        $this->location = $location;
+    }
+
     public static function fromArray(array $data): ChatFullInfo {
         $instance = new self();
         if (isset($data['id'])) {
@@ -501,98 +593,6 @@ final class ChatFullInfo {
             $instance->location = ChatLocation::fromArray($data['location']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int                  $id = null,
-        ?string               $type = null,
-        ?string               $title = null,
-        ?string               $username = null,
-        ?string               $firstName = null,
-        ?string               $lastName = null,
-        ?bool                 $isForum = null,
-        ?int                  $accentColorId = null,
-        ?int                  $maxReactionCount = null,
-        ?ChatPhoto            $photo = null,
-        ?array                $activeUsernames = null,
-        ?Birthdate            $birthdate = null,
-        ?BusinessIntro        $businessIntro = null,
-        ?BusinessLocation     $businessLocation = null,
-        ?BusinessOpeningHours $businessOpeningHours = null,
-        ?Chat                 $personalChat = null,
-        ?array                $availableReactions = null,
-        ?string               $backgroundCustomEmojiId = null,
-        ?int                  $profileAccentColorId = null,
-        ?string               $profileBackgroundCustomEmojiId = null,
-        ?string               $emojiStatusCustomEmojiId = null,
-        ?int                  $emojiStatusExpirationDate = null,
-        ?string               $bio = null,
-        ?bool                 $hasPrivateForwards = null,
-        ?bool                 $hasRestrictedVoiceAndVideoMessages = null,
-        ?bool                 $joinToSendMessages = null,
-        ?bool                 $joinByRequest = null,
-        ?string               $description = null,
-        ?string               $inviteLink = null,
-        ?Message              $pinnedMessage = null,
-        ?ChatPermissions      $permissions = null,
-        ?bool                 $canSendPaidMedia = null,
-        ?int                  $slowModeDelay = null,
-        ?int                  $unrestrictBoostCount = null,
-        ?int                  $messageAutoDeleteTime = null,
-        ?bool                 $hasAggressiveAntiSpamEnabled = null,
-        ?bool                 $hasHiddenMembers = null,
-        ?bool                 $hasProtectedContent = null,
-        ?bool                 $hasVisibleHistory = null,
-        ?string               $stickerSetName = null,
-        ?bool                 $canSetStickerSet = null,
-        ?string               $customEmojiStickerSetName = null,
-        ?int                  $linkedChatId = null,
-        ?ChatLocation         $location = null,
-    ) {
-        $this->id = $id;
-        $this->type = $type;
-        $this->title = $title;
-        $this->username = $username;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->isForum = $isForum;
-        $this->accentColorId = $accentColorId;
-        $this->maxReactionCount = $maxReactionCount;
-        $this->photo = $photo;
-        $this->activeUsernames = $activeUsernames;
-        $this->birthdate = $birthdate;
-        $this->businessIntro = $businessIntro;
-        $this->businessLocation = $businessLocation;
-        $this->businessOpeningHours = $businessOpeningHours;
-        $this->personalChat = $personalChat;
-        $this->availableReactions = $availableReactions;
-        $this->backgroundCustomEmojiId = $backgroundCustomEmojiId;
-        $this->profileAccentColorId = $profileAccentColorId;
-        $this->profileBackgroundCustomEmojiId = $profileBackgroundCustomEmojiId;
-        $this->emojiStatusCustomEmojiId = $emojiStatusCustomEmojiId;
-        $this->emojiStatusExpirationDate = $emojiStatusExpirationDate;
-        $this->bio = $bio;
-        $this->hasPrivateForwards = $hasPrivateForwards;
-        $this->hasRestrictedVoiceAndVideoMessages = $hasRestrictedVoiceAndVideoMessages;
-        $this->joinToSendMessages = $joinToSendMessages;
-        $this->joinByRequest = $joinByRequest;
-        $this->description = $description;
-        $this->inviteLink = $inviteLink;
-        $this->pinnedMessage = $pinnedMessage;
-        $this->permissions = $permissions;
-        $this->canSendPaidMedia = $canSendPaidMedia;
-        $this->slowModeDelay = $slowModeDelay;
-        $this->unrestrictBoostCount = $unrestrictBoostCount;
-        $this->messageAutoDeleteTime = $messageAutoDeleteTime;
-        $this->hasAggressiveAntiSpamEnabled = $hasAggressiveAntiSpamEnabled;
-        $this->hasHiddenMembers = $hasHiddenMembers;
-        $this->hasProtectedContent = $hasProtectedContent;
-        $this->hasVisibleHistory = $hasVisibleHistory;
-        $this->stickerSetName = $stickerSetName;
-        $this->canSetStickerSet = $canSetStickerSet;
-        $this->customEmojiStickerSetName = $customEmojiStickerSetName;
-        $this->linkedChatId = $linkedChatId;
-        $this->location = $location;
     }
 
     public function getId(): ?int {

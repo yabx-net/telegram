@@ -168,6 +168,50 @@ final class InputInvoiceMessageContent {
      */
     protected ?bool $isFlexible = null;
 
+    public function __construct(
+        ?string $title = null,
+        ?string $description = null,
+        ?string $payload = null,
+        ?string $providerToken = null,
+        ?string $currency = null,
+        ?array  $prices = null,
+        ?int    $maxTipAmount = null,
+        ?array  $suggestedTipAmounts = null,
+        ?string $providerData = null,
+        ?string $photoUrl = null,
+        ?int    $photoSize = null,
+        ?int    $photoWidth = null,
+        ?int    $photoHeight = null,
+        ?bool   $needName = null,
+        ?bool   $needPhoneNumber = null,
+        ?bool   $needEmail = null,
+        ?bool   $needShippingAddress = null,
+        ?bool   $sendPhoneNumberToProvider = null,
+        ?bool   $sendEmailToProvider = null,
+        ?bool   $isFlexible = null,
+    ) {
+        $this->title = $title;
+        $this->description = $description;
+        $this->payload = $payload;
+        $this->providerToken = $providerToken;
+        $this->currency = $currency;
+        $this->prices = $prices;
+        $this->maxTipAmount = $maxTipAmount;
+        $this->suggestedTipAmounts = $suggestedTipAmounts;
+        $this->providerData = $providerData;
+        $this->photoUrl = $photoUrl;
+        $this->photoSize = $photoSize;
+        $this->photoWidth = $photoWidth;
+        $this->photoHeight = $photoHeight;
+        $this->needName = $needName;
+        $this->needPhoneNumber = $needPhoneNumber;
+        $this->needEmail = $needEmail;
+        $this->needShippingAddress = $needShippingAddress;
+        $this->sendPhoneNumberToProvider = $sendPhoneNumberToProvider;
+        $this->sendEmailToProvider = $sendEmailToProvider;
+        $this->isFlexible = $isFlexible;
+    }
+
     public static function fromArray(array $data): InputInvoiceMessageContent {
         $instance = new self();
         if (isset($data['title'])) {
@@ -237,50 +281,6 @@ final class InputInvoiceMessageContent {
             $instance->isFlexible = $data['is_flexible'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $title = null,
-        ?string $description = null,
-        ?string $payload = null,
-        ?string $providerToken = null,
-        ?string $currency = null,
-        ?array  $prices = null,
-        ?int    $maxTipAmount = null,
-        ?array  $suggestedTipAmounts = null,
-        ?string $providerData = null,
-        ?string $photoUrl = null,
-        ?int    $photoSize = null,
-        ?int    $photoWidth = null,
-        ?int    $photoHeight = null,
-        ?bool   $needName = null,
-        ?bool   $needPhoneNumber = null,
-        ?bool   $needEmail = null,
-        ?bool   $needShippingAddress = null,
-        ?bool   $sendPhoneNumberToProvider = null,
-        ?bool   $sendEmailToProvider = null,
-        ?bool   $isFlexible = null,
-    ) {
-        $this->title = $title;
-        $this->description = $description;
-        $this->payload = $payload;
-        $this->providerToken = $providerToken;
-        $this->currency = $currency;
-        $this->prices = $prices;
-        $this->maxTipAmount = $maxTipAmount;
-        $this->suggestedTipAmounts = $suggestedTipAmounts;
-        $this->providerData = $providerData;
-        $this->photoUrl = $photoUrl;
-        $this->photoSize = $photoSize;
-        $this->photoWidth = $photoWidth;
-        $this->photoHeight = $photoHeight;
-        $this->needName = $needName;
-        $this->needPhoneNumber = $needPhoneNumber;
-        $this->needEmail = $needEmail;
-        $this->needShippingAddress = $needShippingAddress;
-        $this->sendPhoneNumberToProvider = $sendPhoneNumberToProvider;
-        $this->sendEmailToProvider = $sendEmailToProvider;
-        $this->isFlexible = $isFlexible;
     }
 
     public function getTitle(): ?string {

@@ -48,6 +48,20 @@ final class ChosenInlineResult {
      */
     protected ?string $query = null;
 
+    public function __construct(
+        ?string   $resultId = null,
+        ?User     $from = null,
+        ?Location $location = null,
+        ?string   $inlineMessageId = null,
+        ?string   $query = null,
+    ) {
+        $this->resultId = $resultId;
+        $this->from = $from;
+        $this->location = $location;
+        $this->inlineMessageId = $inlineMessageId;
+        $this->query = $query;
+    }
+
     public static function fromArray(array $data): ChosenInlineResult {
         $instance = new self();
         if (isset($data['result_id'])) {
@@ -66,20 +80,6 @@ final class ChosenInlineResult {
             $instance->query = $data['query'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string   $resultId = null,
-        ?User     $from = null,
-        ?Location $location = null,
-        ?string   $inlineMessageId = null,
-        ?string   $query = null,
-    ) {
-        $this->resultId = $resultId;
-        $this->from = $from;
-        $this->location = $location;
-        $this->inlineMessageId = $inlineMessageId;
-        $this->query = $query;
     }
 
     public function getResultId(): ?string {

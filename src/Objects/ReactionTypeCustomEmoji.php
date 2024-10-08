@@ -24,6 +24,14 @@ final class ReactionTypeCustomEmoji extends ReactionType {
      */
     protected ?string $customEmojiId = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?string $customEmojiId = null,
+    ) {
+        $this->type = $type;
+        $this->customEmojiId = $customEmojiId;
+    }
+
     public static function fromArray(array $data): ReactionTypeCustomEmoji {
         $instance = new self();
         if (isset($data['type'])) {
@@ -33,14 +41,6 @@ final class ReactionTypeCustomEmoji extends ReactionType {
             $instance->customEmojiId = $data['custom_emoji_id'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?string $customEmojiId = null,
-    ) {
-        $this->type = $type;
-        $this->customEmojiId = $customEmojiId;
     }
 
     public function getType(): ?string {

@@ -120,6 +120,38 @@ final class ChatPermissions {
      */
     protected ?bool $canManageTopics = null;
 
+    public function __construct(
+        ?bool $canSendMessages = null,
+        ?bool $canSendAudios = null,
+        ?bool $canSendDocuments = null,
+        ?bool $canSendPhotos = null,
+        ?bool $canSendVideos = null,
+        ?bool $canSendVideoNotes = null,
+        ?bool $canSendVoiceNotes = null,
+        ?bool $canSendPolls = null,
+        ?bool $canSendOtherMessages = null,
+        ?bool $canAddWebPagePreviews = null,
+        ?bool $canChangeInfo = null,
+        ?bool $canInviteUsers = null,
+        ?bool $canPinMessages = null,
+        ?bool $canManageTopics = null,
+    ) {
+        $this->canSendMessages = $canSendMessages;
+        $this->canSendAudios = $canSendAudios;
+        $this->canSendDocuments = $canSendDocuments;
+        $this->canSendPhotos = $canSendPhotos;
+        $this->canSendVideos = $canSendVideos;
+        $this->canSendVideoNotes = $canSendVideoNotes;
+        $this->canSendVoiceNotes = $canSendVoiceNotes;
+        $this->canSendPolls = $canSendPolls;
+        $this->canSendOtherMessages = $canSendOtherMessages;
+        $this->canAddWebPagePreviews = $canAddWebPagePreviews;
+        $this->canChangeInfo = $canChangeInfo;
+        $this->canInviteUsers = $canInviteUsers;
+        $this->canPinMessages = $canPinMessages;
+        $this->canManageTopics = $canManageTopics;
+    }
+
     public static function fromArray(array $data): ChatPermissions {
         $instance = new self();
         if (isset($data['can_send_messages'])) {
@@ -165,38 +197,6 @@ final class ChatPermissions {
             $instance->canManageTopics = $data['can_manage_topics'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?bool $canSendMessages = null,
-        ?bool $canSendAudios = null,
-        ?bool $canSendDocuments = null,
-        ?bool $canSendPhotos = null,
-        ?bool $canSendVideos = null,
-        ?bool $canSendVideoNotes = null,
-        ?bool $canSendVoiceNotes = null,
-        ?bool $canSendPolls = null,
-        ?bool $canSendOtherMessages = null,
-        ?bool $canAddWebPagePreviews = null,
-        ?bool $canChangeInfo = null,
-        ?bool $canInviteUsers = null,
-        ?bool $canPinMessages = null,
-        ?bool $canManageTopics = null,
-    ) {
-        $this->canSendMessages = $canSendMessages;
-        $this->canSendAudios = $canSendAudios;
-        $this->canSendDocuments = $canSendDocuments;
-        $this->canSendPhotos = $canSendPhotos;
-        $this->canSendVideos = $canSendVideos;
-        $this->canSendVideoNotes = $canSendVideoNotes;
-        $this->canSendVoiceNotes = $canSendVoiceNotes;
-        $this->canSendPolls = $canSendPolls;
-        $this->canSendOtherMessages = $canSendOtherMessages;
-        $this->canAddWebPagePreviews = $canAddWebPagePreviews;
-        $this->canChangeInfo = $canChangeInfo;
-        $this->canInviteUsers = $canInviteUsers;
-        $this->canPinMessages = $canPinMessages;
-        $this->canManageTopics = $canManageTopics;
     }
 
     public function getCanSendMessages(): ?bool {

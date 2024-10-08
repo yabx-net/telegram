@@ -72,6 +72,26 @@ final class ChatMemberUpdated {
      */
     protected ?bool $viaChatFolderInviteLink = null;
 
+    public function __construct(
+        ?Chat           $chat = null,
+        ?User           $from = null,
+        ?int            $date = null,
+        ?ChatMember     $oldChatMember = null,
+        ?ChatMember     $newChatMember = null,
+        ?ChatInviteLink $inviteLink = null,
+        ?bool           $viaJoinRequest = null,
+        ?bool           $viaChatFolderInviteLink = null,
+    ) {
+        $this->chat = $chat;
+        $this->from = $from;
+        $this->date = $date;
+        $this->oldChatMember = $oldChatMember;
+        $this->newChatMember = $newChatMember;
+        $this->inviteLink = $inviteLink;
+        $this->viaJoinRequest = $viaJoinRequest;
+        $this->viaChatFolderInviteLink = $viaChatFolderInviteLink;
+    }
+
     public static function fromArray(array $data): ChatMemberUpdated {
         $instance = new self();
         if (isset($data['chat'])) {
@@ -99,26 +119,6 @@ final class ChatMemberUpdated {
             $instance->viaChatFolderInviteLink = $data['via_chat_folder_invite_link'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?Chat           $chat = null,
-        ?User           $from = null,
-        ?int            $date = null,
-        ?ChatMember     $oldChatMember = null,
-        ?ChatMember     $newChatMember = null,
-        ?ChatInviteLink $inviteLink = null,
-        ?bool           $viaJoinRequest = null,
-        ?bool           $viaChatFolderInviteLink = null,
-    ) {
-        $this->chat = $chat;
-        $this->from = $from;
-        $this->date = $date;
-        $this->oldChatMember = $oldChatMember;
-        $this->newChatMember = $newChatMember;
-        $this->inviteLink = $inviteLink;
-        $this->viaJoinRequest = $viaJoinRequest;
-        $this->viaChatFolderInviteLink = $viaChatFolderInviteLink;
     }
 
     public function getChat(): ?Chat {

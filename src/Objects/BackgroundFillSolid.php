@@ -24,6 +24,14 @@ final class BackgroundFillSolid {
      */
     protected ?int $color = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?int    $color = null,
+    ) {
+        $this->type = $type;
+        $this->color = $color;
+    }
+
     public static function fromArray(array $data): BackgroundFillSolid {
         $instance = new self();
         if (isset($data['type'])) {
@@ -33,14 +41,6 @@ final class BackgroundFillSolid {
             $instance->color = $data['color'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?int    $color = null,
-    ) {
-        $this->type = $type;
-        $this->color = $color;
     }
 
     public function getType(): ?string {

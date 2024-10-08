@@ -120,6 +120,38 @@ final class Poll {
      */
     protected ?int $closeDate = null;
 
+    public function __construct(
+        ?string $id = null,
+        ?string $question = null,
+        ?array  $questionEntities = null,
+        ?array  $options = null,
+        ?int    $totalVoterCount = null,
+        ?bool   $isClosed = null,
+        ?bool   $isAnonymous = null,
+        ?string $type = null,
+        ?bool   $allowsMultipleAnswers = null,
+        ?int    $correctOptionId = null,
+        ?string $explanation = null,
+        ?array  $explanationEntities = null,
+        ?int    $openPeriod = null,
+        ?int    $closeDate = null,
+    ) {
+        $this->id = $id;
+        $this->question = $question;
+        $this->questionEntities = $questionEntities;
+        $this->options = $options;
+        $this->totalVoterCount = $totalVoterCount;
+        $this->isClosed = $isClosed;
+        $this->isAnonymous = $isAnonymous;
+        $this->type = $type;
+        $this->allowsMultipleAnswers = $allowsMultipleAnswers;
+        $this->correctOptionId = $correctOptionId;
+        $this->explanation = $explanation;
+        $this->explanationEntities = $explanationEntities;
+        $this->openPeriod = $openPeriod;
+        $this->closeDate = $closeDate;
+    }
+
     public static function fromArray(array $data): Poll {
         $instance = new self();
         if (isset($data['id'])) {
@@ -174,38 +206,6 @@ final class Poll {
             $instance->closeDate = $data['close_date'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $id = null,
-        ?string $question = null,
-        ?array  $questionEntities = null,
-        ?array  $options = null,
-        ?int    $totalVoterCount = null,
-        ?bool   $isClosed = null,
-        ?bool   $isAnonymous = null,
-        ?string $type = null,
-        ?bool   $allowsMultipleAnswers = null,
-        ?int    $correctOptionId = null,
-        ?string $explanation = null,
-        ?array  $explanationEntities = null,
-        ?int    $openPeriod = null,
-        ?int    $closeDate = null,
-    ) {
-        $this->id = $id;
-        $this->question = $question;
-        $this->questionEntities = $questionEntities;
-        $this->options = $options;
-        $this->totalVoterCount = $totalVoterCount;
-        $this->isClosed = $isClosed;
-        $this->isAnonymous = $isAnonymous;
-        $this->type = $type;
-        $this->allowsMultipleAnswers = $allowsMultipleAnswers;
-        $this->correctOptionId = $correctOptionId;
-        $this->explanation = $explanation;
-        $this->explanationEntities = $explanationEntities;
-        $this->openPeriod = $openPeriod;
-        $this->closeDate = $closeDate;
     }
 
     public function getId(): ?string {

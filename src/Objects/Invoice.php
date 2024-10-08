@@ -48,6 +48,20 @@ final class Invoice {
      */
     protected ?int $totalAmount = null;
 
+    public function __construct(
+        ?string $title = null,
+        ?string $description = null,
+        ?string $startParameter = null,
+        ?string $currency = null,
+        ?int    $totalAmount = null,
+    ) {
+        $this->title = $title;
+        $this->description = $description;
+        $this->startParameter = $startParameter;
+        $this->currency = $currency;
+        $this->totalAmount = $totalAmount;
+    }
+
     public static function fromArray(array $data): Invoice {
         $instance = new self();
         if (isset($data['title'])) {
@@ -66,20 +80,6 @@ final class Invoice {
             $instance->totalAmount = $data['total_amount'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $title = null,
-        ?string $description = null,
-        ?string $startParameter = null,
-        ?string $currency = null,
-        ?int    $totalAmount = null,
-    ) {
-        $this->title = $title;
-        $this->description = $description;
-        $this->startParameter = $startParameter;
-        $this->currency = $currency;
-        $this->totalAmount = $totalAmount;
     }
 
     public function getTitle(): ?string {

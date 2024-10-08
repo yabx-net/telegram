@@ -128,6 +128,40 @@ final class ChatAdministratorRights {
      */
     protected ?bool $canManageTopics = null;
 
+    public function __construct(
+        ?bool $isAnonymous = null,
+        ?bool $canManageChat = null,
+        ?bool $canDeleteMessages = null,
+        ?bool $canManageVideoChats = null,
+        ?bool $canRestrictMembers = null,
+        ?bool $canPromoteMembers = null,
+        ?bool $canChangeInfo = null,
+        ?bool $canInviteUsers = null,
+        ?bool $canPostStories = null,
+        ?bool $canEditStories = null,
+        ?bool $canDeleteStories = null,
+        ?bool $canPostMessages = null,
+        ?bool $canEditMessages = null,
+        ?bool $canPinMessages = null,
+        ?bool $canManageTopics = null,
+    ) {
+        $this->isAnonymous = $isAnonymous;
+        $this->canManageChat = $canManageChat;
+        $this->canDeleteMessages = $canDeleteMessages;
+        $this->canManageVideoChats = $canManageVideoChats;
+        $this->canRestrictMembers = $canRestrictMembers;
+        $this->canPromoteMembers = $canPromoteMembers;
+        $this->canChangeInfo = $canChangeInfo;
+        $this->canInviteUsers = $canInviteUsers;
+        $this->canPostStories = $canPostStories;
+        $this->canEditStories = $canEditStories;
+        $this->canDeleteStories = $canDeleteStories;
+        $this->canPostMessages = $canPostMessages;
+        $this->canEditMessages = $canEditMessages;
+        $this->canPinMessages = $canPinMessages;
+        $this->canManageTopics = $canManageTopics;
+    }
+
     public static function fromArray(array $data): ChatAdministratorRights {
         $instance = new self();
         if (isset($data['is_anonymous'])) {
@@ -176,40 +210,6 @@ final class ChatAdministratorRights {
             $instance->canManageTopics = $data['can_manage_topics'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?bool $isAnonymous = null,
-        ?bool $canManageChat = null,
-        ?bool $canDeleteMessages = null,
-        ?bool $canManageVideoChats = null,
-        ?bool $canRestrictMembers = null,
-        ?bool $canPromoteMembers = null,
-        ?bool $canChangeInfo = null,
-        ?bool $canInviteUsers = null,
-        ?bool $canPostStories = null,
-        ?bool $canEditStories = null,
-        ?bool $canDeleteStories = null,
-        ?bool $canPostMessages = null,
-        ?bool $canEditMessages = null,
-        ?bool $canPinMessages = null,
-        ?bool $canManageTopics = null,
-    ) {
-        $this->isAnonymous = $isAnonymous;
-        $this->canManageChat = $canManageChat;
-        $this->canDeleteMessages = $canDeleteMessages;
-        $this->canManageVideoChats = $canManageVideoChats;
-        $this->canRestrictMembers = $canRestrictMembers;
-        $this->canPromoteMembers = $canPromoteMembers;
-        $this->canChangeInfo = $canChangeInfo;
-        $this->canInviteUsers = $canInviteUsers;
-        $this->canPostStories = $canPostStories;
-        $this->canEditStories = $canEditStories;
-        $this->canDeleteStories = $canDeleteStories;
-        $this->canPostMessages = $canPostMessages;
-        $this->canEditMessages = $canEditMessages;
-        $this->canPinMessages = $canPinMessages;
-        $this->canManageTopics = $canManageTopics;
     }
 
     public function getIsAnonymous(): ?bool {

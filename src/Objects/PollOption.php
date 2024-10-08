@@ -32,6 +32,16 @@ final class PollOption {
      */
     protected ?int $voterCount = null;
 
+    public function __construct(
+        ?string $text = null,
+        ?array  $textEntities = null,
+        ?int    $voterCount = null,
+    ) {
+        $this->text = $text;
+        $this->textEntities = $textEntities;
+        $this->voterCount = $voterCount;
+    }
+
     public static function fromArray(array $data): PollOption {
         $instance = new self();
         if (isset($data['text'])) {
@@ -47,16 +57,6 @@ final class PollOption {
             $instance->voterCount = $data['voter_count'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $text = null,
-        ?array  $textEntities = null,
-        ?int    $voterCount = null,
-    ) {
-        $this->text = $text;
-        $this->textEntities = $textEntities;
-        $this->voterCount = $voterCount;
     }
 
     public function getText(): ?string {

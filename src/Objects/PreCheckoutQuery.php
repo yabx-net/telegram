@@ -64,6 +64,24 @@ final class PreCheckoutQuery {
      */
     protected ?OrderInfo $orderInfo = null;
 
+    public function __construct(
+        ?string    $id = null,
+        ?User      $from = null,
+        ?string    $currency = null,
+        ?int       $totalAmount = null,
+        ?string    $invoicePayload = null,
+        ?string    $shippingOptionId = null,
+        ?OrderInfo $orderInfo = null,
+    ) {
+        $this->id = $id;
+        $this->from = $from;
+        $this->currency = $currency;
+        $this->totalAmount = $totalAmount;
+        $this->invoicePayload = $invoicePayload;
+        $this->shippingOptionId = $shippingOptionId;
+        $this->orderInfo = $orderInfo;
+    }
+
     public static function fromArray(array $data): PreCheckoutQuery {
         $instance = new self();
         if (isset($data['id'])) {
@@ -88,24 +106,6 @@ final class PreCheckoutQuery {
             $instance->orderInfo = OrderInfo::fromArray($data['order_info']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string    $id = null,
-        ?User      $from = null,
-        ?string    $currency = null,
-        ?int       $totalAmount = null,
-        ?string    $invoicePayload = null,
-        ?string    $shippingOptionId = null,
-        ?OrderInfo $orderInfo = null,
-    ) {
-        $this->id = $id;
-        $this->from = $from;
-        $this->currency = $currency;
-        $this->totalAmount = $totalAmount;
-        $this->invoicePayload = $invoicePayload;
-        $this->shippingOptionId = $shippingOptionId;
-        $this->orderInfo = $orderInfo;
     }
 
     public function getId(): ?string {

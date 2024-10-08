@@ -40,6 +40,18 @@ final class MessageOriginChat extends MessageOrigin {
      */
     protected ?string $authorSignature = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?int    $date = null,
+        ?Chat   $senderChat = null,
+        ?string $authorSignature = null,
+    ) {
+        $this->type = $type;
+        $this->date = $date;
+        $this->senderChat = $senderChat;
+        $this->authorSignature = $authorSignature;
+    }
+
     public static function fromArray(array $data): MessageOriginChat {
         $instance = new self();
         if (isset($data['type'])) {
@@ -55,18 +67,6 @@ final class MessageOriginChat extends MessageOrigin {
             $instance->authorSignature = $data['author_signature'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?int    $date = null,
-        ?Chat   $senderChat = null,
-        ?string $authorSignature = null,
-    ) {
-        $this->type = $type;
-        $this->date = $date;
-        $this->senderChat = $senderChat;
-        $this->authorSignature = $authorSignature;
     }
 
     public function getType(): ?string {

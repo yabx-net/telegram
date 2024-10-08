@@ -48,6 +48,20 @@ final class MessageOriginChannel extends MessageOrigin {
      */
     protected ?string $authorSignature = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?int    $date = null,
+        ?Chat   $chat = null,
+        ?int    $messageId = null,
+        ?string $authorSignature = null,
+    ) {
+        $this->type = $type;
+        $this->date = $date;
+        $this->chat = $chat;
+        $this->messageId = $messageId;
+        $this->authorSignature = $authorSignature;
+    }
+
     public static function fromArray(array $data): MessageOriginChannel {
         $instance = new self();
         if (isset($data['type'])) {
@@ -66,20 +80,6 @@ final class MessageOriginChannel extends MessageOrigin {
             $instance->authorSignature = $data['author_signature'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?int    $date = null,
-        ?Chat   $chat = null,
-        ?int    $messageId = null,
-        ?string $authorSignature = null,
-    ) {
-        $this->type = $type;
-        $this->date = $date;
-        $this->chat = $chat;
-        $this->messageId = $messageId;
-        $this->authorSignature = $authorSignature;
     }
 
     public function getType(): ?string {

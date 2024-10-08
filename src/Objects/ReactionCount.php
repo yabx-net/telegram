@@ -24,6 +24,14 @@ final class ReactionCount {
      */
     protected ?int $totalCount = null;
 
+    public function __construct(
+        ?ReactionType $type = null,
+        ?int          $totalCount = null,
+    ) {
+        $this->type = $type;
+        $this->totalCount = $totalCount;
+    }
+
     public static function fromArray(array $data): ReactionCount {
         $instance = new self();
         if (isset($data['type'])) {
@@ -33,14 +41,6 @@ final class ReactionCount {
             $instance->totalCount = $data['total_count'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?ReactionType $type = null,
-        ?int          $totalCount = null,
-    ) {
-        $this->type = $type;
-        $this->totalCount = $totalCount;
     }
 
     public function getType(): ?ReactionType {

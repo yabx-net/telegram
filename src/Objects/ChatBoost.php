@@ -40,6 +40,18 @@ final class ChatBoost {
      */
     protected ?ChatBoostSource $source = null;
 
+    public function __construct(
+        ?string          $boostId = null,
+        ?int             $addDate = null,
+        ?int             $expirationDate = null,
+        ?ChatBoostSource $source = null,
+    ) {
+        $this->boostId = $boostId;
+        $this->addDate = $addDate;
+        $this->expirationDate = $expirationDate;
+        $this->source = $source;
+    }
+
     public static function fromArray(array $data): ChatBoost {
         $instance = new self();
         if (isset($data['boost_id'])) {
@@ -55,18 +67,6 @@ final class ChatBoost {
             $instance->source = ChatBoostSource::fromArray($data['source']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string          $boostId = null,
-        ?int             $addDate = null,
-        ?int             $expirationDate = null,
-        ?ChatBoostSource $source = null,
-    ) {
-        $this->boostId = $boostId;
-        $this->addDate = $addDate;
-        $this->expirationDate = $expirationDate;
-        $this->source = $source;
     }
 
     public function getBoostId(): ?string {

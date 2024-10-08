@@ -40,6 +40,18 @@ final class ChatBoostSourceGiveaway {
      */
     protected ?bool $isUnclaimed = null;
 
+    public function __construct(
+        ?string $source = null,
+        ?int    $giveawayMessageId = null,
+        ?User   $user = null,
+        ?bool   $isUnclaimed = null,
+    ) {
+        $this->source = $source;
+        $this->giveawayMessageId = $giveawayMessageId;
+        $this->user = $user;
+        $this->isUnclaimed = $isUnclaimed;
+    }
+
     public static function fromArray(array $data): ChatBoostSourceGiveaway {
         $instance = new self();
         if (isset($data['source'])) {
@@ -55,18 +67,6 @@ final class ChatBoostSourceGiveaway {
             $instance->isUnclaimed = $data['is_unclaimed'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $source = null,
-        ?int    $giveawayMessageId = null,
-        ?User   $user = null,
-        ?bool   $isUnclaimed = null,
-    ) {
-        $this->source = $source;
-        $this->giveawayMessageId = $giveawayMessageId;
-        $this->user = $user;
-        $this->isUnclaimed = $isUnclaimed;
     }
 
     public function getSource(): ?string {

@@ -56,6 +56,22 @@ final class BackgroundTypePattern extends BackgroundType {
      */
     protected ?bool $isMoving = null;
 
+    public function __construct(
+        ?string         $type = null,
+        ?Document       $document = null,
+        ?BackgroundFill $fill = null,
+        ?int            $intensity = null,
+        ?bool           $isInverted = null,
+        ?bool           $isMoving = null,
+    ) {
+        $this->type = $type;
+        $this->document = $document;
+        $this->fill = $fill;
+        $this->intensity = $intensity;
+        $this->isInverted = $isInverted;
+        $this->isMoving = $isMoving;
+    }
+
     public static function fromArray(array $data): BackgroundTypePattern {
         $instance = new self();
         if (isset($data['type'])) {
@@ -77,22 +93,6 @@ final class BackgroundTypePattern extends BackgroundType {
             $instance->isMoving = $data['is_moving'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string         $type = null,
-        ?Document       $document = null,
-        ?BackgroundFill $fill = null,
-        ?int            $intensity = null,
-        ?bool           $isInverted = null,
-        ?bool           $isMoving = null,
-    ) {
-        $this->type = $type;
-        $this->document = $document;
-        $this->fill = $fill;
-        $this->intensity = $intensity;
-        $this->isInverted = $isInverted;
-        $this->isMoving = $isMoving;
     }
 
     public function getType(): ?string {

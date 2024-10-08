@@ -24,6 +24,14 @@ final class BusinessLocation {
      */
     protected ?Location $location = null;
 
+    public function __construct(
+        ?string   $address = null,
+        ?Location $location = null,
+    ) {
+        $this->address = $address;
+        $this->location = $location;
+    }
+
     public static function fromArray(array $data): BusinessLocation {
         $instance = new self();
         if (isset($data['address'])) {
@@ -33,14 +41,6 @@ final class BusinessLocation {
             $instance->location = Location::fromArray($data['location']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string   $address = null,
-        ?Location $location = null,
-    ) {
-        $this->address = $address;
-        $this->location = $location;
     }
 
     public function getAddress(): ?string {

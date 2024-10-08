@@ -64,6 +64,24 @@ final class KeyboardButtonRequestUsers {
      */
     protected ?bool $requestPhoto = null;
 
+    public function __construct(
+        ?int  $requestId = null,
+        ?bool $userIsBot = null,
+        ?bool $userIsPremium = null,
+        ?int  $maxQuantity = null,
+        ?bool $requestName = null,
+        ?bool $requestUsername = null,
+        ?bool $requestPhoto = null,
+    ) {
+        $this->requestId = $requestId;
+        $this->userIsBot = $userIsBot;
+        $this->userIsPremium = $userIsPremium;
+        $this->maxQuantity = $maxQuantity;
+        $this->requestName = $requestName;
+        $this->requestUsername = $requestUsername;
+        $this->requestPhoto = $requestPhoto;
+    }
+
     public static function fromArray(array $data): KeyboardButtonRequestUsers {
         $instance = new self();
         if (isset($data['request_id'])) {
@@ -88,24 +106,6 @@ final class KeyboardButtonRequestUsers {
             $instance->requestPhoto = $data['request_photo'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int  $requestId = null,
-        ?bool $userIsBot = null,
-        ?bool $userIsPremium = null,
-        ?int  $maxQuantity = null,
-        ?bool $requestName = null,
-        ?bool $requestUsername = null,
-        ?bool $requestPhoto = null,
-    ) {
-        $this->requestId = $requestId;
-        $this->userIsBot = $userIsBot;
-        $this->userIsPremium = $userIsPremium;
-        $this->maxQuantity = $maxQuantity;
-        $this->requestName = $requestName;
-        $this->requestUsername = $requestUsername;
-        $this->requestPhoto = $requestPhoto;
     }
 
     public function getRequestId(): ?int {

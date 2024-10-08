@@ -16,18 +16,18 @@ final class ChatBackground {
      */
     protected ?BackgroundType $type = null;
 
+    public function __construct(
+        ?BackgroundType $type = null,
+    ) {
+        $this->type = $type;
+    }
+
     public static function fromArray(array $data): ChatBackground {
         $instance = new self();
         if (isset($data['type'])) {
             $instance->type = BackgroundType::fromArray($data['type']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?BackgroundType $type = null,
-    ) {
-        $this->type = $type;
     }
 
     public function getType(): ?BackgroundType {

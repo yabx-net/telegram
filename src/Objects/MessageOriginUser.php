@@ -32,6 +32,16 @@ final class MessageOriginUser extends MessageOrigin {
      */
     protected ?User $senderUser = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?int    $date = null,
+        ?User   $senderUser = null,
+    ) {
+        $this->type = $type;
+        $this->date = $date;
+        $this->senderUser = $senderUser;
+    }
+
     public static function fromArray(array $data): MessageOriginUser {
         $instance = new self();
         if (isset($data['type'])) {
@@ -44,16 +54,6 @@ final class MessageOriginUser extends MessageOrigin {
             $instance->senderUser = User::fromArray($data['sender_user']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?int    $date = null,
-        ?User   $senderUser = null,
-    ) {
-        $this->type = $type;
-        $this->date = $date;
-        $this->senderUser = $senderUser;
     }
 
     public function getType(): ?string {

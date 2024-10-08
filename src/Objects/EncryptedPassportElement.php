@@ -88,6 +88,30 @@ final class EncryptedPassportElement {
      */
     protected ?string $hash = null;
 
+    public function __construct(
+        ?string       $type = null,
+        ?string       $data = null,
+        ?string       $phoneNumber = null,
+        ?string       $email = null,
+        ?array        $files = null,
+        ?PassportFile $frontSide = null,
+        ?PassportFile $reverseSide = null,
+        ?PassportFile $selfie = null,
+        ?array        $translation = null,
+        ?string       $hash = null,
+    ) {
+        $this->type = $type;
+        $this->data = $data;
+        $this->phoneNumber = $phoneNumber;
+        $this->email = $email;
+        $this->files = $files;
+        $this->frontSide = $frontSide;
+        $this->reverseSide = $reverseSide;
+        $this->selfie = $selfie;
+        $this->translation = $translation;
+        $this->hash = $hash;
+    }
+
     public static function fromArray(array $data): EncryptedPassportElement {
         $instance = new self();
         if (isset($data['type'])) {
@@ -127,30 +151,6 @@ final class EncryptedPassportElement {
             $instance->hash = $data['hash'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string       $type = null,
-        ?string       $data = null,
-        ?string       $phoneNumber = null,
-        ?string       $email = null,
-        ?array        $files = null,
-        ?PassportFile $frontSide = null,
-        ?PassportFile $reverseSide = null,
-        ?PassportFile $selfie = null,
-        ?array        $translation = null,
-        ?string       $hash = null,
-    ) {
-        $this->type = $type;
-        $this->data = $data;
-        $this->phoneNumber = $phoneNumber;
-        $this->email = $email;
-        $this->files = $files;
-        $this->frontSide = $frontSide;
-        $this->reverseSide = $reverseSide;
-        $this->selfie = $selfie;
-        $this->translation = $translation;
-        $this->hash = $hash;
     }
 
     public function getType(): ?string {

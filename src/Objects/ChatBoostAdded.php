@@ -16,18 +16,18 @@ final class ChatBoostAdded {
      */
     protected ?int $boostCount = null;
 
+    public function __construct(
+        ?int $boostCount = null,
+    ) {
+        $this->boostCount = $boostCount;
+    }
+
     public static function fromArray(array $data): ChatBoostAdded {
         $instance = new self();
         if (isset($data['boost_count'])) {
             $instance->boostCount = $data['boost_count'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int $boostCount = null,
-    ) {
-        $this->boostCount = $boostCount;
     }
 
     public function getBoostCount(): ?int {

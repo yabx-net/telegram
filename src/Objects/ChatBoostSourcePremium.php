@@ -24,6 +24,14 @@ final class ChatBoostSourcePremium {
      */
     protected ?User $user = null;
 
+    public function __construct(
+        ?string $source = null,
+        ?User   $user = null,
+    ) {
+        $this->source = $source;
+        $this->user = $user;
+    }
+
     public static function fromArray(array $data): ChatBoostSourcePremium {
         $instance = new self();
         if (isset($data['source'])) {
@@ -33,14 +41,6 @@ final class ChatBoostSourcePremium {
             $instance->user = User::fromArray($data['user']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $source = null,
-        ?User   $user = null,
-    ) {
-        $this->source = $source;
-        $this->user = $user;
     }
 
     public function getSource(): ?string {

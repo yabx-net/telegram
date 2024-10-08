@@ -40,6 +40,18 @@ final class InputContactMessageContent {
      */
     protected ?string $vcard = null;
 
+    public function __construct(
+        ?string $phoneNumber = null,
+        ?string $firstName = null,
+        ?string $lastName = null,
+        ?string $vcard = null,
+    ) {
+        $this->phoneNumber = $phoneNumber;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->vcard = $vcard;
+    }
+
     public static function fromArray(array $data): InputContactMessageContent {
         $instance = new self();
         if (isset($data['phone_number'])) {
@@ -55,18 +67,6 @@ final class InputContactMessageContent {
             $instance->vcard = $data['vcard'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $phoneNumber = null,
-        ?string $firstName = null,
-        ?string $lastName = null,
-        ?string $vcard = null,
-    ) {
-        $this->phoneNumber = $phoneNumber;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->vcard = $vcard;
     }
 
     public function getPhoneNumber(): ?string {

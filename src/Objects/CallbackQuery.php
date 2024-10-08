@@ -64,6 +64,24 @@ final class CallbackQuery {
      */
     protected ?string $gameShortName = null;
 
+    public function __construct(
+        ?string                   $id = null,
+        ?User                     $from = null,
+        ?MaybeInaccessibleMessage $message = null,
+        ?string                   $inlineMessageId = null,
+        ?string                   $chatInstance = null,
+        ?string                   $data = null,
+        ?string                   $gameShortName = null,
+    ) {
+        $this->id = $id;
+        $this->from = $from;
+        $this->message = $message;
+        $this->inlineMessageId = $inlineMessageId;
+        $this->chatInstance = $chatInstance;
+        $this->data = $data;
+        $this->gameShortName = $gameShortName;
+    }
+
     public static function fromArray(array $data): CallbackQuery {
         $instance = new self();
         if (isset($data['id'])) {
@@ -88,24 +106,6 @@ final class CallbackQuery {
             $instance->gameShortName = $data['game_short_name'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string                   $id = null,
-        ?User                     $from = null,
-        ?MaybeInaccessibleMessage $message = null,
-        ?string                   $inlineMessageId = null,
-        ?string                   $chatInstance = null,
-        ?string                   $data = null,
-        ?string                   $gameShortName = null,
-    ) {
-        $this->id = $id;
-        $this->from = $from;
-        $this->message = $message;
-        $this->inlineMessageId = $inlineMessageId;
-        $this->chatInstance = $chatInstance;
-        $this->data = $data;
-        $this->gameShortName = $gameShortName;
     }
 
     public function getId(): ?string {

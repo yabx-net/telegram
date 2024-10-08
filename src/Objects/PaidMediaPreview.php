@@ -40,6 +40,18 @@ final class PaidMediaPreview {
      */
     protected ?int $duration = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?int    $width = null,
+        ?int    $height = null,
+        ?int    $duration = null,
+    ) {
+        $this->type = $type;
+        $this->width = $width;
+        $this->height = $height;
+        $this->duration = $duration;
+    }
+
     public static function fromArray(array $data): PaidMediaPreview {
         $instance = new self();
         if (isset($data['type'])) {
@@ -55,18 +67,6 @@ final class PaidMediaPreview {
             $instance->duration = $data['duration'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?int    $width = null,
-        ?int    $height = null,
-        ?int    $duration = null,
-    ) {
-        $this->type = $type;
-        $this->width = $width;
-        $this->height = $height;
-        $this->duration = $duration;
     }
 
     public function getType(): ?string {

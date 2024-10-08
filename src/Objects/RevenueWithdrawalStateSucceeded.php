@@ -32,6 +32,16 @@ final class RevenueWithdrawalStateSucceeded extends RevenueWithdrawalState {
      */
     protected ?string $url = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?int    $date = null,
+        ?string $url = null,
+    ) {
+        $this->type = $type;
+        $this->date = $date;
+        $this->url = $url;
+    }
+
     public static function fromArray(array $data): RevenueWithdrawalStateSucceeded {
         $instance = new self();
         if (isset($data['type'])) {
@@ -44,16 +54,6 @@ final class RevenueWithdrawalStateSucceeded extends RevenueWithdrawalState {
             $instance->url = $data['url'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?int    $date = null,
-        ?string $url = null,
-    ) {
-        $this->type = $type;
-        $this->date = $date;
-        $this->url = $url;
     }
 
     public function getType(): ?string {

@@ -24,6 +24,14 @@ final class PaidMediaVideo extends PaidMedia {
      */
     protected ?Video $video = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?Video  $video = null,
+    ) {
+        $this->type = $type;
+        $this->video = $video;
+    }
+
     public static function fromArray(array $data): PaidMediaVideo {
         $instance = new self();
         if (isset($data['type'])) {
@@ -33,14 +41,6 @@ final class PaidMediaVideo extends PaidMedia {
             $instance->video = Video::fromArray($data['video']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?Video  $video = null,
-    ) {
-        $this->type = $type;
-        $this->video = $video;
     }
 
     public function getType(): ?string {

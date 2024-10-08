@@ -24,6 +24,14 @@ final class BackgroundTypeChatTheme extends BackgroundType {
      */
     protected ?string $themeName = null;
 
+    public function __construct(
+        ?string $type = null,
+        ?string $themeName = null,
+    ) {
+        $this->type = $type;
+        $this->themeName = $themeName;
+    }
+
     public static function fromArray(array $data): BackgroundTypeChatTheme {
         $instance = new self();
         if (isset($data['type'])) {
@@ -33,14 +41,6 @@ final class BackgroundTypeChatTheme extends BackgroundType {
             $instance->themeName = $data['theme_name'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $type = null,
-        ?string $themeName = null,
-    ) {
-        $this->type = $type;
-        $this->themeName = $themeName;
     }
 
     public function getType(): ?string {

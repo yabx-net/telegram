@@ -40,6 +40,18 @@ final class PassportFile {
      */
     protected ?int $fileDate = null;
 
+    public function __construct(
+        ?string $fileId = null,
+        ?string $fileUniqueId = null,
+        ?int    $fileSize = null,
+        ?int    $fileDate = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->fileSize = $fileSize;
+        $this->fileDate = $fileDate;
+    }
+
     public static function fromArray(array $data): PassportFile {
         $instance = new self();
         if (isset($data['file_id'])) {
@@ -55,18 +67,6 @@ final class PassportFile {
             $instance->fileDate = $data['file_date'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $fileId = null,
-        ?string $fileUniqueId = null,
-        ?int    $fileSize = null,
-        ?int    $fileDate = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->fileSize = $fileSize;
-        $this->fileDate = $fileDate;
     }
 
     public function getFileId(): ?string {

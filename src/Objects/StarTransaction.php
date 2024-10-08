@@ -48,6 +48,20 @@ final class StarTransaction {
      */
     protected ?TransactionPartner $receiver = null;
 
+    public function __construct(
+        ?string             $id = null,
+        ?int                $amount = null,
+        ?int                $date = null,
+        ?TransactionPartner $source = null,
+        ?TransactionPartner $receiver = null,
+    ) {
+        $this->id = $id;
+        $this->amount = $amount;
+        $this->date = $date;
+        $this->source = $source;
+        $this->receiver = $receiver;
+    }
+
     public static function fromArray(array $data): StarTransaction {
         $instance = new self();
         if (isset($data['id'])) {
@@ -66,20 +80,6 @@ final class StarTransaction {
             $instance->receiver = TransactionPartner::fromArray($data['receiver']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string             $id = null,
-        ?int                $amount = null,
-        ?int                $date = null,
-        ?TransactionPartner $source = null,
-        ?TransactionPartner $receiver = null,
-    ) {
-        $this->id = $id;
-        $this->amount = $amount;
-        $this->date = $date;
-        $this->source = $source;
-        $this->receiver = $receiver;
     }
 
     public function getId(): ?string {

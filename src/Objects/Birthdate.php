@@ -32,6 +32,16 @@ final class Birthdate {
      */
     protected ?int $year = null;
 
+    public function __construct(
+        ?int $day = null,
+        ?int $month = null,
+        ?int $year = null,
+    ) {
+        $this->day = $day;
+        $this->month = $month;
+        $this->year = $year;
+    }
+
     public static function fromArray(array $data): Birthdate {
         $instance = new self();
         if (isset($data['day'])) {
@@ -44,16 +54,6 @@ final class Birthdate {
             $instance->year = $data['year'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int $day = null,
-        ?int $month = null,
-        ?int $year = null,
-    ) {
-        $this->day = $day;
-        $this->month = $month;
-        $this->year = $year;
     }
 
     public function getDay(): ?int {

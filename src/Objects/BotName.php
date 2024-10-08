@@ -16,18 +16,18 @@ final class BotName {
      */
     protected ?string $name = null;
 
+    public function __construct(
+        ?string $name = null,
+    ) {
+        $this->name = $name;
+    }
+
     public static function fromArray(array $data): BotName {
         $instance = new self();
         if (isset($data['name'])) {
             $instance->name = $data['name'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $name = null,
-    ) {
-        $this->name = $name;
     }
 
     public function getName(): ?string {

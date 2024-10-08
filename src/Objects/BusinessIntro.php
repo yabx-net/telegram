@@ -32,6 +32,16 @@ final class BusinessIntro {
      */
     protected ?Sticker $sticker = null;
 
+    public function __construct(
+        ?string  $title = null,
+        ?string  $message = null,
+        ?Sticker $sticker = null,
+    ) {
+        $this->title = $title;
+        $this->message = $message;
+        $this->sticker = $sticker;
+    }
+
     public static function fromArray(array $data): BusinessIntro {
         $instance = new self();
         if (isset($data['title'])) {
@@ -44,16 +54,6 @@ final class BusinessIntro {
             $instance->sticker = Sticker::fromArray($data['sticker']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string  $title = null,
-        ?string  $message = null,
-        ?Sticker $sticker = null,
-    ) {
-        $this->title = $title;
-        $this->message = $message;
-        $this->sticker = $sticker;
     }
 
     public function getTitle(): ?string {

@@ -16,18 +16,18 @@ final class VideoChatEnded {
      */
     protected ?int $duration = null;
 
+    public function __construct(
+        ?int $duration = null,
+    ) {
+        $this->duration = $duration;
+    }
+
     public static function fromArray(array $data): VideoChatEnded {
         $instance = new self();
         if (isset($data['duration'])) {
             $instance->duration = $data['duration'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?int $duration = null,
-    ) {
-        $this->duration = $duration;
     }
 
     public function getDuration(): ?int {

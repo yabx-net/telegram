@@ -40,6 +40,18 @@ final class ChatBoostRemoved {
      */
     protected ?ChatBoostSource $source = null;
 
+    public function __construct(
+        ?Chat            $chat = null,
+        ?string          $boostId = null,
+        ?int             $removeDate = null,
+        ?ChatBoostSource $source = null,
+    ) {
+        $this->chat = $chat;
+        $this->boostId = $boostId;
+        $this->removeDate = $removeDate;
+        $this->source = $source;
+    }
+
     public static function fromArray(array $data): ChatBoostRemoved {
         $instance = new self();
         if (isset($data['chat'])) {
@@ -55,18 +67,6 @@ final class ChatBoostRemoved {
             $instance->source = ChatBoostSource::fromArray($data['source']);
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?Chat            $chat = null,
-        ?string          $boostId = null,
-        ?int             $removeDate = null,
-        ?ChatBoostSource $source = null,
-    ) {
-        $this->chat = $chat;
-        $this->boostId = $boostId;
-        $this->removeDate = $removeDate;
-        $this->source = $source;
     }
 
     public function getChat(): ?Chat {

@@ -48,6 +48,20 @@ final class InputSticker {
      */
     protected ?array $keywords = null;
 
+    public function __construct(
+        ?string       $sticker = null,
+        ?string       $format = null,
+        ?array        $emojiList = null,
+        ?MaskPosition $maskPosition = null,
+        ?array        $keywords = null,
+    ) {
+        $this->sticker = $sticker;
+        $this->format = $format;
+        $this->emojiList = $emojiList;
+        $this->maskPosition = $maskPosition;
+        $this->keywords = $keywords;
+    }
+
     public static function fromArray(array $data): InputSticker {
         $instance = new self();
         if (isset($data['sticker'])) {
@@ -72,20 +86,6 @@ final class InputSticker {
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string       $sticker = null,
-        ?string       $format = null,
-        ?array        $emojiList = null,
-        ?MaskPosition $maskPosition = null,
-        ?array        $keywords = null,
-    ) {
-        $this->sticker = $sticker;
-        $this->format = $format;
-        $this->emojiList = $emojiList;
-        $this->maskPosition = $maskPosition;
-        $this->keywords = $keywords;
     }
 
     public function getSticker(): ?string {

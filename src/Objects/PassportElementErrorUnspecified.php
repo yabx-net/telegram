@@ -40,6 +40,18 @@ final class PassportElementErrorUnspecified {
      */
     protected ?string $message = null;
 
+    public function __construct(
+        ?string $source = null,
+        ?string $type = null,
+        ?string $elementHash = null,
+        ?string $message = null,
+    ) {
+        $this->source = $source;
+        $this->type = $type;
+        $this->elementHash = $elementHash;
+        $this->message = $message;
+    }
+
     public static function fromArray(array $data): PassportElementErrorUnspecified {
         $instance = new self();
         if (isset($data['source'])) {
@@ -55,18 +67,6 @@ final class PassportElementErrorUnspecified {
             $instance->message = $data['message'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string $source = null,
-        ?string $type = null,
-        ?string $elementHash = null,
-        ?string $message = null,
-    ) {
-        $this->source = $source;
-        $this->type = $type;
-        $this->elementHash = $elementHash;
-        $this->message = $message;
     }
 
     public function getSource(): ?string {

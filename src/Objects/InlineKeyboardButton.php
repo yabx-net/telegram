@@ -88,6 +88,30 @@ final class InlineKeyboardButton {
      */
     protected ?bool $pay = null;
 
+    public function __construct(
+        ?string                      $text = null,
+        ?string                      $url = null,
+        ?string                      $callbackData = null,
+        ?WebAppInfo                  $webApp = null,
+        ?LoginUrl                    $loginUrl = null,
+        ?string                      $switchInlineQuery = null,
+        ?string                      $switchInlineQueryCurrentChat = null,
+        ?SwitchInlineQueryChosenChat $switchInlineQueryChosenChat = null,
+        ?CallbackGame                $callbackGame = null,
+        ?bool                        $pay = null,
+    ) {
+        $this->text = $text;
+        $this->url = $url;
+        $this->callbackData = $callbackData;
+        $this->webApp = $webApp;
+        $this->loginUrl = $loginUrl;
+        $this->switchInlineQuery = $switchInlineQuery;
+        $this->switchInlineQueryCurrentChat = $switchInlineQueryCurrentChat;
+        $this->switchInlineQueryChosenChat = $switchInlineQueryChosenChat;
+        $this->callbackGame = $callbackGame;
+        $this->pay = $pay;
+    }
+
     public static function fromArray(array $data): InlineKeyboardButton {
         $instance = new self();
         if (isset($data['text'])) {
@@ -121,30 +145,6 @@ final class InlineKeyboardButton {
             $instance->pay = $data['pay'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string                      $text = null,
-        ?string                      $url = null,
-        ?string                      $callbackData = null,
-        ?WebAppInfo                  $webApp = null,
-        ?LoginUrl                    $loginUrl = null,
-        ?string                      $switchInlineQuery = null,
-        ?string                      $switchInlineQueryCurrentChat = null,
-        ?SwitchInlineQueryChosenChat $switchInlineQueryChosenChat = null,
-        ?CallbackGame                $callbackGame = null,
-        ?bool                        $pay = null,
-    ) {
-        $this->text = $text;
-        $this->url = $url;
-        $this->callbackData = $callbackData;
-        $this->webApp = $webApp;
-        $this->loginUrl = $loginUrl;
-        $this->switchInlineQuery = $switchInlineQuery;
-        $this->switchInlineQueryCurrentChat = $switchInlineQueryCurrentChat;
-        $this->switchInlineQueryChosenChat = $switchInlineQueryChosenChat;
-        $this->callbackGame = $callbackGame;
-        $this->pay = $pay;
     }
 
     public function getText(): ?string {

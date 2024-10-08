@@ -32,6 +32,16 @@ final class InlineQueryResultsButton {
      */
     protected ?string $startParameter = null;
 
+    public function __construct(
+        ?string     $text = null,
+        ?WebAppInfo $webApp = null,
+        ?string     $startParameter = null,
+    ) {
+        $this->text = $text;
+        $this->webApp = $webApp;
+        $this->startParameter = $startParameter;
+    }
+
     public static function fromArray(array $data): InlineQueryResultsButton {
         $instance = new self();
         if (isset($data['text'])) {
@@ -44,16 +54,6 @@ final class InlineQueryResultsButton {
             $instance->startParameter = $data['start_parameter'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string     $text = null,
-        ?WebAppInfo $webApp = null,
-        ?string     $startParameter = null,
-    ) {
-        $this->text = $text;
-        $this->webApp = $webApp;
-        $this->startParameter = $startParameter;
     }
 
     public function getText(): ?string {

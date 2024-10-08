@@ -128,6 +128,40 @@ final class Sticker {
      */
     protected ?int $fileSize = null;
 
+    public function __construct(
+        ?string       $fileId = null,
+        ?string       $fileUniqueId = null,
+        ?string       $type = null,
+        ?int          $width = null,
+        ?int          $height = null,
+        ?bool         $isAnimated = null,
+        ?bool         $isVideo = null,
+        ?PhotoSize    $thumbnail = null,
+        ?string       $emoji = null,
+        ?string       $setName = null,
+        ?File         $premiumAnimation = null,
+        ?MaskPosition $maskPosition = null,
+        ?string       $customEmojiId = null,
+        ?bool         $needsRepainting = null,
+        ?int          $fileSize = null,
+    ) {
+        $this->fileId = $fileId;
+        $this->fileUniqueId = $fileUniqueId;
+        $this->type = $type;
+        $this->width = $width;
+        $this->height = $height;
+        $this->isAnimated = $isAnimated;
+        $this->isVideo = $isVideo;
+        $this->thumbnail = $thumbnail;
+        $this->emoji = $emoji;
+        $this->setName = $setName;
+        $this->premiumAnimation = $premiumAnimation;
+        $this->maskPosition = $maskPosition;
+        $this->customEmojiId = $customEmojiId;
+        $this->needsRepainting = $needsRepainting;
+        $this->fileSize = $fileSize;
+    }
+
     public static function fromArray(array $data): Sticker {
         $instance = new self();
         if (isset($data['file_id'])) {
@@ -176,40 +210,6 @@ final class Sticker {
             $instance->fileSize = $data['file_size'];
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?string       $fileId = null,
-        ?string       $fileUniqueId = null,
-        ?string       $type = null,
-        ?int          $width = null,
-        ?int          $height = null,
-        ?bool         $isAnimated = null,
-        ?bool         $isVideo = null,
-        ?PhotoSize    $thumbnail = null,
-        ?string       $emoji = null,
-        ?string       $setName = null,
-        ?File         $premiumAnimation = null,
-        ?MaskPosition $maskPosition = null,
-        ?string       $customEmojiId = null,
-        ?bool         $needsRepainting = null,
-        ?int          $fileSize = null,
-    ) {
-        $this->fileId = $fileId;
-        $this->fileUniqueId = $fileUniqueId;
-        $this->type = $type;
-        $this->width = $width;
-        $this->height = $height;
-        $this->isAnimated = $isAnimated;
-        $this->isVideo = $isVideo;
-        $this->thumbnail = $thumbnail;
-        $this->emoji = $emoji;
-        $this->setName = $setName;
-        $this->premiumAnimation = $premiumAnimation;
-        $this->maskPosition = $maskPosition;
-        $this->customEmojiId = $customEmojiId;
-        $this->needsRepainting = $needsRepainting;
-        $this->fileSize = $fileSize;
     }
 
     public function getFileId(): ?string {

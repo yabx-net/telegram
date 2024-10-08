@@ -16,22 +16,22 @@ final class InlineKeyboardMarkup extends ReplyMarkup {
      */
     protected ?array $inlineKeyboard = null;
 
+    public function __construct(
+        ?array $inlineKeyboard = null,
+    ) {
+        $this->inlineKeyboard = $inlineKeyboard;
+    }
+
     public static function fromArray(array $data): InlineKeyboardMarkup {
         $instance = new self();
         if (isset($data['inline_keyboard'])) {
             $instance->inlineKeyboard = [];
             foreach ($data['inline_keyboard'] as $item) {
-                if(!$item) continue;
+                if (!$item) continue;
                 $instance->inlineKeyboard[] = InlineKeyboardButton::fromArray($item);
             }
         }
         return $instance;
-    }
-
-    public function __construct(
-        ?array $inlineKeyboard = null,
-    ) {
-        $this->inlineKeyboard = $inlineKeyboard;
     }
 
     public function getInlineKeyboard(): ?array {
