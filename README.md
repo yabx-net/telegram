@@ -1,6 +1,6 @@
 Telegram Bot API SDK for PHP 8.1+
 ---------------------------------
-- Bot API 7.9 (August 14, 2024)
+- Bot API 7.10 (September 6, 2024)
 - HTTP-Client based on Guzzle
 - Full support of all available types according https://core.telegram.org/bots/api#available-types
 - Full support of all available methods according https://core.telegram.org/bots/api#available-methods

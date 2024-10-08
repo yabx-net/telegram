@@ -26,7 +26,6 @@ use Yabx\Telegram\Objects\GameHighScore;
 use Yabx\Telegram\Objects\InlineKeyboardMarkup;
 use Yabx\Telegram\Objects\InlineQueryResult;
 use Yabx\Telegram\Objects\InlineQueryResultsButton;
-use Yabx\Telegram\Objects\InputMedia;
 use Yabx\Telegram\Objects\InputSticker;
 use Yabx\Telegram\Objects\LinkPreviewOptions;
 use Yabx\Telegram\Objects\MaskPosition;
@@ -1071,15 +1070,15 @@ class BotApi {
         return Message::fromArray($this->request('editMessageCaption', $params));
     }
 
-    public function editMessageMedia(InputMedia $media, ?string $businessConnectionId = null, int|string $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
+    public function editMessageMedia(string $media, ?string $businessConnectionId = null, int|string $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         if (isset($chatId)) $params['chat_id'] = $chatId;
         if (isset($messageId)) $params['message_id'] = $messageId;
         if (isset($inlineMessageId)) $params['inline_message_id'] = $inlineMessageId;
-        $params['media'] = $media;
+        if(file_exists($media)) $params['media'] = fopen($media, 'r');
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
-        return Message::fromArray($this->request('editMessageMedia', $params));
+        return Message::fromArray($this->request('editMessageMedia', $params, true));
     }
 
     public function editMessageLiveLocation(float $latitude, float $longitude, ?string $businessConnectionId = null, int|string $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?int $livePeriod = null, ?float $horizontalAccuracy = null, ?int $heading = null, ?int $proximityAlertRadius = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
