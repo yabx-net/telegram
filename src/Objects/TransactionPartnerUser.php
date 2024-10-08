@@ -40,17 +40,13 @@ final class TransactionPartnerUser extends TransactionPartner {
      */
     protected ?array $paidMedia = null;
 
-    public function __construct(
-        ?string $type = null,
-        ?User   $user = null,
-        ?string $invoicePayload = null,
-        ?array  $paidMedia = null,
-    ) {
-        $this->type = $type;
-        $this->user = $user;
-        $this->invoicePayload = $invoicePayload;
-        $this->paidMedia = $paidMedia;
-    }
+    /**
+     * Paid Media Payload
+     *
+     * Optional. Bot-specified paid media payload
+     * @var string|null
+     */
+    protected ?string $paidMediaPayload = null;
 
     public static function fromArray(array $data): TransactionPartnerUser {
         $instance = new self();
@@ -69,7 +65,24 @@ final class TransactionPartnerUser extends TransactionPartner {
                 $instance->paidMedia[] = PaidMedia::fromArray($item);
             }
         }
+        if (isset($data['paid_media_payload'])) {
+            $instance->paidMediaPayload = $data['paid_media_payload'];
+        }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $type = null,
+        ?User   $user = null,
+        ?string $invoicePayload = null,
+        ?array  $paidMedia = null,
+        ?string $paidMediaPayload = null,
+    ) {
+        $this->type = $type;
+        $this->user = $user;
+        $this->invoicePayload = $invoicePayload;
+        $this->paidMedia = $paidMedia;
+        $this->paidMediaPayload = $paidMediaPayload;
     }
 
     public function getType(): ?string {
@@ -105,6 +118,15 @@ final class TransactionPartnerUser extends TransactionPartner {
 
     public function setPaidMedia(?array $value): self {
         $this->paidMedia = $value;
+        return $this;
+    }
+
+    public function getPaidMediaPayload(): ?string {
+        return $this->paidMediaPayload;
+    }
+
+    public function setPaidMediaPayload(?string $value): self {
+        $this->paidMediaPayload = $value;
         return $this;
     }
 

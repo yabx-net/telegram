@@ -32,14 +32,24 @@ final class GiveawayCompleted {
      */
     protected ?Message $giveawayMessage = null;
 
+    /**
+     * Is Star Giveaway
+     *
+     * Optional. True, if the giveaway is a Telegram Star giveaway. Otherwise, currently, the giveaway is a Telegram Premium giveaway.
+     * @var bool|null
+     */
+    protected ?bool $isStarGiveaway = null;
+
     public function __construct(
         ?int     $winnerCount = null,
         ?int     $unclaimedPrizeCount = null,
         ?Message $giveawayMessage = null,
+        ?bool    $isStarGiveaway = null,
     ) {
         $this->winnerCount = $winnerCount;
         $this->unclaimedPrizeCount = $unclaimedPrizeCount;
         $this->giveawayMessage = $giveawayMessage;
+        $this->isStarGiveaway = $isStarGiveaway;
     }
 
     public static function fromArray(array $data): GiveawayCompleted {
@@ -52,6 +62,9 @@ final class GiveawayCompleted {
         }
         if (isset($data['giveaway_message'])) {
             $instance->giveawayMessage = Message::fromArray($data['giveaway_message']);
+        }
+        if (isset($data['is_star_giveaway'])) {
+            $instance->isStarGiveaway = $data['is_star_giveaway'];
         }
         return $instance;
     }
@@ -80,6 +93,15 @@ final class GiveawayCompleted {
 
     public function setGiveawayMessage(?Message $value): self {
         $this->giveawayMessage = $value;
+        return $this;
+    }
+
+    public function getIsStarGiveaway(): ?bool {
+        return $this->isStarGiveaway;
+    }
+
+    public function setIsStarGiveaway(?bool $value): self {
+        $this->isStarGiveaway = $value;
         return $this;
     }
 

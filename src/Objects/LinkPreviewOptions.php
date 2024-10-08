@@ -48,20 +48,6 @@ final class LinkPreviewOptions {
      */
     protected ?bool $showAboveText = null;
 
-    public function __construct(
-        ?bool   $isDisabled = null,
-        ?string $url = null,
-        ?bool   $preferSmallMedia = null,
-        ?bool   $preferLargeMedia = null,
-        ?bool   $showAboveText = null,
-    ) {
-        $this->isDisabled = $isDisabled;
-        $this->url = $url;
-        $this->preferSmallMedia = $preferSmallMedia;
-        $this->preferLargeMedia = $preferLargeMedia;
-        $this->showAboveText = $showAboveText;
-    }
-
     public static function fromArray(array $data): LinkPreviewOptions {
         $instance = new self();
         if (isset($data['is_disabled'])) {
@@ -80,6 +66,20 @@ final class LinkPreviewOptions {
             $instance->showAboveText = $data['show_above_text'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?bool   $isDisabled = null,
+        ?string $url = null,
+        ?bool   $preferSmallMedia = null,
+        ?bool   $preferLargeMedia = null,
+        ?bool   $showAboveText = null,
+    ) {
+        $this->isDisabled = $isDisabled;
+        $this->url = $url;
+        $this->preferSmallMedia = $preferSmallMedia;
+        $this->preferLargeMedia = $preferLargeMedia;
+        $this->showAboveText = $showAboveText;
     }
 
     public function getIsDisabled(): ?bool {

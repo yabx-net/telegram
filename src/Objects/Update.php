@@ -137,6 +137,14 @@ final class Update {
     protected ?PreCheckoutQuery $preCheckoutQuery = null;
 
     /**
+     * Purchased Paid Media
+     *
+     * Optional. A user purchased paid media with a non-empty payload sent by the bot in a non-channel chat
+     * @var PaidMediaPurchased|null
+     */
+    protected ?PaidMediaPurchased $purchasedPaidMedia = null;
+
+    /**
      * Poll
      *
      * Optional. New poll state. Bots receive only updates about manually stopped polls and polls, which are sent by the bot
@@ -209,6 +217,7 @@ final class Update {
         ?CallbackQuery               $callbackQuery = null,
         ?ShippingQuery               $shippingQuery = null,
         ?PreCheckoutQuery            $preCheckoutQuery = null,
+        ?PaidMediaPurchased          $purchasedPaidMedia = null,
         ?Poll                        $poll = null,
         ?PollAnswer                  $pollAnswer = null,
         ?ChatMemberUpdated           $myChatMember = null,
@@ -233,6 +242,7 @@ final class Update {
         $this->callbackQuery = $callbackQuery;
         $this->shippingQuery = $shippingQuery;
         $this->preCheckoutQuery = $preCheckoutQuery;
+        $this->purchasedPaidMedia = $purchasedPaidMedia;
         $this->poll = $poll;
         $this->pollAnswer = $pollAnswer;
         $this->myChatMember = $myChatMember;
@@ -291,6 +301,9 @@ final class Update {
         }
         if (isset($data['pre_checkout_query'])) {
             $instance->preCheckoutQuery = PreCheckoutQuery::fromArray($data['pre_checkout_query']);
+        }
+        if (isset($data['purchased_paid_media'])) {
+            $instance->purchasedPaidMedia = PaidMediaPurchased::fromArray($data['purchased_paid_media']);
         }
         if (isset($data['poll'])) {
             $instance->poll = Poll::fromArray($data['poll']);
@@ -457,6 +470,15 @@ final class Update {
 
     public function setPreCheckoutQuery(?PreCheckoutQuery $value): self {
         $this->preCheckoutQuery = $value;
+        return $this;
+    }
+
+    public function getPurchasedPaidMedia(): ?PaidMediaPurchased {
+        return $this->purchasedPaidMedia;
+    }
+
+    public function setPurchasedPaidMedia(?PaidMediaPurchased $value): self {
+        $this->purchasedPaidMedia = $value;
         return $this;
     }
 

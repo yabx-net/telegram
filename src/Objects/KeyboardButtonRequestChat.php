@@ -96,32 +96,6 @@ final class KeyboardButtonRequestChat {
      */
     protected ?bool $requestPhoto = null;
 
-    public function __construct(
-        ?int                     $requestId = null,
-        ?bool                    $chatIsChannel = null,
-        ?bool                    $chatIsForum = null,
-        ?bool                    $chatHasUsername = null,
-        ?bool                    $chatIsCreated = null,
-        ?ChatAdministratorRights $userAdministratorRights = null,
-        ?ChatAdministratorRights $botAdministratorRights = null,
-        ?bool                    $botIsMember = null,
-        ?bool                    $requestTitle = null,
-        ?bool                    $requestUsername = null,
-        ?bool                    $requestPhoto = null,
-    ) {
-        $this->requestId = $requestId;
-        $this->chatIsChannel = $chatIsChannel;
-        $this->chatIsForum = $chatIsForum;
-        $this->chatHasUsername = $chatHasUsername;
-        $this->chatIsCreated = $chatIsCreated;
-        $this->userAdministratorRights = $userAdministratorRights;
-        $this->botAdministratorRights = $botAdministratorRights;
-        $this->botIsMember = $botIsMember;
-        $this->requestTitle = $requestTitle;
-        $this->requestUsername = $requestUsername;
-        $this->requestPhoto = $requestPhoto;
-    }
-
     public static function fromArray(array $data): KeyboardButtonRequestChat {
         $instance = new self();
         if (isset($data['request_id'])) {
@@ -158,6 +132,32 @@ final class KeyboardButtonRequestChat {
             $instance->requestPhoto = $data['request_photo'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?int                     $requestId = null,
+        ?bool                    $chatIsChannel = null,
+        ?bool                    $chatIsForum = null,
+        ?bool                    $chatHasUsername = null,
+        ?bool                    $chatIsCreated = null,
+        ?ChatAdministratorRights $userAdministratorRights = null,
+        ?ChatAdministratorRights $botAdministratorRights = null,
+        ?bool                    $botIsMember = null,
+        ?bool                    $requestTitle = null,
+        ?bool                    $requestUsername = null,
+        ?bool                    $requestPhoto = null,
+    ) {
+        $this->requestId = $requestId;
+        $this->chatIsChannel = $chatIsChannel;
+        $this->chatIsForum = $chatIsForum;
+        $this->chatHasUsername = $chatHasUsername;
+        $this->chatIsCreated = $chatIsCreated;
+        $this->userAdministratorRights = $userAdministratorRights;
+        $this->botAdministratorRights = $botAdministratorRights;
+        $this->botIsMember = $botIsMember;
+        $this->requestTitle = $requestTitle;
+        $this->requestUsername = $requestUsername;
+        $this->requestPhoto = $requestPhoto;
     }
 
     public function getRequestId(): ?int {

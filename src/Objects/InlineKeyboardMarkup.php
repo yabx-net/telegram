@@ -4,7 +4,7 @@ namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\ObjectTrait;
 
-final class InlineKeyboardMarkup extends ReplyMarkup {
+final class InlineKeyboardMarkup {
 
     use ObjectTrait;
 
@@ -27,7 +27,6 @@ final class InlineKeyboardMarkup extends ReplyMarkup {
         if (isset($data['inline_keyboard'])) {
             $instance->inlineKeyboard = [];
             foreach ($data['inline_keyboard'] as $item) {
-                if (!$item) continue;
                 $instance->inlineKeyboard[] = InlineKeyboardButton::fromArray($item);
             }
         }

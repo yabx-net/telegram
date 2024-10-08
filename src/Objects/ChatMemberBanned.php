@@ -23,7 +23,7 @@ final class ChatMemberBanned extends ChatMember {
     /**
      * Until Date
      *
-     * Date when restrictions will be lifted for this user; unix time. If 0, then the user is banned forever
+     * Date when restrictions will be lifted for this user; Unix time. If 0, then the user is banned forever
      * @var int|null
      */
     protected ?int $untilDate = null;

@@ -16,12 +16,6 @@ final class StarTransactions {
      */
     protected ?array $transactions = null;
 
-    public function __construct(
-        ?array $transactions = null,
-    ) {
-        $this->transactions = $transactions;
-    }
-
     public static function fromArray(array $data): StarTransactions {
         $instance = new self();
         if (isset($data['transactions'])) {
@@ -31,6 +25,12 @@ final class StarTransactions {
             }
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?array $transactions = null,
+    ) {
+        $this->transactions = $transactions;
     }
 
     public function getTransactions(): ?array {

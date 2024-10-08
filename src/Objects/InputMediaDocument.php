@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class InputMediaDocument extends InputMedia {
+use Yabx\Telegram\ObjectTrait;
+
+final class InputMediaDocument {
+
+    use ObjectTrait;
 
     /**
      * Type

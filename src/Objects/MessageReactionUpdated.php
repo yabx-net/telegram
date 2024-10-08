@@ -64,24 +64,6 @@ final class MessageReactionUpdated {
      */
     protected ?array $newReaction = null;
 
-    public function __construct(
-        ?Chat  $chat = null,
-        ?int   $messageId = null,
-        ?User  $user = null,
-        ?Chat  $actorChat = null,
-        ?int   $date = null,
-        ?array $oldReaction = null,
-        ?array $newReaction = null,
-    ) {
-        $this->chat = $chat;
-        $this->messageId = $messageId;
-        $this->user = $user;
-        $this->actorChat = $actorChat;
-        $this->date = $date;
-        $this->oldReaction = $oldReaction;
-        $this->newReaction = $newReaction;
-    }
-
     public static function fromArray(array $data): MessageReactionUpdated {
         $instance = new self();
         if (isset($data['chat'])) {
@@ -112,6 +94,24 @@ final class MessageReactionUpdated {
             }
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?Chat  $chat = null,
+        ?int   $messageId = null,
+        ?User  $user = null,
+        ?Chat  $actorChat = null,
+        ?int   $date = null,
+        ?array $oldReaction = null,
+        ?array $newReaction = null,
+    ) {
+        $this->chat = $chat;
+        $this->messageId = $messageId;
+        $this->user = $user;
+        $this->actorChat = $actorChat;
+        $this->date = $date;
+        $this->oldReaction = $oldReaction;
+        $this->newReaction = $newReaction;
     }
 
     public function getChat(): ?Chat {

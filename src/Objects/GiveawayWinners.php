@@ -57,9 +57,17 @@ final class GiveawayWinners {
     protected ?int $additionalChatCount = null;
 
     /**
+     * Prize Star Count
+     *
+     * Optional. The number of Telegram Stars that were split between giveaway winners; for Telegram Star giveaways only
+     * @var int|null
+     */
+    protected ?int $prizeStarCount = null;
+
+    /**
      * Premium Subscription Month Count
      *
-     * Optional. The number of months the Telegram Premium subscription won from the giveaway will be active for
+     * Optional. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only
      * @var int|null
      */
     protected ?int $premiumSubscriptionMonthCount = null;
@@ -103,6 +111,7 @@ final class GiveawayWinners {
         ?int    $winnerCount = null,
         ?array  $winners = null,
         ?int    $additionalChatCount = null,
+        ?int    $prizeStarCount = null,
         ?int    $premiumSubscriptionMonthCount = null,
         ?int    $unclaimedPrizeCount = null,
         ?bool   $onlyNewMembers = null,
@@ -115,6 +124,7 @@ final class GiveawayWinners {
         $this->winnerCount = $winnerCount;
         $this->winners = $winners;
         $this->additionalChatCount = $additionalChatCount;
+        $this->prizeStarCount = $prizeStarCount;
         $this->premiumSubscriptionMonthCount = $premiumSubscriptionMonthCount;
         $this->unclaimedPrizeCount = $unclaimedPrizeCount;
         $this->onlyNewMembers = $onlyNewMembers;
@@ -144,6 +154,9 @@ final class GiveawayWinners {
         }
         if (isset($data['additional_chat_count'])) {
             $instance->additionalChatCount = $data['additional_chat_count'];
+        }
+        if (isset($data['prize_star_count'])) {
+            $instance->prizeStarCount = $data['prize_star_count'];
         }
         if (isset($data['premium_subscription_month_count'])) {
             $instance->premiumSubscriptionMonthCount = $data['premium_subscription_month_count'];
@@ -214,6 +227,15 @@ final class GiveawayWinners {
 
     public function setAdditionalChatCount(?int $value): self {
         $this->additionalChatCount = $value;
+        return $this;
+    }
+
+    public function getPrizeStarCount(): ?int {
+        return $this->prizeStarCount;
+    }
+
+    public function setPrizeStarCount(?int $value): self {
+        $this->prizeStarCount = $value;
         return $this;
     }
 

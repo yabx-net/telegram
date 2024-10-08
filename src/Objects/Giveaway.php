@@ -65,9 +65,17 @@ final class Giveaway {
     protected ?array $countryCodes = null;
 
     /**
+     * Prize Star Count
+     *
+     * Optional. The number of Telegram Stars to be split between giveaway winners; for Telegram Star giveaways only
+     * @var int|null
+     */
+    protected ?int $prizeStarCount = null;
+
+    /**
      * Premium Subscription Month Count
      *
-     * Optional. The number of months the Telegram Premium subscription won from the giveaway will be active for
+     * Optional. The number of months the Telegram Premium subscription won from the giveaway will be active for; for Telegram Premium giveaways only
      * @var int|null
      */
     protected ?int $premiumSubscriptionMonthCount = null;
@@ -80,6 +88,7 @@ final class Giveaway {
         ?bool   $hasPublicWinners = null,
         ?string $prizeDescription = null,
         ?array  $countryCodes = null,
+        ?int    $prizeStarCount = null,
         ?int    $premiumSubscriptionMonthCount = null,
     ) {
         $this->chats = $chats;
@@ -89,6 +98,7 @@ final class Giveaway {
         $this->hasPublicWinners = $hasPublicWinners;
         $this->prizeDescription = $prizeDescription;
         $this->countryCodes = $countryCodes;
+        $this->prizeStarCount = $prizeStarCount;
         $this->premiumSubscriptionMonthCount = $premiumSubscriptionMonthCount;
     }
 
@@ -120,6 +130,9 @@ final class Giveaway {
             foreach ($data['country_codes'] as $item) {
                 $instance->countryCodes[] = $item;
             }
+        }
+        if (isset($data['prize_star_count'])) {
+            $instance->prizeStarCount = $data['prize_star_count'];
         }
         if (isset($data['premium_subscription_month_count'])) {
             $instance->premiumSubscriptionMonthCount = $data['premium_subscription_month_count'];
@@ -187,6 +200,15 @@ final class Giveaway {
 
     public function setCountryCodes(?array $value): self {
         $this->countryCodes = $value;
+        return $this;
+    }
+
+    public function getPrizeStarCount(): ?int {
+        return $this->prizeStarCount;
+    }
+
+    public function setPrizeStarCount(?int $value): self {
+        $this->prizeStarCount = $value;
         return $this;
     }
 

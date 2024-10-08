@@ -2,7 +2,11 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class InputMediaPhoto extends InputMedia {
+use Yabx\Telegram\ObjectTrait;
+
+final class InputMediaPhoto {
+
+    use ObjectTrait;
 
     /**
      * Type
@@ -45,6 +49,14 @@ final class InputMediaPhoto extends InputMedia {
     protected ?array $captionEntities = null;
 
     /**
+     * Show Caption Above Media
+     *
+     * Optional. Pass True, if the caption must be shown above the message media
+     * @var bool|null
+     */
+    protected ?bool $showCaptionAboveMedia = null;
+
+    /**
      * Has Spoiler
      *
      * Optional. Pass True if the photo needs to be covered with a spoiler animation
@@ -58,6 +70,7 @@ final class InputMediaPhoto extends InputMedia {
         ?string $caption = null,
         ?string $parseMode = null,
         ?array  $captionEntities = null,
+        ?bool   $showCaptionAboveMedia = null,
         ?bool   $hasSpoiler = null,
     ) {
         $this->type = $type;
@@ -65,6 +78,7 @@ final class InputMediaPhoto extends InputMedia {
         $this->caption = $caption;
         $this->parseMode = $parseMode;
         $this->captionEntities = $captionEntities;
+        $this->showCaptionAboveMedia = $showCaptionAboveMedia;
         $this->hasSpoiler = $hasSpoiler;
     }
 
@@ -87,6 +101,9 @@ final class InputMediaPhoto extends InputMedia {
             foreach ($data['caption_entities'] as $item) {
                 $instance->captionEntities[] = MessageEntity::fromArray($item);
             }
+        }
+        if (isset($data['show_caption_above_media'])) {
+            $instance->showCaptionAboveMedia = $data['show_caption_above_media'];
         }
         if (isset($data['has_spoiler'])) {
             $instance->hasSpoiler = $data['has_spoiler'];
@@ -136,6 +153,15 @@ final class InputMediaPhoto extends InputMedia {
 
     public function setCaptionEntities(?array $value): self {
         $this->captionEntities = $value;
+        return $this;
+    }
+
+    public function getShowCaptionAboveMedia(): ?bool {
+        return $this->showCaptionAboveMedia;
+    }
+
+    public function setShowCaptionAboveMedia(?bool $value): self {
+        $this->showCaptionAboveMedia = $value;
         return $this;
     }
 

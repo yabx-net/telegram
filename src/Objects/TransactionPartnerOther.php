@@ -16,18 +16,18 @@ final class TransactionPartnerOther extends TransactionPartner {
      */
     protected ?string $type = null;
 
-    public function __construct(
-        ?string $type = null,
-    ) {
-        $this->type = $type;
-    }
-
     public static function fromArray(array $data): TransactionPartnerOther {
         $instance = new self();
         if (isset($data['type'])) {
             $instance->type = $data['type'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $type = null,
+    ) {
+        $this->type = $type;
     }
 
     public function getType(): ?string {

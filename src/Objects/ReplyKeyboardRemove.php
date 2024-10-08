@@ -24,14 +24,6 @@ final class ReplyKeyboardRemove extends ReplyMarkup {
      */
     protected ?bool $selective = null;
 
-    public function __construct(
-        ?bool $removeKeyboard = null,
-        ?bool $selective = null,
-    ) {
-        $this->removeKeyboard = $removeKeyboard;
-        $this->selective = $selective;
-    }
-
     public static function fromArray(array $data): ReplyKeyboardRemove {
         $instance = new self();
         if (isset($data['remove_keyboard'])) {
@@ -41,6 +33,14 @@ final class ReplyKeyboardRemove extends ReplyMarkup {
             $instance->selective = $data['selective'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?bool $removeKeyboard = null,
+        ?bool $selective = null,
+    ) {
+        $this->removeKeyboard = $removeKeyboard;
+        $this->selective = $selective;
     }
 
     public function getRemoveKeyboard(): ?bool {

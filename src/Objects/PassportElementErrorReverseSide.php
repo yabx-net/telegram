@@ -4,7 +4,7 @@ namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\ObjectTrait;
 
-final class PassportElementErrorReverseSide {
+final class PassportElementErrorReverseSide extends PassportElementError {
 
     use ObjectTrait;
 
@@ -40,18 +40,6 @@ final class PassportElementErrorReverseSide {
      */
     protected ?string $message = null;
 
-    public function __construct(
-        ?string $source = null,
-        ?string $type = null,
-        ?string $fileHash = null,
-        ?string $message = null,
-    ) {
-        $this->source = $source;
-        $this->type = $type;
-        $this->fileHash = $fileHash;
-        $this->message = $message;
-    }
-
     public static function fromArray(array $data): PassportElementErrorReverseSide {
         $instance = new self();
         if (isset($data['source'])) {
@@ -67,6 +55,18 @@ final class PassportElementErrorReverseSide {
             $instance->message = $data['message'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $source = null,
+        ?string $type = null,
+        ?string $fileHash = null,
+        ?string $message = null,
+    ) {
+        $this->source = $source;
+        $this->type = $type;
+        $this->fileHash = $fileHash;
+        $this->message = $message;
     }
 
     public function getSource(): ?string {

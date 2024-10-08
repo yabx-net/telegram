@@ -16,18 +16,18 @@ final class SentWebAppMessage {
      */
     protected ?string $inlineMessageId = null;
 
-    public function __construct(
-        ?string $inlineMessageId = null,
-    ) {
-        $this->inlineMessageId = $inlineMessageId;
-    }
-
     public static function fromArray(array $data): SentWebAppMessage {
         $instance = new self();
         if (isset($data['inline_message_id'])) {
             $instance->inlineMessageId = $data['inline_message_id'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $inlineMessageId = null,
+    ) {
+        $this->inlineMessageId = $inlineMessageId;
     }
 
     public function getInlineMessageId(): ?string {

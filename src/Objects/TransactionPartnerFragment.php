@@ -24,14 +24,6 @@ final class TransactionPartnerFragment extends TransactionPartner {
      */
     protected ?RevenueWithdrawalState $withdrawalState = null;
 
-    public function __construct(
-        ?string                 $type = null,
-        ?RevenueWithdrawalState $withdrawalState = null,
-    ) {
-        $this->type = $type;
-        $this->withdrawalState = $withdrawalState;
-    }
-
     public static function fromArray(array $data): TransactionPartnerFragment {
         $instance = new self();
         if (isset($data['type'])) {
@@ -41,6 +33,14 @@ final class TransactionPartnerFragment extends TransactionPartner {
             $instance->withdrawalState = RevenueWithdrawalState::fromArray($data['withdrawal_state']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string                 $type = null,
+        ?RevenueWithdrawalState $withdrawalState = null,
+    ) {
+        $this->type = $type;
+        $this->withdrawalState = $withdrawalState;
     }
 
     public function getType(): ?string {

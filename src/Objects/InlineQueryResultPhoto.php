@@ -93,6 +93,14 @@ final class InlineQueryResultPhoto extends InlineQueryResult {
     protected ?array $captionEntities = null;
 
     /**
+     * Show Caption Above Media
+     *
+     * Optional. Pass True, if the caption must be shown above the message media
+     * @var bool|null
+     */
+    protected ?bool $showCaptionAboveMedia = null;
+
+    /**
      * Reply Markup
      *
      * Optional. Inline keyboard attached to the message
@@ -120,6 +128,7 @@ final class InlineQueryResultPhoto extends InlineQueryResult {
         ?string               $caption = null,
         ?string               $parseMode = null,
         ?array                $captionEntities = null,
+        ?bool                 $showCaptionAboveMedia = null,
         ?InlineKeyboardMarkup $replyMarkup = null,
         ?InputMessageContent  $inputMessageContent = null,
     ) {
@@ -134,6 +143,7 @@ final class InlineQueryResultPhoto extends InlineQueryResult {
         $this->caption = $caption;
         $this->parseMode = $parseMode;
         $this->captionEntities = $captionEntities;
+        $this->showCaptionAboveMedia = $showCaptionAboveMedia;
         $this->replyMarkup = $replyMarkup;
         $this->inputMessageContent = $inputMessageContent;
     }
@@ -175,6 +185,9 @@ final class InlineQueryResultPhoto extends InlineQueryResult {
             foreach ($data['caption_entities'] as $item) {
                 $instance->captionEntities[] = MessageEntity::fromArray($item);
             }
+        }
+        if (isset($data['show_caption_above_media'])) {
+            $instance->showCaptionAboveMedia = $data['show_caption_above_media'];
         }
         if (isset($data['reply_markup'])) {
             $instance->replyMarkup = InlineKeyboardMarkup::fromArray($data['reply_markup']);
@@ -281,6 +294,15 @@ final class InlineQueryResultPhoto extends InlineQueryResult {
 
     public function setCaptionEntities(?array $value): self {
         $this->captionEntities = $value;
+        return $this;
+    }
+
+    public function getShowCaptionAboveMedia(): ?bool {
+        return $this->showCaptionAboveMedia;
+    }
+
+    public function setShowCaptionAboveMedia(?bool $value): self {
+        $this->showCaptionAboveMedia = $value;
         return $this;
     }
 

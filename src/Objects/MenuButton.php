@@ -2,14 +2,20 @@
 
 namespace Yabx\Telegram\Objects;
 
+use Yabx\Telegram\Exception;
 use Yabx\Telegram\ObjectTrait;
 
-final class MenuButton {
+abstract class MenuButton {
 
     use ObjectTrait;
 
     public static function fromArray(array $data): MenuButton {
-        return new self();
+        return match ($data['type']) {
+            'commands' => MenuButtonCommands::fromArray($data),
+            'default' => MenuButtonDefault::fromArray($data),
+            'web_app' => MenuButtonWebApp::fromArray($data),
+            default => throw new Exception('Failed to create MenuButton')
+        };
     }
 
 }

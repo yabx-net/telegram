@@ -48,20 +48,6 @@ final class SwitchInlineQueryChosenChat {
      */
     protected ?bool $allowChannelChats = null;
 
-    public function __construct(
-        ?string $query = null,
-        ?bool   $allowUserChats = null,
-        ?bool   $allowBotChats = null,
-        ?bool   $allowGroupChats = null,
-        ?bool   $allowChannelChats = null,
-    ) {
-        $this->query = $query;
-        $this->allowUserChats = $allowUserChats;
-        $this->allowBotChats = $allowBotChats;
-        $this->allowGroupChats = $allowGroupChats;
-        $this->allowChannelChats = $allowChannelChats;
-    }
-
     public static function fromArray(array $data): SwitchInlineQueryChosenChat {
         $instance = new self();
         if (isset($data['query'])) {
@@ -80,6 +66,20 @@ final class SwitchInlineQueryChosenChat {
             $instance->allowChannelChats = $data['allow_channel_chats'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $query = null,
+        ?bool   $allowUserChats = null,
+        ?bool   $allowBotChats = null,
+        ?bool   $allowGroupChats = null,
+        ?bool   $allowChannelChats = null,
+    ) {
+        $this->query = $query;
+        $this->allowUserChats = $allowUserChats;
+        $this->allowBotChats = $allowBotChats;
+        $this->allowGroupChats = $allowGroupChats;
+        $this->allowChannelChats = $allowChannelChats;
     }
 
     public function getQuery(): ?string {

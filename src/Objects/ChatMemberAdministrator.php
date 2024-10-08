@@ -39,7 +39,7 @@ class ChatMemberAdministrator extends ChatMember {
     /**
      * Can Manage Chat
      *
-     * True, if the administrator can access the chat event log, chat statistics, message statistics in channels, see channel members, see anonymous administrators in supergroups and ignore slow mode. Implied by any other administrator privilege
+     * True, if the administrator can access the chat event log, get boost list, see hidden supergroup and channel members, report spam messages and ignore slow mode. Implied by any other administrator privilege.
      * @var bool|null
      */
     protected ?bool $canManageChat = null;
@@ -63,7 +63,7 @@ class ChatMemberAdministrator extends ChatMember {
     /**
      * Can Restrict Members
      *
-     * True, if the administrator can restrict, ban or unban chat members
+     * True, if the administrator can restrict, ban or unban chat members, or access supergroup statistics
      * @var bool|null
      */
     protected ?bool $canRestrictMembers = null;
@@ -93,9 +93,33 @@ class ChatMemberAdministrator extends ChatMember {
     protected ?bool $canInviteUsers = null;
 
     /**
+     * Can Post Stories
+     *
+     * True, if the administrator can post stories to the chat
+     * @var bool|null
+     */
+    protected ?bool $canPostStories = null;
+
+    /**
+     * Can Edit Stories
+     *
+     * True, if the administrator can edit stories posted by other users, post stories to the chat page, pin chat stories, and access the chat's story archive
+     * @var bool|null
+     */
+    protected ?bool $canEditStories = null;
+
+    /**
+     * Can Delete Stories
+     *
+     * True, if the administrator can delete stories posted by other users
+     * @var bool|null
+     */
+    protected ?bool $canDeleteStories = null;
+
+    /**
      * Can Post Messages
      *
-     * Optional. True, if the administrator can post in the channel; channels only
+     * Optional. True, if the administrator can post messages in the channel, or access channel statistics; for channels only
      * @var bool|null
      */
     protected ?bool $canPostMessages = null;
@@ -103,7 +127,7 @@ class ChatMemberAdministrator extends ChatMember {
     /**
      * Can Edit Messages
      *
-     * Optional. True, if the administrator can edit messages of other users and can pin messages; channels only
+     * Optional. True, if the administrator can edit messages of other users and can pin messages; for channels only
      * @var bool|null
      */
     protected ?bool $canEditMessages = null;
@@ -111,7 +135,7 @@ class ChatMemberAdministrator extends ChatMember {
     /**
      * Can Pin Messages
      *
-     * Optional. True, if the user is allowed to pin messages; groups and supergroups only
+     * Optional. True, if the user is allowed to pin messages; for groups and supergroups only
      * @var bool|null
      */
     protected ?bool $canPinMessages = null;
@@ -119,7 +143,7 @@ class ChatMemberAdministrator extends ChatMember {
     /**
      * Can Manage Topics
      *
-     * Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only
+     * Optional. True, if the user is allowed to create, rename, close, and reopen forum topics; for supergroups only
      * @var bool|null
      */
     protected ?bool $canManageTopics = null;
@@ -144,6 +168,9 @@ class ChatMemberAdministrator extends ChatMember {
         ?bool   $canPromoteMembers = null,
         ?bool   $canChangeInfo = null,
         ?bool   $canInviteUsers = null,
+        ?bool   $canPostStories = null,
+        ?bool   $canEditStories = null,
+        ?bool   $canDeleteStories = null,
         ?bool   $canPostMessages = null,
         ?bool   $canEditMessages = null,
         ?bool   $canPinMessages = null,
@@ -161,6 +188,9 @@ class ChatMemberAdministrator extends ChatMember {
         $this->canPromoteMembers = $canPromoteMembers;
         $this->canChangeInfo = $canChangeInfo;
         $this->canInviteUsers = $canInviteUsers;
+        $this->canPostStories = $canPostStories;
+        $this->canEditStories = $canEditStories;
+        $this->canDeleteStories = $canDeleteStories;
         $this->canPostMessages = $canPostMessages;
         $this->canEditMessages = $canEditMessages;
         $this->canPinMessages = $canPinMessages;
@@ -202,6 +232,15 @@ class ChatMemberAdministrator extends ChatMember {
         }
         if (isset($data['can_invite_users'])) {
             $instance->canInviteUsers = $data['can_invite_users'];
+        }
+        if (isset($data['can_post_stories'])) {
+            $instance->canPostStories = $data['can_post_stories'];
+        }
+        if (isset($data['can_edit_stories'])) {
+            $instance->canEditStories = $data['can_edit_stories'];
+        }
+        if (isset($data['can_delete_stories'])) {
+            $instance->canDeleteStories = $data['can_delete_stories'];
         }
         if (isset($data['can_post_messages'])) {
             $instance->canPostMessages = $data['can_post_messages'];
@@ -317,6 +356,33 @@ class ChatMemberAdministrator extends ChatMember {
 
     public function setCanInviteUsers(?bool $value): self {
         $this->canInviteUsers = $value;
+        return $this;
+    }
+
+    public function getCanPostStories(): ?bool {
+        return $this->canPostStories;
+    }
+
+    public function setCanPostStories(?bool $value): self {
+        $this->canPostStories = $value;
+        return $this;
+    }
+
+    public function getCanEditStories(): ?bool {
+        return $this->canEditStories;
+    }
+
+    public function setCanEditStories(?bool $value): self {
+        $this->canEditStories = $value;
+        return $this;
+    }
+
+    public function getCanDeleteStories(): ?bool {
+        return $this->canDeleteStories;
+    }
+
+    public function setCanDeleteStories(?bool $value): self {
+        $this->canDeleteStories = $value;
         return $this;
     }
 

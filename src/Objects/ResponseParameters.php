@@ -24,14 +24,6 @@ final class ResponseParameters {
      */
     protected ?int $retryAfter = null;
 
-    public function __construct(
-        ?int $migrateToChatId = null,
-        ?int $retryAfter = null,
-    ) {
-        $this->migrateToChatId = $migrateToChatId;
-        $this->retryAfter = $retryAfter;
-    }
-
     public static function fromArray(array $data): ResponseParameters {
         $instance = new self();
         if (isset($data['migrate_to_chat_id'])) {
@@ -41,6 +33,14 @@ final class ResponseParameters {
             $instance->retryAfter = $data['retry_after'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?int $migrateToChatId = null,
+        ?int $retryAfter = null,
+    ) {
+        $this->migrateToChatId = $migrateToChatId;
+        $this->retryAfter = $retryAfter;
     }
 
     public function getMigrateToChatId(): ?int {

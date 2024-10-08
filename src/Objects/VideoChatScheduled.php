@@ -16,18 +16,18 @@ final class VideoChatScheduled {
      */
     protected ?int $startDate = null;
 
-    public function __construct(
-        ?int $startDate = null,
-    ) {
-        $this->startDate = $startDate;
-    }
-
     public static function fromArray(array $data): VideoChatScheduled {
         $instance = new self();
         if (isset($data['start_date'])) {
             $instance->startDate = $data['start_date'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?int $startDate = null,
+    ) {
+        $this->startDate = $startDate;
     }
 
     public function getStartDate(): ?int {

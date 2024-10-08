@@ -64,24 +64,6 @@ final class InputPaidMediaVideo extends InputPaidMedia {
      */
     protected ?bool $supportsStreaming = null;
 
-    public function __construct(
-        ?string $type = null,
-        ?string $media = null,
-        ?string $thumbnail = null,
-        ?int    $width = null,
-        ?int    $height = null,
-        ?int    $duration = null,
-        ?bool   $supportsStreaming = null,
-    ) {
-        $this->type = $type;
-        $this->media = $media;
-        $this->thumbnail = $thumbnail;
-        $this->width = $width;
-        $this->height = $height;
-        $this->duration = $duration;
-        $this->supportsStreaming = $supportsStreaming;
-    }
-
     public static function fromArray(array $data): InputPaidMediaVideo {
         $instance = new self();
         if (isset($data['type'])) {
@@ -106,6 +88,24 @@ final class InputPaidMediaVideo extends InputPaidMedia {
             $instance->supportsStreaming = $data['supports_streaming'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string $type = null,
+        ?string $media = null,
+        ?string $thumbnail = null,
+        ?int    $width = null,
+        ?int    $height = null,
+        ?int    $duration = null,
+        ?bool   $supportsStreaming = null,
+    ) {
+        $this->type = $type;
+        $this->media = $media;
+        $this->thumbnail = $thumbnail;
+        $this->width = $width;
+        $this->height = $height;
+        $this->duration = $duration;
+        $this->supportsStreaming = $supportsStreaming;
     }
 
     public function getType(): ?string {

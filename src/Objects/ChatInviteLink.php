@@ -80,6 +80,22 @@ final class ChatInviteLink {
      */
     protected ?int $pendingJoinRequestCount = null;
 
+    /**
+     * Subscription Period
+     *
+     * Optional. The number of seconds the subscription will be active for before the next payment
+     * @var int|null
+     */
+    protected ?int $subscriptionPeriod = null;
+
+    /**
+     * Subscription Price
+     *
+     * Optional. The amount of Telegram Stars a user must pay initially and after each subsequent subscription period to be a member of the chat using the link
+     * @var int|null
+     */
+    protected ?int $subscriptionPrice = null;
+
     public function __construct(
         ?string $inviteLink = null,
         ?User   $creator = null,
@@ -90,6 +106,8 @@ final class ChatInviteLink {
         ?int    $expireDate = null,
         ?int    $memberLimit = null,
         ?int    $pendingJoinRequestCount = null,
+        ?int    $subscriptionPeriod = null,
+        ?int    $subscriptionPrice = null,
     ) {
         $this->inviteLink = $inviteLink;
         $this->creator = $creator;
@@ -100,6 +118,8 @@ final class ChatInviteLink {
         $this->expireDate = $expireDate;
         $this->memberLimit = $memberLimit;
         $this->pendingJoinRequestCount = $pendingJoinRequestCount;
+        $this->subscriptionPeriod = $subscriptionPeriod;
+        $this->subscriptionPrice = $subscriptionPrice;
     }
 
     public static function fromArray(array $data): ChatInviteLink {
@@ -130,6 +150,12 @@ final class ChatInviteLink {
         }
         if (isset($data['pending_join_request_count'])) {
             $instance->pendingJoinRequestCount = $data['pending_join_request_count'];
+        }
+        if (isset($data['subscription_period'])) {
+            $instance->subscriptionPeriod = $data['subscription_period'];
+        }
+        if (isset($data['subscription_price'])) {
+            $instance->subscriptionPrice = $data['subscription_price'];
         }
         return $instance;
     }
@@ -212,6 +238,24 @@ final class ChatInviteLink {
 
     public function setPendingJoinRequestCount(?int $value): self {
         $this->pendingJoinRequestCount = $value;
+        return $this;
+    }
+
+    public function getSubscriptionPeriod(): ?int {
+        return $this->subscriptionPeriod;
+    }
+
+    public function setSubscriptionPeriod(?int $value): self {
+        $this->subscriptionPeriod = $value;
+        return $this;
+    }
+
+    public function getSubscriptionPrice(): ?int {
+        return $this->subscriptionPrice;
+    }
+
+    public function setSubscriptionPrice(?int $value): self {
+        $this->subscriptionPrice = $value;
         return $this;
     }
 

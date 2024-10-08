@@ -56,22 +56,6 @@ final class ReplyKeyboardMarkup extends ReplyMarkup {
      */
     protected ?bool $selective = null;
 
-    public function __construct(
-        ?array  $keyboard = null,
-        ?bool   $isPersistent = null,
-        ?bool   $resizeKeyboard = null,
-        ?bool   $oneTimeKeyboard = null,
-        ?string $inputFieldPlaceholder = null,
-        ?bool   $selective = null,
-    ) {
-        $this->keyboard = $keyboard;
-        $this->isPersistent = $isPersistent;
-        $this->resizeKeyboard = $resizeKeyboard;
-        $this->oneTimeKeyboard = $oneTimeKeyboard;
-        $this->inputFieldPlaceholder = $inputFieldPlaceholder;
-        $this->selective = $selective;
-    }
-
     public static function fromArray(array $data): ReplyKeyboardMarkup {
         $instance = new self();
         if (isset($data['keyboard'])) {
@@ -96,6 +80,22 @@ final class ReplyKeyboardMarkup extends ReplyMarkup {
             $instance->selective = $data['selective'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?array  $keyboard = null,
+        ?bool   $isPersistent = null,
+        ?bool   $resizeKeyboard = null,
+        ?bool   $oneTimeKeyboard = null,
+        ?string $inputFieldPlaceholder = null,
+        ?bool   $selective = null,
+    ) {
+        $this->keyboard = $keyboard;
+        $this->isPersistent = $isPersistent;
+        $this->resizeKeyboard = $resizeKeyboard;
+        $this->oneTimeKeyboard = $oneTimeKeyboard;
+        $this->inputFieldPlaceholder = $inputFieldPlaceholder;
+        $this->selective = $selective;
     }
 
     public function getKeyboard(): ?array {

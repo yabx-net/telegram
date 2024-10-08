@@ -4,7 +4,7 @@ namespace Yabx\Telegram\Objects;
 
 use Yabx\Telegram\ObjectTrait;
 
-final class MenuButtonWebApp {
+final class MenuButtonWebApp extends MenuButton {
 
     use ObjectTrait;
 
@@ -32,16 +32,6 @@ final class MenuButtonWebApp {
      */
     protected ?WebAppInfo $webApp = null;
 
-    public function __construct(
-        ?string     $type = null,
-        ?string     $text = null,
-        ?WebAppInfo $webApp = null,
-    ) {
-        $this->type = $type;
-        $this->text = $text;
-        $this->webApp = $webApp;
-    }
-
     public static function fromArray(array $data): MenuButtonWebApp {
         $instance = new self();
         if (isset($data['type'])) {
@@ -54,6 +44,16 @@ final class MenuButtonWebApp {
             $instance->webApp = WebAppInfo::fromArray($data['web_app']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string     $type = null,
+        ?string     $text = null,
+        ?WebAppInfo $webApp = null,
+    ) {
+        $this->type = $type;
+        $this->text = $text;
+        $this->webApp = $webApp;
     }
 
     public function getType(): ?string {

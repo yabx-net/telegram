@@ -72,26 +72,6 @@ final class InputVenueMessageContent {
      */
     protected ?string $googlePlaceType = null;
 
-    public function __construct(
-        ?float  $latitude = null,
-        ?float  $longitude = null,
-        ?string $title = null,
-        ?string $address = null,
-        ?string $foursquareId = null,
-        ?string $foursquareType = null,
-        ?string $googlePlaceId = null,
-        ?string $googlePlaceType = null,
-    ) {
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
-        $this->title = $title;
-        $this->address = $address;
-        $this->foursquareId = $foursquareId;
-        $this->foursquareType = $foursquareType;
-        $this->googlePlaceId = $googlePlaceId;
-        $this->googlePlaceType = $googlePlaceType;
-    }
-
     public static function fromArray(array $data): InputVenueMessageContent {
         $instance = new self();
         if (isset($data['latitude'])) {
@@ -119,6 +99,26 @@ final class InputVenueMessageContent {
             $instance->googlePlaceType = $data['google_place_type'];
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?float  $latitude = null,
+        ?float  $longitude = null,
+        ?string $title = null,
+        ?string $address = null,
+        ?string $foursquareId = null,
+        ?string $foursquareType = null,
+        ?string $googlePlaceId = null,
+        ?string $googlePlaceType = null,
+    ) {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        $this->title = $title;
+        $this->address = $address;
+        $this->foursquareId = $foursquareId;
+        $this->foursquareType = $foursquareType;
+        $this->googlePlaceId = $googlePlaceId;
+        $this->googlePlaceType = $googlePlaceType;
     }
 
     public function getLatitude(): ?float {

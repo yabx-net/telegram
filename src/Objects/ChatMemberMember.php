@@ -20,12 +20,22 @@ final class ChatMemberMember extends ChatMember {
      */
     protected ?User $user = null;
 
+    /**
+     * Until Date
+     *
+     * Optional. Date when the user's subscription will expire; Unix time
+     * @var int|null
+     */
+    protected ?int $untilDate = null;
+
     public function __construct(
         ?string $status = null,
         ?User   $user = null,
+        ?int    $untilDate = null,
     ) {
         $this->status = $status;
         $this->user = $user;
+        $this->untilDate = $untilDate;
     }
 
     public static function fromArray(array $data): ChatMemberMember {
@@ -35,6 +45,9 @@ final class ChatMemberMember extends ChatMember {
         }
         if (isset($data['user'])) {
             $instance->user = User::fromArray($data['user']);
+        }
+        if (isset($data['until_date'])) {
+            $instance->untilDate = $data['until_date'];
         }
         return $instance;
     }
@@ -54,6 +67,15 @@ final class ChatMemberMember extends ChatMember {
 
     public function setUser(?User $value): self {
         $this->user = $value;
+        return $this;
+    }
+
+    public function getUntilDate(): ?int {
+        return $this->untilDate;
+    }
+
+    public function setUntilDate(?int $value): self {
+        $this->untilDate = $value;
         return $this;
     }
 

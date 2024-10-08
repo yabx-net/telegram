@@ -31,7 +31,7 @@ final class ChatMemberRestricted extends ChatMember {
     /**
      * Can Send Messages
      *
-     * True, if the user is allowed to send text messages, contacts, invoices, locations and venues
+     * True, if the user is allowed to send text messages, contacts, giveaways, giveaway winners, invoices, locations and venues
      * @var bool|null
      */
     protected ?bool $canSendMessages = null;
@@ -143,7 +143,7 @@ final class ChatMemberRestricted extends ChatMember {
     /**
      * Until Date
      *
-     * Date when restrictions will be lifted for this user; unix time. If 0, then the user is restricted forever
+     * Date when restrictions will be lifted for this user; Unix time. If 0, then the user is restricted forever
      * @var int|null
      */
     protected ?int $untilDate = null;
