@@ -426,12 +426,13 @@ class BotApi {
         return Message::fromArray($this->request('sendVideoNote', $params, is_resource($videoNote) || is_resource($thumbnail)));
     }
 
-    public function sendPaidMedia(int|string $chatId, int $starCount, array $media, ?string $businessConnectionId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null): Message {
+    public function sendPaidMedia(int|string $chatId, int $starCount, array $media, ?string $payload = null, ?string $businessConnectionId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
         $params['star_count'] = $starCount;
         $params['media'] = $media;
+        if (isset($payload)) $params['payload'] = $payload;
         if (isset($caption)) $params['caption'] = $caption;
         if (isset($parseMode)) $params['parse_mode'] = $parseMode;
         if (isset($captionEntities)) $params['caption_entities'] = $captionEntities;
