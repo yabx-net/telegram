@@ -5,6 +5,7 @@ namespace Yabx\Telegram\Enum;
 enum ChatAction: string {
     case Typing = 'typing';
     case RecordVideo = 'record_video';
+    case UploadPhoto = 'upload_photo';
     case UploadVideo = 'upload_video';
     case RecordVoice = 'record_voice';
     case UploadVoice = 'upload_voice';
