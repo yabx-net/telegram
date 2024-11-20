@@ -8,9 +8,9 @@ final class InputPaidMediaPhoto extends InputPaidMedia {
      * Type
      *
      * Type of the media, must be photo
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'photo';
 
     /**
      * Media
@@ -32,20 +32,13 @@ final class InputPaidMediaPhoto extends InputPaidMedia {
     }
 
     public function __construct(
-        ?string $type = null,
         ?string $media = null,
     ) {
-        $this->type = $type;
         $this->media = $media;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getMedia(): ?string {

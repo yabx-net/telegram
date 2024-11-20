@@ -8,9 +8,9 @@ final class InputMediaAnimation extends AbstractObject {
      * Type
      *
      * Type of the result, must be animation
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'animation';
 
     /**
      * Media
@@ -93,7 +93,6 @@ final class InputMediaAnimation extends AbstractObject {
     protected ?bool $hasSpoiler = null;
 
     public function __construct(
-        ?string $type = null,
         ?string $media = null,
         ?string $thumbnail = null,
         ?string $caption = null,
@@ -105,7 +104,6 @@ final class InputMediaAnimation extends AbstractObject {
         ?int    $duration = null,
         ?bool   $hasSpoiler = null,
     ) {
-        $this->type = $type;
         $this->media = $media;
         $this->thumbnail = $thumbnail;
         $this->caption = $caption;
@@ -159,13 +157,8 @@ final class InputMediaAnimation extends AbstractObject {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getMedia(): ?string {

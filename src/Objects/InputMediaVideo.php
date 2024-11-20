@@ -8,9 +8,9 @@ final class InputMediaVideo extends AbstractObject {
      * Type
      *
      * Type of the result, must be video
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'video';
 
     /**
      * Media
@@ -101,7 +101,6 @@ final class InputMediaVideo extends AbstractObject {
     protected ?bool $hasSpoiler = null;
 
     public function __construct(
-        ?string $type = null,
         ?string $media = null,
         ?string $thumbnail = null,
         ?string $caption = null,
@@ -114,7 +113,6 @@ final class InputMediaVideo extends AbstractObject {
         ?bool   $supportsStreaming = null,
         ?bool   $hasSpoiler = null,
     ) {
-        $this->type = $type;
         $this->media = $media;
         $this->thumbnail = $thumbnail;
         $this->caption = $caption;
@@ -172,13 +170,8 @@ final class InputMediaVideo extends AbstractObject {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getMedia(): ?string {

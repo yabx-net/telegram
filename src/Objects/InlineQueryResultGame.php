@@ -8,9 +8,9 @@ final class InlineQueryResultGame extends InlineQueryResult {
      * Type
      *
      * Type of the result, must be game
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'game';
 
     /**
      * Id
@@ -37,12 +37,10 @@ final class InlineQueryResultGame extends InlineQueryResult {
     protected ?InlineKeyboardMarkup $replyMarkup = null;
 
     public function __construct(
-        ?string               $type = null,
         ?string               $id = null,
         ?string               $gameShortName = null,
         ?InlineKeyboardMarkup $replyMarkup = null,
     ) {
-        $this->type = $type;
         $this->id = $id;
         $this->gameShortName = $gameShortName;
         $this->replyMarkup = $replyMarkup;
@@ -65,13 +63,8 @@ final class InlineQueryResultGame extends InlineQueryResult {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getId(): ?string {

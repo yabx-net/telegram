@@ -8,9 +8,9 @@ final class InputPaidMediaVideo extends InputPaidMedia {
      * Type
      *
      * Type of the media, must be video
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'video';
 
     /**
      * Media
@@ -87,7 +87,6 @@ final class InputPaidMediaVideo extends InputPaidMedia {
     }
 
     public function __construct(
-        ?string $type = null,
         ?string $media = null,
         ?string $thumbnail = null,
         ?int    $width = null,
@@ -95,7 +94,6 @@ final class InputPaidMediaVideo extends InputPaidMedia {
         ?int    $duration = null,
         ?bool   $supportsStreaming = null,
     ) {
-        $this->type = $type;
         $this->media = $media;
         $this->thumbnail = $thumbnail;
         $this->width = $width;
@@ -104,13 +102,8 @@ final class InputPaidMediaVideo extends InputPaidMedia {
         $this->supportsStreaming = $supportsStreaming;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getMedia(): ?string {

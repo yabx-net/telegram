@@ -8,9 +8,9 @@ final class InlineQueryResultLocation extends InlineQueryResult {
      * Type
      *
      * Type of the result, must be location
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'location';
 
     /**
      * Id
@@ -117,7 +117,6 @@ final class InlineQueryResultLocation extends InlineQueryResult {
     protected ?int $thumbnailHeight = null;
 
     public function __construct(
-        ?string               $type = null,
         ?string               $id = null,
         ?float                $latitude = null,
         ?float                $longitude = null,
@@ -132,7 +131,6 @@ final class InlineQueryResultLocation extends InlineQueryResult {
         ?int                  $thumbnailWidth = null,
         ?int                  $thumbnailHeight = null,
     ) {
-        $this->type = $type;
         $this->id = $id;
         $this->latitude = $latitude;
         $this->longitude = $longitude;
@@ -195,13 +193,8 @@ final class InlineQueryResultLocation extends InlineQueryResult {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getId(): ?string {

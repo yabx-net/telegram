@@ -8,9 +8,9 @@ final class InputMediaDocument extends AbstractObject {
      * Type
      *
      * Type of the result, must be document
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'document';
 
     /**
      * Media
@@ -61,7 +61,6 @@ final class InputMediaDocument extends AbstractObject {
     protected ?bool $disableContentTypeDetection = null;
 
     public function __construct(
-        ?string $type = null,
         ?string $media = null,
         ?string $thumbnail = null,
         ?string $caption = null,
@@ -69,7 +68,6 @@ final class InputMediaDocument extends AbstractObject {
         ?array  $captionEntities = null,
         ?bool   $disableContentTypeDetection = null,
     ) {
-        $this->type = $type;
         $this->media = $media;
         $this->thumbnail = $thumbnail;
         $this->caption = $caption;
@@ -107,13 +105,8 @@ final class InputMediaDocument extends AbstractObject {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getMedia(): ?string {

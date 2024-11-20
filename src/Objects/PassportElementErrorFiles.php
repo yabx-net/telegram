@@ -8,9 +8,9 @@ final class PassportElementErrorFiles extends PassportElementError {
      * Source
      *
      * Error source, must be files
-     * @var string|null
+     * @var string
      */
-    protected ?string $source = null;
+    protected string $source = 'files';
 
     /**
      * Type
@@ -57,24 +57,17 @@ final class PassportElementErrorFiles extends PassportElementError {
     }
 
     public function __construct(
-        ?string $source = null,
         ?string $type = null,
         ?array  $fileHashes = null,
         ?string $message = null,
     ) {
-        $this->source = $source;
         $this->type = $type;
         $this->fileHashes = $fileHashes;
         $this->message = $message;
     }
 
-    public function getSource(): ?string {
+    public function getSource(): string {
         return $this->source;
-    }
-
-    public function setSource(?string $value): self {
-        $this->source = $value;
-        return $this;
     }
 
     public function getType(): ?string {

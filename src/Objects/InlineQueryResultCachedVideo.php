@@ -8,9 +8,9 @@ final class InlineQueryResultCachedVideo extends InlineQueryResult {
      * Type
      *
      * Type of the result, must be video
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'video';
 
     /**
      * Id
@@ -93,7 +93,6 @@ final class InlineQueryResultCachedVideo extends InlineQueryResult {
     protected ?InputMessageContent $inputMessageContent = null;
 
     public function __construct(
-        ?string               $type = null,
         ?string               $id = null,
         ?string               $videoFileId = null,
         ?string               $title = null,
@@ -105,7 +104,6 @@ final class InlineQueryResultCachedVideo extends InlineQueryResult {
         ?InlineKeyboardMarkup $replyMarkup = null,
         ?InputMessageContent  $inputMessageContent = null,
     ) {
-        $this->type = $type;
         $this->id = $id;
         $this->videoFileId = $videoFileId;
         $this->title = $title;
@@ -159,13 +157,8 @@ final class InlineQueryResultCachedVideo extends InlineQueryResult {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getId(): ?string {

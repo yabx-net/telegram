@@ -32,10 +32,8 @@ final class ReactionTypeEmoji extends ReactionType {
     }
 
     public function __construct(
-        ?string $type = null,
         ?string $emoji = null,
     ) {
-        $this->type = $type;
         $this->emoji = $emoji;
     }
 

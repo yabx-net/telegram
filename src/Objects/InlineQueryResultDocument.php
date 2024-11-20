@@ -8,9 +8,9 @@ final class InlineQueryResultDocument extends InlineQueryResult {
      * Type
      *
      * Type of the result, must be document
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'document';
 
     /**
      * Id
@@ -117,7 +117,6 @@ final class InlineQueryResultDocument extends InlineQueryResult {
     protected ?int $thumbnailHeight = null;
 
     public function __construct(
-        ?string               $type = null,
         ?string               $id = null,
         ?string               $title = null,
         ?string               $caption = null,
@@ -132,7 +131,6 @@ final class InlineQueryResultDocument extends InlineQueryResult {
         ?int                  $thumbnailWidth = null,
         ?int                  $thumbnailHeight = null,
     ) {
-        $this->type = $type;
         $this->id = $id;
         $this->title = $title;
         $this->caption = $caption;

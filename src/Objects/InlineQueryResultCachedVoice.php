@@ -8,9 +8,9 @@ final class InlineQueryResultCachedVoice extends InlineQueryResult {
      * Type
      *
      * Type of the result, must be voice
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'voice';
 
     /**
      * Id
@@ -77,7 +77,6 @@ final class InlineQueryResultCachedVoice extends InlineQueryResult {
     protected ?InputMessageContent $inputMessageContent = null;
 
     public function __construct(
-        ?string               $type = null,
         ?string               $id = null,
         ?string               $voiceFileId = null,
         ?string               $title = null,
@@ -87,7 +86,6 @@ final class InlineQueryResultCachedVoice extends InlineQueryResult {
         ?InlineKeyboardMarkup $replyMarkup = null,
         ?InputMessageContent  $inputMessageContent = null,
     ) {
-        $this->type = $type;
         $this->id = $id;
         $this->voiceFileId = $voiceFileId;
         $this->title = $title;
@@ -133,13 +131,8 @@ final class InlineQueryResultCachedVoice extends InlineQueryResult {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getId(): ?string {

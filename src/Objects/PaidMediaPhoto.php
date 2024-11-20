@@ -21,10 +21,8 @@ final class PaidMediaPhoto extends PaidMedia {
     protected ?array $photo = null;
 
     public function __construct(
-        ?string $type = null,
         ?array  $photo = null,
     ) {
-        $this->type = $type;
         $this->photo = $photo;
     }
 

@@ -8,9 +8,9 @@ final class InlineQueryResultVenue extends InlineQueryResult {
      * Type
      *
      * Type of the result, must be venue
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'venue';
 
     /**
      * Id
@@ -125,7 +125,6 @@ final class InlineQueryResultVenue extends InlineQueryResult {
     protected ?int $thumbnailHeight = null;
 
     public function __construct(
-        ?string               $type = null,
         ?string               $id = null,
         ?float                $latitude = null,
         ?float                $longitude = null,
@@ -141,7 +140,6 @@ final class InlineQueryResultVenue extends InlineQueryResult {
         ?int                  $thumbnailWidth = null,
         ?int                  $thumbnailHeight = null,
     ) {
-        $this->type = $type;
         $this->id = $id;
         $this->latitude = $latitude;
         $this->longitude = $longitude;

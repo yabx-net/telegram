@@ -8,9 +8,9 @@ final class InputMediaPhoto extends AbstractObject {
      * Type
      *
      * Type of the result, must be photo
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'photo';
 
     /**
      * Media
@@ -61,7 +61,6 @@ final class InputMediaPhoto extends AbstractObject {
     protected ?bool $hasSpoiler = null;
 
     public function __construct(
-        ?string $type = null,
         ?string $media = null,
         ?string $caption = null,
         ?string $parseMode = null,
@@ -69,7 +68,6 @@ final class InputMediaPhoto extends AbstractObject {
         ?bool   $showCaptionAboveMedia = null,
         ?bool   $hasSpoiler = null,
     ) {
-        $this->type = $type;
         $this->media = $media;
         $this->caption = $caption;
         $this->parseMode = $parseMode;
@@ -107,13 +105,8 @@ final class InputMediaPhoto extends AbstractObject {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getMedia(): ?string {

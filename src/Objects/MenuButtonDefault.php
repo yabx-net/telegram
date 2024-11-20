@@ -8,9 +8,9 @@ final class MenuButtonDefault extends MenuButton {
      * Type
      *
      * Type of the button, must be default
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'default';
 
     public static function fromArray(array $data): MenuButtonDefault {
         $instance = new self();
@@ -20,19 +20,8 @@ final class MenuButtonDefault extends MenuButton {
         return $instance;
     }
 
-    public function __construct(
-        ?string $type = null,
-    ) {
-        $this->type = $type;
-    }
-
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
 }

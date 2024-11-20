@@ -8,9 +8,9 @@ final class PassportElementErrorTranslationFile extends PassportElementError {
      * Source
      *
      * Error source, must be translation_file
-     * @var string|null
+     * @var string
      */
-    protected ?string $source = null;
+    protected string $source = 'translation_file';
 
     /**
      * Type
@@ -54,12 +54,10 @@ final class PassportElementErrorTranslationFile extends PassportElementError {
     }
 
     public function __construct(
-        ?string $source = null,
         ?string $type = null,
         ?string $fileHash = null,
         ?string $message = null,
     ) {
-        $this->source = $source;
         $this->type = $type;
         $this->fileHash = $fileHash;
         $this->message = $message;

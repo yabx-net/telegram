@@ -8,9 +8,9 @@ final class MenuButtonWebApp extends MenuButton {
      * Type
      *
      * Type of the button, must be web_app
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'web_app';
 
     /**
      * Text
@@ -43,22 +43,15 @@ final class MenuButtonWebApp extends MenuButton {
     }
 
     public function __construct(
-        ?string     $type = null,
         ?string     $text = null,
         ?WebAppInfo $webApp = null,
     ) {
-        $this->type = $type;
         $this->text = $text;
         $this->webApp = $webApp;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getText(): ?string {

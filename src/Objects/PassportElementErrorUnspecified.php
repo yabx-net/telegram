@@ -8,9 +8,9 @@ final class PassportElementErrorUnspecified extends PassportElementError {
      * Source
      *
      * Error source, must be unspecified
-     * @var string|null
+     * @var string
      */
-    protected ?string $source = null;
+    protected string $source = 'unspecified';
 
     /**
      * Type
@@ -54,24 +54,17 @@ final class PassportElementErrorUnspecified extends PassportElementError {
     }
 
     public function __construct(
-        ?string $source = null,
         ?string $type = null,
         ?string $elementHash = null,
         ?string $message = null,
     ) {
-        $this->source = $source;
         $this->type = $type;
         $this->elementHash = $elementHash;
         $this->message = $message;
     }
 
-    public function getSource(): ?string {
+    public function getSource(): string {
         return $this->source;
-    }
-
-    public function setSource(?string $value): self {
-        $this->source = $value;
-        return $this;
     }
 
     public function getType(): ?string {

@@ -8,9 +8,9 @@ final class PassportElementErrorDataField extends PassportElementError {
      * Source
      *
      * Error source, must be data
-     * @var string|null
+     * @var string
      */
-    protected ?string $source = null;
+    protected string $source = 'data';
 
     /**
      * Type
@@ -65,26 +65,19 @@ final class PassportElementErrorDataField extends PassportElementError {
     }
 
     public function __construct(
-        ?string $source = null,
         ?string $type = null,
         ?string $fieldName = null,
         ?string $dataHash = null,
         ?string $message = null,
     ) {
-        $this->source = $source;
         $this->type = $type;
         $this->fieldName = $fieldName;
         $this->dataHash = $dataHash;
         $this->message = $message;
     }
 
-    public function getSource(): ?string {
+    public function getSource(): string {
         return $this->source;
-    }
-
-    public function setSource(?string $value): self {
-        $this->source = $value;
-        return $this;
     }
 
     public function getType(): ?string {
