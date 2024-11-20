@@ -8,9 +8,9 @@ final class PaidMediaVideo extends PaidMedia {
      * Type
      *
      * Type of the paid media, always “video”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'video';
 
     /**
      * Video
@@ -21,10 +21,8 @@ final class PaidMediaVideo extends PaidMedia {
     protected ?Video $video = null;
 
     public function __construct(
-        ?string $type = null,
         ?Video  $video = null,
     ) {
-        $this->type = $type;
         $this->video = $video;
     }
 
@@ -39,13 +37,8 @@ final class PaidMediaVideo extends PaidMedia {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getVideo(): ?Video {

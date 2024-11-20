@@ -8,9 +8,9 @@ final class BotCommandScopeChatAdministrators extends BotCommandScope {
      * Type
      *
      * Scope type, must be chat_administrators
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'chat_administrators';
 
     /**
      * Chat Id
@@ -21,10 +21,8 @@ final class BotCommandScopeChatAdministrators extends BotCommandScope {
     protected int|string|null $chatId = null;
 
     public function __construct(
-        ?string         $type = null,
         int|string|null $chatId = null,
     ) {
-        $this->type = $type;
         $this->chatId = $chatId;
     }
 
@@ -39,13 +37,8 @@ final class BotCommandScopeChatAdministrators extends BotCommandScope {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getChatId(): int|string|null {

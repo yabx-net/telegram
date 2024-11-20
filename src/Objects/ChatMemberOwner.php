@@ -8,9 +8,9 @@ final class ChatMemberOwner extends ChatMember {
      * Status
      *
      * The member's status in the chat, always “creator”
-     * @var string|null
+     * @var string
      */
-    protected ?string $status = null;
+    protected string $status = 'creator';
 
     /**
      * User
@@ -37,12 +37,10 @@ final class ChatMemberOwner extends ChatMember {
     protected ?string $customTitle = null;
 
     public function __construct(
-        ?string $status = null,
         ?User   $user = null,
         ?bool   $isAnonymous = null,
         ?string $customTitle = null,
     ) {
-        $this->status = $status;
         $this->user = $user;
         $this->isAnonymous = $isAnonymous;
         $this->customTitle = $customTitle;
@@ -65,13 +63,8 @@ final class ChatMemberOwner extends ChatMember {
         return $instance;
     }
 
-    public function getStatus(): ?string {
+    public function getStatus(): string {
         return $this->status;
-    }
-
-    public function setStatus(?string $value): self {
-        $this->status = $value;
-        return $this;
     }
 
     public function getUser(): ?User {

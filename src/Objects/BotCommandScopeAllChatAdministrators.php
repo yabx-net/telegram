@@ -7,15 +7,9 @@ final class BotCommandScopeAllChatAdministrators extends BotCommandScope {
      * Type
      *
      * Scope type, must be all_chat_administrators
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
-
-    public function __construct(
-        ?string $type = null,
-    ) {
-        $this->type = $type;
-    }
+    protected string $type = 'all_chat_administrators';
 
     public static function fromArray(array $data): BotCommandScopeAllChatAdministrators {
         $instance = new self();
@@ -25,13 +19,8 @@ final class BotCommandScopeAllChatAdministrators extends BotCommandScope {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
 }

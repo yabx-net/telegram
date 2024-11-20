@@ -8,9 +8,9 @@ final class BackgroundFillSolid extends AbstractObject {
      * Type
      *
      * Type of the background fill, always “solid”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'solid';
 
     /**
      * Color
@@ -21,10 +21,8 @@ final class BackgroundFillSolid extends AbstractObject {
     protected ?int $color = null;
 
     public function __construct(
-        ?string $type = null,
         ?int    $color = null,
     ) {
-        $this->type = $type;
         $this->color = $color;
     }
 
@@ -39,13 +37,8 @@ final class BackgroundFillSolid extends AbstractObject {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getColor(): ?int {

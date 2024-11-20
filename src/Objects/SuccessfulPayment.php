@@ -29,6 +29,30 @@ final class SuccessfulPayment extends AbstractObject {
     protected ?string $invoicePayload = null;
 
     /**
+     * Subscription Expiration Date
+     *
+     * Optional. Expiration date of the subscription, in Unix time; for recurring payments only
+     * @var int|null
+     */
+    protected ?int $subscriptionExpirationDate = null;
+
+    /**
+     * Is Recurring
+     *
+     * Optional. True, if the payment is a recurring payment for a subscription
+     * @var bool|null
+     */
+    protected ?bool $isRecurring = null;
+
+    /**
+     * Is First Recurring
+     *
+     * Optional. True, if the payment is the first payment for a subscription
+     * @var bool|null
+     */
+    protected ?bool $isFirstRecurring = null;
+
+    /**
      * Shipping Option Id
      *
      * Optional. Identifier of the shipping option chosen by the user
@@ -71,6 +95,15 @@ final class SuccessfulPayment extends AbstractObject {
         if (isset($data['invoice_payload'])) {
             $instance->invoicePayload = $data['invoice_payload'];
         }
+        if (isset($data['subscription_expiration_date'])) {
+            $instance->subscriptionExpirationDate = $data['subscription_expiration_date'];
+        }
+        if (isset($data['is_recurring'])) {
+            $instance->isRecurring = $data['is_recurring'];
+        }
+        if (isset($data['is_first_recurring'])) {
+            $instance->isFirstRecurring = $data['is_first_recurring'];
+        }
         if (isset($data['shipping_option_id'])) {
             $instance->shippingOptionId = $data['shipping_option_id'];
         }
@@ -90,6 +123,9 @@ final class SuccessfulPayment extends AbstractObject {
         ?string    $currency = null,
         ?int       $totalAmount = null,
         ?string    $invoicePayload = null,
+        ?int       $subscriptionExpirationDate = null,
+        ?bool      $isRecurring = null,
+        ?bool      $isFirstRecurring = null,
         ?string    $shippingOptionId = null,
         ?OrderInfo $orderInfo = null,
         ?string    $telegramPaymentChargeId = null,
@@ -98,6 +134,9 @@ final class SuccessfulPayment extends AbstractObject {
         $this->currency = $currency;
         $this->totalAmount = $totalAmount;
         $this->invoicePayload = $invoicePayload;
+        $this->subscriptionExpirationDate = $subscriptionExpirationDate;
+        $this->isRecurring = $isRecurring;
+        $this->isFirstRecurring = $isFirstRecurring;
         $this->shippingOptionId = $shippingOptionId;
         $this->orderInfo = $orderInfo;
         $this->telegramPaymentChargeId = $telegramPaymentChargeId;
@@ -128,6 +167,33 @@ final class SuccessfulPayment extends AbstractObject {
 
     public function setInvoicePayload(?string $value): self {
         $this->invoicePayload = $value;
+        return $this;
+    }
+
+    public function getSubscriptionExpirationDate(): ?int {
+        return $this->subscriptionExpirationDate;
+    }
+
+    public function setSubscriptionExpirationDate(?int $value): self {
+        $this->subscriptionExpirationDate = $value;
+        return $this;
+    }
+
+    public function getIsRecurring(): ?bool {
+        return $this->isRecurring;
+    }
+
+    public function setIsRecurring(?bool $value): self {
+        $this->isRecurring = $value;
+        return $this;
+    }
+
+    public function getIsFirstRecurring(): ?bool {
+        return $this->isFirstRecurring;
+    }
+
+    public function setIsFirstRecurring(?bool $value): self {
+        $this->isFirstRecurring = $value;
         return $this;
     }
 

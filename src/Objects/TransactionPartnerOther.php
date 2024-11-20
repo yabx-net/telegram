@@ -8,9 +8,9 @@ final class TransactionPartnerOther extends TransactionPartner {
      * Type
      *
      * Type of the transaction partner, always “other”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'other';
 
     public static function fromArray(array $data): TransactionPartnerOther {
         $instance = new self();
@@ -20,19 +20,8 @@ final class TransactionPartnerOther extends TransactionPartner {
         return $instance;
     }
 
-    public function __construct(
-        ?string $type = null,
-    ) {
-        $this->type = $type;
-    }
-
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
 }

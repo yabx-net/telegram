@@ -8,9 +8,9 @@ final class InlineQueryResultCachedGif extends InlineQueryResult {
      * Type
      *
      * Type of the result, must be gif
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'gif';
 
     /**
      * Id
@@ -85,7 +85,6 @@ final class InlineQueryResultCachedGif extends InlineQueryResult {
     protected ?InputMessageContent $inputMessageContent = null;
 
     public function __construct(
-        ?string               $type = null,
         ?string               $id = null,
         ?string               $gifFileId = null,
         ?string               $title = null,
@@ -96,7 +95,6 @@ final class InlineQueryResultCachedGif extends InlineQueryResult {
         ?InlineKeyboardMarkup $replyMarkup = null,
         ?InputMessageContent  $inputMessageContent = null,
     ) {
-        $this->type = $type;
         $this->id = $id;
         $this->gifFileId = $gifFileId;
         $this->title = $title;
@@ -146,13 +144,8 @@ final class InlineQueryResultCachedGif extends InlineQueryResult {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getId(): ?string {

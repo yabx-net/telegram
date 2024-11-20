@@ -8,9 +8,9 @@ final class BackgroundFillFreeformGradient extends BackgroundFill {
      * Type
      *
      * Type of the background fill, always “freeform_gradient”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'freeform_gradient';
 
     /**
      * Colors
@@ -21,10 +21,8 @@ final class BackgroundFillFreeformGradient extends BackgroundFill {
     protected ?array $colors = null;
 
     public function __construct(
-        ?string $type = null,
-        ?array  $colors = null,
+        ?array $colors = null,
     ) {
-        $this->type = $type;
         $this->colors = $colors;
     }
 
@@ -42,13 +40,8 @@ final class BackgroundFillFreeformGradient extends BackgroundFill {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getColors(): ?array {

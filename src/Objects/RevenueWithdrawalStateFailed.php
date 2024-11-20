@@ -8,9 +8,9 @@ final class RevenueWithdrawalStateFailed extends RevenueWithdrawalState {
      * Type
      *
      * Type of the state, always “failed”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'failed';
 
     public static function fromArray(array $data): RevenueWithdrawalStateFailed {
         $instance = new self();
@@ -20,19 +20,8 @@ final class RevenueWithdrawalStateFailed extends RevenueWithdrawalState {
         return $instance;
     }
 
-    public function __construct(
-        ?string $type = null,
-    ) {
-        $this->type = $type;
-    }
-
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
 }

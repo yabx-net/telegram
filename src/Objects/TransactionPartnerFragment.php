@@ -8,9 +8,9 @@ final class TransactionPartnerFragment extends TransactionPartner {
      * Type
      *
      * Type of the transaction partner, always “fragment”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'fragment';
 
     /**
      * Withdrawal State
@@ -32,20 +32,13 @@ final class TransactionPartnerFragment extends TransactionPartner {
     }
 
     public function __construct(
-        ?string                 $type = null,
         ?RevenueWithdrawalState $withdrawalState = null,
     ) {
-        $this->type = $type;
         $this->withdrawalState = $withdrawalState;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getWithdrawalState(): ?RevenueWithdrawalState {

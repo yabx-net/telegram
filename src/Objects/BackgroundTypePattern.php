@@ -8,9 +8,9 @@ final class BackgroundTypePattern extends BackgroundType {
      * Type
      *
      * Type of the background, always “pattern”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'pattern';
 
     /**
      * Document
@@ -53,14 +53,12 @@ final class BackgroundTypePattern extends BackgroundType {
     protected ?bool $isMoving = null;
 
     public function __construct(
-        ?string         $type = null,
         ?Document       $document = null,
         ?BackgroundFill $fill = null,
         ?int            $intensity = null,
         ?bool           $isInverted = null,
         ?bool           $isMoving = null,
     ) {
-        $this->type = $type;
         $this->document = $document;
         $this->fill = $fill;
         $this->intensity = $intensity;
@@ -91,13 +89,8 @@ final class BackgroundTypePattern extends BackgroundType {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getDocument(): ?Document {

@@ -8,9 +8,9 @@ final class ReactionTypePaid extends ReactionType {
      * Type
      *
      * Type of the reaction, always “paid”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'paid';
 
     public static function fromArray(array $data): ReactionTypePaid {
         $instance = new self();
@@ -20,19 +20,8 @@ final class ReactionTypePaid extends ReactionType {
         return $instance;
     }
 
-    public function __construct(
-        ?string $type = null,
-    ) {
-        $this->type = $type;
-    }
-
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
 }

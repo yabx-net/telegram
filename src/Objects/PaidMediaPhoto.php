@@ -8,9 +8,9 @@ final class PaidMediaPhoto extends PaidMedia {
      * Type
      *
      * Type of the paid media, always “photo”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'photo';
 
     /**
      * Photo
@@ -42,13 +42,8 @@ final class PaidMediaPhoto extends PaidMedia {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getPhoto(): ?array {

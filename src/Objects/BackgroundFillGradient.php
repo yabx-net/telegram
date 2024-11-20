@@ -8,9 +8,9 @@ final class BackgroundFillGradient extends AbstractObject {
      * Type
      *
      * Type of the background fill, always “gradient”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'gradient';
 
     /**
      * Top Color
@@ -37,12 +37,10 @@ final class BackgroundFillGradient extends AbstractObject {
     protected ?int $rotationAngle = null;
 
     public function __construct(
-        ?string $type = null,
         ?int    $topColor = null,
         ?int    $bottomColor = null,
         ?int    $rotationAngle = null,
     ) {
-        $this->type = $type;
         $this->topColor = $topColor;
         $this->bottomColor = $bottomColor;
         $this->rotationAngle = $rotationAngle;
@@ -65,13 +63,8 @@ final class BackgroundFillGradient extends AbstractObject {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getTopColor(): ?int {

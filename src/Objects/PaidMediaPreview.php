@@ -8,9 +8,9 @@ final class PaidMediaPreview extends PaidMedia {
      * Type
      *
      * Type of the paid media, always “preview”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'preview';
 
     /**
      * Width
@@ -54,24 +54,17 @@ final class PaidMediaPreview extends PaidMedia {
     }
 
     public function __construct(
-        ?string $type = null,
         ?int    $width = null,
         ?int    $height = null,
         ?int    $duration = null,
     ) {
-        $this->type = $type;
         $this->width = $width;
         $this->height = $height;
         $this->duration = $duration;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getWidth(): ?int {

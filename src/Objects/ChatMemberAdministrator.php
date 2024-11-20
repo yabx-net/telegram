@@ -8,9 +8,9 @@ class ChatMemberAdministrator extends ChatMember {
      * Status
      *
      * The member's status in the chat, always “administrator”
-     * @var string|null
+     * @var string
      */
-    protected ?string $status = null;
+    protected string $status = 'administrator';
 
     /**
      * User
@@ -157,7 +157,6 @@ class ChatMemberAdministrator extends ChatMember {
     protected ?string $customTitle = null;
 
     public function __construct(
-        ?string $status = null,
         ?User   $user = null,
         ?bool   $canBeEdited = null,
         ?bool   $isAnonymous = null,
@@ -177,7 +176,6 @@ class ChatMemberAdministrator extends ChatMember {
         ?bool   $canManageTopics = null,
         ?string $customTitle = null,
     ) {
-        $this->status = $status;
         $this->user = $user;
         $this->canBeEdited = $canBeEdited;
         $this->isAnonymous = $isAnonymous;
@@ -260,13 +258,8 @@ class ChatMemberAdministrator extends ChatMember {
         return $instance;
     }
 
-    public function getStatus(): ?string {
+    public function getStatus(): string {
         return $this->status;
-    }
-
-    public function setStatus(?string $value): self {
-        $this->status = $value;
-        return $this;
     }
 
     public function getUser(): ?User {

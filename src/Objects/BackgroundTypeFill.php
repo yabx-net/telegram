@@ -8,9 +8,9 @@ final class BackgroundTypeFill extends BackgroundType {
      * Type
      *
      * Type of the background, always “fill”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'fill';
 
     /**
      * Fill
@@ -29,11 +29,9 @@ final class BackgroundTypeFill extends BackgroundType {
     protected ?int $darkThemeDimming = null;
 
     public function __construct(
-        ?string         $type = null,
         ?BackgroundFill $fill = null,
         ?int            $darkThemeDimming = null,
     ) {
-        $this->type = $type;
         $this->fill = $fill;
         $this->darkThemeDimming = $darkThemeDimming;
     }
@@ -52,13 +50,8 @@ final class BackgroundTypeFill extends BackgroundType {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getFill(): ?BackgroundFill {

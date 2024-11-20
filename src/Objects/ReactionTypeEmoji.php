@@ -8,14 +8,14 @@ final class ReactionTypeEmoji extends ReactionType {
      * Type
      *
      * Type of the reaction, always “emoji”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'emoji';
 
     /**
      * Emoji
      *
-     * Reaction emoji. Currently, it can be one of "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""
+     * Reaction emoji.
      * @var string|null
      */
     protected ?string $emoji = null;
@@ -39,13 +39,8 @@ final class ReactionTypeEmoji extends ReactionType {
         $this->emoji = $emoji;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getEmoji(): ?string {

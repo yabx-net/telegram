@@ -8,9 +8,9 @@ final class BackgroundTypeChatTheme extends BackgroundType {
      * Type
      *
      * Type of the background, always “chat_theme”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'chat_theme';
 
     /**
      * Theme Name
@@ -21,10 +21,8 @@ final class BackgroundTypeChatTheme extends BackgroundType {
     protected ?string $themeName = null;
 
     public function __construct(
-        ?string $type = null,
         ?string $themeName = null,
     ) {
-        $this->type = $type;
         $this->themeName = $themeName;
     }
 
@@ -39,13 +37,8 @@ final class BackgroundTypeChatTheme extends BackgroundType {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getThemeName(): ?string {

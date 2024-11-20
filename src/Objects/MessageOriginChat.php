@@ -8,9 +8,9 @@ final class MessageOriginChat extends MessageOrigin {
      * Type
      *
      * Type of the message origin, always “chat”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'chat';
 
     /**
      * Date
@@ -54,24 +54,17 @@ final class MessageOriginChat extends MessageOrigin {
     }
 
     public function __construct(
-        ?string $type = null,
         ?int    $date = null,
         ?Chat   $senderChat = null,
         ?string $authorSignature = null,
     ) {
-        $this->type = $type;
         $this->date = $date;
         $this->senderChat = $senderChat;
         $this->authorSignature = $authorSignature;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getDate(): ?int {

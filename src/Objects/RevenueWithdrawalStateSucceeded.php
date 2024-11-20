@@ -8,9 +8,9 @@ final class RevenueWithdrawalStateSucceeded extends RevenueWithdrawalState {
      * Type
      *
      * Type of the state, always “succeeded”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'succeeded';
 
     /**
      * Date
@@ -43,22 +43,15 @@ final class RevenueWithdrawalStateSucceeded extends RevenueWithdrawalState {
     }
 
     public function __construct(
-        ?string $type = null,
         ?int    $date = null,
         ?string $url = null,
     ) {
-        $this->type = $type;
         $this->date = $date;
         $this->url = $url;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getDate(): ?int {

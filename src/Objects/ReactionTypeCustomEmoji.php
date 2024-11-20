@@ -8,9 +8,9 @@ final class ReactionTypeCustomEmoji extends ReactionType {
      * Type
      *
      * Type of the reaction, always “custom_emoji”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'custom_emoji';
 
     /**
      * Custom Emoji Id
@@ -32,20 +32,13 @@ final class ReactionTypeCustomEmoji extends ReactionType {
     }
 
     public function __construct(
-        ?string $type = null,
         ?string $customEmojiId = null,
     ) {
-        $this->type = $type;
         $this->customEmojiId = $customEmojiId;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getCustomEmojiId(): ?string {

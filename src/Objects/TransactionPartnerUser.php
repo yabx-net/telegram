@@ -2,15 +2,15 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class TransactionPartnerUser extends TransactionPartner {
+final class TransactionPartnerUser extends AbstractObject {
 
     /**
      * Type
      *
      * Type of the transaction partner, always “user”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'user';
 
     /**
      * User
@@ -29,6 +29,14 @@ final class TransactionPartnerUser extends TransactionPartner {
     protected ?string $invoicePayload = null;
 
     /**
+     * Subscription Period
+     *
+     * Optional. The duration of the paid subscription
+     * @var int|null
+     */
+    protected ?int $subscriptionPeriod = null;
+
+    /**
      * Paid Media
      *
      * Optional. Information about the paid media bought by the user
@@ -44,6 +52,14 @@ final class TransactionPartnerUser extends TransactionPartner {
      */
     protected ?string $paidMediaPayload = null;
 
+    /**
+     * Gift
+     *
+     * Optional. The gift sent to the user by the bot
+     * @var string|null
+     */
+    protected ?string $gift = null;
+
     public static function fromArray(array $data): TransactionPartnerUser {
         $instance = new self();
         if (isset($data['type'])) {
@@ -55,6 +71,9 @@ final class TransactionPartnerUser extends TransactionPartner {
         if (isset($data['invoice_payload'])) {
             $instance->invoicePayload = $data['invoice_payload'];
         }
+        if (isset($data['subscription_period'])) {
+            $instance->subscriptionPeriod = $data['subscription_period'];
+        }
         if (isset($data['paid_media'])) {
             $instance->paidMedia = [];
             foreach ($data['paid_media'] as $item) {
@@ -64,30 +83,30 @@ final class TransactionPartnerUser extends TransactionPartner {
         if (isset($data['paid_media_payload'])) {
             $instance->paidMediaPayload = $data['paid_media_payload'];
         }
+        if (isset($data['gift'])) {
+            $instance->gift = $data['gift'];
+        }
         return $instance;
     }
 
     public function __construct(
-        ?string $type = null,
         ?User   $user = null,
         ?string $invoicePayload = null,
+        ?int    $subscriptionPeriod = null,
         ?array  $paidMedia = null,
         ?string $paidMediaPayload = null,
+        ?string $gift = null,
     ) {
-        $this->type = $type;
         $this->user = $user;
         $this->invoicePayload = $invoicePayload;
+        $this->subscriptionPeriod = $subscriptionPeriod;
         $this->paidMedia = $paidMedia;
         $this->paidMediaPayload = $paidMediaPayload;
+        $this->gift = $gift;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getUser(): ?User {
@@ -108,6 +127,15 @@ final class TransactionPartnerUser extends TransactionPartner {
         return $this;
     }
 
+    public function getSubscriptionPeriod(): ?int {
+        return $this->subscriptionPeriod;
+    }
+
+    public function setSubscriptionPeriod(?int $value): self {
+        $this->subscriptionPeriod = $value;
+        return $this;
+    }
+
     public function getPaidMedia(): ?array {
         return $this->paidMedia;
     }
@@ -123,6 +151,15 @@ final class TransactionPartnerUser extends TransactionPartner {
 
     public function setPaidMediaPayload(?string $value): self {
         $this->paidMediaPayload = $value;
+        return $this;
+    }
+
+    public function getGift(): ?string {
+        return $this->gift;
+    }
+
+    public function setGift(?string $value): self {
+        $this->gift = $value;
         return $this;
     }
 

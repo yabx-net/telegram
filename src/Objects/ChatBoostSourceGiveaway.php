@@ -8,9 +8,9 @@ final class ChatBoostSourceGiveaway extends AbstractObject {
      * Source
      *
      * Source of the boost, always “giveaway”
-     * @var string|null
+     * @var string
      */
-    protected ?string $source = null;
+    protected string $source = 'giveaway';
 
     /**
      * Giveaway Message Id
@@ -37,12 +37,10 @@ final class ChatBoostSourceGiveaway extends AbstractObject {
     protected ?bool $isUnclaimed = null;
 
     public function __construct(
-        ?string $source = null,
         ?int    $giveawayMessageId = null,
         ?User   $user = null,
         ?bool   $isUnclaimed = null,
     ) {
-        $this->source = $source;
         $this->giveawayMessageId = $giveawayMessageId;
         $this->user = $user;
         $this->isUnclaimed = $isUnclaimed;
@@ -65,13 +63,8 @@ final class ChatBoostSourceGiveaway extends AbstractObject {
         return $instance;
     }
 
-    public function getSource(): ?string {
+    public function getSource(): string {
         return $this->source;
-    }
-
-    public function setSource(?string $value): self {
-        $this->source = $value;
-        return $this;
     }
 
     public function getGiveawayMessageId(): ?int {

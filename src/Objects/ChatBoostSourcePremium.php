@@ -8,9 +8,9 @@ final class ChatBoostSourcePremium extends AbstractObject {
      * Source
      *
      * Source of the boost, always “premium”
-     * @var string|null
+     * @var string
      */
-    protected ?string $source = null;
+    protected string $source = 'premium';
 
     /**
      * User
@@ -21,10 +21,8 @@ final class ChatBoostSourcePremium extends AbstractObject {
     protected ?User $user = null;
 
     public function __construct(
-        ?string $source = null,
         ?User   $user = null,
     ) {
-        $this->source = $source;
         $this->user = $user;
     }
 
@@ -39,13 +37,8 @@ final class ChatBoostSourcePremium extends AbstractObject {
         return $instance;
     }
 
-    public function getSource(): ?string {
+    public function getSource(): string {
         return $this->source;
-    }
-
-    public function setSource(?string $value): self {
-        $this->source = $value;
-        return $this;
     }
 
     public function getUser(): ?User {

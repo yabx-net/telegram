@@ -8,9 +8,9 @@ final class BotCommandScopeChatMember extends BotCommandScope {
      * Type
      *
      * Scope type, must be chat_member
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'chat_member';
 
     /**
      * Chat Id
@@ -29,11 +29,9 @@ final class BotCommandScopeChatMember extends BotCommandScope {
     protected ?int $userId = null;
 
     public function __construct(
-        ?string         $type = null,
         int|string|null $chatId = null,
         ?int            $userId = null,
     ) {
-        $this->type = $type;
         $this->chatId = $chatId;
         $this->userId = $userId;
     }
@@ -52,13 +50,8 @@ final class BotCommandScopeChatMember extends BotCommandScope {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getChatId(): int|string|null {

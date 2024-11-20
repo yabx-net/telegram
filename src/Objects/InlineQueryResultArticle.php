@@ -8,9 +8,9 @@ final class InlineQueryResultArticle extends InlineQueryResult {
      * Type
      *
      * Type of the result, must be article
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'article';
 
     /**
      * Id
@@ -93,7 +93,6 @@ final class InlineQueryResultArticle extends InlineQueryResult {
     protected ?int $thumbnailHeight = null;
 
     public function __construct(
-        ?string               $type = null,
         ?string               $id = null,
         ?string               $title = null,
         ?InputMessageContent  $inputMessageContent = null,
@@ -105,7 +104,6 @@ final class InlineQueryResultArticle extends InlineQueryResult {
         ?int                  $thumbnailWidth = null,
         ?int                  $thumbnailHeight = null,
     ) {
-        $this->type = $type;
         $this->id = $id;
         $this->title = $title;
         $this->inputMessageContent = $inputMessageContent;
@@ -156,13 +154,8 @@ final class InlineQueryResultArticle extends InlineQueryResult {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getId(): ?string {

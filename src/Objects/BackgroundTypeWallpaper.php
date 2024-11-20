@@ -8,9 +8,9 @@ final class BackgroundTypeWallpaper extends BackgroundType {
      * Type
      *
      * Type of the background, always “wallpaper”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'wallpaper';
 
     /**
      * Document
@@ -45,13 +45,11 @@ final class BackgroundTypeWallpaper extends BackgroundType {
     protected ?bool $isMoving = null;
 
     public function __construct(
-        ?string   $type = null,
         ?Document $document = null,
         ?int      $darkThemeDimming = null,
         ?bool     $isBlurred = null,
         ?bool     $isMoving = null,
     ) {
-        $this->type = $type;
         $this->document = $document;
         $this->darkThemeDimming = $darkThemeDimming;
         $this->isBlurred = $isBlurred;
@@ -78,13 +76,8 @@ final class BackgroundTypeWallpaper extends BackgroundType {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
     public function getDocument(): ?Document {

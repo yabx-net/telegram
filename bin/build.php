@@ -11,7 +11,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Yabx\Telegram\Utils;
 
-exec('rm ' . __DIR__ . '/../src/Objects/*.php');
+//exec('rm ' . __DIR__ . '/../src/Objects/*.php');
 
 $doc = file_get_contents('https://core.telegram.org/bots/api');
 $doc = str_replace('<h4>', '-----<h4>', $doc);
@@ -43,6 +43,8 @@ foreach ($docs as $doc) {
     echo $name . PHP_EOL;
 
     $path = __DIR__ . '/../src/Objects/' . $name . '.php';
+
+    if(file_exists($path)) continue;
 
     $f = fopen($path, 'w');
     fwrite($f, "<?php\n\nnamespace Yabx\\Telegram\\Objects;\n\nuse InvalidArgumentException;\nuse Yabx\\Telegram\\ObjectTrait;\n\nfinal class {$name} {\n\n\tuse ObjectTrait;\n\n");

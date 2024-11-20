@@ -8,9 +8,9 @@ final class MessageOriginUser extends MessageOrigin {
      * Type
      *
      * Type of the message origin, always “user”
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
+    protected string $type = 'user';
 
     /**
      * Date
@@ -43,11 +43,9 @@ final class MessageOriginUser extends MessageOrigin {
     }
 
     public function __construct(
-        ?string $type = null,
         ?int    $date = null,
         ?User   $senderUser = null,
     ) {
-        $this->type = $type;
         $this->date = $date;
         $this->senderUser = $senderUser;
     }

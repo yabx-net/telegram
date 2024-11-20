@@ -8,15 +8,9 @@ final class BotCommandScopeDefault extends BotCommandScope {
      * Type
      *
      * Scope type, must be default
-     * @var string|null
+     * @var string
      */
-    protected ?string $type = null;
-
-    public function __construct(
-        ?string $type = null,
-    ) {
-        $this->type = $type;
-    }
+    protected string $type = 'default';
 
     public static function fromArray(array $data): BotCommandScopeDefault {
         $instance = new self();
@@ -26,13 +20,8 @@ final class BotCommandScopeDefault extends BotCommandScope {
         return $instance;
     }
 
-    public function getType(): ?string {
+    public function getType(): string {
         return $this->type;
-    }
-
-    public function setType(?string $value): self {
-        $this->type = $value;
-        return $this;
     }
 
 }

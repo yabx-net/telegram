@@ -163,7 +163,7 @@ foreach ($docs as $doc) {
 
 }
 
-$code = str_replace('#METHODS', implode("\n", $methods), $code);
+$code .= implode("\n", $methods);
 $code = str_replace("\t", "    ", $code);
 
 file_put_contents(__DIR__ . '/../src/BotApiGenerated.php', $code);
