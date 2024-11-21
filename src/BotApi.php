@@ -7,6 +7,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
+use Throwable;
 use Yabx\Telegram\Enum\ChatAction;
 use Yabx\Telegram\Objects\BotCommand;
 use Yabx\Telegram\Objects\BotCommandScope;
@@ -117,16 +118,21 @@ class BotApi {
         $params = array_map(fn(mixed $param) => is_object($param) && method_exists($param, 'toArray') ? call_user_func([$param, 'toArray']) : $param, $params);
         $this->logger->debug('REQUEST: ' . $method, $params);
         $endpoint = sprintf('%s/bot%s/', $this->apiUrl, $this->token);
-        if ($multipart) {
-            $multipart = [];
-            foreach ($params as $key => $value) {
-                $multipart[] = ['name' => $key, 'contents' => is_array($value) ? json_encode($value) : $value];
+        try {
+            if ($multipart) {
+                $multipart = [];
+                foreach ($params as $key => $value) {
+                    $multipart[] = ['name' => $key, 'contents' => is_array($value) ? json_encode($value) : $value];
+                }
+                $res = $this->client->post($endpoint . $method, [RequestOptions::MULTIPART => $multipart]);
+            } else {
+                $res = $this->client->post($endpoint . $method, [RequestOptions::JSON => $params]);
             }
-            $res = $this->client->post($endpoint . $method, [RequestOptions::MULTIPART => $multipart]);
-        } else {
-            $res = $this->client->post($endpoint . $method, [RequestOptions::JSON => $params]);
+            $json = json_decode($res->getBody()->__toString(), true);
+        } catch (Throwable $e) {
+            $this->logger->error($e->getMessage());
+            throw new Exception($e->getMessage());
         }
-        $json = json_decode($res->getBody()->__toString(), true);
         if ($json['ok'] ?? false) {
             $this->logger->debug('RESPONSE', $json);
             return $json['result'];
