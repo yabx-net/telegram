@@ -2,7 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class TransactionPartnerUser extends AbstractObject {
+final class TransactionPartnerUser extends TransactionPartner {
 
     /**
      * Type

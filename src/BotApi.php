@@ -1351,7 +1351,7 @@ class BotApi {
         return Message::fromArray($this->request('sendInvoice', $params));
     }
 
-    public function createInvoiceLink(string $title, string $description, string $payload, string $currency, array $prices, ?string $businessConnectionId = null, ?int $photoHeight = null, ?bool $sendEmailToProvider = null, ?bool $sendPhoneNumberToProvider = null, ?bool $needShippingAddress = null, ?bool $needEmail = null, ?bool $needPhoneNumber = null, ?bool $needName = null, ?string $photoUrl = null, ?int $photoWidth = null, ?int $photoSize = null, ?string $providerData = null, ?array $suggestedTipAmounts = null, ?int $maxTipAmount = null, ?int $subscriptionPeriod = null, ?string $providerToken = null, ?bool $isFlexible = null): mixed {
+    public function createInvoiceLink(string $title, string $description, string $payload, string $currency, array $prices, ?string $businessConnectionId = null, ?int $photoHeight = null, ?bool $sendEmailToProvider = null, ?bool $sendPhoneNumberToProvider = null, ?bool $needShippingAddress = null, ?bool $needEmail = null, ?bool $needPhoneNumber = null, ?bool $needName = null, ?string $photoUrl = null, ?int $photoWidth = null, ?int $photoSize = null, ?string $providerData = null, ?array $suggestedTipAmounts = null, ?int $maxTipAmount = null, ?int $subscriptionPeriod = null, ?string $providerToken = null, ?bool $isFlexible = null): string {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['title'] = $title;
@@ -1547,6 +1547,21 @@ class BotApi {
 
     public function setLogger(?LoggerInterface $logger): void {
         $this->logger = $logger;
+    }
+
+    private function file(?string $path): mixed {
+        if(!$path) return null;
+        elseif(str_starts_with($path, 'https://')) {
+            return $path;
+        } elseif(str_starts_with($path, 'file://')) {
+            if(!file_exists($path)) throw new Exception("File path '{$path}' not found");
+            return $path;
+        } elseif(is_file($path)) {
+            if(!file_exists($path)) throw new Exception("File path '{$path}' not found");
+            return fopen($path, 'rb');
+        } else {
+            throw new Exception('Invalid file path');
+        }
     }
 
 }
