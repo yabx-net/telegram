@@ -184,7 +184,7 @@ class BotApi {
         return $this->request('close', $params);
     }
 
-    public function sendMessage(int|string $chatId, string $text, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendMessage(int|string $chatId, string $text, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -235,7 +235,7 @@ class BotApi {
         return MessageId::arrayOf($this->request('forwardMessages', $params));
     }
 
-    public function copyMessage(int|string $chatId, int|string $fromChatId, int $messageId, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): MessageId {
+    public function copyMessage(int|string $chatId, int|string $fromChatId, int $messageId, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): MessageId {
         $params = [];
         $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
@@ -277,7 +277,7 @@ class BotApi {
         return MessageId::arrayOf($this->request('copyMessages', $params));
     }
 
-    public function sendPhoto(int|string $chatId, string $photo, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $hasSpoiler = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendPhoto(int|string $chatId, string $photo, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $hasSpoiler = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         if (file_exists($photo)) $photo = fopen($photo, 'r');
         $params = [];
         if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
@@ -298,7 +298,7 @@ class BotApi {
         return Message::fromArray($this->request('sendPhoto', $params, is_resource($photo)));
     }
 
-    public function sendAudio(int|string $chatId, string $audio, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?string $performer = null, ?string $title = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendAudio(int|string $chatId, string $audio, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?string $performer = null, ?string $title = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -320,7 +320,7 @@ class BotApi {
         return Message::fromArray($this->request('sendAudio', $params));
     }
 
-    public function sendDocument(int|string $chatId, string $document, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $thumbnail = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $disableContentTypeDetection = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendDocument(int|string $chatId, string $document, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $thumbnail = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $disableContentTypeDetection = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -344,7 +344,7 @@ class BotApi {
         return Message::fromArray($this->request('sendDocument', $params, is_resource($document) || is_resource($thumbnail)));
     }
 
-    public function sendVideo(int|string $chatId, string $video, ?string $businessConnectionId = null, ?bool $showCaptionAboveMedia = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $supportsStreaming = null, ?bool $hasSpoiler = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendVideo(int|string $chatId, string $video, ?string $businessConnectionId = null, ?bool $showCaptionAboveMedia = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $supportsStreaming = null, ?bool $hasSpoiler = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -373,7 +373,7 @@ class BotApi {
         return Message::fromArray($this->request('sendVideo', $params, is_resource($video) || is_resource($thumbnail)));
     }
 
-    public function sendAnimation(int|string $chatId, string $animation, ?string $businessConnectionId = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $hasSpoiler = null, ?bool $showCaptionAboveMedia = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendAnimation(int|string $chatId, string $animation, ?string $businessConnectionId = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $hasSpoiler = null, ?bool $showCaptionAboveMedia = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -401,7 +401,7 @@ class BotApi {
         return Message::fromArray($this->request('sendAnimation', $params, is_resource($animation) || is_resource($thumbnail)));
     }
 
-    public function sendVoice(int|string $chatId, string $voice, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendVoice(int|string $chatId, string $voice, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -421,7 +421,7 @@ class BotApi {
         return Message::fromArray($this->request('sendVoice', $params, is_resource($voice)));
     }
 
-    public function sendVideoNote(int|string $chatId, string $videoNote, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $duration = null, ?int $length = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendVideoNote(int|string $chatId, string $videoNote, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $duration = null, ?int $length = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -443,7 +443,7 @@ class BotApi {
         return Message::fromArray($this->request('sendVideoNote', $params, is_resource($videoNote) || is_resource($thumbnail)));
     }
 
-    public function sendPaidMedia(int|string $chatId, int $starCount, array $media, ?string $payload = null, ?string $businessConnectionId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendPaidMedia(int|string $chatId, int $starCount, array $media, ?string $payload = null, ?string $businessConnectionId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -490,7 +490,7 @@ class BotApi {
         return Message::arrayOf($this->request('sendMediaGroup', $params));
     }
 
-    public function sendLocation(int|string $chatId, float $latitude, float $longitude, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?float $horizontalAccuracy = null, ?int $livePeriod = null, ?int $heading = null, ?int $proximityAlertRadius = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendLocation(int|string $chatId, float $latitude, float $longitude, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?float $horizontalAccuracy = null, ?int $livePeriod = null, ?int $heading = null, ?int $proximityAlertRadius = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -510,7 +510,7 @@ class BotApi {
         return Message::fromArray($this->request('sendLocation', $params));
     }
 
-    public function sendVenue(int|string $chatId, float $latitude, float $longitude, string $title, string $address, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $foursquareId = null, ?string $foursquareType = null, ?string $googlePlaceId = null, ?string $googlePlaceType = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendVenue(int|string $chatId, float $latitude, float $longitude, string $title, string $address, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $foursquareId = null, ?string $foursquareType = null, ?string $googlePlaceId = null, ?string $googlePlaceType = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -532,7 +532,7 @@ class BotApi {
         return Message::fromArray($this->request('sendVenue', $params));
     }
 
-    public function sendContact(int|string $chatId, string $phoneNumber, string $firstName, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $lastName = null, ?string $vcard = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendContact(int|string $chatId, string $phoneNumber, string $firstName, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $lastName = null, ?string $vcard = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -550,7 +550,7 @@ class BotApi {
         return Message::fromArray($this->request('sendContact', $params));
     }
 
-    public function sendPoll(int|string $chatId, string $question, array $options, ?string $businessConnectionId = null, ?array $explanationEntities = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $isClosed = null, ?int $closeDate = null, ?int $openPeriod = null, ?string $explanation = null, ?string $explanationParseMode = null, ?int $correctOptionId = null, ?bool $allowsMultipleAnswers = null, ?string $type = null, ?bool $isAnonymous = null, ?array $questionEntities = null, ?string $questionParseMode = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendPoll(int|string $chatId, string $question, array $options, ?string $businessConnectionId = null, ?array $explanationEntities = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $isClosed = null, ?int $closeDate = null, ?int $openPeriod = null, ?string $explanation = null, ?string $explanationParseMode = null, ?int $correctOptionId = null, ?bool $allowsMultipleAnswers = null, ?string $type = null, ?bool $isAnonymous = null, ?array $questionEntities = null, ?string $questionParseMode = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -578,7 +578,7 @@ class BotApi {
         return Message::fromArray($this->request('sendPoll', $params));
     }
 
-    public function sendDice(int|string $chatId, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $emoji = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendDice(int|string $chatId, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $emoji = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -1166,7 +1166,7 @@ class BotApi {
         return $this->request('deleteMessages', $params);
     }
 
-    public function sendSticker(int|string $chatId, string $sticker, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $emoji = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendSticker(int|string $chatId, string $sticker, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $emoji = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
