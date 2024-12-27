@@ -7,7 +7,7 @@ final class StarTransaction extends AbstractObject {
     /**
      * Id
      *
-     * Unique identifier of the transaction. Coincides with the identifer of the original transaction for refund transactions. Coincides with SuccessfulPayment.telegram_payment_charge_id for successful incoming payments from users.
+     * Unique identifier of the transaction. Coincides with the identifier of the original transaction for refund transactions. Coincides with SuccessfulPayment.telegram_payment_charge_id for successful incoming payments from users.
      * @var string|null
      */
     protected ?string $id = null;
@@ -15,10 +15,18 @@ final class StarTransaction extends AbstractObject {
     /**
      * Amount
      *
-     * Number of Telegram Stars transferred by the transaction
+     * Integer amount of Telegram Stars transferred by the transaction
      * @var int|null
      */
     protected ?int $amount = null;
+
+    /**
+     * Nanostar Amount
+     *
+     * Optional. The number of 1/1000000000 shares of Telegram Stars transferred by the transaction; from 0 to 999999999
+     * @var int|null
+     */
+    protected ?int $nanostarAmount = null;
 
     /**
      * Date
@@ -44,20 +52,6 @@ final class StarTransaction extends AbstractObject {
      */
     protected ?TransactionPartner $receiver = null;
 
-    public function __construct(
-        ?string             $id = null,
-        ?int                $amount = null,
-        ?int                $date = null,
-        ?TransactionPartner $source = null,
-        ?TransactionPartner $receiver = null,
-    ) {
-        $this->id = $id;
-        $this->amount = $amount;
-        $this->date = $date;
-        $this->source = $source;
-        $this->receiver = $receiver;
-    }
-
     public static function fromArray(array $data): StarTransaction {
         $instance = new self();
         if (isset($data['id'])) {
@@ -65,6 +59,9 @@ final class StarTransaction extends AbstractObject {
         }
         if (isset($data['amount'])) {
             $instance->amount = $data['amount'];
+        }
+        if (isset($data['nanostar_amount'])) {
+            $instance->nanostarAmount = $data['nanostar_amount'];
         }
         if (isset($data['date'])) {
             $instance->date = $data['date'];
@@ -76,6 +73,22 @@ final class StarTransaction extends AbstractObject {
             $instance->receiver = TransactionPartner::fromArray($data['receiver']);
         }
         return $instance;
+    }
+
+    public function __construct(
+        ?string             $id = null,
+        ?int                $amount = null,
+        ?int                $nanostarAmount = null,
+        ?int                $date = null,
+        ?TransactionPartner $source = null,
+        ?TransactionPartner $receiver = null,
+    ) {
+        $this->id = $id;
+        $this->amount = $amount;
+        $this->nanostarAmount = $nanostarAmount;
+        $this->date = $date;
+        $this->source = $source;
+        $this->receiver = $receiver;
     }
 
     public function getId(): ?string {
@@ -93,6 +106,15 @@ final class StarTransaction extends AbstractObject {
 
     public function setAmount(?int $value): self {
         $this->amount = $value;
+        return $this;
+    }
+
+    public function getNanostarAmount(): ?int {
+        return $this->nanostarAmount;
+    }
+
+    public function setNanostarAmount(?int $value): self {
+        $this->nanostarAmount = $value;
         return $this;
     }
 

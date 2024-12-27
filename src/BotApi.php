@@ -56,7 +56,7 @@ class BotApi {
     protected string $token;
     protected ?LoggerInterface $logger;
 
-    public function __construct(string $token, array $guzzleOptions = [], LoggerInterface $logger = null, string $apiUrl = 'https://api.telegram.org') {
+    public function __construct(string $token, array $guzzleOptions = [], ?LoggerInterface $logger = null, string $apiUrl = 'https://api.telegram.org') {
         $this->client = new Client([
             'http_errors' => false,
             ...$guzzleOptions
@@ -1068,7 +1068,7 @@ class BotApi {
         return ChatAdministratorRights::fromArray($this->request('getMyDefaultAdministratorRights', $params));
     }
 
-    public function editMessageText(string $text, ?string $businessConnectionId = null, int|string $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
+    public function editMessageText(string $text, ?string $businessConnectionId = null, int|string|null $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         if (isset($chatId)) $params['chat_id'] = $chatId;
@@ -1082,7 +1082,7 @@ class BotApi {
         return Message::fromArray($this->request('editMessageText', $params));
     }
 
-    public function editMessageCaption(?string $businessConnectionId = null, int|string $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
+    public function editMessageCaption(?string $businessConnectionId = null, int|string|null $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         if (isset($chatId)) $params['chat_id'] = $chatId;
@@ -1096,7 +1096,7 @@ class BotApi {
         return Message::fromArray($this->request('editMessageCaption', $params));
     }
 
-    public function editMessageMedia(string $media, ?string $businessConnectionId = null, int|string $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
+    public function editMessageMedia(string $media, ?string $businessConnectionId = null, int|string|null $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         if (isset($chatId)) $params['chat_id'] = $chatId;
@@ -1107,7 +1107,7 @@ class BotApi {
         return Message::fromArray($this->request('editMessageMedia', $params, true));
     }
 
-    public function editMessageLiveLocation(float $latitude, float $longitude, ?string $businessConnectionId = null, int|string $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?int $livePeriod = null, ?float $horizontalAccuracy = null, ?int $heading = null, ?int $proximityAlertRadius = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
+    public function editMessageLiveLocation(float $latitude, float $longitude, ?string $businessConnectionId = null, int|string|null $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?int $livePeriod = null, ?float $horizontalAccuracy = null, ?int $heading = null, ?int $proximityAlertRadius = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         if (isset($chatId)) $params['chat_id'] = $chatId;
@@ -1123,7 +1123,7 @@ class BotApi {
         return Message::fromArray($this->request('editMessageLiveLocation', $params));
     }
 
-    public function stopMessageLiveLocation(?string $businessConnectionId = null, int|string $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
+    public function stopMessageLiveLocation(?string $businessConnectionId = null, int|string|null $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         if (isset($chatId)) $params['chat_id'] = $chatId;
@@ -1133,7 +1133,7 @@ class BotApi {
         return Message::fromArray($this->request('stopMessageLiveLocation', $params));
     }
 
-    public function editMessageReplyMarkup(?string $businessConnectionId = null, int|string $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
+    public function editMessageReplyMarkup(?string $businessConnectionId = null, int|string|null $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         if (isset($chatId)) $params['chat_id'] = $chatId;
@@ -1549,19 +1549,19 @@ class BotApi {
         $this->logger = $logger;
     }
 
-    private function file(?string $path): mixed {
-        if(!$path) return null;
-        elseif(str_starts_with($path, 'https://')) {
-            return $path;
-        } elseif(str_starts_with($path, 'file://')) {
-            if(!file_exists($path)) throw new Exception("File path '{$path}' not found");
-            return $path;
-        } elseif(is_file($path)) {
-            if(!file_exists($path)) throw new Exception("File path '{$path}' not found");
-            return fopen($path, 'rb');
-        } else {
-            throw new Exception('Invalid file path');
-        }
-    }
+    //private function file(?string $path): mixed {
+    //    if(!$path) return null;
+    //    elseif(str_starts_with($path, 'https://')) {
+    //        return $path;
+    //    } elseif(str_starts_with($path, 'file://')) {
+    //        if(!file_exists($path)) throw new Exception("File path '{$path}' not found");
+    //        return $path;
+    //    } elseif(is_file($path)) {
+    //        if(!file_exists($path)) throw new Exception("File path '{$path}' not found");
+    //        return fopen($path, 'rb');
+    //    } else {
+    //        throw new Exception('Invalid file path');
+    //    }
+    //}
 
 }

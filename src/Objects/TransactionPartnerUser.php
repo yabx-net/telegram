@@ -2,15 +2,15 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class TransactionPartnerUser extends TransactionPartner {
+final class TransactionPartnerUser extends AbstractObject {
 
     /**
      * Type
      *
      * Type of the transaction partner, always “user”
-     * @var string
+     * @var string|null
      */
-    protected string $type = 'user';
+    protected ?string $type = null;
 
     /**
      * User
@@ -19,6 +19,14 @@ final class TransactionPartnerUser extends TransactionPartner {
      * @var User|null
      */
     protected ?User $user = null;
+
+    /**
+     * Affiliate
+     *
+     * Optional. Information about the affiliate that received a commission via this transaction
+     * @var AffiliateInfo|null
+     */
+    protected ?AffiliateInfo $affiliate = null;
 
     /**
      * Invoice Payload
@@ -56,9 +64,9 @@ final class TransactionPartnerUser extends TransactionPartner {
      * Gift
      *
      * Optional. The gift sent to the user by the bot
-     * @var string|null
+     * @var Gift|null
      */
-    protected ?string $gift = null;
+    protected ?Gift $gift = null;
 
     public static function fromArray(array $data): TransactionPartnerUser {
         $instance = new self();
@@ -67,6 +75,9 @@ final class TransactionPartnerUser extends TransactionPartner {
         }
         if (isset($data['user'])) {
             $instance->user = User::fromArray($data['user']);
+        }
+        if (isset($data['affiliate'])) {
+            $instance->affiliate = AffiliateInfo::fromArray($data['affiliate']);
         }
         if (isset($data['invoice_payload'])) {
             $instance->invoicePayload = $data['invoice_payload'];
@@ -84,20 +95,24 @@ final class TransactionPartnerUser extends TransactionPartner {
             $instance->paidMediaPayload = $data['paid_media_payload'];
         }
         if (isset($data['gift'])) {
-            $instance->gift = $data['gift'];
+            $instance->gift = Gift::fromArray($data['gift']);
         }
         return $instance;
     }
 
     public function __construct(
-        ?User   $user = null,
-        ?string $invoicePayload = null,
-        ?int    $subscriptionPeriod = null,
-        ?array  $paidMedia = null,
-        ?string $paidMediaPayload = null,
-        ?string $gift = null,
+        ?string        $type = null,
+        ?User          $user = null,
+        ?AffiliateInfo $affiliate = null,
+        ?string        $invoicePayload = null,
+        ?int           $subscriptionPeriod = null,
+        ?array         $paidMedia = null,
+        ?string        $paidMediaPayload = null,
+        ?Gift          $gift = null,
     ) {
+        $this->type = $type;
         $this->user = $user;
+        $this->affiliate = $affiliate;
         $this->invoicePayload = $invoicePayload;
         $this->subscriptionPeriod = $subscriptionPeriod;
         $this->paidMedia = $paidMedia;
@@ -105,8 +120,13 @@ final class TransactionPartnerUser extends TransactionPartner {
         $this->gift = $gift;
     }
 
-    public function getType(): string {
+    public function getType(): ?string {
         return $this->type;
+    }
+
+    public function setType(?string $value): self {
+        $this->type = $value;
+        return $this;
     }
 
     public function getUser(): ?User {
@@ -115,6 +135,15 @@ final class TransactionPartnerUser extends TransactionPartner {
 
     public function setUser(?User $value): self {
         $this->user = $value;
+        return $this;
+    }
+
+    public function getAffiliate(): ?AffiliateInfo {
+        return $this->affiliate;
+    }
+
+    public function setAffiliate(?AffiliateInfo $value): self {
+        $this->affiliate = $value;
         return $this;
     }
 
@@ -154,11 +183,11 @@ final class TransactionPartnerUser extends TransactionPartner {
         return $this;
     }
 
-    public function getGift(): ?string {
+    public function getGift(): ?Gift {
         return $this->gift;
     }
 
-    public function setGift(?string $value): self {
+    public function setGift(?Gift $value): self {
         $this->gift = $value;
         return $this;
     }
