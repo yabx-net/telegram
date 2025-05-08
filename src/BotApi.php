@@ -55,6 +55,7 @@ class BotApi {
     protected Client $client;
     protected string $token;
     protected ?LoggerInterface $logger;
+    protected ?array $lastResponse = null;
 
     public function __construct(string $token, array $guzzleOptions = [], ?LoggerInterface $logger = null, string $apiUrl = 'https://api.telegram.org') {
         $this->client = new Client([
@@ -129,6 +130,7 @@ class BotApi {
                 $res = $this->client->post($endpoint . $method, [RequestOptions::JSON => $params]);
             }
             $json = json_decode($res->getBody()->__toString(), true);
+            $this->lastResponse = (array)$json;
         } catch (Throwable $e) {
             $this->logger->error($e->getMessage());
             throw new Exception($e->getMessage());
@@ -138,7 +140,7 @@ class BotApi {
             return $json['result'];
         } else {
             $this->logger->debug('ERROR', $json);
-            throw new Exception($json['description'] ?? 'Unknown error', $json['code'] ?? 500);
+            throw new Exception($json['description'] ?? 'Unknown error', $json['error_code'] ?? 500);
         }
     }
 
@@ -1563,5 +1565,9 @@ class BotApi {
     //        throw new Exception('Invalid file path');
     //    }
     //}
+
+    public function getLastResponse(): ?array {
+        return $this->lastResponse;
+    }
 
 }
