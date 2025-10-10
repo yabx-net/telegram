@@ -2,7 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class InputVenueMessageContent extends AbstractObject {
+final class InputVenueMessageContent extends InputMessageContent {
 
     /**
      * Latitude
