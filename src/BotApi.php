@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Throwable;
 use Yabx\Telegram\Enum\ChatAction;
+use Yabx\Telegram\Objects\AcceptedGiftTypes;
 use Yabx\Telegram\Objects\BotCommand;
 use Yabx\Telegram\Objects\BotCommandScope;
 use Yabx\Telegram\Objects\BotDescription;
@@ -28,24 +29,33 @@ use Yabx\Telegram\Objects\Gifts;
 use Yabx\Telegram\Objects\InlineKeyboardMarkup;
 use Yabx\Telegram\Objects\InlineQueryResult;
 use Yabx\Telegram\Objects\InlineQueryResultsButton;
+use Yabx\Telegram\Objects\InputChecklist;
+use Yabx\Telegram\Objects\InputProfilePhoto;
 use Yabx\Telegram\Objects\InputSticker;
+use Yabx\Telegram\Objects\InputStoryContent;
+use Yabx\Telegram\Objects\KeyboardButton;
 use Yabx\Telegram\Objects\LinkPreviewOptions;
 use Yabx\Telegram\Objects\MaskPosition;
 use Yabx\Telegram\Objects\MenuButton;
 use Yabx\Telegram\Objects\Message;
 use Yabx\Telegram\Objects\MessageId;
+use Yabx\Telegram\Objects\OwnedGifts;
 use Yabx\Telegram\Objects\Poll;
 use Yabx\Telegram\Objects\PreparedInlineMessage;
+use Yabx\Telegram\Objects\PreparedKeyboardButton;
 use Yabx\Telegram\Objects\ReplyKeyboardMarkup;
 use Yabx\Telegram\Objects\ReplyKeyboardRemove;
 use Yabx\Telegram\Objects\ReplyParameters;
 use Yabx\Telegram\Objects\SentWebAppMessage;
+use Yabx\Telegram\Objects\StarAmount;
 use Yabx\Telegram\Objects\StarTransactions;
 use Yabx\Telegram\Objects\Sticker;
 use Yabx\Telegram\Objects\StickerSet;
+use Yabx\Telegram\Objects\Story;
 use Yabx\Telegram\Objects\Update;
 use Yabx\Telegram\Objects\User;
 use Yabx\Telegram\Objects\UserChatBoosts;
+use Yabx\Telegram\Objects\UserProfileAudios;
 use Yabx\Telegram\Objects\UserProfilePhotos;
 use Yabx\Telegram\Objects\WebhookInfo;
 
@@ -114,7 +124,6 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-
     public function request(string $method, array $params = [], bool $multipart = false): mixed {
         $params = array_map(fn(mixed $param) => is_object($param) && method_exists($param, 'toArray') ? call_user_func([$param, 'toArray']) : $param, $params);
         $this->logger->debug('REQUEST: ' . $method, $params);
@@ -1503,6 +1512,810 @@ class BotApi {
         if (isset($messageId)) $params['message_id'] = $messageId;
         if (isset($inlineMessageId)) $params['inline_message_id'] = $inlineMessageId;
         return GameHighScore::arrayOf($this->request('getGameHighScores', $params));
+    }
+
+        /**
+    * Method: sendChecklist
+    *
+    * Use this method to send a checklist on behalf of a connected business account. On success, the sent Message is returned.
+    * @link https://core.telegram.org/bots/api#sendchecklist
+    * @param string $businessConnectionId
+    * @param int $chatId
+    * @param InputChecklist $checklist
+    * @param bool|null $disableNotification
+    * @param bool|null $protectContent
+    * @param string|null $messageEffectId
+    * @param ReplyParameters|null $replyParameters
+    * @param InlineKeyboardMarkup|null $replyMarkup
+    * @return Message
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function sendChecklist(string $businessConnectionId, int $chatId, InputChecklist $checklist, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['chat_id'] = $chatId;
+        $params['checklist'] = $checklist;
+        if (isset($disableNotification)) $params['disable_notification'] = $disableNotification;
+        if (isset($protectContent)) $params['protect_content'] = $protectContent;
+        if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
+        if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
+        if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        return Message::fromArray($this->request('sendChecklist', $params));
+    }
+
+        /**
+    * Method: sendMessageDraft
+    *
+    * Use this method to stream a partial message to a user while the message is being generated. Returns True on success.
+    * @link https://core.telegram.org/bots/api#sendmessagedraft
+    * @param int $chatId
+    * @param int $draftId
+    * @param string $text
+    * @param int|null $messageThreadId
+    * @param string|null $parseMode
+    * @param array|null $entities
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function sendMessageDraft(int $chatId, int $draftId, string $text, ?int $messageThreadId = null, ?string $parseMode = null, ?array $entities = null): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['draft_id'] = $draftId;
+        $params['text'] = $text;
+        if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
+        if (isset($parseMode)) $params['parse_mode'] = $parseMode;
+        if (isset($entities)) $params['entities'] = $entities;
+        return $this->request('sendMessageDraft', $params);
+    }
+
+        /**
+    * Method: getUserProfileAudios
+    *
+    * Use this method to get a list of profile audios for a user. Returns a UserProfileAudios object.
+    * @link https://core.telegram.org/bots/api#getuserprofileaudios
+    * @param int $userId
+    * @param int|null $offset
+    * @param int|null $limit
+    * @return UserProfileAudios
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function getUserProfileAudios(int $userId, ?int $offset = null, ?int $limit = null): UserProfileAudios {
+        $params = [];
+        $params['user_id'] = $userId;
+        if (isset($offset)) $params['offset'] = $offset;
+        if (isset($limit)) $params['limit'] = $limit;
+        return UserProfileAudios::fromArray($this->request('getUserProfileAudios', $params));
+    }
+
+        /**
+    * Method: setChatMemberTag
+    *
+    * Use this method to set a tag for a regular member in a group or a supergroup. The bot must be an administrator in the chat for this to work and must have the can_manage_tags administrator right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#setchatmembertag
+    * @param int|string $chatId
+    * @param int $userId
+    * @param string|null $tag
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function setChatMemberTag(int|string $chatId, int $userId, ?string $tag = null): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['user_id'] = $userId;
+        if (isset($tag)) $params['tag'] = $tag;
+        return $this->request('setChatMemberTag', $params);
+    }
+
+        /**
+    * Method: getManagedBotToken
+    *
+    * Use this method to get the token of a managed bot. Returns the token as String on success.
+    * @link https://core.telegram.org/bots/api#getmanagedbottoken
+    * @param int $userId
+    * @return string
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function getManagedBotToken(int $userId): string {
+        $params = [];
+        $params['user_id'] = $userId;
+        return $this->request('getManagedBotToken', $params);
+    }
+
+        /**
+    * Method: replaceManagedBotToken
+    *
+    * Use this method to revoke the current token of a managed bot and generate a new one. Returns the new token as String on success.
+    * @link https://core.telegram.org/bots/api#replacemanagedbottoken
+    * @param int $userId
+    * @return string
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function replaceManagedBotToken(int $userId): string {
+        $params = [];
+        $params['user_id'] = $userId;
+        return $this->request('replaceManagedBotToken', $params);
+    }
+
+        /**
+    * Method: setMyProfilePhoto
+    *
+    * Changes the profile photo of the bot. Returns True on success.
+    * @link https://core.telegram.org/bots/api#setmyprofilephoto
+    * @param InputProfilePhoto $photo
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function setMyProfilePhoto(InputProfilePhoto $photo): bool {
+        $params = [];
+        $params['photo'] = $photo;
+        return $this->request('setMyProfilePhoto', $params);
+    }
+
+        /**
+    * Method: removeMyProfilePhoto
+    *
+    * Removes the profile photo of the bot. Requires no parameters. Returns True on success.
+    * @link https://core.telegram.org/bots/api#removemyprofilephoto
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function removeMyProfilePhoto(): bool {
+        $params = [];
+        return $this->request('removeMyProfilePhoto', $params);
+    }
+
+        /**
+    * Method: giftPremiumSubscription
+    *
+    * Gifts a Telegram Premium subscription to the given user. Returns True on success.
+    * @link https://core.telegram.org/bots/api#giftpremiumsubscription
+    * @param int $userId
+    * @param int $monthCount
+    * @param int $starCount
+    * @param string|null $text
+    * @param string|null $textParseMode
+    * @param array|null $textEntities
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function giftPremiumSubscription(int $userId, int $monthCount, int $starCount, ?string $text = null, ?string $textParseMode = null, ?array $textEntities = null): bool {
+        $params = [];
+        $params['user_id'] = $userId;
+        $params['month_count'] = $monthCount;
+        $params['star_count'] = $starCount;
+        if (isset($text)) $params['text'] = $text;
+        if (isset($textParseMode)) $params['text_parse_mode'] = $textParseMode;
+        if (isset($textEntities)) $params['text_entities'] = $textEntities;
+        return $this->request('giftPremiumSubscription', $params);
+    }
+
+        /**
+    * Method: verifyUser
+    *
+    * Verifies a user on behalf of the organization which is represented by the bot. Returns True on success.
+    * @link https://core.telegram.org/bots/api#verifyuser
+    * @param int $userId
+    * @param string|null $customDescription
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function verifyUser(int $userId, ?string $customDescription = null): bool {
+        $params = [];
+        $params['user_id'] = $userId;
+        if (isset($customDescription)) $params['custom_description'] = $customDescription;
+        return $this->request('verifyUser', $params);
+    }
+
+        /**
+    * Method: verifyChat
+    *
+    * Verifies a chat on behalf of the organization which is represented by the bot. Returns True on success.
+    * @link https://core.telegram.org/bots/api#verifychat
+    * @param int|string $chatId
+    * @param string|null $customDescription
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function verifyChat(int|string $chatId, ?string $customDescription = null): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        if (isset($customDescription)) $params['custom_description'] = $customDescription;
+        return $this->request('verifyChat', $params);
+    }
+
+        /**
+    * Method: removeUserVerification
+    *
+    * Removes verification from a user who is currently verified on behalf of the organization represented by the bot. Returns True on success.
+    * @link https://core.telegram.org/bots/api#removeuserverification
+    * @param int $userId
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function removeUserVerification(int $userId): bool {
+        $params = [];
+        $params['user_id'] = $userId;
+        return $this->request('removeUserVerification', $params);
+    }
+
+        /**
+    * Method: removeChatVerification
+    *
+    * Removes verification from a chat that is currently verified on behalf of the organization represented by the bot. Returns True on success.
+    * @link https://core.telegram.org/bots/api#removechatverification
+    * @param int|string $chatId
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function removeChatVerification(int|string $chatId): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        return $this->request('removeChatVerification', $params);
+    }
+
+        /**
+    * Method: readBusinessMessage
+    *
+    * Marks incoming message as read on behalf of a business account. Requires the can_read_messages business bot right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#readbusinessmessage
+    * @param string $businessConnectionId
+    * @param int $chatId
+    * @param int $messageId
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function readBusinessMessage(string $businessConnectionId, int $chatId, int $messageId): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['chat_id'] = $chatId;
+        $params['message_id'] = $messageId;
+        return $this->request('readBusinessMessage', $params);
+    }
+
+        /**
+    * Method: deleteBusinessMessages
+    *
+    * Delete messages on behalf of a business account. Requires the can_delete_sent_messages business bot right to delete messages sent by the bot itself, or the can_delete_all_messages business bot right to delete any message. Returns True on success.
+    * @link https://core.telegram.org/bots/api#deletebusinessmessages
+    * @param string $businessConnectionId
+    * @param array $messageIds
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function deleteBusinessMessages(string $businessConnectionId, array $messageIds): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['message_ids'] = $messageIds;
+        return $this->request('deleteBusinessMessages', $params);
+    }
+
+        /**
+    * Method: setBusinessAccountName
+    *
+    * Changes the first and last name of a managed business account. Requires the can_change_name business bot right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#setbusinessaccountname
+    * @param string $businessConnectionId
+    * @param string $firstName
+    * @param string|null $lastName
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function setBusinessAccountName(string $businessConnectionId, string $firstName, ?string $lastName = null): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['first_name'] = $firstName;
+        if (isset($lastName)) $params['last_name'] = $lastName;
+        return $this->request('setBusinessAccountName', $params);
+    }
+
+        /**
+    * Method: setBusinessAccountUsername
+    *
+    * Changes the username of a managed business account. Requires the can_change_username business bot right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#setbusinessaccountusername
+    * @param string $businessConnectionId
+    * @param string|null $username
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function setBusinessAccountUsername(string $businessConnectionId, ?string $username = null): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        if (isset($username)) $params['username'] = $username;
+        return $this->request('setBusinessAccountUsername', $params);
+    }
+
+        /**
+    * Method: setBusinessAccountBio
+    *
+    * Changes the bio of a managed business account. Requires the can_change_bio business bot right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#setbusinessaccountbio
+    * @param string $businessConnectionId
+    * @param string|null $bio
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function setBusinessAccountBio(string $businessConnectionId, ?string $bio = null): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        if (isset($bio)) $params['bio'] = $bio;
+        return $this->request('setBusinessAccountBio', $params);
+    }
+
+        /**
+    * Method: setBusinessAccountProfilePhoto
+    *
+    * Changes the profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#setbusinessaccountprofilephoto
+    * @param string $businessConnectionId
+    * @param InputProfilePhoto $photo
+    * @param bool|null $isPublic
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function setBusinessAccountProfilePhoto(string $businessConnectionId, InputProfilePhoto $photo, ?bool $isPublic = null): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['photo'] = $photo;
+        if (isset($isPublic)) $params['is_public'] = $isPublic;
+        return $this->request('setBusinessAccountProfilePhoto', $params);
+    }
+
+        /**
+    * Method: removeBusinessAccountProfilePhoto
+    *
+    * Removes the current profile photo of a managed business account. Requires the can_edit_profile_photo business bot right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#removebusinessaccountprofilephoto
+    * @param string $businessConnectionId
+    * @param bool|null $isPublic
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function removeBusinessAccountProfilePhoto(string $businessConnectionId, ?bool $isPublic = null): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        if (isset($isPublic)) $params['is_public'] = $isPublic;
+        return $this->request('removeBusinessAccountProfilePhoto', $params);
+    }
+
+        /**
+    * Method: setBusinessAccountGiftSettings
+    *
+    * Changes the privacy settings pertaining to incoming gifts in a managed business account. Requires the can_change_gift_settings business bot right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#setbusinessaccountgiftsettings
+    * @param string $businessConnectionId
+    * @param bool $showGiftButton
+    * @param AcceptedGiftTypes $acceptedGiftTypes
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function setBusinessAccountGiftSettings(string $businessConnectionId, bool $showGiftButton, AcceptedGiftTypes $acceptedGiftTypes): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['show_gift_button'] = $showGiftButton;
+        $params['accepted_gift_types'] = $acceptedGiftTypes;
+        return $this->request('setBusinessAccountGiftSettings', $params);
+    }
+
+        /**
+    * Method: getBusinessAccountStarBalance
+    *
+    * Returns the amount of Telegram Stars owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns StarAmount on success.
+    * @link https://core.telegram.org/bots/api#getbusinessaccountstarbalance
+    * @param string $businessConnectionId
+    * @return StarAmount
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function getBusinessAccountStarBalance(string $businessConnectionId): StarAmount {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        return StarAmount::fromArray($this->request('getBusinessAccountStarBalance', $params));
+    }
+
+        /**
+    * Method: transferBusinessAccountStars
+    *
+    * Transfers Telegram Stars from the business account balance to the bot's balance. Requires the can_transfer_stars business bot right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#transferbusinessaccountstars
+    * @param string $businessConnectionId
+    * @param int $starCount
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function transferBusinessAccountStars(string $businessConnectionId, int $starCount): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['star_count'] = $starCount;
+        return $this->request('transferBusinessAccountStars', $params);
+    }
+
+        /**
+    * Method: getBusinessAccountGifts
+    *
+    * Returns the gifts received and owned by a managed business account. Requires the can_view_gifts_and_stars business bot right. Returns OwnedGifts on success.
+    * @link https://core.telegram.org/bots/api#getbusinessaccountgifts
+    * @param string $businessConnectionId
+    * @param bool|null $excludeUnsaved
+    * @param bool|null $excludeSaved
+    * @param bool|null $excludeUnlimited
+    * @param bool|null $excludeLimitedUpgradable
+    * @param bool|null $excludeLimitedNonUpgradable
+    * @param bool|null $excludeUnique
+    * @param bool|null $excludeFromBlockchain
+    * @param bool|null $sortByPrice
+    * @param string|null $offset
+    * @param int|null $limit
+    * @return OwnedGifts
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function getBusinessAccountGifts(string $businessConnectionId, ?bool $excludeUnsaved = null, ?bool $excludeSaved = null, ?bool $excludeUnlimited = null, ?bool $excludeLimitedUpgradable = null, ?bool $excludeLimitedNonUpgradable = null, ?bool $excludeUnique = null, ?bool $excludeFromBlockchain = null, ?bool $sortByPrice = null, ?string $offset = null, ?int $limit = null): OwnedGifts {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        if (isset($excludeUnsaved)) $params['exclude_unsaved'] = $excludeUnsaved;
+        if (isset($excludeSaved)) $params['exclude_saved'] = $excludeSaved;
+        if (isset($excludeUnlimited)) $params['exclude_unlimited'] = $excludeUnlimited;
+        if (isset($excludeLimitedUpgradable)) $params['exclude_limited_upgradable'] = $excludeLimitedUpgradable;
+        if (isset($excludeLimitedNonUpgradable)) $params['exclude_limited_non_upgradable'] = $excludeLimitedNonUpgradable;
+        if (isset($excludeUnique)) $params['exclude_unique'] = $excludeUnique;
+        if (isset($excludeFromBlockchain)) $params['exclude_from_blockchain'] = $excludeFromBlockchain;
+        if (isset($sortByPrice)) $params['sort_by_price'] = $sortByPrice;
+        if (isset($offset)) $params['offset'] = $offset;
+        if (isset($limit)) $params['limit'] = $limit;
+        return OwnedGifts::fromArray($this->request('getBusinessAccountGifts', $params));
+    }
+
+        /**
+    * Method: getUserGifts
+    *
+    * Returns the gifts owned and hosted by a user. Returns OwnedGifts on success.
+    * @link https://core.telegram.org/bots/api#getusergifts
+    * @param int $userId
+    * @param bool|null $excludeUnlimited
+    * @param bool|null $excludeLimitedUpgradable
+    * @param bool|null $excludeLimitedNonUpgradable
+    * @param bool|null $excludeFromBlockchain
+    * @param bool|null $excludeUnique
+    * @param bool|null $sortByPrice
+    * @param string|null $offset
+    * @param int|null $limit
+    * @return OwnedGifts
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function getUserGifts(int $userId, ?bool $excludeUnlimited = null, ?bool $excludeLimitedUpgradable = null, ?bool $excludeLimitedNonUpgradable = null, ?bool $excludeFromBlockchain = null, ?bool $excludeUnique = null, ?bool $sortByPrice = null, ?string $offset = null, ?int $limit = null): OwnedGifts {
+        $params = [];
+        $params['user_id'] = $userId;
+        if (isset($excludeUnlimited)) $params['exclude_unlimited'] = $excludeUnlimited;
+        if (isset($excludeLimitedUpgradable)) $params['exclude_limited_upgradable'] = $excludeLimitedUpgradable;
+        if (isset($excludeLimitedNonUpgradable)) $params['exclude_limited_non_upgradable'] = $excludeLimitedNonUpgradable;
+        if (isset($excludeFromBlockchain)) $params['exclude_from_blockchain'] = $excludeFromBlockchain;
+        if (isset($excludeUnique)) $params['exclude_unique'] = $excludeUnique;
+        if (isset($sortByPrice)) $params['sort_by_price'] = $sortByPrice;
+        if (isset($offset)) $params['offset'] = $offset;
+        if (isset($limit)) $params['limit'] = $limit;
+        return OwnedGifts::fromArray($this->request('getUserGifts', $params));
+    }
+
+        /**
+    * Method: getChatGifts
+    *
+    * Returns the gifts owned by a chat. Returns OwnedGifts on success.
+    * @link https://core.telegram.org/bots/api#getchatgifts
+    * @param int|string $chatId
+    * @param bool|null $excludeUnsaved
+    * @param bool|null $excludeSaved
+    * @param bool|null $excludeUnlimited
+    * @param bool|null $excludeLimitedUpgradable
+    * @param bool|null $excludeLimitedNonUpgradable
+    * @param bool|null $excludeFromBlockchain
+    * @param bool|null $excludeUnique
+    * @param bool|null $sortByPrice
+    * @param string|null $offset
+    * @param int|null $limit
+    * @return OwnedGifts
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function getChatGifts(int|string $chatId, ?bool $excludeUnsaved = null, ?bool $excludeSaved = null, ?bool $excludeUnlimited = null, ?bool $excludeLimitedUpgradable = null, ?bool $excludeLimitedNonUpgradable = null, ?bool $excludeFromBlockchain = null, ?bool $excludeUnique = null, ?bool $sortByPrice = null, ?string $offset = null, ?int $limit = null): OwnedGifts {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        if (isset($excludeUnsaved)) $params['exclude_unsaved'] = $excludeUnsaved;
+        if (isset($excludeSaved)) $params['exclude_saved'] = $excludeSaved;
+        if (isset($excludeUnlimited)) $params['exclude_unlimited'] = $excludeUnlimited;
+        if (isset($excludeLimitedUpgradable)) $params['exclude_limited_upgradable'] = $excludeLimitedUpgradable;
+        if (isset($excludeLimitedNonUpgradable)) $params['exclude_limited_non_upgradable'] = $excludeLimitedNonUpgradable;
+        if (isset($excludeFromBlockchain)) $params['exclude_from_blockchain'] = $excludeFromBlockchain;
+        if (isset($excludeUnique)) $params['exclude_unique'] = $excludeUnique;
+        if (isset($sortByPrice)) $params['sort_by_price'] = $sortByPrice;
+        if (isset($offset)) $params['offset'] = $offset;
+        if (isset($limit)) $params['limit'] = $limit;
+        return OwnedGifts::fromArray($this->request('getChatGifts', $params));
+    }
+
+        /**
+    * Method: convertGiftToStars
+    *
+    * Converts a given regular gift to Telegram Stars. Requires the can_convert_gifts_to_stars business bot right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#convertgifttostars
+    * @param string $businessConnectionId
+    * @param string $ownedGiftId
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function convertGiftToStars(string $businessConnectionId, string $ownedGiftId): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['owned_gift_id'] = $ownedGiftId;
+        return $this->request('convertGiftToStars', $params);
+    }
+
+        /**
+    * Method: upgradeGift
+    *
+    * Upgrades a given regular gift to a unique gift. Requires the can_transfer_and_upgrade_gifts business bot right. Additionally requires the can_transfer_stars business bot right if the upgrade is paid. Returns True on success.
+    * @link https://core.telegram.org/bots/api#upgradegift
+    * @param string $businessConnectionId
+    * @param string $ownedGiftId
+    * @param bool|null $keepOriginalDetails
+    * @param int|null $starCount
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function upgradeGift(string $businessConnectionId, string $ownedGiftId, ?bool $keepOriginalDetails = null, ?int $starCount = null): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['owned_gift_id'] = $ownedGiftId;
+        if (isset($keepOriginalDetails)) $params['keep_original_details'] = $keepOriginalDetails;
+        if (isset($starCount)) $params['star_count'] = $starCount;
+        return $this->request('upgradeGift', $params);
+    }
+
+        /**
+    * Method: transferGift
+    *
+    * Transfers an owned unique gift to another user. Requires the can_transfer_and_upgrade_gifts business bot right. Requires can_transfer_stars business bot right if the transfer is paid. Returns True on success.
+    * @link https://core.telegram.org/bots/api#transfergift
+    * @param string $businessConnectionId
+    * @param string $ownedGiftId
+    * @param int $newOwnerChatId
+    * @param int|null $starCount
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function transferGift(string $businessConnectionId, string $ownedGiftId, int $newOwnerChatId, ?int $starCount = null): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['owned_gift_id'] = $ownedGiftId;
+        $params['new_owner_chat_id'] = $newOwnerChatId;
+        if (isset($starCount)) $params['star_count'] = $starCount;
+        return $this->request('transferGift', $params);
+    }
+
+        /**
+    * Method: postStory
+    *
+    * Posts a story on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+    * @link https://core.telegram.org/bots/api#poststory
+    * @param string $businessConnectionId
+    * @param InputStoryContent $content
+    * @param int $activePeriod
+    * @param string|null $caption
+    * @param string|null $parseMode
+    * @param array|null $captionEntities
+    * @param array|null $areas
+    * @param bool|null $postToChatPage
+    * @param bool|null $protectContent
+    * @return Story
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function postStory(string $businessConnectionId, InputStoryContent $content, int $activePeriod, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?array $areas = null, ?bool $postToChatPage = null, ?bool $protectContent = null): Story {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['content'] = $content;
+        $params['active_period'] = $activePeriod;
+        if (isset($caption)) $params['caption'] = $caption;
+        if (isset($parseMode)) $params['parse_mode'] = $parseMode;
+        if (isset($captionEntities)) $params['caption_entities'] = $captionEntities;
+        if (isset($areas)) $params['areas'] = $areas;
+        if (isset($postToChatPage)) $params['post_to_chat_page'] = $postToChatPage;
+        if (isset($protectContent)) $params['protect_content'] = $protectContent;
+        return Story::fromArray($this->request('postStory', $params));
+    }
+
+        /**
+    * Method: repostStory
+    *
+    * Reposts a story on behalf of a business account from another business account. Both business accounts must be managed by the same bot, and the story on the source account must have been posted (or reposted) by the bot. Requires the can_manage_stories business bot right for both business accounts. Returns Story on success.
+    * @link https://core.telegram.org/bots/api#repoststory
+    * @param string $businessConnectionId
+    * @param int $fromChatId
+    * @param int $fromStoryId
+    * @param int $activePeriod
+    * @param bool|null $postToChatPage
+    * @param bool|null $protectContent
+    * @return Story
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function repostStory(string $businessConnectionId, int $fromChatId, int $fromStoryId, int $activePeriod, ?bool $postToChatPage = null, ?bool $protectContent = null): Story {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['from_chat_id'] = $fromChatId;
+        $params['from_story_id'] = $fromStoryId;
+        $params['active_period'] = $activePeriod;
+        if (isset($postToChatPage)) $params['post_to_chat_page'] = $postToChatPage;
+        if (isset($protectContent)) $params['protect_content'] = $protectContent;
+        return Story::fromArray($this->request('repostStory', $params));
+    }
+
+        /**
+    * Method: editStory
+    *
+    * Edits a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns Story on success.
+    * @link https://core.telegram.org/bots/api#editstory
+    * @param string $businessConnectionId
+    * @param int $storyId
+    * @param InputStoryContent $content
+    * @param string|null $caption
+    * @param string|null $parseMode
+    * @param array|null $captionEntities
+    * @param array|null $areas
+    * @return Story
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function editStory(string $businessConnectionId, int $storyId, InputStoryContent $content, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?array $areas = null): Story {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['story_id'] = $storyId;
+        $params['content'] = $content;
+        if (isset($caption)) $params['caption'] = $caption;
+        if (isset($parseMode)) $params['parse_mode'] = $parseMode;
+        if (isset($captionEntities)) $params['caption_entities'] = $captionEntities;
+        if (isset($areas)) $params['areas'] = $areas;
+        return Story::fromArray($this->request('editStory', $params));
+    }
+
+        /**
+    * Method: deleteStory
+    *
+    * Deletes a story previously posted by the bot on behalf of a managed business account. Requires the can_manage_stories business bot right. Returns True on success.
+    * @link https://core.telegram.org/bots/api#deletestory
+    * @param string $businessConnectionId
+    * @param int $storyId
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function deleteStory(string $businessConnectionId, int $storyId): bool {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['story_id'] = $storyId;
+        return $this->request('deleteStory', $params);
+    }
+
+        /**
+    * Method: savePreparedKeyboardButton
+    *
+    * Stores a keyboard button that can be used by a user within a Mini App. Returns a PreparedKeyboardButton object.
+    * @link https://core.telegram.org/bots/api#savepreparedkeyboardbutton
+    * @param int $userId
+    * @param KeyboardButton $button
+    * @return PreparedKeyboardButton
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function savePreparedKeyboardButton(int $userId, KeyboardButton $button): PreparedKeyboardButton {
+        $params = [];
+        $params['user_id'] = $userId;
+        $params['button'] = $button;
+        return PreparedKeyboardButton::fromArray($this->request('savePreparedKeyboardButton', $params));
+    }
+
+        /**
+    * Method: editMessageChecklist
+    *
+    * Use this method to edit a checklist on behalf of a connected business account. On success, the edited Message is returned.
+    * @link https://core.telegram.org/bots/api#editmessagechecklist
+    * @param string $businessConnectionId
+    * @param int $chatId
+    * @param int $messageId
+    * @param InputChecklist $checklist
+    * @param InlineKeyboardMarkup|null $replyMarkup
+    * @return Message
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function editMessageChecklist(string $businessConnectionId, int $chatId, int $messageId, InputChecklist $checklist, ?InlineKeyboardMarkup $replyMarkup = null): Message {
+        $params = [];
+        $params['business_connection_id'] = $businessConnectionId;
+        $params['chat_id'] = $chatId;
+        $params['message_id'] = $messageId;
+        $params['checklist'] = $checklist;
+        if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        return Message::fromArray($this->request('editMessageChecklist', $params));
+    }
+
+        /**
+    * Method: approveSuggestedPost
+    *
+    * Use this method to approve a suggested post in a direct messages chat. The bot must have the 'can_post_messages' administrator right in the corresponding channel chat. Returns True on success.
+    * @link https://core.telegram.org/bots/api#approvesuggestedpost
+    * @param int $chatId
+    * @param int $messageId
+    * @param int|null $sendDate
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function approveSuggestedPost(int $chatId, int $messageId, ?int $sendDate = null): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['message_id'] = $messageId;
+        if (isset($sendDate)) $params['send_date'] = $sendDate;
+        return $this->request('approveSuggestedPost', $params);
+    }
+
+        /**
+    * Method: declineSuggestedPost
+    *
+    * Use this method to decline a suggested post in a direct messages chat. The bot must have the 'can_manage_direct_messages' administrator right in the corresponding channel chat. Returns True on success.
+    * @link https://core.telegram.org/bots/api#declinesuggestedpost
+    * @param int $chatId
+    * @param int $messageId
+    * @param string|null $comment
+    * @return bool
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function declineSuggestedPost(int $chatId, int $messageId, ?string $comment = null): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['message_id'] = $messageId;
+        if (isset($comment)) $params['comment'] = $comment;
+        return $this->request('declineSuggestedPost', $params);
+    }
+
+        /**
+    * Method: getMyStarBalance
+    *
+    * A method to get the current Telegram Stars balance of the bot. Requires no parameters. On success, returns a StarAmount object.
+    * @link https://core.telegram.org/bots/api#getmystarbalance
+    * @return StarAmount
+    * @throws Exception
+    * @throws GuzzleException
+    */
+    public function getMyStarBalance(): StarAmount {
+        $params = [];
+        return StarAmount::fromArray($this->request('getMyStarBalance', $params));
     }
 
     public function downloadFile(string|File $file, string $savePath): void {
