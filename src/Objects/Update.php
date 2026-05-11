@@ -77,6 +77,14 @@ final class Update extends AbstractObject {
     protected ?BusinessMessagesDeleted $deletedBusinessMessages = null;
 
     /**
+     * Guest Message
+     *
+     * Optional. New incoming guest mode message
+     * @var Message|null
+     */
+    protected ?Message $guestMessage = null;
+
+    /**
      * Message Reaction
      *
      * Optional. A reaction to a message was changed by a user. The bot must be an administrator in the chat and must explicitly specify "message_reaction" in the list of allowed_updates to receive these updates. The update isn't received for reactions set by bots.
@@ -206,6 +214,7 @@ final class Update extends AbstractObject {
         ?Message                     $businessMessage = null,
         ?Message                     $editedBusinessMessage = null,
         ?BusinessMessagesDeleted     $deletedBusinessMessages = null,
+        ?Message                     $guestMessage = null,
         ?MessageReactionUpdated      $messageReaction = null,
         ?MessageReactionCountUpdated $messageReactionCount = null,
         ?InlineQuery                 $inlineQuery = null,
@@ -231,6 +240,7 @@ final class Update extends AbstractObject {
         $this->businessMessage = $businessMessage;
         $this->editedBusinessMessage = $editedBusinessMessage;
         $this->deletedBusinessMessages = $deletedBusinessMessages;
+        $this->guestMessage = $guestMessage;
         $this->messageReaction = $messageReaction;
         $this->messageReactionCount = $messageReactionCount;
         $this->inlineQuery = $inlineQuery;
@@ -276,6 +286,9 @@ final class Update extends AbstractObject {
         }
         if (isset($data['deleted_business_messages'])) {
             $instance->deletedBusinessMessages = BusinessMessagesDeleted::fromArray($data['deleted_business_messages']);
+        }
+        if (isset($data['guest_message'])) {
+            $instance->guestMessage = Message::fromArray($data['guest_message']);
         }
         if (isset($data['message_reaction'])) {
             $instance->messageReaction = MessageReactionUpdated::fromArray($data['message_reaction']);
@@ -403,6 +416,15 @@ final class Update extends AbstractObject {
 
     public function setDeletedBusinessMessages(?BusinessMessagesDeleted $value): self {
         $this->deletedBusinessMessages = $value;
+        return $this;
+    }
+
+    public function getGuestMessage(): ?Message {
+        return $this->guestMessage;
+    }
+
+    public function setGuestMessage(?Message $value): self {
+        $this->guestMessage = $value;
         return $this;
     }
 

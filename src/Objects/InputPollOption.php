@@ -28,14 +28,24 @@ final class InputPollOption extends AbstractObject {
      */
     protected ?array $textEntities = null;
 
+    /**
+     * Media
+     *
+     * Optional. Content of the poll option
+     * @var InputPollOptionMedia|null
+     */
+    protected ?InputPollOptionMedia $media = null;
+
     public function __construct(
         ?string $text = null,
         ?string $textParseMode = null,
         ?array  $textEntities = null,
+        ?InputPollOptionMedia $media = null,
     ) {
         $this->text = $text;
         $this->textParseMode = $textParseMode;
         $this->textEntities = $textEntities;
+        $this->media = $media;
     }
 
     public static function fromArray(array $data): InputPollOption {
@@ -51,6 +61,18 @@ final class InputPollOption extends AbstractObject {
             foreach ($data['text_entities'] as $item) {
                 $instance->textEntities[] = MessageEntity::fromArray($item);
             }
+        }
+        if (isset($data['media'])) {
+            $instance->media = match ($data['media']['type'] ?? null) {
+                'animation' => InputMediaAnimation::fromArray($data['media']),
+                'live_photo' => InputMediaLivePhoto::fromArray($data['media']),
+                'location' => InputMediaLocation::fromArray($data['media']),
+                'photo' => InputMediaPhoto::fromArray($data['media']),
+                'sticker' => InputMediaSticker::fromArray($data['media']),
+                'venue' => InputMediaVenue::fromArray($data['media']),
+                'video' => InputMediaVideo::fromArray($data['media']),
+                default => null,
+            };
         }
         return $instance;
     }
@@ -79,6 +101,15 @@ final class InputPollOption extends AbstractObject {
 
     public function setTextEntities(?array $value): self {
         $this->textEntities = $value;
+        return $this;
+    }
+
+    public function getMedia(): ?InputPollOptionMedia {
+        return $this->media;
+    }
+
+    public function setMedia(?InputPollOptionMedia $value): self {
+        $this->media = $value;
         return $this;
     }
 

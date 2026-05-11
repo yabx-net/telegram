@@ -85,6 +85,14 @@ final class User extends AbstractObject {
     protected ?bool $canReadAllGroupMessages = null;
 
     /**
+     * Supports Guest Queries
+     *
+     * Optional. True, if the bot supports guest mode. Returned only in getMe.
+     * @var bool|null
+     */
+    protected ?bool $supportsGuestQueries = null;
+
+    /**
      * Supports Inline Queries
      *
      * Optional. True, if the bot supports inline queries. Returned only in getMe.
@@ -119,6 +127,7 @@ final class User extends AbstractObject {
         ?bool   $addedToAttachmentMenu = null,
         ?bool   $canJoinGroups = null,
         ?bool   $canReadAllGroupMessages = null,
+        ?bool   $supportsGuestQueries = null,
         ?bool   $supportsInlineQueries = null,
         ?bool   $canConnectToBusiness = null,
         ?bool   $hasMainWebApp = null,
@@ -133,6 +142,7 @@ final class User extends AbstractObject {
         $this->addedToAttachmentMenu = $addedToAttachmentMenu;
         $this->canJoinGroups = $canJoinGroups;
         $this->canReadAllGroupMessages = $canReadAllGroupMessages;
+        $this->supportsGuestQueries = $supportsGuestQueries;
         $this->supportsInlineQueries = $supportsInlineQueries;
         $this->canConnectToBusiness = $canConnectToBusiness;
         $this->hasMainWebApp = $hasMainWebApp;
@@ -169,6 +179,9 @@ final class User extends AbstractObject {
         }
         if (isset($data['can_read_all_group_messages'])) {
             $instance->canReadAllGroupMessages = $data['can_read_all_group_messages'];
+        }
+        if (isset($data['supports_guest_queries'])) {
+            $instance->supportsGuestQueries = $data['supports_guest_queries'];
         }
         if (isset($data['supports_inline_queries'])) {
             $instance->supportsInlineQueries = $data['supports_inline_queries'];
@@ -269,6 +282,15 @@ final class User extends AbstractObject {
 
     public function setCanReadAllGroupMessages(?bool $value): self {
         $this->canReadAllGroupMessages = $value;
+        return $this;
+    }
+
+    public function getSupportsGuestQueries(): ?bool {
+        return $this->supportsGuestQueries;
+    }
+
+    public function setSupportsGuestQueries(?bool $value): self {
+        $this->supportsGuestQueries = $value;
         return $this;
     }
 

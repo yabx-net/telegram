@@ -2,7 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class InputMediaVideo extends AbstractObject {
+final class InputMediaVideo extends AbstractObject implements InputPollMedia, InputPollOptionMedia {
 
     /**
      * Type

@@ -21,6 +21,14 @@ final class PollOption extends AbstractObject {
     protected ?array $textEntities = null;
 
     /**
+     * Media
+     *
+     * Optional. Information about the media in the poll option
+     * @var PollMedia|null
+     */
+    protected ?PollMedia $media = null;
+
+    /**
      * Voter Count
      *
      * Number of users that voted for this option
@@ -31,10 +39,12 @@ final class PollOption extends AbstractObject {
     public function __construct(
         ?string $text = null,
         ?array  $textEntities = null,
+        ?PollMedia $media = null,
         ?int    $voterCount = null,
     ) {
         $this->text = $text;
         $this->textEntities = $textEntities;
+        $this->media = $media;
         $this->voterCount = $voterCount;
     }
 
@@ -48,6 +58,9 @@ final class PollOption extends AbstractObject {
             foreach ($data['text_entities'] as $item) {
                 $instance->textEntities[] = MessageEntity::fromArray($item);
             }
+        }
+        if (isset($data['media'])) {
+            $instance->media = PollMedia::fromArray($data['media']);
         }
         if (isset($data['voter_count'])) {
             $instance->voterCount = $data['voter_count'];
@@ -70,6 +83,15 @@ final class PollOption extends AbstractObject {
 
     public function setTextEntities(?array $value): self {
         $this->textEntities = $value;
+        return $this;
+    }
+
+    public function getMedia(): ?PollMedia {
+        return $this->media;
+    }
+
+    public function setMedia(?PollMedia $value): self {
+        $this->media = $value;
         return $this;
     }
 

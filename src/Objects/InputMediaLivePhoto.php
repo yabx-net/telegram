@@ -2,28 +2,40 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class InputMediaPhoto extends AbstractObject implements InputPollMedia, InputPollOptionMedia {
+/**
+ * This object represents a live photo to be sent.
+ * @link https://core.telegram.org/bots/api#inputmedialivephoto
+ */
+final class InputMediaLivePhoto extends InputMedia implements InputPollMedia, InputPollOptionMedia {
 
     /**
      * Type
      *
-     * Type of the result, must be photo
+     * Type of the result, must be live_photo
      * @var string
      */
-    protected string $type = 'photo';
+    protected string $type = 'live_photo';
 
     /**
      * Media
      *
-     * File to send. Pass a file_id to send a file that exists on the Telegram servers (recommended), pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one using multipart/form-data under <file_attach_name> name. More information on Sending Files »
+     * File to send. Pass a file_id to send a file that exists on the Telegram servers, pass an HTTP URL for Telegram to get a file from the Internet, or pass “attach://<file_attach_name>” to upload a new one.
      * @var string|null
      */
     protected ?string $media = null;
 
     /**
+     * Photo
+     *
+     * Photo image for the live photo.
+     * @var string|null
+     */
+    protected ?string $photo = null;
+
+    /**
      * Caption
      *
-     * Optional. Caption of the photo to be sent, 0-1024 characters after entities parsing
+     * Optional. Caption of the live photo to be sent, 0-1024 characters after entities parsing
      * @var string|null
      */
     protected ?string $caption = null;
@@ -31,7 +43,7 @@ final class InputMediaPhoto extends AbstractObject implements InputPollMedia, In
     /**
      * Parse Mode
      *
-     * Optional. Mode for parsing entities in the photo caption. See formatting options for more details.
+     * Optional. Mode for parsing entities in the live photo caption.
      * @var string|null
      */
     protected ?string $parseMode = null;
@@ -55,20 +67,22 @@ final class InputMediaPhoto extends AbstractObject implements InputPollMedia, In
     /**
      * Has Spoiler
      *
-     * Optional. Pass True if the photo needs to be covered with a spoiler animation
+     * Optional. Pass True if the live photo needs to be covered with a spoiler animation
      * @var bool|null
      */
     protected ?bool $hasSpoiler = null;
 
     public function __construct(
         ?string $media = null,
+        ?string $photo = null,
         ?string $caption = null,
         ?string $parseMode = null,
-        ?array  $captionEntities = null,
-        ?bool   $showCaptionAboveMedia = null,
-        ?bool   $hasSpoiler = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $hasSpoiler = null,
     ) {
         $this->media = $media;
+        $this->photo = $photo;
         $this->caption = $caption;
         $this->parseMode = $parseMode;
         $this->captionEntities = $captionEntities;
@@ -76,13 +90,16 @@ final class InputMediaPhoto extends AbstractObject implements InputPollMedia, In
         $this->hasSpoiler = $hasSpoiler;
     }
 
-    public static function fromArray(array $data): InputMediaPhoto {
+    public static function fromArray(array $data): InputMediaLivePhoto {
         $instance = new self();
         if (isset($data['type'])) {
             $instance->type = $data['type'];
         }
         if (isset($data['media'])) {
             $instance->media = $data['media'];
+        }
+        if (isset($data['photo'])) {
+            $instance->photo = $data['photo'];
         }
         if (isset($data['caption'])) {
             $instance->caption = $data['caption'];
@@ -115,6 +132,15 @@ final class InputMediaPhoto extends AbstractObject implements InputPollMedia, In
 
     public function setMedia(?string $value): self {
         $this->media = $value;
+        return $this;
+    }
+
+    public function getPhoto(): ?string {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $value): self {
+        $this->photo = $value;
         return $this;
     }
 

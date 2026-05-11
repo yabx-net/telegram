@@ -4,8 +4,8 @@ namespace Yabx\Telegram\Objects;
 
 final class MaybeInaccessibleMessage extends AbstractObject {
 
-    private ?Message $message = null;
-    private ?InaccessibleMessage $inaccessibleMessage = null;
+    protected ?Message $message = null;
+    protected ?InaccessibleMessage $inaccessibleMessage = null;
 
     public static function fromArray(array $data): MaybeInaccessibleMessage {
         $entity = new MaybeInaccessibleMessage();

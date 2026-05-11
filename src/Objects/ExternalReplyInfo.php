@@ -77,6 +77,14 @@ final class ExternalReplyInfo extends AbstractObject {
     protected ?array $photo = null;
 
     /**
+     * Live Photo
+     *
+     * Optional. Message is a live photo
+     * @var LivePhoto|null
+     */
+    protected ?LivePhoto $livePhoto = null;
+
+    /**
      * Sticker
      *
      * Optional. Message is a sticker, information about the sticker
@@ -206,6 +214,7 @@ final class ExternalReplyInfo extends AbstractObject {
         ?Document           $document = null,
         ?PaidMediaInfo      $paidMedia = null,
         ?array              $photo = null,
+        ?LivePhoto          $livePhoto = null,
         ?Sticker            $sticker = null,
         ?Story              $story = null,
         ?Video              $video = null,
@@ -231,6 +240,7 @@ final class ExternalReplyInfo extends AbstractObject {
         $this->document = $document;
         $this->paidMedia = $paidMedia;
         $this->photo = $photo;
+        $this->livePhoto = $livePhoto;
         $this->sticker = $sticker;
         $this->story = $story;
         $this->video = $video;
@@ -279,6 +289,9 @@ final class ExternalReplyInfo extends AbstractObject {
             foreach ($data['photo'] as $item) {
                 $instance->photo[] = PhotoSize::fromArray($item);
             }
+        }
+        if (isset($data['live_photo'])) {
+            $instance->livePhoto = LivePhoto::fromArray($data['live_photo']);
         }
         if (isset($data['sticker'])) {
             $instance->sticker = Sticker::fromArray($data['sticker']);
@@ -406,6 +419,15 @@ final class ExternalReplyInfo extends AbstractObject {
 
     public function setPhoto(?array $value): self {
         $this->photo = $value;
+        return $this;
+    }
+
+    public function getLivePhoto(): ?LivePhoto {
+        return $this->livePhoto;
+    }
+
+    public function setLivePhoto(?LivePhoto $value): self {
+        $this->livePhoto = $value;
         return $this;
     }
 

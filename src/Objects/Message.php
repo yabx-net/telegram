@@ -53,6 +53,14 @@ final class Message extends AbstractObject {
     protected ?User $senderBusinessBot = null;
 
     /**
+     * Guest Query Id
+     *
+     * Optional. Unique identifier of the guest query that was answered by this message.
+     * @var string|null
+     */
+    protected ?string $guestQueryId = null;
+
+    /**
      * Date
      *
      * Date the message was sent in Unix time. It is always a positive number, representing a valid date.
@@ -139,6 +147,22 @@ final class Message extends AbstractObject {
      * @var User|null
      */
     protected ?User $viaBot = null;
+
+    /**
+     * Guest Bot Caller User
+     *
+     * Optional. User that called the bot in guest mode.
+     * @var User|null
+     */
+    protected ?User $guestBotCallerUser = null;
+
+    /**
+     * Guest Bot Caller Chat
+     *
+     * Optional. Chat from which the bot was called in guest mode.
+     * @var Chat|null
+     */
+    protected ?Chat $guestBotCallerChat = null;
 
     /**
      * Edit Date
@@ -251,6 +275,14 @@ final class Message extends AbstractObject {
      * @var PhotoSize[]|null
      */
     protected ?array $photo = null;
+
+    /**
+     * Live Photo
+     *
+     * Optional. Message is a live photo
+     * @var LivePhoto|null
+     */
+    protected ?LivePhoto $livePhoto = null;
 
     /**
      * Sticker
@@ -691,6 +723,7 @@ final class Message extends AbstractObject {
         ?Chat                          $senderChat = null,
         ?int                           $senderBoostCount = null,
         ?User                          $senderBusinessBot = null,
+        ?string                        $guestQueryId = null,
         ?int                           $date = null,
         ?string                        $businessConnectionId = null,
         ?Chat                          $chat = null,
@@ -702,6 +735,8 @@ final class Message extends AbstractObject {
         ?TextQuote                     $quote = null,
         ?Story                         $replyToStory = null,
         ?User                          $viaBot = null,
+        ?User                          $guestBotCallerUser = null,
+        ?Chat                          $guestBotCallerChat = null,
         ?int                           $editDate = null,
         ?bool                          $hasProtectedContent = null,
         ?bool                          $isFromOffline = null,
@@ -716,6 +751,7 @@ final class Message extends AbstractObject {
         ?Document                      $document = null,
         ?PaidMediaInfo                 $paidMedia = null,
         ?array                         $photo = null,
+        ?LivePhoto                     $livePhoto = null,
         ?Sticker                       $sticker = null,
         ?Story                         $story = null,
         ?Video                         $video = null,
@@ -777,6 +813,7 @@ final class Message extends AbstractObject {
         $this->senderChat = $senderChat;
         $this->senderBoostCount = $senderBoostCount;
         $this->senderBusinessBot = $senderBusinessBot;
+        $this->guestQueryId = $guestQueryId;
         $this->date = $date;
         $this->businessConnectionId = $businessConnectionId;
         $this->chat = $chat;
@@ -788,6 +825,8 @@ final class Message extends AbstractObject {
         $this->quote = $quote;
         $this->replyToStory = $replyToStory;
         $this->viaBot = $viaBot;
+        $this->guestBotCallerUser = $guestBotCallerUser;
+        $this->guestBotCallerChat = $guestBotCallerChat;
         $this->editDate = $editDate;
         $this->hasProtectedContent = $hasProtectedContent;
         $this->isFromOffline = $isFromOffline;
@@ -802,6 +841,7 @@ final class Message extends AbstractObject {
         $this->document = $document;
         $this->paidMedia = $paidMedia;
         $this->photo = $photo;
+        $this->livePhoto = $livePhoto;
         $this->sticker = $sticker;
         $this->story = $story;
         $this->video = $video;
@@ -878,6 +918,9 @@ final class Message extends AbstractObject {
         if (isset($data['sender_business_bot'])) {
             $instance->senderBusinessBot = User::fromArray($data['sender_business_bot']);
         }
+        if (isset($data['guest_query_id'])) {
+            $instance->guestQueryId = $data['guest_query_id'];
+        }
         if (isset($data['date'])) {
             $instance->date = $data['date'];
         }
@@ -910,6 +953,12 @@ final class Message extends AbstractObject {
         }
         if (isset($data['via_bot'])) {
             $instance->viaBot = User::fromArray($data['via_bot']);
+        }
+        if (isset($data['guest_bot_caller_user'])) {
+            $instance->guestBotCallerUser = User::fromArray($data['guest_bot_caller_user']);
+        }
+        if (isset($data['guest_bot_caller_chat'])) {
+            $instance->guestBotCallerChat = Chat::fromArray($data['guest_bot_caller_chat']);
         }
         if (isset($data['edit_date'])) {
             $instance->editDate = $data['edit_date'];
@@ -958,6 +1007,9 @@ final class Message extends AbstractObject {
             foreach ($data['photo'] as $item) {
                 $instance->photo[] = PhotoSize::fromArray($item);
             }
+        }
+        if (isset($data['live_photo'])) {
+            $instance->livePhoto = LivePhoto::fromArray($data['live_photo']);
         }
         if (isset($data['sticker'])) {
             $instance->sticker = Sticker::fromArray($data['sticker']);
@@ -1187,6 +1239,15 @@ final class Message extends AbstractObject {
         return $this;
     }
 
+    public function getGuestQueryId(): ?string {
+        return $this->guestQueryId;
+    }
+
+    public function setGuestQueryId(?string $value): self {
+        $this->guestQueryId = $value;
+        return $this;
+    }
+
     public function getDate(): ?int {
         return $this->date;
     }
@@ -1283,6 +1344,24 @@ final class Message extends AbstractObject {
 
     public function setViaBot(?User $value): self {
         $this->viaBot = $value;
+        return $this;
+    }
+
+    public function getGuestBotCallerUser(): ?User {
+        return $this->guestBotCallerUser;
+    }
+
+    public function setGuestBotCallerUser(?User $value): self {
+        $this->guestBotCallerUser = $value;
+        return $this;
+    }
+
+    public function getGuestBotCallerChat(): ?Chat {
+        return $this->guestBotCallerChat;
+    }
+
+    public function setGuestBotCallerChat(?Chat $value): self {
+        $this->guestBotCallerChat = $value;
         return $this;
     }
 
@@ -1409,6 +1488,15 @@ final class Message extends AbstractObject {
 
     public function setPhoto(?array $value): self {
         $this->photo = $value;
+        return $this;
+    }
+
+    public function getLivePhoto(): ?LivePhoto {
+        return $this->livePhoto;
+    }
+
+    public function setLivePhoto(?LivePhoto $value): self {
+        $this->livePhoto = $value;
         return $this;
     }
 

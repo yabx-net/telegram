@@ -109,6 +109,14 @@ final class ChatMemberRestricted extends ChatMember {
     protected ?bool $canAddWebPagePreviews = null;
 
     /**
+     * Can React To Messages
+     *
+     * True, if the user is allowed to add reactions to messages
+     * @var bool|null
+     */
+    protected ?bool $canReactToMessages = null;
+
+    /**
      * Can Change Info
      *
      * True, if the user is allowed to change the chat title, photo and other settings
@@ -161,6 +169,7 @@ final class ChatMemberRestricted extends ChatMember {
         ?bool   $canSendPolls = null,
         ?bool   $canSendOtherMessages = null,
         ?bool   $canAddWebPagePreviews = null,
+        ?bool   $canReactToMessages = null,
         ?bool   $canChangeInfo = null,
         ?bool   $canInviteUsers = null,
         ?bool   $canPinMessages = null,
@@ -179,6 +188,7 @@ final class ChatMemberRestricted extends ChatMember {
         $this->canSendPolls = $canSendPolls;
         $this->canSendOtherMessages = $canSendOtherMessages;
         $this->canAddWebPagePreviews = $canAddWebPagePreviews;
+        $this->canReactToMessages = $canReactToMessages;
         $this->canChangeInfo = $canChangeInfo;
         $this->canInviteUsers = $canInviteUsers;
         $this->canPinMessages = $canPinMessages;
@@ -226,6 +236,9 @@ final class ChatMemberRestricted extends ChatMember {
         }
         if (isset($data['can_add_web_page_previews'])) {
             $instance->canAddWebPagePreviews = $data['can_add_web_page_previews'];
+        }
+        if (isset($data['can_react_to_messages'])) {
+            $instance->canReactToMessages = $data['can_react_to_messages'];
         }
         if (isset($data['can_change_info'])) {
             $instance->canChangeInfo = $data['can_change_info'];
@@ -354,6 +367,15 @@ final class ChatMemberRestricted extends ChatMember {
 
     public function setCanAddWebPagePreviews(?bool $value): self {
         $this->canAddWebPagePreviews = $value;
+        return $this;
+    }
+
+    public function getCanReactToMessages(): ?bool {
+        return $this->canReactToMessages;
+    }
+
+    public function setCanReactToMessages(?bool $value): self {
+        $this->canReactToMessages = $value;
         return $this;
     }
 

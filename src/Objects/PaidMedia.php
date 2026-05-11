@@ -12,6 +12,7 @@ abstract class PaidMedia extends AbstractObject {
             'preview' => PaidMediaPreview::fromArray($data),
             'photo' => PaidMediaPhoto::fromArray($data),
             'video' => PaidMediaVideo::fromArray($data),
+            'live_photo' => PaidMediaLivePhoto::fromArray($data),
             default => throw new InvalidArgumentException('Invalid PaidMedia type'),
         };
     }

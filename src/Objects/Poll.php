@@ -37,6 +37,14 @@ final class Poll extends AbstractObject {
     protected ?array $options = null;
 
     /**
+     * Media
+     *
+     * Optional. Information about the poll media
+     * @var PollMedia|null
+     */
+    protected ?PollMedia $media = null;
+
+    /**
      * Total Voter Count
      *
      * Total number of users that voted in the poll
@@ -77,6 +85,22 @@ final class Poll extends AbstractObject {
     protected ?bool $allowsMultipleAnswers = null;
 
     /**
+     * Members Only
+     *
+     * Optional. True, if only members of the chat can vote in the poll
+     * @var bool|null
+     */
+    protected ?bool $membersOnly = null;
+
+    /**
+     * Country Codes
+     *
+     * Optional. A list of 2-letter ISO 3166-1 alpha-2 country codes of the countries from which users can vote in the poll
+     * @var string[]|null
+     */
+    protected ?array $countryCodes = null;
+
+    /**
      * Correct Option Id
      *
      * Optional. 0-based identifier of the correct answer option. Available only for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with the bot.
@@ -101,6 +125,14 @@ final class Poll extends AbstractObject {
     protected ?array $explanationEntities = null;
 
     /**
+     * Explanation Media
+     *
+     * Optional. Information about the media in the quiz explanation
+     * @var PollMedia|null
+     */
+    protected ?PollMedia $explanationMedia = null;
+
+    /**
      * Open Period
      *
      * Optional. Amount of time in seconds the poll will be active after creation
@@ -121,14 +153,18 @@ final class Poll extends AbstractObject {
         ?string $question = null,
         ?array  $questionEntities = null,
         ?array  $options = null,
+        ?PollMedia $media = null,
         ?int    $totalVoterCount = null,
         ?bool   $isClosed = null,
         ?bool   $isAnonymous = null,
         ?string $type = null,
         ?bool   $allowsMultipleAnswers = null,
+        ?bool   $membersOnly = null,
+        ?array  $countryCodes = null,
         ?int    $correctOptionId = null,
         ?string $explanation = null,
         ?array  $explanationEntities = null,
+        ?PollMedia $explanationMedia = null,
         ?int    $openPeriod = null,
         ?int    $closeDate = null,
     ) {
@@ -136,14 +172,18 @@ final class Poll extends AbstractObject {
         $this->question = $question;
         $this->questionEntities = $questionEntities;
         $this->options = $options;
+        $this->media = $media;
         $this->totalVoterCount = $totalVoterCount;
         $this->isClosed = $isClosed;
         $this->isAnonymous = $isAnonymous;
         $this->type = $type;
         $this->allowsMultipleAnswers = $allowsMultipleAnswers;
+        $this->membersOnly = $membersOnly;
+        $this->countryCodes = $countryCodes;
         $this->correctOptionId = $correctOptionId;
         $this->explanation = $explanation;
         $this->explanationEntities = $explanationEntities;
+        $this->explanationMedia = $explanationMedia;
         $this->openPeriod = $openPeriod;
         $this->closeDate = $closeDate;
     }
@@ -168,6 +208,9 @@ final class Poll extends AbstractObject {
                 $instance->options[] = PollOption::fromArray($item);
             }
         }
+        if (isset($data['media'])) {
+            $instance->media = PollMedia::fromArray($data['media']);
+        }
         if (isset($data['total_voter_count'])) {
             $instance->totalVoterCount = $data['total_voter_count'];
         }
@@ -183,6 +226,15 @@ final class Poll extends AbstractObject {
         if (isset($data['allows_multiple_answers'])) {
             $instance->allowsMultipleAnswers = $data['allows_multiple_answers'];
         }
+        if (isset($data['members_only'])) {
+            $instance->membersOnly = $data['members_only'];
+        }
+        if (isset($data['country_codes'])) {
+            $instance->countryCodes = [];
+            foreach ($data['country_codes'] as $item) {
+                $instance->countryCodes[] = $item;
+            }
+        }
         if (isset($data['correct_option_id'])) {
             $instance->correctOptionId = $data['correct_option_id'];
         }
@@ -194,6 +246,9 @@ final class Poll extends AbstractObject {
             foreach ($data['explanation_entities'] as $item) {
                 $instance->explanationEntities[] = MessageEntity::fromArray($item);
             }
+        }
+        if (isset($data['explanation_media'])) {
+            $instance->explanationMedia = PollMedia::fromArray($data['explanation_media']);
         }
         if (isset($data['open_period'])) {
             $instance->openPeriod = $data['open_period'];
@@ -237,6 +292,15 @@ final class Poll extends AbstractObject {
 
     public function setOptions(?array $value): self {
         $this->options = $value;
+        return $this;
+    }
+
+    public function getMedia(): ?PollMedia {
+        return $this->media;
+    }
+
+    public function setMedia(?PollMedia $value): self {
+        $this->media = $value;
         return $this;
     }
 
@@ -285,6 +349,24 @@ final class Poll extends AbstractObject {
         return $this;
     }
 
+    public function getMembersOnly(): ?bool {
+        return $this->membersOnly;
+    }
+
+    public function setMembersOnly(?bool $value): self {
+        $this->membersOnly = $value;
+        return $this;
+    }
+
+    public function getCountryCodes(): ?array {
+        return $this->countryCodes;
+    }
+
+    public function setCountryCodes(?array $value): self {
+        $this->countryCodes = $value;
+        return $this;
+    }
+
     public function getCorrectOptionId(): ?int {
         return $this->correctOptionId;
     }
@@ -309,6 +391,15 @@ final class Poll extends AbstractObject {
 
     public function setExplanationEntities(?array $value): self {
         $this->explanationEntities = $value;
+        return $this;
+    }
+
+    public function getExplanationMedia(): ?PollMedia {
+        return $this->explanationMedia;
+    }
+
+    public function setExplanationMedia(?PollMedia $value): self {
+        $this->explanationMedia = $value;
         return $this;
     }
 
