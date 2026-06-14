@@ -34,6 +34,7 @@ use Yabx\Telegram\Objects\InlineQueryResultsButton;
 use Yabx\Telegram\Objects\InputChecklist;
 use Yabx\Telegram\Objects\InputPollMedia;
 use Yabx\Telegram\Objects\InputProfilePhoto;
+use Yabx\Telegram\Objects\InputRichMessage;
 use Yabx\Telegram\Objects\InputSticker;
 use Yabx\Telegram\Objects\InputStoryContent;
 use Yabx\Telegram\Objects\KeyboardButton;
@@ -306,6 +307,29 @@ class BotApi {
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
         return Message::fromArray($this->request('sendMessage', $params));
+    }
+
+    /**
+     * Method: sendRichMessage
+     *
+     * Use this method to send rich messages. On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#sendrichmessage
+     */
+    public function sendRichMessage(int|string $chatId, InputRichMessage $richMessage, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $directMessagesTopicId = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?bool $allowPaidBroadcast = null, ?string $messageEffectId = null, ?SuggestedPostParameters $suggestedPostParameters = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null): Message {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['rich_message'] = $richMessage;
+        if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
+        if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
+        if (isset($directMessagesTopicId)) $params['direct_messages_topic_id'] = $directMessagesTopicId;
+        if (isset($disableNotification)) $params['disable_notification'] = $disableNotification;
+        if (isset($protectContent)) $params['protect_content'] = $protectContent;
+        if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
+        if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
+        if (isset($suggestedPostParameters)) $params['suggested_post_parameters'] = $suggestedPostParameters;
+        if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
+        if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        return Message::fromArray($this->request('sendRichMessage', $params));
     }
 
     /**
@@ -1577,6 +1601,32 @@ class BotApi {
     }
 
     /**
+     * Method: answerChatJoinRequestQuery
+     *
+     * Use this method to process a received chat join request query. Returns True on success.
+     * @link https://core.telegram.org/bots/api#answerchatjoinrequestquery
+     */
+    public function answerChatJoinRequestQuery(string $chatJoinRequestQueryId, string $result): bool {
+        $params = [];
+        $params['chat_join_request_query_id'] = $chatJoinRequestQueryId;
+        $params['result'] = $result;
+        return $this->request('answerChatJoinRequestQuery', $params);
+    }
+
+    /**
+     * Method: sendChatJoinRequestWebApp
+     *
+     * Use this method to process a received chat join request query by showing a Mini App to the user before deciding the outcome. Returns True on success.
+     * @link https://core.telegram.org/bots/api#sendchatjoinrequestwebapp
+     */
+    public function sendChatJoinRequestWebApp(string $chatJoinRequestQueryId, string $webAppUrl): bool {
+        $params = [];
+        $params['chat_join_request_query_id'] = $chatJoinRequestQueryId;
+        $params['web_app_url'] = $webAppUrl;
+        return $this->request('sendChatJoinRequestWebApp', $params);
+    }
+
+    /**
      * Method: setChatPhoto
      *
      * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats. The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights. Returns True on success.
@@ -2336,7 +2386,7 @@ class BotApi {
      *
      * Use this method to edit text and game messages. On success, if the edited message is not an inline message, the edited Message is returned, otherwise True is returned. Note that business messages that were not sent by the bot and do not contain an inline keyboard can only be edited within 48 hours from the time they were sent.
      * @link https://core.telegram.org/bots/api#editmessagetext
-     * @param string $text
+     * @param string|null $text
      * @param ?string $businessConnectionId
      * @param int|string|null $chatId
      * @param ?int $messageId
@@ -2344,21 +2394,23 @@ class BotApi {
      * @param ?string $parseMode
      * @param ?array $entities
      * @param ?LinkPreviewOptions $linkPreviewOptions
+     * @param ?InputRichMessage $richMessage
      * @param ?InlineKeyboardMarkup $replyMarkup
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function editMessageText(string $text, ?string $businessConnectionId = null, int|string|null $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
+    public function editMessageText(?string $text = null, ?string $businessConnectionId = null, int|string|null $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?InputRichMessage $richMessage = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         if (isset($chatId)) $params['chat_id'] = $chatId;
         if (isset($messageId)) $params['message_id'] = $messageId;
         if (isset($inlineMessageId)) $params['inline_message_id'] = $inlineMessageId;
-        $params['text'] = $text;
+        if (isset($text)) $params['text'] = $text;
         if (isset($parseMode)) $params['parse_mode'] = $parseMode;
         if (isset($entities)) $params['entities'] = $entities;
         if (isset($linkPreviewOptions)) $params['link_preview_options'] = $linkPreviewOptions;
+        if (isset($richMessage)) $params['rich_message'] = $richMessage;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
         return Message::fromArray($this->request('editMessageText', $params));
     }
@@ -3408,6 +3460,21 @@ class BotApi {
         if (isset($parseMode)) $params['parse_mode'] = $parseMode;
         if (isset($entities)) $params['entities'] = $entities;
         return $this->request('sendMessageDraft', $params);
+    }
+
+    /**
+     * Method: sendRichMessageDraft
+     *
+     * Use this method to stream a partial rich message to a user while the message is being generated. Returns True on success.
+     * @link https://core.telegram.org/bots/api#sendrichmessagedraft
+     */
+    public function sendRichMessageDraft(int $chatId, int $draftId, InputRichMessage $richMessage, ?int $messageThreadId = null): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['draft_id'] = $draftId;
+        $params['rich_message'] = $richMessage;
+        if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
+        return $this->request('sendRichMessageDraft', $params);
     }
 
     /**

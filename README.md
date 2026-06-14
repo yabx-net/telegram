@@ -1,6 +1,6 @@
 # yabx/telegram
 
-PHP SDK for the [Telegram Bot API](https://core.telegram.org/bots/api). Typed request/response objects, [Guzzle](https://github.com/guzzle/guzzle) HTTP client, and coverage aligned with **Bot API 10.0** (May 2026).
+PHP SDK for the [Telegram Bot API](https://core.telegram.org/bots/api). Typed request/response objects, [Guzzle](https://github.com/guzzle/guzzle) HTTP client, and coverage aligned with **Bot API 10.1** (June 2026).
 
 ## Requirements
 

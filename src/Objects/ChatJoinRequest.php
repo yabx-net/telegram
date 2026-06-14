@@ -52,6 +52,14 @@ final class ChatJoinRequest extends AbstractObject {
      */
     protected ?ChatInviteLink $inviteLink = null;
 
+    /**
+     * Query Id
+     *
+     * Optional. Identifier of the join request query. If present, then the bot must call sendChatJoinRequestWebApp or directly call answerChatJoinRequestQuery within 10 seconds.
+     * @var string|null
+     */
+    protected ?string $queryId = null;
+
     public function __construct(
         ?Chat           $chat = null,
         ?User           $from = null,
@@ -59,6 +67,7 @@ final class ChatJoinRequest extends AbstractObject {
         ?int            $date = null,
         ?string         $bio = null,
         ?ChatInviteLink $inviteLink = null,
+        ?string         $queryId = null,
     ) {
         $this->chat = $chat;
         $this->from = $from;
@@ -66,6 +75,7 @@ final class ChatJoinRequest extends AbstractObject {
         $this->date = $date;
         $this->bio = $bio;
         $this->inviteLink = $inviteLink;
+        $this->queryId = $queryId;
     }
 
     public static function fromArray(array $data): ChatJoinRequest {
@@ -87,6 +97,9 @@ final class ChatJoinRequest extends AbstractObject {
         }
         if (isset($data['invite_link'])) {
             $instance->inviteLink = ChatInviteLink::fromArray($data['invite_link']);
+        }
+        if (isset($data['query_id'])) {
+            $instance->queryId = $data['query_id'];
         }
         return $instance;
     }
@@ -142,6 +155,15 @@ final class ChatJoinRequest extends AbstractObject {
 
     public function setInviteLink(?ChatInviteLink $value): self {
         $this->inviteLink = $value;
+        return $this;
+    }
+
+    public function getQueryId(): ?string {
+        return $this->queryId;
+    }
+
+    public function setQueryId(?string $value): self {
+        $this->queryId = $value;
         return $this;
     }
 

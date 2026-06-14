@@ -93,6 +93,14 @@ final class User extends AbstractObject {
     protected ?bool $supportsGuestQueries = null;
 
     /**
+     * Supports Join Request Queries
+     *
+     * Optional. True, if the bot supports join request queries. Returned only in getMe.
+     * @var bool|null
+     */
+    protected ?bool $supportsJoinRequestQueries = null;
+
+    /**
      * Supports Inline Queries
      *
      * Optional. True, if the bot supports inline queries. Returned only in getMe.
@@ -128,6 +136,7 @@ final class User extends AbstractObject {
         ?bool   $canJoinGroups = null,
         ?bool   $canReadAllGroupMessages = null,
         ?bool   $supportsGuestQueries = null,
+        ?bool   $supportsJoinRequestQueries = null,
         ?bool   $supportsInlineQueries = null,
         ?bool   $canConnectToBusiness = null,
         ?bool   $hasMainWebApp = null,
@@ -143,6 +152,7 @@ final class User extends AbstractObject {
         $this->canJoinGroups = $canJoinGroups;
         $this->canReadAllGroupMessages = $canReadAllGroupMessages;
         $this->supportsGuestQueries = $supportsGuestQueries;
+        $this->supportsJoinRequestQueries = $supportsJoinRequestQueries;
         $this->supportsInlineQueries = $supportsInlineQueries;
         $this->canConnectToBusiness = $canConnectToBusiness;
         $this->hasMainWebApp = $hasMainWebApp;
@@ -182,6 +192,9 @@ final class User extends AbstractObject {
         }
         if (isset($data['supports_guest_queries'])) {
             $instance->supportsGuestQueries = $data['supports_guest_queries'];
+        }
+        if (isset($data['supports_join_request_queries'])) {
+            $instance->supportsJoinRequestQueries = $data['supports_join_request_queries'];
         }
         if (isset($data['supports_inline_queries'])) {
             $instance->supportsInlineQueries = $data['supports_inline_queries'];
@@ -291,6 +304,15 @@ final class User extends AbstractObject {
 
     public function setSupportsGuestQueries(?bool $value): self {
         $this->supportsGuestQueries = $value;
+        return $this;
+    }
+
+    public function getSupportsJoinRequestQueries(): ?bool {
+        return $this->supportsJoinRequestQueries;
+    }
+
+    public function setSupportsJoinRequestQueries(?bool $value): self {
+        $this->supportsJoinRequestQueries = $value;
         return $this;
     }
 

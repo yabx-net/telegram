@@ -221,6 +221,14 @@ final class ChatFullInfo extends AbstractObject {
     protected ?bool $joinByRequest = null;
 
     /**
+     * Guard Bot
+     *
+     * Optional. The bot that processes join request queries in the chat. The field is only available to chat administrators.
+     * @var User|null
+     */
+    protected ?User $guardBot = null;
+
+    /**
      * Description
      *
      * Optional. Description, for groups, supergroups and channel chats
@@ -384,6 +392,7 @@ final class ChatFullInfo extends AbstractObject {
         ?bool                 $hasRestrictedVoiceAndVideoMessages = null,
         ?bool                 $joinToSendMessages = null,
         ?bool                 $joinByRequest = null,
+        ?User                 $guardBot = null,
         ?string               $description = null,
         ?string               $inviteLink = null,
         ?Message              $pinnedMessage = null,
@@ -429,6 +438,7 @@ final class ChatFullInfo extends AbstractObject {
         $this->hasRestrictedVoiceAndVideoMessages = $hasRestrictedVoiceAndVideoMessages;
         $this->joinToSendMessages = $joinToSendMessages;
         $this->joinByRequest = $joinByRequest;
+        $this->guardBot = $guardBot;
         $this->description = $description;
         $this->inviteLink = $inviteLink;
         $this->pinnedMessage = $pinnedMessage;
@@ -536,6 +546,9 @@ final class ChatFullInfo extends AbstractObject {
         }
         if (isset($data['join_by_request'])) {
             $instance->joinByRequest = $data['join_by_request'];
+        }
+        if (isset($data['guard_bot'])) {
+            $instance->guardBot = User::fromArray($data['guard_bot']);
         }
         if (isset($data['description'])) {
             $instance->description = $data['description'];
@@ -831,6 +844,15 @@ final class ChatFullInfo extends AbstractObject {
 
     public function setJoinByRequest(?bool $value): self {
         $this->joinByRequest = $value;
+        return $this;
+    }
+
+    public function getGuardBot(): ?User {
+        return $this->guardBot;
+    }
+
+    public function setGuardBot(?User $value): self {
+        $this->guardBot = $value;
         return $this;
     }
 

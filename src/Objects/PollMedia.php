@@ -33,6 +33,14 @@ final class PollMedia extends AbstractObject {
     protected ?Document $document = null;
 
     /**
+     * Link
+     *
+     * Optional. The HTTP link attached to the poll option
+     * @var Link|null
+     */
+    protected ?Link $link = null;
+
+    /**
      * Live Photo
      *
      * Optional. Live photo content of the poll media
@@ -84,6 +92,7 @@ final class PollMedia extends AbstractObject {
         ?Animation $animation = null,
         ?Audio $audio = null,
         ?Document $document = null,
+        ?Link $link = null,
         ?LivePhoto $livePhoto = null,
         ?Location $location = null,
         ?array $photo = null,
@@ -94,6 +103,7 @@ final class PollMedia extends AbstractObject {
         $this->animation = $animation;
         $this->audio = $audio;
         $this->document = $document;
+        $this->link = $link;
         $this->livePhoto = $livePhoto;
         $this->location = $location;
         $this->photo = $photo;
@@ -112,6 +122,9 @@ final class PollMedia extends AbstractObject {
         }
         if (isset($data['document'])) {
             $instance->document = Document::fromArray($data['document']);
+        }
+        if (isset($data['link'])) {
+            $instance->link = Link::fromArray($data['link']);
         }
         if (isset($data['live_photo'])) {
             $instance->livePhoto = LivePhoto::fromArray($data['live_photo']);
@@ -161,6 +174,15 @@ final class PollMedia extends AbstractObject {
 
     public function setDocument(?Document $value): self {
         $this->document = $value;
+        return $this;
+    }
+
+    public function getLink(): ?Link {
+        return $this->link;
+    }
+
+    public function setLink(?Link $value): self {
+        $this->link = $value;
         return $this;
     }
 

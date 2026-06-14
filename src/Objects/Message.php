@@ -213,6 +213,14 @@ final class Message extends AbstractObject {
     protected ?string $text = null;
 
     /**
+     * Rich Message
+     *
+     * Optional. Message is a rich formatted message
+     * @var RichMessage|null
+     */
+    protected ?RichMessage $richMessage = null;
+
+    /**
      * Entities
      *
      * Optional. For text messages, special entities like usernames, URLs, bot commands, etc. that appear in the text
@@ -743,6 +751,7 @@ final class Message extends AbstractObject {
         ?string                        $mediaGroupId = null,
         ?string                        $authorSignature = null,
         ?string                        $text = null,
+        ?RichMessage                   $richMessage = null,
         ?array                         $entities = null,
         ?LinkPreviewOptions            $linkPreviewOptions = null,
         ?string                        $effectId = null,
@@ -833,6 +842,7 @@ final class Message extends AbstractObject {
         $this->mediaGroupId = $mediaGroupId;
         $this->authorSignature = $authorSignature;
         $this->text = $text;
+        $this->richMessage = $richMessage;
         $this->entities = $entities;
         $this->linkPreviewOptions = $linkPreviewOptions;
         $this->effectId = $effectId;
@@ -977,6 +987,9 @@ final class Message extends AbstractObject {
         }
         if (isset($data['text'])) {
             $instance->text = $data['text'];
+        }
+        if (isset($data['rich_message'])) {
+            $instance->richMessage = RichMessage::fromArray($data['rich_message']);
         }
         if (isset($data['entities'])) {
             $instance->entities = [];
@@ -1416,6 +1429,15 @@ final class Message extends AbstractObject {
 
     public function setText(?string $value): self {
         $this->text = $value;
+        return $this;
+    }
+
+    public function getRichMessage(): ?RichMessage {
+        return $this->richMessage;
+    }
+
+    public function setRichMessage(?RichMessage $value): self {
+        $this->richMessage = $value;
         return $this;
     }
 
