@@ -1,0 +1,18 @@
+{
+  "message_id": 55,
+  "date": 1681135130,
+  "chat": {
+    "id": 1,
+    "type": "private",
+    "first_name": "User"
+  },
+  "rich_message": {
+    "blocks": [
+      {
+        "type": "paragraph",
+        "text": "Rich content"
+      }
+    ],
+    "is_rtl": false
+  }
+}

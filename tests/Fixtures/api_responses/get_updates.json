@@ -1,0 +1,22 @@
+[
+  {
+    "update_id": 94181761,
+    "message": {
+      "message_id": 74,
+      "from": {
+        "id": 630692,
+        "is_bot": false,
+        "first_name": "Alice",
+        "username": "alice"
+      },
+      "chat": {
+        "id": 630692,
+        "first_name": "Alice",
+        "username": "alice",
+        "type": "private"
+      },
+      "date": 1681135130,
+      "text": "Hello"
+    }
+  }
+]

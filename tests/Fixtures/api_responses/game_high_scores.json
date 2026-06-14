@@ -1,0 +1,11 @@
+[
+  {
+    "position": 1,
+    "user": {
+      "id": 1,
+      "is_bot": false,
+      "first_name": "Player"
+    },
+    "score": 9000
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "url": "https://example.com/hook",
+  "has_custom_certificate": false,
+  "pending_update_count": 2,
+  "last_error_date": 1681135000,
+  "last_error_message": "Connection timed out",
+  "max_connections": 40,
+  "allowed_updates": ["message", "callback_query"],
+  "ip_address": "149.154.167.220"
+}

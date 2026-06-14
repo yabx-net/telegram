@@ -55,10 +55,10 @@ final class ReplyKeyboardMarkup extends AbstractObject {
     public static function fromArray(array $data): ReplyKeyboardMarkup {
         $instance = new self();
         if (isset($data['keyboard'])) {
-            $instance->keyboard = [];
-            foreach ($data['keyboard'] as $item) {
-                $instance->keyboard[] = KeyboardButton::fromArray($item);
-            }
+            $instance->keyboard = array_map(
+                fn(array $row) => KeyboardButton::arrayOf($row),
+                $data['keyboard'],
+            );
         }
         if (isset($data['is_persistent'])) {
             $instance->isPersistent = $data['is_persistent'];

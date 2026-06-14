@@ -1,0 +1,12 @@
+{
+  "update_id": 94181783,
+  "deleted_business_messages": {
+    "business_connection_id": "bc-1",
+    "chat": {
+      "id": 630692,
+      "type": "private",
+      "first_name": "Customer"
+    },
+    "message_ids": [198, 199]
+  }
+}

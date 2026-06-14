@@ -1,0 +1,34 @@
+{
+  "update_id": 94181778,
+  "chat_member": {
+    "chat": {
+      "id": -1001234567890,
+      "type": "supergroup",
+      "title": "Test Group"
+    },
+    "from": {
+      "id": 111111,
+      "is_bot": false,
+      "first_name": "Admin"
+    },
+    "date": 1681135130,
+    "old_chat_member": {
+      "status": "member",
+      "user": {
+        "id": 222222,
+        "is_bot": false,
+        "first_name": "User"
+      }
+    },
+    "new_chat_member": {
+      "status": "restricted",
+      "user": {
+        "id": 222222,
+        "is_bot": false,
+        "first_name": "User"
+      },
+      "is_member": true,
+      "can_send_messages": false
+    }
+  }
+}

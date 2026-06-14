@@ -1,0 +1,12 @@
+{
+  "update_id": 94181776,
+  "removed_chat_boost": {
+    "chat": {
+      "id": -1001234567890,
+      "type": "supergroup",
+      "title": "Boosted Group"
+    },
+    "boost_id": "boost-1",
+    "remove_date": 1681221530
+  }
+}

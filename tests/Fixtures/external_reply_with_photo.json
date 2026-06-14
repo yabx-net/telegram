@@ -1,0 +1,26 @@
+{
+  "origin": {
+    "type": "user",
+    "date": 1681135130,
+    "sender_user": {
+      "id": 1,
+      "is_bot": false,
+      "first_name": "Sender"
+    }
+  },
+  "photo": [
+    {
+      "file_id": "AgACAgIAAxkBAAI",
+      "file_unique_id": "AQADAAI",
+      "width": 320,
+      "height": 240
+    }
+  ],
+  "animation": {
+    "file_id": "CgACAgIAAxkBAAI",
+    "file_unique_id": "AgADAAI",
+    "width": 320,
+    "height": 240,
+    "duration": 3
+  }
+}

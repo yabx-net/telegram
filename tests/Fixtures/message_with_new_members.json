@@ -1,0 +1,22 @@
+{
+  "message_id": 81,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Group"
+  },
+  "new_chat_members": [
+    {
+      "id": 2,
+      "is_bot": false,
+      "first_name": "Alice"
+    },
+    {
+      "id": 3,
+      "is_bot": true,
+      "first_name": "HelperBot",
+      "username": "helper_bot"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "message_id": 61,
+  "date": 1681135130,
+  "chat": {"id": -1001234567890, "type": "supergroup", "title": "Forum"},
+  "is_topic_message": true,
+  "message_thread_id": 42,
+  "forum_topic_closed": {},
+  "forum_topic_reopened": {},
+  "general_forum_topic_hidden": {},
+  "general_forum_topic_unhidden": {}
+}

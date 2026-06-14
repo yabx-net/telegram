@@ -1,0 +1,19 @@
+{
+  "message_id": 59,
+  "date": 1681135130,
+  "chat": {"id": -1001234567890, "type": "channel", "title": "News"},
+  "giveaway_created": {"prize_star_count": 100},
+  "giveaway": {
+    "chats": [{"id": -1001234567890, "type": "channel", "title": "News"}],
+    "winners_selection_date": 1681221530,
+    "winner_count": 3
+  },
+  "giveaway_winners": {
+    "chat": {"id": -1001234567890, "type": "channel", "title": "News"},
+    "giveaway_message_id": 10,
+    "winners_selection_date": 1681221530,
+    "winner_count": 1,
+    "winners": [{"id": 1, "is_bot": false, "first_name": "Winner"}]
+  },
+  "giveaway_completed": {"winner_count": 3, "is_star_giveaway": true}
+}

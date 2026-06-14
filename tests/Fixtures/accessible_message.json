@@ -1,0 +1,10 @@
+{
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Test Group"
+  },
+  "message_id": 43,
+  "date": 1681135130,
+  "text": "Accessible message"
+}

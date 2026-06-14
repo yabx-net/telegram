@@ -1,0 +1,12 @@
+{
+  "update_id": 94181771,
+  "chosen_inline_result": {
+    "result_id": "article-1",
+    "from": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "User"
+    },
+    "query": "telegram bot"
+  }
+}

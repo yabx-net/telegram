@@ -1,0 +1,18 @@
+{
+  "update_id": 94181782,
+  "message_reaction_count": {
+    "chat": {
+      "id": -1001234567890,
+      "type": "supergroup",
+      "title": "Test Group"
+    },
+    "message_id": 55,
+    "date": 1681135130,
+    "reactions": [
+      {
+        "type": {"type": "emoji", "emoji": "🔥"},
+        "total_count": 12
+      }
+    ]
+  }
+}

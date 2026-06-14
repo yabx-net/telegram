@@ -1,0 +1,15 @@
+{
+  "invite_link": "https://t.me/+AbCdEf",
+  "creator": {
+    "id": 1,
+    "is_bot": true,
+    "first_name": "Bot",
+    "username": "test_bot"
+  },
+  "creates_join_request": true,
+  "is_primary": false,
+  "is_revoked": false,
+  "name": "Guests",
+  "expire_date": 1681221530,
+  "member_limit": 100
+}

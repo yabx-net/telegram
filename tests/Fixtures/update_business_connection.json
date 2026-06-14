@@ -1,0 +1,15 @@
+{
+  "update_id": 94181774,
+  "business_connection": {
+    "id": "bc-1",
+    "user": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "Business"
+    },
+    "user_chat_id": 630692,
+    "date": 1681135130,
+    "can_reply": true,
+    "is_enabled": true
+  }
+}

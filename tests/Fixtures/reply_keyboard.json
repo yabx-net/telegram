@@ -1,0 +1,13 @@
+{
+  "keyboard": [
+    [
+      {"text": "Option A"},
+      {"text": "Option B"}
+    ],
+    [
+      {"text": "Cancel"}
+    ]
+  ],
+  "resize_keyboard": true,
+  "one_time_keyboard": true
+}

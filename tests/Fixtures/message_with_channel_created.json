@@ -1,0 +1,10 @@
+{
+  "message_id": 86,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001111111111,
+    "type": "channel",
+    "title": "News Channel"
+  },
+  "channel_chat_created": true
+}

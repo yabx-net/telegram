@@ -1,0 +1,26 @@
+{
+  "id": -1005555555555,
+  "type": "supergroup",
+  "title": "Local Group",
+  "join_by_request": true,
+  "join_to_send_messages": true,
+  "guard_bot": {
+    "id": 999,
+    "is_bot": true,
+    "first_name": "Guard",
+    "username": "guard_bot"
+  },
+  "location": {
+    "location": {
+      "latitude": 53.9,
+      "longitude": 27.56
+    },
+    "address": "Minsk center"
+  },
+  "emoji_status_custom_emoji_id": "123456789",
+  "profile_accent_color_id": 2,
+  "sticker_set_name": "MyStickers",
+  "can_set_sticker_set": true,
+  "unrestrict_boost_count": 3,
+  "has_aggressive_anti_spam_enabled": true
+}

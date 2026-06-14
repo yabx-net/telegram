@@ -1,0 +1,13 @@
+{
+  "message_id": 53,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "game": {
+    "title": "My Game",
+    "description": "Fun",
+    "photo": [
+      {"file_id": "AgACAgIAAxkBAAI", "file_unique_id": "AQADAAI", "width": 320, "height": 240}
+    ]
+  },
+  "dice": {"emoji": "🎯", "value": 6}
+}

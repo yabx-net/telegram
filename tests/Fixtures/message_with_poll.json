@@ -1,0 +1,18 @@
+{
+  "message_id": 52,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "poll": {
+    "id": "poll-1",
+    "question": "Lunch?",
+    "options": [
+      {"text": "Pizza", "voter_count": 0},
+      {"text": "Sushi", "voter_count": 0}
+    ],
+    "total_voter_count": 0,
+    "is_closed": false,
+    "is_anonymous": true,
+    "type": "regular",
+    "allows_multiple_answers": false
+  }
+}

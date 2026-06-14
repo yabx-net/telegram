@@ -1,0 +1,11 @@
+{
+  "inline_keyboard": [
+    [
+      {"text": "Yes", "callback_data": "yes"},
+      {"text": "No", "callback_data": "no"}
+    ],
+    [
+      {"text": "Docs", "url": "https://core.telegram.org/bots/api"}
+    ]
+  ]
+}

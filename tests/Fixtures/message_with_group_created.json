@@ -1,0 +1,10 @@
+{
+  "message_id": 84,
+  "date": 1681135130,
+  "chat": {
+    "id": -123,
+    "type": "group",
+    "title": "New Group"
+  },
+  "group_chat_created": true
+}

@@ -1,0 +1,11 @@
+{
+  "message_id": 60,
+  "date": 1681135130,
+  "chat": {"id": -1001234567890, "type": "supergroup", "title": "Team"},
+  "video_chat_scheduled": {"start_date": 1681221530},
+  "video_chat_started": {},
+  "video_chat_ended": {"duration": 300},
+  "video_chat_participants_invited": {
+    "users": [{"id": 1, "is_bot": false, "first_name": "Alice"}]
+  }
+}

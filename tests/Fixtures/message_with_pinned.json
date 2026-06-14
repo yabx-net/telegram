@@ -1,0 +1,19 @@
+{
+  "message_id": 82,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Group"
+  },
+  "pinned_message": {
+    "chat": {
+      "id": -1001234567890,
+      "type": "supergroup",
+      "title": "Group"
+    },
+    "message_id": 43,
+    "date": 1681135000,
+    "text": "Pinned rules"
+  }
+}

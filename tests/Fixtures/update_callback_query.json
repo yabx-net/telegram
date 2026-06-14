@@ -1,0 +1,23 @@
+{
+  "update_id": 94181762,
+  "callback_query": {
+    "id": "cq-1",
+    "from": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "User"
+    },
+    "message": {
+      "message_id": 75,
+      "date": 1681135130,
+      "chat": {
+        "id": 630692,
+        "type": "private",
+        "first_name": "User"
+      },
+      "text": "Choose"
+    },
+    "chat_instance": "instance-1",
+    "data": "yes"
+  }
+}

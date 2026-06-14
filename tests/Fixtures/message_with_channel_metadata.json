@@ -1,0 +1,13 @@
+{
+  "message_id": 62,
+  "date": 1681135130,
+  "sender_chat": {"id": -1001234567890, "type": "channel", "title": "News"},
+  "chat": {"id": -1001111111111, "type": "supergroup", "title": "Comments"},
+  "is_automatic_forward": true,
+  "author_signature": "Editor",
+  "via_bot": {"id": 2, "is_bot": true, "first_name": "ForwardBot", "username": "forward_bot"},
+  "business_connection_id": "bc-1",
+  "sender_boost_count": 2,
+  "sender_business_bot": {"id": 3, "is_bot": true, "first_name": "BizBot", "username": "biz_bot"},
+  "text": "Forwarded announcement"
+}

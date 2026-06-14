@@ -1,0 +1,16 @@
+{
+  "message_id": 54,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "location": {"latitude": 53.9, "longitude": 27.56},
+  "venue": {
+    "location": {"latitude": 53.9, "longitude": 27.56},
+    "title": "Office",
+    "address": "123 Main St"
+  },
+  "contact": {
+    "phone_number": "+10000000000",
+    "first_name": "John",
+    "last_name": "Doe"
+  }
+}

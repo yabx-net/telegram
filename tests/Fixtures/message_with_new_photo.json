@@ -1,0 +1,23 @@
+{
+  "message_id": 90,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Photo Group"
+  },
+  "new_chat_photo": [
+    {
+      "file_id": "AgACAgIAAxkBAAI",
+      "file_unique_id": "AQADAAI",
+      "width": 160,
+      "height": 160
+    },
+    {
+      "file_id": "AgACAgIAAxkBAAJ",
+      "file_unique_id": "AQADAAJ",
+      "width": 640,
+      "height": 640
+    }
+  ]
+}

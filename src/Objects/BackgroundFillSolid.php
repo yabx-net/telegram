@@ -2,7 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class BackgroundFillSolid extends AbstractObject {
+final class BackgroundFillSolid extends BackgroundFill {
 
     /**
      * Type

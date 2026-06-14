@@ -138,7 +138,7 @@ class BotApi {
      * @throws GuzzleException
      */
     public function request(string $method, array $params = [], bool $multipart = false): mixed {
-        $params = array_map(fn(mixed $param) => is_object($param) && method_exists($param, 'toArray') ? call_user_func([$param, 'toArray']) : $param, $params);
+        $params = $this->serializeParams($params);
         $this->logger->debug('REQUEST: ' . $method, $params);
         $endpoint = sprintf('%s/bot%s/', $this->apiUrl, $this->token);
         try {
@@ -184,7 +184,6 @@ class BotApi {
     public function setWebhook(string $url, ?string $ipAddress = null, ?int $maxConnections = null, ?array $allowedUpdates = null, ?bool $dropPendingUpdates = null, ?string $secretToken = null): bool {
         $params = [];
         $params['url'] = $url;
-        if (isset($certificate)) $params['certificate'] = $certificate;
         if (isset($ipAddress)) $params['ip_address'] = $ipAddress;
         if (isset($maxConnections)) $params['max_connections'] = $maxConnections;
         if (isset($allowedUpdates)) $params['allowed_updates'] = $allowedUpdates;
@@ -4384,6 +4383,17 @@ class BotApi {
     //        throw new Exception('Invalid file path');
     //    }
     //}
+
+    private function serializeParams(mixed $param): mixed {
+        if (is_object($param) && method_exists($param, 'toArray')) {
+            return $param->toArray();
+        }
+        if (is_array($param)) {
+            return array_map(fn(mixed $item) => $this->serializeParams($item), $param);
+        }
+
+        return $param;
+    }
 
     /**
      * Get the last decoded response received from Telegram.

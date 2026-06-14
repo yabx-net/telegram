@@ -25,4 +25,15 @@ final class MaybeInaccessibleMessage extends AbstractObject {
         return $this->inaccessibleMessage;
     }
 
+    public function toArray(): array {
+        if ($this->message !== null) {
+            return $this->message->toArray();
+        }
+        if ($this->inaccessibleMessage !== null) {
+            return $this->inaccessibleMessage->toArray();
+        }
+
+        return [];
+    }
+
 }

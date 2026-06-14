@@ -1,0 +1,25 @@
+{
+  "origin": {
+    "type": "channel",
+    "date": 1681135130,
+    "chat": {
+      "id": -1001111111111,
+      "type": "channel",
+      "title": "Channel"
+    },
+    "message_id": 5
+  },
+  "poll": {
+    "id": "poll-1",
+    "question": "Yes or no?",
+    "options": [
+      {"text": "Yes", "voter_count": 1},
+      {"text": "No", "voter_count": 0}
+    ],
+    "total_voter_count": 1,
+    "is_closed": false,
+    "is_anonymous": true,
+    "type": "regular",
+    "allows_multiple_answers": false
+  }
+}

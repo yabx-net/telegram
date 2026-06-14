@@ -1,0 +1,10 @@
+{
+  "id": -1001111111111,
+  "type": "channel",
+  "title": "News Channel",
+  "username": "news_channel",
+  "description": "Daily news",
+  "invite_link": "https://t.me/+invite",
+  "can_send_paid_media": true,
+  "linked_chat_id": -1001234567890
+}

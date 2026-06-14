@@ -21,10 +21,10 @@ final class InlineKeyboardMarkup extends AbstractObject {
     public static function fromArray(array $data): InlineKeyboardMarkup {
         $instance = new self();
         if (isset($data['inline_keyboard'])) {
-            $instance->inlineKeyboard = [];
-            foreach ($data['inline_keyboard'] as $item) {
-                $instance->inlineKeyboard[] = InlineKeyboardButton::fromArray($item);
-            }
+            $instance->inlineKeyboard = array_map(
+                fn(array $row) => InlineKeyboardButton::arrayOf($row),
+                $data['inline_keyboard'],
+            );
         }
         return $instance;
     }

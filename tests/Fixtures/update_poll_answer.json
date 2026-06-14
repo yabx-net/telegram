@@ -1,0 +1,12 @@
+{
+  "update_id": 94181764,
+  "poll_answer": {
+    "poll_id": "poll-1",
+    "user": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "User"
+    },
+    "option_ids": [0]
+  }
+}

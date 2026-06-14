@@ -1,0 +1,16 @@
+{
+  "message_id": 72,
+  "date": 1681135130,
+  "chat": {
+    "id": 1,
+    "type": "private",
+    "first_name": "Buyer"
+  },
+  "successful_payment": {
+    "currency": "USD",
+    "total_amount": 1000,
+    "invoice_payload": "order-42",
+    "telegram_payment_charge_id": "tg-charge-1",
+    "provider_payment_charge_id": "provider-charge-1"
+  }
+}

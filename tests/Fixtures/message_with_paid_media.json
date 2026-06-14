@@ -1,0 +1,25 @@
+{
+  "message_id": 30,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001111111111,
+    "type": "channel",
+    "title": "Paid Channel"
+  },
+  "paid_media": {
+    "star_count": 10,
+    "paid_media": [
+      {
+        "type": "photo",
+        "photo": [
+          {
+            "file_id": "AgACAgIAAxkBAAI",
+            "file_unique_id": "AQADAAI",
+            "width": 320,
+            "height": 240
+          }
+        ]
+      }
+    ]
+  }
+}

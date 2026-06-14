@@ -1,0 +1,30 @@
+{
+  "message_id": 35,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Test Group"
+  },
+  "from": {
+    "id": 1,
+    "is_bot": false,
+    "first_name": "User"
+  },
+  "text": "Hello @bot",
+  "entities": [
+    {
+      "type": "mention",
+      "offset": 6,
+      "length": 4
+    }
+  ],
+  "quote": {
+    "text": "quoted part",
+    "position": 0,
+    "is_manual": true
+  },
+  "link_preview_options": {
+    "is_disabled": true
+  }
+}

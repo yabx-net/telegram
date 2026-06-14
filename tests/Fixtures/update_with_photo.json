@@ -1,0 +1,52 @@
+{
+  "update_id": 94181761,
+  "message": {
+    "message_id": 74,
+    "from": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "Aliaksandr",
+      "last_name": "M",
+      "username": "aliaksandr_m",
+      "language_code": "ru"
+    },
+    "chat": {
+      "id": 630692,
+      "first_name": "Aliaksandr",
+      "last_name": "M",
+      "username": "aliaksandr_m",
+      "type": "private"
+    },
+    "date": 1681135130,
+    "photo": [
+      {
+        "file_id": "AgACAgIAAxkBAANKZDQWGjf2Kdiixe2NiS2vLaaOtrUAAgPJMRuikKFJ8ZIeKv71NIcBAAMCAANzAAMvBA",
+        "file_unique_id": "AQADA8kxG6KQoUl4",
+        "file_size": 1586,
+        "width": 90,
+        "height": 67
+      },
+      {
+        "file_id": "AgACAgIAAxkBAANKZDQWGjf2Kdiixe2NiS2vLaaOtrUAAgPJMRuikKFJ8ZIeKv71NIcBAAMCAANtAAMvBA",
+        "file_unique_id": "AQADA8kxG6KQoUly",
+        "file_size": 18587,
+        "width": 320,
+        "height": 240
+      },
+      {
+        "file_id": "AgACAgIAAxkBAANKZDQWGjf2Kdiixe2NiS2vLaaOtrUAAgPJMRuikKFJ8ZIeKv71NIcBAAMCAAN4AAMvBA",
+        "file_unique_id": "AQADA8kxG6KQoUl9",
+        "file_size": 82233,
+        "width": 800,
+        "height": 600
+      },
+      {
+        "file_id": "AgACAgIAAxkBAANKZDQWGjf2Kdiixe2NiS2vLaaOtrUAAgPJMRuikKFJ8ZIeKv71NIcBAAMCAAN5AAMvBA",
+        "file_unique_id": "AQADA8kxG6KQoUl-",
+        "file_size": 114956,
+        "width": 1280,
+        "height": 960
+      }
+    ]
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "message_id": 60,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Forum"
+  },
+  "is_topic_message": true,
+  "message_thread_id": 42,
+  "forum_topic_created": {
+    "name": "General",
+    "icon_color": 7322096
+  }
+}

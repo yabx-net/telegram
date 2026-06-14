@@ -1,0 +1,12 @@
+{
+  "message_id": 56,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "refunded_payment": {
+    "currency": "XTR",
+    "total_amount": 100,
+    "invoice_payload": "order-42",
+    "telegram_payment_charge_id": "tg-charge-1",
+    "provider_payment_charge_id": "provider-charge-1"
+  }
+}

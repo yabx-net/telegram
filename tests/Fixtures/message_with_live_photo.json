@@ -1,0 +1,15 @@
+{
+  "message_id": 64,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "live_photo": {
+    "file_id": "live-1",
+    "file_unique_id": "live-u",
+    "width": 1080,
+    "height": 1920,
+    "duration": 3,
+    "photo": [
+      {"file_id": "photo-1", "file_unique_id": "photo-u", "width": 1080, "height": 1920}
+    ]
+  }
+}

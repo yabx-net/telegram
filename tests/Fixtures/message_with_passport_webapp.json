@@ -1,0 +1,12 @@
+{
+  "message_id": 55,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "passport_data": {
+    "data": [{"type": "email", "email": "user@example.com"}],
+    "credentials": {"data": "encrypted-data", "hash": "hash", "secret": "secret"}
+  },
+  "web_app_data": {"data": "{\"ok\":true}", "button_text": "Open"},
+  "write_access_allowed": {"web_app_name": "MyApp"},
+  "connected_website": "https://example.com"
+}

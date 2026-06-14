@@ -1,0 +1,11 @@
+{
+  "update_id": 94181772,
+  "purchased_paid_media": {
+    "from": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "Buyer"
+    },
+    "paid_media_payload": "premium-content-1"
+  }
+}

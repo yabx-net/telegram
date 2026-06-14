@@ -1,0 +1,13 @@
+{
+  "boost_id": "boost-1",
+  "add_date": 1681135130,
+  "expiration_date": 1681221530,
+  "source": {
+    "source": "premium",
+    "user": {
+      "id": 1,
+      "is_bot": false,
+      "first_name": "Booster"
+    }
+  }
+}

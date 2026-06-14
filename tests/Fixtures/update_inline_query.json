@@ -1,0 +1,13 @@
+{
+  "update_id": 94181763,
+  "inline_query": {
+    "id": "iq-1",
+    "from": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "User"
+    },
+    "query": "telegram",
+    "offset": ""
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "message_id": 88,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Renamed Group"
+  },
+  "new_chat_title": "Renamed Group"
+}

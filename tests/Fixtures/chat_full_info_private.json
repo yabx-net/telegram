@@ -1,0 +1,18 @@
+{
+  "id": 630692,
+  "type": "private",
+  "first_name": "Creator",
+  "last_name": "User",
+  "username": "creator",
+  "bio": "Building bots",
+  "emoji_status_custom_emoji_id": "54321",
+  "emoji_status_expiration_date": 1681221530,
+  "profile_accent_color_id": 4,
+  "personal_chat": {
+    "id": -1001111111111,
+    "type": "channel",
+    "title": "My Channel",
+    "username": "my_channel"
+  },
+  "background_custom_emoji_id": "99999"
+}

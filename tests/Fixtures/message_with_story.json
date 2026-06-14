@@ -1,0 +1,9 @@
+{
+  "message_id": 65,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "story": {
+    "chat": {"id": 1, "type": "private", "first_name": "User"},
+    "id": 99
+  }
+}

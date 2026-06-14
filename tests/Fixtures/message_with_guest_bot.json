@@ -1,0 +1,9 @@
+{
+  "message_id": 66,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "guest_query_id": "gq-42",
+  "guest_bot_caller_user": {"id": 7, "is_bot": false, "first_name": "Guest"},
+  "guest_bot_caller_chat": {"id": -1009999999999, "type": "supergroup", "title": "Guest Chat"},
+  "text": "Guest message"
+}

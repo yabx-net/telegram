@@ -1,0 +1,12 @@
+{
+  "message_id": 91,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Forum"
+  },
+  "forum_topic_edited": {
+    "name": "Renamed Topic"
+  }
+}

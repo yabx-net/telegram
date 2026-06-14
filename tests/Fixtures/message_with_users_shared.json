@@ -1,0 +1,18 @@
+{
+  "message_id": 93,
+  "date": 1681135130,
+  "chat": {
+    "id": 1,
+    "type": "private",
+    "first_name": "User"
+  },
+  "users_shared": {
+    "request_id": 1,
+    "users": [
+      {
+        "user_id": 10,
+        "first_name": "Alice"
+      }
+    ]
+  }
+}

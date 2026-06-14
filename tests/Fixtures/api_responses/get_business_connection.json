@@ -1,0 +1,13 @@
+{
+  "id": "bc-1",
+  "user": {
+    "id": 630692,
+    "is_bot": false,
+    "first_name": "Business",
+    "username": "biz_user"
+  },
+  "user_chat_id": 630692,
+  "date": 1681135130,
+  "can_reply": true,
+  "is_enabled": true
+}

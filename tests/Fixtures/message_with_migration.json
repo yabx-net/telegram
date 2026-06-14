@@ -1,0 +1,10 @@
+{
+  "message_id": 80,
+  "date": 1681135130,
+  "chat": {
+    "id": -123,
+    "type": "group",
+    "title": "Old Group"
+  },
+  "migrate_to_chat_id": -1001234567890
+}

@@ -1,0 +1,19 @@
+{
+  "update_id": 94181766,
+  "shipping_query": {
+    "id": "sq-1",
+    "from": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "Buyer"
+    },
+    "invoice_payload": "order-42",
+    "shipping_address": {
+      "country_code": "US",
+      "state": "NY",
+      "city": "New York",
+      "street_line1": "5th Avenue",
+      "post_code": "10001"
+    }
+  }
+}

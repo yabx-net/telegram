@@ -1,0 +1,14 @@
+{
+  "message_id": 83,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Group"
+  },
+  "left_chat_member": {
+    "id": 5,
+    "is_bot": false,
+    "first_name": "Bob"
+  }
+}

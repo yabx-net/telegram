@@ -1,0 +1,8 @@
+{
+  "message_id": 58,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "chat_background_set": {
+    "type": {"type": "chat_theme", "theme_name": "dark"}
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": [
+        "Hello ",
+        {"type": "bold", "text": "world"}
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Section",
+      "size": 2
+    }
+  ],
+  "is_rtl": false
+}

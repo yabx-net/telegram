@@ -1,0 +1,13 @@
+{
+  "message_id": 51,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "video": {
+    "file_id": "BAACAgIAAxkBAAI",
+    "file_unique_id": "AgADAAI",
+    "width": 1280,
+    "height": 720,
+    "duration": 30
+  },
+  "caption": "Clip"
+}

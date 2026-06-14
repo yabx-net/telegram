@@ -1,0 +1,10 @@
+{
+  "message_id": 87,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Upgraded"
+  },
+  "migrate_from_chat_id": -123
+}

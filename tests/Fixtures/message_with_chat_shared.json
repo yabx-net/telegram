@@ -1,0 +1,10 @@
+{
+  "message_id": 57,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "chat_shared": {
+    "request_id": 2,
+    "chat_id": -1001234567890,
+    "title": "Shared Group"
+  }
+}

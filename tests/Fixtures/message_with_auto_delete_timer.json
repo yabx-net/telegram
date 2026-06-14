@@ -1,0 +1,12 @@
+{
+  "message_id": 94,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Group"
+  },
+  "message_auto_delete_timer_changed": {
+    "message_auto_delete_time": 86400
+  }
+}

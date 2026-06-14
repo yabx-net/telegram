@@ -1,0 +1,27 @@
+{
+  "origin": {
+    "type": "user",
+    "date": 1681135130,
+    "sender_user": {
+      "id": 1,
+      "is_bot": false,
+      "first_name": "Sender"
+    }
+  },
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Test Group"
+  },
+  "message_id": 15,
+  "sticker": {
+    "file_id": "CAACAgIAAxkBAAI",
+    "file_unique_id": "AgADAAI",
+    "type": "regular",
+    "width": 512,
+    "height": 512,
+    "is_animated": false,
+    "is_video": false
+  },
+  "has_media_spoiler": true
+}

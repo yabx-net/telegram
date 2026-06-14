@@ -1,0 +1,39 @@
+{
+  "id": -1001234567890,
+  "type": "supergroup",
+  "title": "Dev Forum",
+  "username": "dev_forum",
+  "is_forum": true,
+  "accent_color_id": 1,
+  "max_reaction_count": 3,
+  "photo": {
+    "small_file_id": "small-1",
+    "small_file_unique_id": "small-u",
+    "big_file_id": "big-1",
+    "big_file_unique_id": "big-u"
+  },
+  "active_usernames": ["dev_forum", "dev_forum_alt"],
+  "permissions": {
+    "can_send_messages": true,
+    "can_send_photos": true,
+    "can_invite_users": true
+  },
+  "slow_mode_delay": 10,
+  "message_auto_delete_time": 86400,
+  "has_protected_content": true,
+  "linked_chat_id": -1009876543210,
+  "pinned_message": {
+    "message_id": 1,
+    "date": 1681135130,
+    "chat": {
+      "id": -1001234567890,
+      "type": "supergroup",
+      "title": "Dev Forum"
+    },
+    "text": "Rules"
+  },
+  "available_reactions": [
+    {"type": "emoji", "emoji": "👍"},
+    {"type": "paid"}
+  ]
+}

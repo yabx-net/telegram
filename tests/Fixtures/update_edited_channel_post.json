@@ -1,0 +1,14 @@
+{
+  "update_id": 94181779,
+  "edited_channel_post": {
+    "message_id": 101,
+    "date": 1681135130,
+    "edit_date": 1681135200,
+    "chat": {
+      "id": -1009876543210,
+      "type": "channel",
+      "title": "News Channel"
+    },
+    "text": "Updated headline"
+  }
+}

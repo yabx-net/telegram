@@ -2,7 +2,7 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class ChatBoostSourceGiftCode extends AbstractObject {
+final class ChatBoostSourceGiftCode extends ChatBoostSource {
 
     /**
      * Source

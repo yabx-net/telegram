@@ -1,0 +1,14 @@
+{
+  "update_id": 94181770,
+  "channel_post": {
+    "message_id": 100,
+    "date": 1681135130,
+    "chat": {
+      "id": -1009876543210,
+      "type": "channel",
+      "title": "News Channel",
+      "username": "news_channel"
+    },
+    "text": "Breaking news"
+  }
+}

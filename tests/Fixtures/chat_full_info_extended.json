@@ -1,0 +1,28 @@
+{
+  "id": -1005555555555,
+  "type": "supergroup",
+  "title": "Extended Group",
+  "username": "extended_group",
+  "bio": "Group bio text",
+  "description": "Long description",
+  "invite_link": "https://t.me/+extended",
+  "is_forum": false,
+  "accent_color_id": 2,
+  "max_reaction_count": 5,
+  "photo": {
+    "small_file_id": "small-2",
+    "small_file_unique_id": "small-u2",
+    "big_file_id": "big-2",
+    "big_file_unique_id": "big-u2"
+  },
+  "active_usernames": ["extended_group"],
+  "emoji_status_custom_emoji_id": "88888",
+  "profile_background_custom_emoji_id": "77777",
+  "join_to_send_messages": true,
+  "has_hidden_members": true,
+  "has_visible_history": false,
+  "has_restricted_voice_and_video_messages": true,
+  "can_set_sticker_set": true,
+  "custom_emoji_sticker_set_name": "emoji_set_by_bot",
+  "message_auto_delete_time": 3600
+}

@@ -1,0 +1,19 @@
+{
+  "message_id": 63,
+  "date": 1681135130,
+  "chat": {"id": 1, "type": "private", "first_name": "User"},
+  "audio": {"file_id": "CQACAgIAAxkBAAI", "file_unique_id": "AgADAAI", "duration": 120, "performer": "Artist", "title": "Track"},
+  "voice": {"file_id": "AwACAgIAAxkBAAI", "file_unique_id": "AgADAAI", "duration": 5},
+  "document": {"file_id": "BQACAgIAAxkBAAI", "file_unique_id": "AgADAAI", "file_name": "readme.pdf"},
+  "animation": {"file_id": "CgACAgIAAxkBAAI", "file_unique_id": "AgADAAI", "width": 320, "height": 240, "duration": 3},
+  "video_note": {"file_id": "DQACAgIAAxkBAAI", "file_unique_id": "AgADAAI", "length": 240, "duration": 10},
+  "sticker": {
+    "file_id": "CAACAgIAAxkBAAI",
+    "file_unique_id": "AgADAAI",
+    "type": "regular",
+    "width": 512,
+    "height": 512,
+    "is_animated": false,
+    "is_video": false
+  }
+}

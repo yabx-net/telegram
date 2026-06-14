@@ -1,0 +1,20 @@
+{
+  "update_id": 94181784,
+  "edited_business_message": {
+    "message_id": 202,
+    "date": 1681135130,
+    "edit_date": 1681135200,
+    "chat": {
+      "id": 630692,
+      "type": "private",
+      "first_name": "Customer"
+    },
+    "from": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "Customer"
+    },
+    "business_connection_id": "bc-1",
+    "text": "Updated order status"
+  }
+}

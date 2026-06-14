@@ -1,0 +1,22 @@
+{
+  "message_id": 92,
+  "date": 1681135130,
+  "chat": {
+    "id": 1,
+    "type": "private",
+    "first_name": "User"
+  },
+  "proximity_alert_triggered": {
+    "traveler": {
+      "id": 1,
+      "is_bot": false,
+      "first_name": "Traveler"
+    },
+    "watcher": {
+      "id": 2,
+      "is_bot": false,
+      "first_name": "Watcher"
+    },
+    "distance": 100
+  }
+}

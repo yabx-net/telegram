@@ -1,0 +1,15 @@
+{
+  "update_id": 94181768,
+  "chat_boost": {
+    "chat": {
+      "id": -1001234567890,
+      "type": "supergroup",
+      "title": "Boosted Group"
+    },
+    "boost": {
+      "boost_id": "boost-1",
+      "add_date": 1681135130,
+      "expiration_date": 1681221530
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "message_id": 89,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "No Photo Group"
+  },
+  "delete_chat_photo": true
+}

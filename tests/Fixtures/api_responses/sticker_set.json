@@ -1,0 +1,19 @@
+{
+  "name": "test_by_bot",
+  "title": "Test Stickers",
+  "sticker_type": "regular",
+  "stickers": [
+    {
+      "width": 512,
+      "height": 512,
+      "emoji": "😀",
+      "set_name": "test_by_bot",
+      "is_animated": false,
+      "is_video": false,
+      "type": "regular",
+      "file_id": "CAACAgIAAxkBAAI",
+      "file_unique_id": "AgADAAI",
+      "file_size": 12345
+    }
+  ]
+}

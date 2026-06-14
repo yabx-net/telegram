@@ -1,0 +1,32 @@
+{
+  "id": 630692,
+  "type": "private",
+  "first_name": "Shop",
+  "last_name": "Owner",
+  "username": "shop_owner",
+  "bio": "We sell things",
+  "birthdate": {
+    "day": 15,
+    "month": 6,
+    "year": 1990
+  },
+  "business_intro": {
+    "title": "Welcome",
+    "message": "How can we help?"
+  },
+  "business_location": {
+    "address": "123 Main St",
+    "location": {
+      "latitude": 53.9,
+      "longitude": 27.56
+    }
+  },
+  "business_opening_hours": {
+    "time_zone_name": "Europe/Moscow",
+    "opening_hours": [
+      {"opening_minute": 540, "closing_minute": 1020}
+    ]
+  },
+  "has_private_forwards": true,
+  "has_restricted_voice_and_video_messages": false
+}

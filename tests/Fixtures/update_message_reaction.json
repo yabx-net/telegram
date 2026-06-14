@@ -1,0 +1,21 @@
+{
+  "update_id": 94181775,
+  "message_reaction": {
+    "chat": {
+      "id": -1001234567890,
+      "type": "supergroup",
+      "title": "Test Group"
+    },
+    "message_id": 50,
+    "user": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "User"
+    },
+    "date": 1681135130,
+    "old_reaction": [],
+    "new_reaction": [
+      {"type": "emoji", "emoji": "👍"}
+    ]
+  }
+}

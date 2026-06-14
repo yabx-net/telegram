@@ -1,0 +1,25 @@
+{
+  "message_id": 25,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Test Group"
+  },
+  "from": {
+    "id": 1,
+    "is_bot": false,
+    "first_name": "User"
+  },
+  "text": "Forwarded content",
+  "forward_origin": {
+    "type": "channel",
+    "date": 1681135000,
+    "chat": {
+      "id": -1001111111111,
+      "type": "channel",
+      "title": "Source Channel"
+    },
+    "message_id": 99
+  }
+}

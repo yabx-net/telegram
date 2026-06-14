@@ -1,0 +1,8 @@
+# Exclude dev-only paths from git archive / Packagist dist (composer --prefer-dist).
+/tests export-ignore
+/scripts export-ignore
+/.github export-ignore
+/phpunit.xml export-ignore
+/phpstan.neon.dist export-ignore
+/.phpunit.cache export-ignore
+/build export-ignore

@@ -1,0 +1,30 @@
+{
+  "message_id": 20,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Test Group"
+  },
+  "from": {
+    "id": 1,
+    "is_bot": false,
+    "first_name": "User"
+  },
+  "text": "This is a reply",
+  "reply_to_message": {
+    "message_id": 19,
+    "date": 1681135120,
+    "chat": {
+      "id": -1001234567890,
+      "type": "supergroup",
+      "title": "Test Group"
+    },
+    "from": {
+      "id": 2,
+      "is_bot": false,
+      "first_name": "Other"
+    },
+    "text": "Original"
+  }
+}

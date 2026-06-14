@@ -1,0 +1,18 @@
+{
+  "update_id": 94181773,
+  "chat_join_request": {
+    "chat": {
+      "id": -1001234567890,
+      "type": "supergroup",
+      "title": "Private Group"
+    },
+    "from": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "Applicant"
+    },
+    "user_chat_id": 630692,
+    "date": 1681135130,
+    "bio": "Would like to join"
+  }
+}

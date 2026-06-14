@@ -1,0 +1,22 @@
+{
+  "status": "administrator",
+  "user": {
+    "id": 1,
+    "is_bot": false,
+    "first_name": "Admin",
+    "username": "group_admin"
+  },
+  "can_be_edited": false,
+  "is_anonymous": false,
+  "can_manage_chat": true,
+  "can_delete_messages": true,
+  "can_manage_video_chats": true,
+  "can_restrict_members": true,
+  "can_promote_members": false,
+  "can_change_info": true,
+  "can_invite_users": true,
+  "can_post_messages": true,
+  "can_edit_messages": true,
+  "can_pin_messages": true,
+  "can_manage_topics": true
+}

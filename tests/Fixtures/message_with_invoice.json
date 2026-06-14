@@ -1,0 +1,16 @@
+{
+  "message_id": 70,
+  "date": 1681135130,
+  "chat": {
+    "id": 1,
+    "type": "private",
+    "first_name": "Buyer"
+  },
+  "invoice": {
+    "title": "Premium",
+    "description": "One month access",
+    "start_parameter": "premium",
+    "currency": "USD",
+    "total_amount": 1000
+  }
+}

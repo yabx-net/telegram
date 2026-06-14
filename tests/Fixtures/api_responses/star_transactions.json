@@ -1,0 +1,15 @@
+{
+  "transactions": [
+    {
+      "id": "tx-1",
+      "amount": 50,
+      "date": 1681135130,
+      "nanostar_amount": 500000000
+    },
+    {
+      "id": "tx-2",
+      "amount": -10,
+      "date": 1681135200
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "update_id": 94181781,
+  "guest_message": {
+    "message_id": 201,
+    "date": 1681135130,
+    "chat": {
+      "id": 630692,
+      "type": "private",
+      "first_name": "Guest"
+    },
+    "from": {
+      "id": 999999,
+      "is_bot": false,
+      "first_name": "Guest"
+    },
+    "text": "Hello from guest"
+  }
+}

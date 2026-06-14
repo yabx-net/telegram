@@ -222,6 +222,115 @@ try {
 | `src/BotApi.php` | Client: all Bot API methods + `request()` |
 | `src/Objects/` | Telegram types (`Message`, `Update`, keyboards, …) |
 | `src/Enum/` | Helpers such as `ChatAction`, etc. |
+| `tests/` | PHPUnit test suite and JSON fixtures |
+
+## Testing
+
+```bash
+composer install
+composer test
+```
+
+Optional coverage report (requires the [PCOV](https://github.com/krakjoe/pcov) extension locally):
+
+```bash
+# Ubuntu/Debian — match your PHP version (php -v)
+sudo apt install php8.3-pcov   # or php8.5-pcov, php8.2-pcov, …
+
+composer test:coverage
+```
+
+HTML report in `build/coverage/`:
+
+```bash
+composer test:coverage-html
+```
+
+If PCOV is not installed, `composer test:coverage` prints installation hints instead of a cryptic PHPUnit error. CI collects coverage with PCOV on PHP 8.3 (job `coverage` in `.github/workflows/tests.yml`).
+
+Tests use [PHPUnit 11](https://phpunit.de/) with Guzzle `MockHandler` for HTTP integration tests. Fixtures live in `tests/Fixtures/`.
+
+### Coverage phases
+
+| Phase | Scope | Status |
+|-------|-------|--------|
+| 1 | Infrastructure, `Utils`, `BotApi`, core objects | done |
+| 2 | All `RichText` / `RichBlock` types, update variants | done |
+| 3 | Polymorphic dispatchers (`ChatMember`, `MessageOrigin`, …) | done |
+| 4 | Round-trip manifest (`tests/Fixtures/roundtrip/`) | done — 331 leaf classes (~93%); dispatchers tested separately |
+| 5 | Composite variant tests (`ChatFullInfo`, `Message`, `ExternalReplyInfo`) | done |
+| 6 | All `Update` webhook variants | done — 22 fixtures |
+| 7 | `BotApi` integration (request serialization, response parsing) | done — 57 tests |
+| 8 | Composite variants (`Message` quote/forward, `ExternalReplyInfo` media) | done |
+| 9 | API response snapshots (`tests/Fixtures/api_responses/`) | done — 7 fixtures |
+| 10 | Shared `MocksBotApi` trait, multipart uploads, forum topic variants | done |
+| 11 | Media send methods, payments, `ChatFullInfo` private, service messages | done |
+| 12 | Location/contact/video note, stars, migration/members, `getUpdatefromRequest` | done |
+| 13 | Paid media, batch delete/copy, `ChatBoostSource` dispatcher, chat service messages | done |
+| 14 | Chat actions, reactions, join requests, sticker set snapshot, chat event messages | done |
+| 15 | Live location, menu button, custom emoji, invite link snapshot, `Update` round-trip | done |
+| 16 | Live photo, forum topics, games, restrict member, service message variants | done — 79 BotApi tests, 13 snapshots |
+| 17 | Chat admin, forum/general topics, stickers, bot profile/commands, join-query | done — 113 BotApi tests, ~69% `BotApi.php` lines |
+| 18 | Business, stories, gifts/stars, payments, verification, managed bot, `downloadFile` | done — 127 BotApi tests, ~99% `BotApi.php` lines |
+| 19 | Deep `Message` / `ChatFullInfo` / `Update` variants | done — 42 message fixtures, `Message` ~67% lines |
+| 20 | `BotApi` edge cases: multipart, `downloadFile`, logging, transport errors | done — `BotApiEdgeCasesTest` |
+| 21 | API snapshots: business, gifts, boosts, invoice, extended chat | done — 18 snapshots |
+| 22 | Polymorphic dispatch + `sendPoll` / `InputPollMedia` contract | done |
+| 23 | PHPStan level 2, coverage threshold 57%, CI static analysis | done — `composer phpstan` |
+| 24 | `CHANGELOG.md`, README examples for Bot API 10.1 features | done |
+
+`InputPollMedia` / `InputPollOptionMedia` are PHP interfaces; implementing classes (`InputMediaPhoto`, `InputMediaLink`, …) are covered in the round-trip manifest and via `sendPoll` contract tests.
+
+### Static analysis and coverage gate
+
+```bash
+composer phpstan          # PHPStan level 2 on src/
+composer test:coverage    # fails if line coverage drops below 57%
+```
+
+### Bot API 10.1 examples
+
+**Business connection**
+
+```php
+$connection = $bot->getBusinessConnection('bc-1');
+$bot->readBusinessMessage('bc-1', $chatId, $messageId);
+```
+
+**Stories (managed business account)**
+
+```php
+use Yabx\Telegram\Objects\InputStoryContentPhoto;
+
+$bot->postStory(
+    businessConnectionId: 'bc-1',
+    content: new InputStoryContentPhoto(type: 'photo', photo: '/tmp/story.jpg'),
+    activePeriod: 86400,
+    caption: 'News',
+);
+```
+
+**Gifts and Stars**
+
+```php
+$gifts = $bot->getAvailableGifts();
+$bot->sendGift($userId, 'gift-id', text: 'Enjoy!');
+$balance = $bot->getMyStarBalance();
+```
+
+**Rich messages**
+
+```php
+use Yabx\Telegram\Objects\InputRichMessage;
+
+$bot->sendRichMessage($chatId, new InputRichMessage(html: '<b>Hello</b>'));
+```
+
+To add coverage for a new object, append an entry to the appropriate file under `tests/Fixtures/roundtrip/` (merged by `roundtrip.php`):
+
+```php
+SomeObject::class => ['field' => 'value'],
+```
 
 ## License
 

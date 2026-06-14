@@ -1,0 +1,49 @@
+{
+  "message_id": 42,
+  "date": 1681135130,
+  "chat": {
+    "id": -1001234567890,
+    "type": "supergroup",
+    "title": "Dev Forum"
+  },
+  "from": {
+    "id": 1,
+    "is_bot": false,
+    "first_name": "Alice"
+  },
+  "photo": [
+    {
+      "file_id": "AgACAgIAAxkBAAI",
+      "file_unique_id": "AQADAAI",
+      "width": 320,
+      "height": 240,
+      "file_size": 12345
+    },
+    {
+      "file_id": "AgACAgIAAxkBAAJ",
+      "file_unique_id": "AQADAAJ",
+      "width": 800,
+      "height": 600,
+      "file_size": 98765
+    }
+  ],
+  "caption": "Photo caption",
+  "caption_entities": [
+    {
+      "type": "bold",
+      "offset": 0,
+      "length": 5
+    }
+  ],
+  "has_media_spoiler": true,
+  "reply_to_message": {
+    "message_id": 19,
+    "date": 1681135000,
+    "chat": {
+      "id": -1001234567890,
+      "type": "supergroup",
+      "title": "Dev Forum"
+    },
+    "text": "Original"
+  }
+}

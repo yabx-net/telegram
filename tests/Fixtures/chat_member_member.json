@@ -1,0 +1,8 @@
+{
+  "status": "member",
+  "user": {
+    "id": 2,
+    "is_bot": false,
+    "first_name": "Member"
+  }
+}

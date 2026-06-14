@@ -1,0 +1,19 @@
+{
+  "update_id": 94181769,
+  "edited_message": {
+    "message_id": 76,
+    "from": {
+      "id": 630692,
+      "is_bot": false,
+      "first_name": "User"
+    },
+    "chat": {
+      "id": 630692,
+      "type": "private",
+      "first_name": "User"
+    },
+    "date": 1681135130,
+    "edit_date": 1681135200,
+    "text": "Edited text"
+  }
+}
