@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented in this file.
 
+## Unreleased
+
+### Fixed
+
+- CI on PHP 8.1: allow PHPUnit 10.5 (`^10.5 || ^11.0`) because PHPUnit 11 requires PHP 8.2+.
+
 ## [10.1.1] - 2026-06-14
 
 ### Added
@@ -20,5 +26,3 @@ All notable changes to this project are documented in this file.
 ### Testing
 
 - **766 tests**, overall line coverage **~58%** (`Message` ~67%, `ChatFullInfo` ~66%, `Update` ~67%, `BotApi` ~99%).
-
-## Unreleased

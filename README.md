@@ -248,7 +248,7 @@ composer test:coverage-html
 
 If PCOV is not installed, `composer test:coverage` prints installation hints instead of a cryptic PHPUnit error. CI collects coverage with PCOV on PHP 8.3 (job `coverage` in `.github/workflows/tests.yml`).
 
-Tests use [PHPUnit 11](https://phpunit.de/) with Guzzle `MockHandler` for HTTP integration tests. Fixtures live in `tests/Fixtures/`.
+Tests use [PHPUnit](https://phpunit.de/) 10.5+ (PHP 8.1) or 11+ (PHP 8.2+) with Guzzle `MockHandler` for HTTP integration tests. Fixtures live in `tests/Fixtures/`.
 
 ### Coverage phases
 
