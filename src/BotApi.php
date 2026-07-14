@@ -286,11 +286,13 @@ class BotApi {
      * @param ?ReplyParameters $replyParameters
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendMessage(int|string $chatId, string $text, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendMessage(int|string $chatId, string $text, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -305,6 +307,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendMessage', $params));
     }
 
@@ -463,11 +467,13 @@ class BotApi {
      * @param ?ReplyParameters $replyParameters
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendPhoto(int|string $chatId, string $photo, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $hasSpoiler = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendPhoto(int|string $chatId, string $photo, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $hasSpoiler = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         if (file_exists($photo)) $photo = fopen($photo, 'r');
         $params = [];
         if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
@@ -485,6 +491,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendPhoto', $params, is_resource($photo)));
     }
 
@@ -562,11 +570,13 @@ class BotApi {
      * @param ?ReplyParameters $replyParameters
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendAudio(int|string $chatId, string $audio, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?string $performer = null, ?string $title = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendAudio(int|string $chatId, string $audio, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?string $performer = null, ?string $title = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -585,6 +595,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendAudio', $params));
     }
 
@@ -608,11 +620,13 @@ class BotApi {
      * @param ?ReplyParameters $replyParameters
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendDocument(int|string $chatId, string $document, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $thumbnail = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $disableContentTypeDetection = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendDocument(int|string $chatId, string $document, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $thumbnail = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $disableContentTypeDetection = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -633,6 +647,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendDocument', $params, is_resource($document) || is_resource($thumbnail)));
     }
 
@@ -661,11 +677,13 @@ class BotApi {
      * @param ?int $messageThreadId
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendVideo(int|string $chatId, string $video, ?string $businessConnectionId = null, ?bool $showCaptionAboveMedia = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $supportsStreaming = null, ?bool $hasSpoiler = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendVideo(int|string $chatId, string $video, ?string $businessConnectionId = null, ?bool $showCaptionAboveMedia = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $supportsStreaming = null, ?bool $hasSpoiler = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -691,6 +709,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendVideo', $params, is_resource($video) || is_resource($thumbnail)));
     }
 
@@ -718,11 +738,13 @@ class BotApi {
      * @param ?int $messageThreadId
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendAnimation(int|string $chatId, string $animation, ?string $businessConnectionId = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $hasSpoiler = null, ?bool $showCaptionAboveMedia = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendAnimation(int|string $chatId, string $animation, ?string $businessConnectionId = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $hasSpoiler = null, ?bool $showCaptionAboveMedia = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -747,6 +769,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendAnimation', $params, is_resource($animation) || is_resource($thumbnail)));
     }
 
@@ -769,11 +793,13 @@ class BotApi {
      * @param ?ReplyParameters $replyParameters
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendVoice(int|string $chatId, string $voice, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendVoice(int|string $chatId, string $voice, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -790,6 +816,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendVoice', $params, is_resource($voice)));
     }
 
@@ -811,11 +839,13 @@ class BotApi {
      * @param ?ReplyParameters $replyParameters
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendVideoNote(int|string $chatId, string $videoNote, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $duration = null, ?int $length = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendVideoNote(int|string $chatId, string $videoNote, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $duration = null, ?int $length = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -834,6 +864,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendVideoNote', $params, is_resource($videoNote) || is_resource($thumbnail)));
     }
 
@@ -927,11 +959,13 @@ class BotApi {
      * @param ?ReplyParameters $replyParameters
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendLocation(int|string $chatId, float $latitude, float $longitude, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?float $horizontalAccuracy = null, ?int $livePeriod = null, ?int $heading = null, ?int $proximityAlertRadius = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendLocation(int|string $chatId, float $latitude, float $longitude, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?float $horizontalAccuracy = null, ?int $livePeriod = null, ?int $heading = null, ?int $proximityAlertRadius = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -948,6 +982,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendLocation', $params));
     }
 
@@ -973,11 +1009,13 @@ class BotApi {
      * @param ?ReplyParameters $replyParameters
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendVenue(int|string $chatId, float $latitude, float $longitude, string $title, string $address, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $foursquareId = null, ?string $foursquareType = null, ?string $googlePlaceId = null, ?string $googlePlaceType = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendVenue(int|string $chatId, float $latitude, float $longitude, string $title, string $address, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $foursquareId = null, ?string $foursquareType = null, ?string $googlePlaceId = null, ?string $googlePlaceType = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -996,6 +1034,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendVenue', $params));
     }
 
@@ -1017,11 +1057,13 @@ class BotApi {
      * @param ?ReplyParameters $replyParameters
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendContact(int|string $chatId, string $phoneNumber, string $firstName, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $lastName = null, ?string $vcard = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendContact(int|string $chatId, string $phoneNumber, string $firstName, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $lastName = null, ?string $vcard = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -1036,6 +1078,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendContact', $params));
     }
 
@@ -2584,6 +2628,130 @@ class BotApi {
     }
 
     /**
+     * Method: editEphemeralMessageText
+     *
+     * Use this method to edit an ephemeral text message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     * @link https://core.telegram.org/bots/api#editephemeralmessagetext
+     * @param int|string $chatId Unique identifier for the target chat or username of the target supergroup in the format @username
+     * @param int $receiverUserId Identifier of the user who received the message
+     * @param int $ephemeralMessageId Identifier of the ephemeral message to edit
+     * @param string $text New text of the message, 1-4096 characters after entity parsing
+     * @param ?string $parseMode Mode for parsing entities in the message text
+     * @param ?array $entities A JSON-serialized list of special entities that appear in message text
+     * @param ?LinkPreviewOptions $linkPreviewOptions Link preview generation options for the message
+     * @param ?InlineKeyboardMarkup $replyMarkup A JSON-serialized object for an inline keyboard
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function editEphemeralMessageText(int|string $chatId, int $receiverUserId, int $ephemeralMessageId, string $text, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?InlineKeyboardMarkup $replyMarkup = null): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['receiver_user_id'] = $receiverUserId;
+        $params['ephemeral_message_id'] = $ephemeralMessageId;
+        $params['text'] = $text;
+        if (isset($parseMode)) $params['parse_mode'] = $parseMode;
+        if (isset($entities)) $params['entities'] = $entities;
+        if (isset($linkPreviewOptions)) $params['link_preview_options'] = $linkPreviewOptions;
+        if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        return $this->request('editEphemeralMessageText', $params);
+    }
+
+    /**
+     * Method: editEphemeralMessageMedia
+     *
+     * Use this method to edit the media of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     * @link https://core.telegram.org/bots/api#editephemeralmessagemedia
+     * @param int|string $chatId Unique identifier for the target chat or username of the target supergroup in the format @username
+     * @param int $receiverUserId Identifier of the user who received the message
+     * @param int $ephemeralMessageId Identifier of the ephemeral message to edit
+     * @param AbstractObject|string $media A JSON-serialized object for the new media content of the message. A new file can't be uploaded; use a previously uploaded file via its file_id or specify a URL.
+     * @param ?InlineKeyboardMarkup $replyMarkup A JSON-serialized object for an inline keyboard
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function editEphemeralMessageMedia(int|string $chatId, int $receiverUserId, int $ephemeralMessageId, AbstractObject|string $media, ?InlineKeyboardMarkup $replyMarkup = null): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['receiver_user_id'] = $receiverUserId;
+        $params['ephemeral_message_id'] = $ephemeralMessageId;
+        $params['media'] = $media;
+        if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        return $this->request('editEphemeralMessageMedia', $params);
+    }
+
+    /**
+     * Method: editEphemeralMessageCaption
+     *
+     * Use this method to edit the caption of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     * @link https://core.telegram.org/bots/api#editephemeralmessagecaption
+     * @param int|string $chatId Unique identifier for the target chat or username of the target supergroup in the format @username
+     * @param int $receiverUserId Identifier of the user who received the message
+     * @param int $ephemeralMessageId Identifier of the ephemeral message to edit
+     * @param ?string $caption New caption of the message, 0-1024 characters after entities parsing
+     * @param ?string $parseMode Mode for parsing entities in the message caption
+     * @param ?array $captionEntities A JSON-serialized list of special entities that appear in the caption
+     * @param ?InlineKeyboardMarkup $replyMarkup A JSON-serialized object for an inline keyboard
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function editEphemeralMessageCaption(int|string $chatId, int $receiverUserId, int $ephemeralMessageId, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?InlineKeyboardMarkup $replyMarkup = null): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['receiver_user_id'] = $receiverUserId;
+        $params['ephemeral_message_id'] = $ephemeralMessageId;
+        if (isset($caption)) $params['caption'] = $caption;
+        if (isset($parseMode)) $params['parse_mode'] = $parseMode;
+        if (isset($captionEntities)) $params['caption_entities'] = $captionEntities;
+        if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        return $this->request('editEphemeralMessageCaption', $params);
+    }
+
+    /**
+     * Method: editEphemeralMessageReplyMarkup
+     *
+     * Use this method to edit only the reply markup of an ephemeral message. Note that it is not guaranteed that the user will receive the message edit event, especially if they are offline. On success, True is returned.
+     * @link https://core.telegram.org/bots/api#editephemeralmessagereplymarkup
+     * @param int|string $chatId Unique identifier for the target chat or username of the target supergroup in the format @username
+     * @param int $receiverUserId Identifier of the user who received the message
+     * @param int $ephemeralMessageId Identifier of the ephemeral message to edit
+     * @param ?InlineKeyboardMarkup $replyMarkup A JSON-serialized object for an inline keyboard
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function editEphemeralMessageReplyMarkup(int|string $chatId, int $receiverUserId, int $ephemeralMessageId, ?InlineKeyboardMarkup $replyMarkup = null): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['receiver_user_id'] = $receiverUserId;
+        $params['ephemeral_message_id'] = $ephemeralMessageId;
+        if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        return $this->request('editEphemeralMessageReplyMarkup', $params);
+    }
+
+    /**
+     * Method: deleteEphemeralMessage
+     *
+     * Use this method to delete an ephemeral message. Note that it is not guaranteed that the user will receive the message deletion event, especially if they are offline. Returns True on success.
+     * @link https://core.telegram.org/bots/api#deleteephemeralmessage
+     * @param int|string $chatId Unique identifier for the target chat or username of the target supergroup in the format @username
+     * @param int $receiverUserId Identifier of the user who received the message
+     * @param int $ephemeralMessageId Identifier of the ephemeral message to delete
+     * @return bool
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function deleteEphemeralMessage(int|string $chatId, int $receiverUserId, int $ephemeralMessageId): bool {
+        $params = [];
+        $params['chat_id'] = $chatId;
+        $params['receiver_user_id'] = $receiverUserId;
+        $params['ephemeral_message_id'] = $ephemeralMessageId;
+        return $this->request('deleteEphemeralMessage', $params);
+    }
+
+    /**
      * Method: deleteMessage
      *
      * Use this method to delete a message, including service messages, with the following limitations:
@@ -2635,11 +2803,13 @@ class BotApi {
      * @param ?ReplyParameters $replyParameters
      * @param InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup
      * @param ?bool $allowPaidBroadcast
+     * @param ?int $receiverUserId
+     * @param ?string $callbackQueryId
      * @return Message
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendSticker(int|string $chatId, string $sticker, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $emoji = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
+    public function sendSticker(int|string $chatId, string $sticker, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $emoji = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?int $receiverUserId = null, ?string $callbackQueryId = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         $params['chat_id'] = $chatId;
@@ -2652,6 +2822,8 @@ class BotApi {
         if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
         if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        if (isset($receiverUserId)) $params['receiver_user_id'] = $receiverUserId;
+        if (isset($callbackQueryId)) $params['callback_query_id'] = $callbackQueryId;
         return Message::fromArray($this->request('sendSticker', $params));
     }
 

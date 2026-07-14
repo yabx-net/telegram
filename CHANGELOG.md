@@ -4,6 +4,15 @@ All notable changes to this project are documented in this file.
 
 ## Unreleased
 
+### Added
+
+- Bot API 10.2 support (July 14, 2026):
+  - Rich Messages: `InputRichBlock*` types, `InputRichBlockListItem`, `InputRichMessageMedia`, `InputMediaVoiceNote`; `InputRichMessage.blocks` / `media`
+  - Ephemeral Messages: `Message.receiver_user` / `ephemeral_message_id`, `BotCommand.is_ephemeral`, `ReplyParameters.ephemeral_message_id`; `receiver_user_id` / `callback_query_id` on send* methods; `editEphemeralMessage*`, `deleteEphemeralMessage`
+  - Communities: `Community`, `CommunityChatAdded`, `CommunityChatRemoved`; `Message.community_chat_*`, `ChatFullInfo.community`
+  - Subscriptions: `BotSubscriptionUpdated`, `Update.subscription`
+  - Tests: `InputRichBlockAllTypesTest`, roundtrip fixtures for InputRichBlock*/Community/subscription, ephemeral BotApi coverage including `editEphemeralMessageMedia`
+
 ### Fixed
 
 - CI on PHP 8.1: allow PHPUnit 10.5 (`^10.5 || ^11.0`) because PHPUnit 11 requires PHP 8.2+.

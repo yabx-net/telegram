@@ -20,12 +20,22 @@ final class BotCommand extends AbstractObject {
      */
     protected ?string $description = null;
 
+    /**
+     * Is Ephemeral
+     *
+     * Optional. True, if the command sends an ephemeral message, which can be seen only by the sender of the message and the bot
+     * @var bool|null
+     */
+    protected ?bool $isEphemeral = null;
+
     public function __construct(
         ?string $command = null,
         ?string $description = null,
+        ?bool $isEphemeral = null,
     ) {
         $this->command = $command;
         $this->description = $description;
+        $this->isEphemeral = $isEphemeral;
     }
 
     public static function fromArray(array $data): BotCommand {
@@ -35,6 +45,9 @@ final class BotCommand extends AbstractObject {
         }
         if (isset($data['description'])) {
             $instance->description = $data['description'];
+        }
+        if (isset($data['is_ephemeral'])) {
+            $instance->isEphemeral = $data['is_ephemeral'];
         }
         return $instance;
     }
@@ -54,6 +67,15 @@ final class BotCommand extends AbstractObject {
 
     public function setDescription(?string $value): self {
         $this->description = $value;
+        return $this;
+    }
+
+    public function getIsEphemeral(): ?bool {
+        return $this->isEphemeral;
+    }
+
+    public function setIsEphemeral(?bool $value): self {
+        $this->isEphemeral = $value;
         return $this;
     }
 

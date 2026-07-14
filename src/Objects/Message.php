@@ -7,10 +7,18 @@ final class Message extends AbstractObject {
     /**
      * Message Id
      *
-     * Unique message identifier inside this chat
+     * Unique message identifier inside this chat; 0 for ephemeral messages. In specific instances (e.g., a message containing a video sent to a big chat), the server might automatically schedule a message instead of sending it immediately. In such cases, this field will be 0 and the relevant message will be unusable until it is actually sent.
      * @var int|null
      */
     protected ?int $messageId = null;
+
+    /**
+     * Ephemeral Message Id
+     *
+     * For ephemeral messages, identifier of the ephemeral message inside this chat. The identifier may be reused for another ephemeral message after the message is deleted or expires.
+     * @var int|null
+     */
+    protected ?int $ephemeralMessageId = null;
 
     /**
      * Message Thread Id
@@ -59,6 +67,14 @@ final class Message extends AbstractObject {
      * @var string|null
      */
     protected ?string $guestQueryId = null;
+
+    /**
+     * Receiver User
+     *
+     * Optional. For ephemeral messages, the user who received the message
+     * @var User|null
+     */
+    protected ?User $receiverUser = null;
 
     /**
      * Date
@@ -549,6 +565,22 @@ final class Message extends AbstractObject {
     protected ?ChatShared $chatShared = null;
 
     /**
+     * Community Chat Added
+     *
+     * Optional. Service message: chat added to a Community
+     * @var CommunityChatAdded|null
+     */
+    protected ?CommunityChatAdded $communityChatAdded = null;
+
+    /**
+     * Community Chat Removed
+     *
+     * Optional. Service message: chat removed from a Community
+     * @var CommunityChatRemoved|null
+     */
+    protected ?CommunityChatRemoved $communityChatRemoved = null;
+
+    /**
      * Connected Website
      *
      * Optional. The domain name of the website on which the user has logged in. More about Telegram Login »
@@ -726,12 +758,14 @@ final class Message extends AbstractObject {
 
     public function __construct(
         ?int                           $messageId = null,
+        ?int                           $ephemeralMessageId = null,
         ?int                           $messageThreadId = null,
         ?User                          $from = null,
         ?Chat                          $senderChat = null,
         ?int                           $senderBoostCount = null,
         ?User                          $senderBusinessBot = null,
         ?string                        $guestQueryId = null,
+        ?User                          $receiverUser = null,
         ?int                           $date = null,
         ?string                        $businessConnectionId = null,
         ?Chat                          $chat = null,
@@ -793,6 +827,8 @@ final class Message extends AbstractObject {
         ?RefundedPayment               $refundedPayment = null,
         ?UsersShared                   $usersShared = null,
         ?ChatShared                    $chatShared = null,
+        ?CommunityChatAdded            $communityChatAdded = null,
+        ?CommunityChatRemoved          $communityChatRemoved = null,
         ?string                        $connectedWebsite = null,
         ?WriteAccessAllowed            $writeAccessAllowed = null,
         ?PassportData                  $passportData = null,
@@ -817,12 +853,14 @@ final class Message extends AbstractObject {
         ?InlineKeyboardMarkup          $replyMarkup = null,
     ) {
         $this->messageId = $messageId;
+        $this->ephemeralMessageId = $ephemeralMessageId;
         $this->messageThreadId = $messageThreadId;
         $this->from = $from;
         $this->senderChat = $senderChat;
         $this->senderBoostCount = $senderBoostCount;
         $this->senderBusinessBot = $senderBusinessBot;
         $this->guestQueryId = $guestQueryId;
+        $this->receiverUser = $receiverUser;
         $this->date = $date;
         $this->businessConnectionId = $businessConnectionId;
         $this->chat = $chat;
@@ -884,6 +922,8 @@ final class Message extends AbstractObject {
         $this->refundedPayment = $refundedPayment;
         $this->usersShared = $usersShared;
         $this->chatShared = $chatShared;
+        $this->communityChatAdded = $communityChatAdded;
+        $this->communityChatRemoved = $communityChatRemoved;
         $this->connectedWebsite = $connectedWebsite;
         $this->writeAccessAllowed = $writeAccessAllowed;
         $this->passportData = $passportData;
@@ -913,6 +953,9 @@ final class Message extends AbstractObject {
         if (isset($data['message_id'])) {
             $instance->messageId = $data['message_id'];
         }
+        if (isset($data['ephemeral_message_id'])) {
+            $instance->ephemeralMessageId = $data['ephemeral_message_id'];
+        }
         if (isset($data['message_thread_id'])) {
             $instance->messageThreadId = $data['message_thread_id'];
         }
@@ -930,6 +973,9 @@ final class Message extends AbstractObject {
         }
         if (isset($data['guest_query_id'])) {
             $instance->guestQueryId = $data['guest_query_id'];
+        }
+        if (isset($data['receiver_user'])) {
+            $instance->receiverUser = User::fromArray($data['receiver_user']);
         }
         if (isset($data['date'])) {
             $instance->date = $data['date'];
@@ -1129,6 +1175,12 @@ final class Message extends AbstractObject {
         if (isset($data['chat_shared'])) {
             $instance->chatShared = ChatShared::fromArray($data['chat_shared']);
         }
+        if (isset($data['community_chat_added'])) {
+            $instance->communityChatAdded = CommunityChatAdded::fromArray($data['community_chat_added']);
+        }
+        if (isset($data['community_chat_removed'])) {
+            $instance->communityChatRemoved = CommunityChatRemoved::fromArray($data['community_chat_removed']);
+        }
         if (isset($data['connected_website'])) {
             $instance->connectedWebsite = $data['connected_website'];
         }
@@ -1207,6 +1259,15 @@ final class Message extends AbstractObject {
         return $this;
     }
 
+    public function getEphemeralMessageId(): ?int {
+        return $this->ephemeralMessageId;
+    }
+
+    public function setEphemeralMessageId(?int $value): self {
+        $this->ephemeralMessageId = $value;
+        return $this;
+    }
+
     public function getMessageThreadId(): ?int {
         return $this->messageThreadId;
     }
@@ -1258,6 +1319,15 @@ final class Message extends AbstractObject {
 
     public function setGuestQueryId(?string $value): self {
         $this->guestQueryId = $value;
+        return $this;
+    }
+
+    public function getReceiverUser(): ?User {
+        return $this->receiverUser;
+    }
+
+    public function setReceiverUser(?User $value): self {
+        $this->receiverUser = $value;
         return $this;
     }
 
@@ -1807,6 +1877,24 @@ final class Message extends AbstractObject {
 
     public function setChatShared(?ChatShared $value): self {
         $this->chatShared = $value;
+        return $this;
+    }
+
+    public function getCommunityChatAdded(): ?CommunityChatAdded {
+        return $this->communityChatAdded;
+    }
+
+    public function setCommunityChatAdded(?CommunityChatAdded $value): self {
+        $this->communityChatAdded = $value;
+        return $this;
+    }
+
+    public function getCommunityChatRemoved(): ?CommunityChatRemoved {
+        return $this->communityChatRemoved;
+    }
+
+    public function setCommunityChatRemoved(?CommunityChatRemoved $value): self {
+        $this->communityChatRemoved = $value;
         return $this;
     }
 

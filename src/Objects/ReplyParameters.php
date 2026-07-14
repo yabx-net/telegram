@@ -7,7 +7,7 @@ final class ReplyParameters extends AbstractObject {
     /**
      * Message Id
      *
-     * Identifier of the message that will be replied to in the current chat, or in the chat chat_id if it is specified
+     * Optional. Identifier of the message that will be replied to in the current chat, or in the chat chat_id if it is specified. Required if ephemeral_message_id isn't specified.
      * @var int|null
      */
     protected ?int $messageId = null;
@@ -15,7 +15,7 @@ final class ReplyParameters extends AbstractObject {
     /**
      * Chat Id
      *
-     * Optional. If the message to be replied to is from a different chat, unique identifier for the chat or username of the channel (in the format @channelusername). Not supported for messages sent on behalf of a business account.
+     * Optional. If the message to be replied to is from a different chat, unique identifier for the chat or username of the bot, supergroup or channel in the format @username. Not supported for messages sent on behalf of a business account, messages from channel direct messages chats and ephemeral messages.
      * @var int|string|null
      */
     protected int|string|null $chatId = null;
@@ -23,7 +23,7 @@ final class ReplyParameters extends AbstractObject {
     /**
      * Allow Sending Without Reply
      *
-     * Optional. Pass True if the message should be sent even if the specified message to be replied to is not found. Always False for replies in another chat or forum topic. Always True for messages sent on behalf of a business account.
+     * Optional. Pass True if the message should be sent even if the specified message to be replied to is not found. Always False for replies in another chat or forum topic, and sent ephemeral messages. Always True for messages sent on behalf of a business account.
      * @var bool|null
      */
     protected ?bool $allowSendingWithoutReply = null;
@@ -31,7 +31,7 @@ final class ReplyParameters extends AbstractObject {
     /**
      * Quote
      *
-     * Optional. Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including bold, italic, underline, strikethrough, spoiler, and custom_emoji entities. The message will fail to send if the quote isn't found in the original message.
+     * Optional. Quoted part of the message to be replied to; 0-1024 characters after entities parsing. The quote must be an exact substring of the message to be replied to, including bold, italic, underline, strikethrough, spoiler, custom_emoji, and date_time entities. The message will fail to send if the quote isn't found in the original message. Ignored for ephemeral messages.
      * @var string|null
      */
     protected ?string $quote = null;
@@ -60,6 +60,14 @@ final class ReplyParameters extends AbstractObject {
      */
     protected ?int $quotePosition = null;
 
+    /**
+     * Ephemeral Message Id
+     *
+     * Optional. Identifier of the incoming ephemeral message that will be replied to in the current chat. A reply to an ephemeral message must itself be an ephemeral message. An ephemeral message may only be replied to within 15 seconds of being sent. Required if message_id isn't specified.
+     * @var int|null
+     */
+    protected ?int $ephemeralMessageId = null;
+
     public function __construct(
         ?int            $messageId = null,
         int|string|null $chatId = null,
@@ -68,6 +76,7 @@ final class ReplyParameters extends AbstractObject {
         ?string         $quoteParseMode = null,
         ?array          $quoteEntities = null,
         ?int            $quotePosition = null,
+        ?int            $ephemeralMessageId = null,
     ) {
         $this->messageId = $messageId;
         $this->chatId = $chatId;
@@ -76,6 +85,7 @@ final class ReplyParameters extends AbstractObject {
         $this->quoteParseMode = $quoteParseMode;
         $this->quoteEntities = $quoteEntities;
         $this->quotePosition = $quotePosition;
+        $this->ephemeralMessageId = $ephemeralMessageId;
     }
 
     public static function fromArray(array $data): ReplyParameters {
@@ -103,6 +113,9 @@ final class ReplyParameters extends AbstractObject {
         }
         if (isset($data['quote_position'])) {
             $instance->quotePosition = $data['quote_position'];
+        }
+        if (isset($data['ephemeral_message_id'])) {
+            $instance->ephemeralMessageId = $data['ephemeral_message_id'];
         }
         return $instance;
     }
@@ -167,6 +180,15 @@ final class ReplyParameters extends AbstractObject {
 
     public function setQuotePosition(?int $value): self {
         $this->quotePosition = $value;
+        return $this;
+    }
+
+    public function getEphemeralMessageId(): ?int {
+        return $this->ephemeralMessageId;
+    }
+
+    public function setEphemeralMessageId(?int $value): self {
+        $this->ephemeralMessageId = $value;
         return $this;
     }
 

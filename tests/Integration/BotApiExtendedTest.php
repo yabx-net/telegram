@@ -17,6 +17,7 @@ use Yabx\Telegram\Objects\InputChecklist;
 use Yabx\Telegram\Objects\InputChecklistTask;
 use Yabx\Telegram\Objects\InputProfilePhotoStatic;
 use Yabx\Telegram\Objects\InputRichMessage;
+use Yabx\Telegram\Objects\InputMediaPhoto;
 use Yabx\Telegram\Objects\InputStoryContentPhoto;
 use Yabx\Telegram\Objects\InputTextMessageContent;
 use Yabx\Telegram\Objects\KeyboardButton;
@@ -519,6 +520,45 @@ final class BotApiExtendedTest extends TestCase {
 
         $this->assertTrue($bot->setCustomEmojiStickerSetThumbnail('emoji_set', customEmojiId: '999'));
         $this->assertSame('999', $this->decodeLastRequest($mock)['custom_emoji_id']);
+    }
+
+    public function testEphemeralMessages(): void {
+        [$bot, $mock] = $this->createBotWithMock([
+            new Response(200, [], $this->apiResponse($this->messageResult())),
+            new Response(200, [], $this->apiResponse(true)),
+            new Response(200, [], $this->apiResponse(true)),
+            new Response(200, [], $this->apiResponse(true)),
+            new Response(200, [], $this->apiResponse(true)),
+            new Response(200, [], $this->apiResponse(true)),
+            new Response(200, [], $this->apiResponse(true)),
+        ]);
+
+        $message = $bot->sendMessage(
+            chatId: -100,
+            text: 'ephemeral',
+            receiverUserId: 7,
+            callbackQueryId: 'cq-1',
+        );
+        $body = $this->decodeLastRequest($mock);
+        $this->assertSame(7, $body['receiver_user_id']);
+        $this->assertSame('cq-1', $body['callback_query_id']);
+        $this->assertInstanceOf(Message::class, $message);
+
+        $this->assertTrue($bot->editEphemeralMessageText(-100, 7, 42, 'updated'));
+        $this->assertSame(42, $this->decodeLastRequest($mock)['ephemeral_message_id']);
+
+        $media = new InputMediaPhoto(media: 'AgACAg');
+        $this->assertTrue($bot->editEphemeralMessageMedia(-100, 7, 42, $media));
+        $this->assertSame(['type' => 'photo', 'media' => 'AgACAg'], $this->decodeLastRequest($mock)['media']);
+
+        $this->assertTrue($bot->editEphemeralMessageCaption(-100, 7, 42, caption: 'cap'));
+        $this->assertTrue($bot->editEphemeralMessageReplyMarkup(-100, 7, 42));
+        $this->assertTrue($bot->deleteEphemeralMessage(-100, 7, 42));
+        $this->assertSame([
+            'chat_id' => -100,
+            'receiver_user_id' => 7,
+            'ephemeral_message_id' => 42,
+        ], $this->decodeLastRequest($mock));
     }
 
     public function testDownloadFileSavesContent(): void {

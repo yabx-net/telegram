@@ -1,6 +1,6 @@
 # yabx/telegram
 
-PHP SDK for the [Telegram Bot API](https://core.telegram.org/bots/api). Typed request/response objects, [Guzzle](https://github.com/guzzle/guzzle) HTTP client, and coverage aligned with **Bot API 10.1** (June 2026).
+PHP SDK for the [Telegram Bot API](https://core.telegram.org/bots/api). Typed request/response objects, [Guzzle](https://github.com/guzzle/guzzle) HTTP client, and coverage aligned with **Bot API 10.2** (July 2026).
 
 ## Requirements
 
@@ -217,12 +217,12 @@ try {
 
 ## Project layout
 
-| Path | Role |
-|------|------|
-| `src/BotApi.php` | Client: all Bot API methods + `request()` |
-| `src/Objects/` | Telegram types (`Message`, `Update`, keyboards, …) |
-| `src/Enum/` | Helpers such as `ChatAction`, etc. |
-| `tests/` | PHPUnit test suite and JSON fixtures |
+| Path             | Role                                               |
+|------------------|----------------------------------------------------|
+| `src/BotApi.php` | Client: all Bot API methods + `request()`          |
+| `src/Objects/`   | Telegram types (`Message`, `Update`, keyboards, …) |
+| `src/Enum/`      | Helpers such as `ChatAction`, etc.                 |
+| `tests/`         | PHPUnit test suite and JSON fixtures               |
 
 ## Testing
 
@@ -252,32 +252,32 @@ Tests use [PHPUnit](https://phpunit.de/) 10.5+ (PHP 8.1) or 11+ (PHP 8.2+) with 
 
 ### Coverage phases
 
-| Phase | Scope | Status |
-|-------|-------|--------|
-| 1 | Infrastructure, `Utils`, `BotApi`, core objects | done |
-| 2 | All `RichText` / `RichBlock` types, update variants | done |
-| 3 | Polymorphic dispatchers (`ChatMember`, `MessageOrigin`, …) | done |
-| 4 | Round-trip manifest (`tests/Fixtures/roundtrip/`) | done — 331 leaf classes (~93%); dispatchers tested separately |
-| 5 | Composite variant tests (`ChatFullInfo`, `Message`, `ExternalReplyInfo`) | done |
-| 6 | All `Update` webhook variants | done — 22 fixtures |
-| 7 | `BotApi` integration (request serialization, response parsing) | done — 57 tests |
-| 8 | Composite variants (`Message` quote/forward, `ExternalReplyInfo` media) | done |
-| 9 | API response snapshots (`tests/Fixtures/api_responses/`) | done — 7 fixtures |
-| 10 | Shared `MocksBotApi` trait, multipart uploads, forum topic variants | done |
-| 11 | Media send methods, payments, `ChatFullInfo` private, service messages | done |
-| 12 | Location/contact/video note, stars, migration/members, `getUpdatefromRequest` | done |
-| 13 | Paid media, batch delete/copy, `ChatBoostSource` dispatcher, chat service messages | done |
-| 14 | Chat actions, reactions, join requests, sticker set snapshot, chat event messages | done |
-| 15 | Live location, menu button, custom emoji, invite link snapshot, `Update` round-trip | done |
-| 16 | Live photo, forum topics, games, restrict member, service message variants | done — 79 BotApi tests, 13 snapshots |
-| 17 | Chat admin, forum/general topics, stickers, bot profile/commands, join-query | done — 113 BotApi tests, ~69% `BotApi.php` lines |
-| 18 | Business, stories, gifts/stars, payments, verification, managed bot, `downloadFile` | done — 127 BotApi tests, ~99% `BotApi.php` lines |
-| 19 | Deep `Message` / `ChatFullInfo` / `Update` variants | done — 42 message fixtures, `Message` ~67% lines |
-| 20 | `BotApi` edge cases: multipart, `downloadFile`, logging, transport errors | done — `BotApiEdgeCasesTest` |
-| 21 | API snapshots: business, gifts, boosts, invoice, extended chat | done — 18 snapshots |
-| 22 | Polymorphic dispatch + `sendPoll` / `InputPollMedia` contract | done |
-| 23 | PHPStan level 2, coverage threshold 57%, CI static analysis | done — `composer phpstan` |
-| 24 | `CHANGELOG.md`, README examples for Bot API 10.1 features | done |
+| Phase | Scope                                                                               | Status                                                        |
+|-------|-------------------------------------------------------------------------------------|---------------------------------------------------------------|
+| 1     | Infrastructure, `Utils`, `BotApi`, core objects                                     | done                                                          |
+| 2     | All `RichText` / `RichBlock` types, update variants                                 | done                                                          |
+| 3     | Polymorphic dispatchers (`ChatMember`, `MessageOrigin`, …)                          | done                                                          |
+| 4     | Round-trip manifest (`tests/Fixtures/roundtrip/`)                                   | done — 331 leaf classes (~93%); dispatchers tested separately |
+| 5     | Composite variant tests (`ChatFullInfo`, `Message`, `ExternalReplyInfo`)            | done                                                          |
+| 6     | All `Update` webhook variants                                                       | done — 22 fixtures                                            |
+| 7     | `BotApi` integration (request serialization, response parsing)                      | done — 57 tests                                               |
+| 8     | Composite variants (`Message` quote/forward, `ExternalReplyInfo` media)             | done                                                          |
+| 9     | API response snapshots (`tests/Fixtures/api_responses/`)                            | done — 7 fixtures                                             |
+| 10    | Shared `MocksBotApi` trait, multipart uploads, forum topic variants                 | done                                                          |
+| 11    | Media send methods, payments, `ChatFullInfo` private, service messages              | done                                                          |
+| 12    | Location/contact/video note, stars, migration/members, `getUpdatefromRequest`       | done                                                          |
+| 13    | Paid media, batch delete/copy, `ChatBoostSource` dispatcher, chat service messages  | done                                                          |
+| 14    | Chat actions, reactions, join requests, sticker set snapshot, chat event messages   | done                                                          |
+| 15    | Live location, menu button, custom emoji, invite link snapshot, `Update` round-trip | done                                                          |
+| 16    | Live photo, forum topics, games, restrict member, service message variants          | done — 79 BotApi tests, 13 snapshots                          |
+| 17    | Chat admin, forum/general topics, stickers, bot profile/commands, join-query        | done — 113 BotApi tests, ~69% `BotApi.php` lines              |
+| 18    | Business, stories, gifts/stars, payments, verification, managed bot, `downloadFile` | done — 127 BotApi tests, ~99% `BotApi.php` lines              |
+| 19    | Deep `Message` / `ChatFullInfo` / `Update` variants                                 | done — 42 message fixtures, `Message` ~67% lines              |
+| 20    | `BotApi` edge cases: multipart, `downloadFile`, logging, transport errors           | done — `BotApiEdgeCasesTest`                                  |
+| 21    | API snapshots: business, gifts, boosts, invoice, extended chat                      | done — 18 snapshots                                           |
+| 22    | Polymorphic dispatch + `sendPoll` / `InputPollMedia` contract                       | done                                                          |
+| 23    | PHPStan level 2, coverage threshold 57%, CI static analysis                         | done — `composer phpstan`                                     |
+| 24    | `CHANGELOG.md`, README examples for Bot API 10.2 features                           | done                                                          |
 
 `InputPollMedia` / `InputPollOptionMedia` are PHP interfaces; implementing classes (`InputMediaPhoto`, `InputMediaLink`, …) are covered in the round-trip manifest and via `sendPoll` contract tests.
 
@@ -286,6 +286,27 @@ Tests use [PHPUnit](https://phpunit.de/) 10.5+ (PHP 8.1) or 11+ (PHP 8.2+) with 
 ```bash
 composer phpstan          # PHPStan level 2 on src/
 composer test:coverage    # fails if line coverage drops below 57%
+```
+
+### Bot API 10.2 examples
+
+**Ephemeral messages**
+
+```php
+$bot->sendMessage($chatId, 'Only you can see this', receiverUserId: $userId, callbackQueryId: $queryId);
+$bot->editEphemeralMessageText($chatId, $userId, $ephemeralMessageId, 'Updated');
+$bot->deleteEphemeralMessage($chatId, $userId, $ephemeralMessageId);
+```
+
+**Rich message blocks**
+
+```php
+use Yabx\Telegram\Objects\InputRichBlockParagraph;
+use Yabx\Telegram\Objects\InputRichMessage;
+
+$bot->sendRichMessage($chatId, new InputRichMessage(
+    blocks: [new InputRichBlockParagraph(text: 'Hello')],
+));
 ```
 
 ### Bot API 10.1 examples

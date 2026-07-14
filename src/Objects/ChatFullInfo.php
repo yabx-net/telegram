@@ -229,6 +229,14 @@ final class ChatFullInfo extends AbstractObject {
     protected ?User $guardBot = null;
 
     /**
+     * Community
+     *
+     * Optional. The Community to which the chat belongs
+     * @var Community|null
+     */
+    protected ?Community $community = null;
+
+    /**
      * Description
      *
      * Optional. Description, for groups, supergroups and channel chats
@@ -393,6 +401,7 @@ final class ChatFullInfo extends AbstractObject {
         ?bool                 $joinToSendMessages = null,
         ?bool                 $joinByRequest = null,
         ?User                 $guardBot = null,
+        ?Community            $community = null,
         ?string               $description = null,
         ?string               $inviteLink = null,
         ?Message              $pinnedMessage = null,
@@ -439,6 +448,7 @@ final class ChatFullInfo extends AbstractObject {
         $this->joinToSendMessages = $joinToSendMessages;
         $this->joinByRequest = $joinByRequest;
         $this->guardBot = $guardBot;
+        $this->community = $community;
         $this->description = $description;
         $this->inviteLink = $inviteLink;
         $this->pinnedMessage = $pinnedMessage;
@@ -549,6 +559,9 @@ final class ChatFullInfo extends AbstractObject {
         }
         if (isset($data['guard_bot'])) {
             $instance->guardBot = User::fromArray($data['guard_bot']);
+        }
+        if (isset($data['community'])) {
+            $instance->community = Community::fromArray($data['community']);
         }
         if (isset($data['description'])) {
             $instance->description = $data['description'];
@@ -853,6 +866,15 @@ final class ChatFullInfo extends AbstractObject {
 
     public function setGuardBot(?User $value): self {
         $this->guardBot = $value;
+        return $this;
+    }
+
+    public function getCommunity(): ?Community {
+        return $this->community;
+    }
+
+    public function setCommunity(?Community $value): self {
+        $this->community = $value;
         return $this;
     }
 

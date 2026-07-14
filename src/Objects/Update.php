@@ -204,6 +204,14 @@ final class Update extends AbstractObject {
      */
     protected ?ChatBoostRemoved $removedChatBoost = null;
 
+    /**
+     * Subscription
+     *
+     * Optional. User payment subscription has changed
+     * @var BotSubscriptionUpdated|null
+     */
+    protected ?BotSubscriptionUpdated $subscription = null;
+
     public function __construct(
         ?int                         $updateId = null,
         ?Message                     $message = null,
@@ -230,6 +238,7 @@ final class Update extends AbstractObject {
         ?ChatJoinRequest             $chatJoinRequest = null,
         ?ChatBoostUpdated            $chatBoost = null,
         ?ChatBoostRemoved            $removedChatBoost = null,
+        ?BotSubscriptionUpdated      $subscription = null,
     ) {
         $this->updateId = $updateId;
         $this->message = $message;
@@ -256,6 +265,7 @@ final class Update extends AbstractObject {
         $this->chatJoinRequest = $chatJoinRequest;
         $this->chatBoost = $chatBoost;
         $this->removedChatBoost = $removedChatBoost;
+        $this->subscription = $subscription;
     }
 
     public static function fromArray(array $data): Update {
@@ -334,6 +344,9 @@ final class Update extends AbstractObject {
         }
         if (isset($data['removed_chat_boost'])) {
             $instance->removedChatBoost = ChatBoostRemoved::fromArray($data['removed_chat_boost']);
+        }
+        if (isset($data['subscription'])) {
+            $instance->subscription = BotSubscriptionUpdated::fromArray($data['subscription']);
         }
         return $instance;
     }
@@ -560,6 +573,15 @@ final class Update extends AbstractObject {
 
     public function setRemovedChatBoost(?ChatBoostRemoved $value): self {
         $this->removedChatBoost = $value;
+        return $this;
+    }
+
+    public function getSubscription(): ?BotSubscriptionUpdated {
+        return $this->subscription;
+    }
+
+    public function setSubscription(?BotSubscriptionUpdated $value): self {
+        $this->subscription = $value;
         return $this;
     }
 

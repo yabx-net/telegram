@@ -15,6 +15,7 @@ return array_merge(
     require __DIR__ . '/roundtrip/forum.php',
     require __DIR__ . '/roundtrip/rich.php',
     require __DIR__ . '/roundtrip/blocks.php',
+    require __DIR__ . '/roundtrip/input_rich_blocks.php',
     require __DIR__ . '/roundtrip/games.php',
     require __DIR__ . '/roundtrip/checklists.php',
     require __DIR__ . '/roundtrip/bot.php',

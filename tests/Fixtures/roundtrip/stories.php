@@ -31,6 +31,7 @@ return [
         'html' => '<b>Hello</b>',
         'is_rtl' => false,
     ],
+    // blocks/media covered via InputRichBlock* and InputRichMessageMedia roundtrips
     InputRichMessageContent::class => [
         'rich_message' => ['markdown' => '*Hello*'],
     ],
