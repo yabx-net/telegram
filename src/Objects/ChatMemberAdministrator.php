@@ -156,6 +156,14 @@ class ChatMemberAdministrator extends ChatMember {
      */
     protected ?string $customTitle = null;
 
+    /**
+     * Can Send Welcome Messages
+     *
+     * True, if the administrator can manage chat welcome messages or directly send them in the case of bots
+     * @var bool|null
+     */
+    protected ?bool $canSendWelcomeMessages = null;
+
     public function __construct(
         ?User   $user = null,
         ?bool   $canBeEdited = null,
@@ -175,6 +183,7 @@ class ChatMemberAdministrator extends ChatMember {
         ?bool   $canPinMessages = null,
         ?bool   $canManageTopics = null,
         ?string $customTitle = null,
+        ?bool $canSendWelcomeMessages = null,
     ) {
         $this->user = $user;
         $this->canBeEdited = $canBeEdited;
@@ -194,6 +203,7 @@ class ChatMemberAdministrator extends ChatMember {
         $this->canPinMessages = $canPinMessages;
         $this->canManageTopics = $canManageTopics;
         $this->customTitle = $customTitle;
+        $this->canSendWelcomeMessages = $canSendWelcomeMessages;
     }
 
     public static function fromArray(array $data): ChatMemberAdministrator {
@@ -254,6 +264,9 @@ class ChatMemberAdministrator extends ChatMember {
         }
         if (isset($data['custom_title'])) {
             $instance->customTitle = $data['custom_title'];
+        }
+        if (isset($data['can_send_welcome_messages'])) {
+            $instance->canSendWelcomeMessages = $data['can_send_welcome_messages'];
         }
         return $instance;
     }
@@ -421,6 +434,15 @@ class ChatMemberAdministrator extends ChatMember {
 
     public function setCustomTitle(?string $value): self {
         $this->customTitle = $value;
+        return $this;
+    }
+
+    public function getCanSendWelcomeMessages(): ?bool {
+        return $this->canSendWelcomeMessages;
+    }
+
+    public function setCanSendWelcomeMessages(?bool $value): self {
+        $this->canSendWelcomeMessages = $value;
         return $this;
     }
 

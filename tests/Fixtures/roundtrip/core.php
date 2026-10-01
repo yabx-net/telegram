@@ -33,7 +33,7 @@ return [
     MessageEntity::class => ['type' => 'bold', 'offset' => 0, 'length' => 4],
     ReplyParameters::class => ['message_id' => 10, 'chat_id' => 123, 'ephemeral_message_id' => 99],
     LinkPreviewOptions::class => ['is_disabled' => true],
-    InlineKeyboardButton::class => ['text' => 'OK', 'callback_data' => 'ok'],
+    InlineKeyboardButton::class => ['text' => 'OK', 'callback_data' => 'ok', 'disabled' => []],
     ReplyKeyboardRemove::class => ['remove_keyboard' => true],
     ForceReply::class => ['force_reply' => true],
     CallbackQuery::class => [

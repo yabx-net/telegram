@@ -120,6 +120,9 @@ return [
     UniqueGiftInfo::class => [
         'gift' => $uniqueGift,
         'origin' => 'upgrade',
+        'text' => 'For you',
+        'entities' => [['type' => 'bold', 'offset' => 0, 'length' => 3]],
+        'is_private' => true,
     ],
     UniqueGiftColors::class => [
         'model_custom_emoji_id' => '1',

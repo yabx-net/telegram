@@ -46,6 +46,7 @@ abstract class RichText extends AbstractObject {
             'anchor_link' => RichTextAnchorLink::fromArray($data),
             'reference' => RichTextReference::fromArray($data),
             'reference_link' => RichTextReferenceLink::fromArray($data),
+            'button' => RichTextButton::fromArray($data),
             default => throw new InvalidArgumentException('Invalid RichText type'),
         };
     }

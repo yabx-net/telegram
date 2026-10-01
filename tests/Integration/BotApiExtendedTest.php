@@ -17,6 +17,7 @@ use Yabx\Telegram\Objects\InputChecklist;
 use Yabx\Telegram\Objects\InputChecklistTask;
 use Yabx\Telegram\Objects\InputProfilePhotoStatic;
 use Yabx\Telegram\Objects\InputRichMessage;
+use Yabx\Telegram\Objects\EphemeralMessageParameters;
 use Yabx\Telegram\Objects\InputMediaPhoto;
 use Yabx\Telegram\Objects\InputStoryContentPhoto;
 use Yabx\Telegram\Objects\InputTextMessageContent;
@@ -189,13 +190,15 @@ final class BotApiExtendedTest extends TestCase {
         $this->assertTrue($bot->sendRichMessageDraft(1, 7, $rich, messageThreadId: 4));
         $this->assertSame(7, $this->decodeLastRequest($mock)['draft_id']);
 
-        $this->assertTrue($bot->sendMessageDraft(1, 8, 'Draft text', messageThreadId: 4, parseMode: 'HTML'));
+        $this->assertTrue($bot->sendMessageDraft(1, 8, 'Draft text', messageThreadId: 4, parseMode: 'HTML', canStop: true, keepOnStop: true));
         $this->assertSame([
             'chat_id' => 1,
             'draft_id' => 8,
             'text' => 'Draft text',
             'message_thread_id' => 4,
             'parse_mode' => 'HTML',
+            'can_stop' => true,
+            'keep_on_stop' => true,
         ], $this->decodeLastRequest($mock));
     }
 
@@ -536,22 +539,31 @@ final class BotApiExtendedTest extends TestCase {
         $message = $bot->sendMessage(
             chatId: -100,
             text: 'ephemeral',
-            receiverUserId: 7,
-            callbackQueryId: 'cq-1',
+            ephemeralMessageParameters: new EphemeralMessageParameters(
+                receiverUserId: 7,
+                callbackQueryId: 'cq-1',
+                replaceCallbackQueryMessage: true,
+            ),
         );
         $body = $this->decodeLastRequest($mock);
-        $this->assertSame(7, $body['receiver_user_id']);
-        $this->assertSame('cq-1', $body['callback_query_id']);
+        $this->assertSame(7, $body['ephemeral_message_parameters']['receiver_user_id']);
+        $this->assertSame('cq-1', $body['ephemeral_message_parameters']['callback_query_id']);
+        $this->assertTrue($body['ephemeral_message_parameters']['replace_callback_query_message']);
         $this->assertInstanceOf(Message::class, $message);
 
         $this->assertTrue($bot->editEphemeralMessageText(-100, 7, 42, 'updated'));
         $this->assertSame(42, $this->decodeLastRequest($mock)['ephemeral_message_id']);
 
+        $rich = new InputRichMessage(html: '<b>secret</b>');
+        $this->assertTrue($bot->editEphemeralMessageText(-100, 7, 42, richMessage: $rich));
+        $this->assertSame('<b>secret</b>', $this->decodeLastRequest($mock)['rich_message']['html']);
+
         $media = new InputMediaPhoto(media: 'AgACAg');
         $this->assertTrue($bot->editEphemeralMessageMedia(-100, 7, 42, $media));
         $this->assertSame(['type' => 'photo', 'media' => 'AgACAg'], $this->decodeLastRequest($mock)['media']);
 
-        $this->assertTrue($bot->editEphemeralMessageCaption(-100, 7, 42, caption: 'cap'));
+        $this->assertTrue($bot->editEphemeralMessageCaption(-100, 7, 42, caption: 'cap', showCaptionAboveMedia: true));
+        $this->assertTrue($this->decodeLastRequest($mock)['show_caption_above_media']);
         $this->assertTrue($bot->editEphemeralMessageReplyMarkup(-100, 7, 42));
         $this->assertTrue($bot->deleteEphemeralMessage(-100, 7, 42));
         $this->assertSame([

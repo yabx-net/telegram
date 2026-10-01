@@ -40,9 +40,11 @@ return [
     ReplyKeyboardMarkup::class => [
         'keyboard' => [[['text' => 'Yes'], ['text' => 'No']]],
         'resize_keyboard' => true,
+        'force_reply' => true,
     ],
     InlineKeyboardMarkup::class => [
         'inline_keyboard' => [[['text' => 'OK', 'callback_data' => 'ok']]],
+        'force_reply' => true,
     ],
     InlineKeyboardButton::class => [
         'text' => 'Share',

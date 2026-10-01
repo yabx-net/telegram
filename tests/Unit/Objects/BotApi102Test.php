@@ -10,7 +10,9 @@ use Yabx\Telegram\Objects\BotSubscriptionUpdated;
 use Yabx\Telegram\Objects\ChatFullInfo;
 use Yabx\Telegram\Objects\Community;
 use Yabx\Telegram\Objects\CommunityChatAdded;
+use Yabx\Telegram\Objects\CommunityChatJoined;
 use Yabx\Telegram\Objects\CommunityChatRemoved;
+use Yabx\Telegram\Objects\MessageGenerationStopped;
 use Yabx\Telegram\Objects\InputMediaPhoto;
 use Yabx\Telegram\Objects\InputMediaVoiceNote;
 use Yabx\Telegram\Objects\InputRichBlock;
@@ -120,6 +122,17 @@ final class BotApi102Test extends TestCase {
             'community_chat_removed' => [],
         ]);
         $this->assertInstanceOf(CommunityChatRemoved::class, $removed->getCommunityChatRemoved());
+
+        $joined = Message::fromArray([
+            'message_id' => 3,
+            'date' => 1710000000,
+            'chat' => ['id' => -100, 'type' => 'supergroup'],
+            'community_chat_joined' => [
+                'community' => ['id' => 55, 'name' => 'Devs'],
+            ],
+        ]);
+        $this->assertInstanceOf(CommunityChatJoined::class, $joined->getCommunityChatJoined());
+        $this->assertSame(55, $joined->getCommunityChatJoined()->getCommunity()->getId());
     }
 
     public function testChatFullInfoCommunity(): void {
@@ -167,5 +180,18 @@ final class BotApi102Test extends TestCase {
         $this->assertInstanceOf(BotSubscriptionUpdated::class, $update->getSubscription());
         $this->assertSame('active', $update->getSubscription()->getState());
         $this->assertSame('plan-pro', $update->getSubscription()->getInvoicePayload());
+    }
+
+    public function testUpdateStoppedMessageGeneration(): void {
+        $update = Update::fromArray([
+            'update_id' => 2,
+            'stopped_message_generation' => [
+                'chat' => ['id' => 7, 'type' => 'private', 'first_name' => 'Bob'],
+                'draft_id' => 9,
+            ],
+        ]);
+        $this->assertInstanceOf(MessageGenerationStopped::class, $update->getStoppedMessageGeneration());
+        $this->assertSame(9, $update->getStoppedMessageGeneration()->getDraftId());
+        $this->assertSame(7, $update->getStoppedMessageGeneration()->getChat()->getId());
     }
 }

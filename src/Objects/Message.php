@@ -581,6 +581,14 @@ final class Message extends AbstractObject {
     protected ?CommunityChatRemoved $communityChatRemoved = null;
 
     /**
+     * Community Chat Joined
+     *
+     * Optional. Service message: chat was joined by a user from a Community
+     * @var CommunityChatJoined|null
+     */
+    protected ?CommunityChatJoined $communityChatJoined = null;
+
+    /**
      * Connected Website
      *
      * Optional. The domain name of the website on which the user has logged in. More about Telegram Login »
@@ -829,6 +837,7 @@ final class Message extends AbstractObject {
         ?ChatShared                    $chatShared = null,
         ?CommunityChatAdded            $communityChatAdded = null,
         ?CommunityChatRemoved          $communityChatRemoved = null,
+        ?CommunityChatJoined           $communityChatJoined = null,
         ?string                        $connectedWebsite = null,
         ?WriteAccessAllowed            $writeAccessAllowed = null,
         ?PassportData                  $passportData = null,
@@ -924,6 +933,7 @@ final class Message extends AbstractObject {
         $this->chatShared = $chatShared;
         $this->communityChatAdded = $communityChatAdded;
         $this->communityChatRemoved = $communityChatRemoved;
+        $this->communityChatJoined = $communityChatJoined;
         $this->connectedWebsite = $connectedWebsite;
         $this->writeAccessAllowed = $writeAccessAllowed;
         $this->passportData = $passportData;
@@ -1180,6 +1190,9 @@ final class Message extends AbstractObject {
         }
         if (isset($data['community_chat_removed'])) {
             $instance->communityChatRemoved = CommunityChatRemoved::fromArray($data['community_chat_removed']);
+        }
+        if (isset($data['community_chat_joined'])) {
+            $instance->communityChatJoined = CommunityChatJoined::fromArray($data['community_chat_joined']);
         }
         if (isset($data['connected_website'])) {
             $instance->connectedWebsite = $data['connected_website'];
@@ -1895,6 +1908,15 @@ final class Message extends AbstractObject {
 
     public function setCommunityChatRemoved(?CommunityChatRemoved $value): self {
         $this->communityChatRemoved = $value;
+        return $this;
+    }
+
+    public function getCommunityChatJoined(): ?CommunityChatJoined {
+        return $this->communityChatJoined;
+    }
+
+    public function setCommunityChatJoined(?CommunityChatJoined $value): self {
+        $this->communityChatJoined = $value;
         return $this;
     }
 

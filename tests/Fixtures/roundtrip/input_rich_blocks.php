@@ -10,7 +10,16 @@ use Yabx\Telegram\Objects\InputMediaVoiceNote;
 use Yabx\Telegram\Objects\InputRichBlockAnchor;
 use Yabx\Telegram\Objects\InputRichBlockAnimation;
 use Yabx\Telegram\Objects\InputRichBlockAudio;
+use Yabx\Telegram\Objects\CommunityChatJoined;
+use Yabx\Telegram\Objects\DisabledButton;
+use Yabx\Telegram\Objects\EphemeralMessageParameters;
 use Yabx\Telegram\Objects\InputRichBlockBlockQuotation;
+use Yabx\Telegram\Objects\InputRichBlockButtons;
+use Yabx\Telegram\Objects\InputRichBlockDocument;
+use Yabx\Telegram\Objects\InputRichBlockExpandableBlockQuotation;
+use Yabx\Telegram\Objects\MessageGenerationStopped;
+use Yabx\Telegram\Objects\RichMessageButton;
+use Yabx\Telegram\Objects\RichTextButton;
 use Yabx\Telegram\Objects\InputRichBlockCollage;
 use Yabx\Telegram\Objects\InputRichBlockDetails;
 use Yabx\Telegram\Objects\InputRichBlockDivider;
@@ -74,10 +83,13 @@ return [
         'items' => [['blocks' => [$paragraph], 'has_checkbox' => true]],
     ],
     InputRichBlockBlockQuotation::class => ['type' => 'blockquote', 'blocks' => [$paragraph]],
+    InputRichBlockExpandableBlockQuotation::class => ['type' => 'expandable_blockquote', 'text' => 'more'],
+    InputRichBlockButtons::class => ['type' => 'buttons', 'buttons' => [['text' => 'Go', 'callback_data' => 'go']]],
+    InputRichBlockDocument::class => ['type' => 'document', 'document' => ['type' => 'document', 'media' => 'BQACAg']],
     InputRichBlockPullQuotation::class => ['type' => 'pullquote', 'text' => 'quote'],
     InputRichBlockCollage::class => ['type' => 'collage', 'blocks' => [$paragraph]],
     InputRichBlockSlideshow::class => ['type' => 'slideshow', 'blocks' => [$paragraph]],
-    InputRichBlockTable::class => ['type' => 'table', 'cells' => [[['text' => 'A']]]],
+    InputRichBlockTable::class => ['type' => 'table', 'cells' => [[['text' => 'A']]], 'is_compact' => true],
     InputRichBlockDetails::class => ['type' => 'details', 'summary' => 'More', 'blocks' => [$paragraph]],
     InputRichBlockMap::class => [
         'type' => 'map',
@@ -92,4 +104,20 @@ return [
     InputRichBlockVideo::class => ['type' => 'video', 'video' => $videoMedia],
     InputRichBlockVoiceNote::class => ['type' => 'voice_note', 'voice_note' => $voiceMedia],
     InputRichBlockThinking::class => ['type' => 'thinking', 'text' => 'hmm'],
+    EphemeralMessageParameters::class => [
+        'receiver_user_id' => 7,
+        'callback_query_id' => 'cq-1',
+        'replace_callback_query_message' => true,
+    ],
+    MessageGenerationStopped::class => [
+        'chat' => SampleData::chat(),
+        'draft_id' => 3,
+    ],
+    CommunityChatJoined::class => ['community' => ['id' => 55, 'name' => 'Devs']],
+    DisabledButton::class => [],
+    RichMessageButton::class => ['text' => 'Open', 'url' => 'https://example.com', 'style' => 'primary'],
+    RichTextButton::class => [
+        'type' => 'button',
+        'button' => ['text' => 'Open', 'callback_data' => 'open'],
+    ],
 ];

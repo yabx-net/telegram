@@ -2,15 +2,29 @@
 
 namespace Yabx\Telegram\Objects;
 
-final class InlineKeyboardButton extends AbstractObject {
+use Yabx\Telegram\Utils;
+
+/**
+ * This object represents a button in a RichMessage. Exactly one of the fields other than text and style must be used to specify the type of the button.
+ * @link https://core.telegram.org/bots/api#richmessagebutton
+ */
+final class RichMessageButton extends AbstractObject {
 
     /**
      * Text
      *
-     * Label text on the button
+     * Text of the button. May contain only plain text, RichTextCustomEmoji and RichTextDateTime entities.
+     * @var RichText|string|array|null
+     */
+    protected mixed $text = null;
+
+    /**
+     * Style
+     *
+     * Optional. Style of the button. Must be one of "danger", "success", "primary", or "link" (the button is shown as a regular link without borders). Apps may use theme-specific colors for the button background and text based on the style. The style "link" is allowed only for callback buttons.
      * @var string|null
      */
-    protected ?string $text = null;
+    protected ?string $style = null;
 
     /**
      * Url
@@ -31,7 +45,7 @@ final class InlineKeyboardButton extends AbstractObject {
     /**
      * Web App
      *
-     * Optional. Description of the Web App that will be launched when the user presses the button. The Web App will be able to send an arbitrary message on behalf of the user using the method answerWebAppQuery. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a Telegram Business account.
+     * Optional. Description of the Web App that will be launched when the user presses the button. Available only in private chats between a user and the bot. Not supported for messages sent on behalf of a business account.
      * @var WebAppInfo|null
      */
     protected ?WebAppInfo $webApp = null;
@@ -39,7 +53,7 @@ final class InlineKeyboardButton extends AbstractObject {
     /**
      * Login Url
      *
-     * Optional. An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget.
+     * Optional. An HTTPS URL used to automatically authorize the user. Can be used as a replacement for the Telegram Login Widget. Not supported for ephemeral messages.
      * @var LoginUrl|null
      */
     protected ?LoginUrl $loginUrl = null;
@@ -47,7 +61,7 @@ final class InlineKeyboardButton extends AbstractObject {
     /**
      * Switch Inline Query
      *
-     * Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Not supported for messages sent on behalf of a Telegram Business account.
+     * Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted.
      * @var string|null
      */
     protected ?string $switchInlineQuery = null;
@@ -55,7 +69,7 @@ final class InlineKeyboardButton extends AbstractObject {
     /**
      * Switch Inline Query Current Chat
      *
-     * Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options. Not supported in channels and for messages sent on behalf of a Telegram Business account.
+     * Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted.
      * @var string|null
      */
     protected ?string $switchInlineQueryCurrentChat = null;
@@ -63,26 +77,18 @@ final class InlineKeyboardButton extends AbstractObject {
     /**
      * Switch Inline Query Chosen Chat
      *
-     * Optional. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field. Not supported for messages sent on behalf of a Telegram Business account.
+     * Optional. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field.
      * @var SwitchInlineQueryChosenChat|null
      */
     protected ?SwitchInlineQueryChosenChat $switchInlineQueryChosenChat = null;
 
     /**
-     * Callback Game
+     * Copy Text
      *
-     * Optional. Description of the game that will be launched when the user presses the button.NOTE: This type of button must always be the first button in the first row.
-     * @var CallbackGame|null
+     * Optional. A button that copies the specified text to the clipboard
+     * @var CopyTextButton|null
      */
-    protected ?CallbackGame $callbackGame = null;
-
-    /**
-     * Pay
-     *
-     * Optional. Specify True, to send a Pay button. Substrings “” and “XTR” in the buttons's text will be replaced with a Telegram Star icon.NOTE: This type of button must always be the first button in the first row and can only be used in invoice messages.
-     * @var bool|null
-     */
-    protected ?bool $pay = null;
+    protected ?CopyTextButton $copyText = null;
 
     /**
      * Disabled
@@ -93,19 +99,20 @@ final class InlineKeyboardButton extends AbstractObject {
     protected ?DisabledButton $disabled = null;
 
     public function __construct(
-        ?string                      $text = null,
-        ?string                      $url = null,
-        ?string                      $callbackData = null,
-        ?WebAppInfo                  $webApp = null,
-        ?LoginUrl                    $loginUrl = null,
-        ?string                      $switchInlineQuery = null,
-        ?string                      $switchInlineQueryCurrentChat = null,
+        mixed $text = null,
+        ?string $style = null,
+        ?string $url = null,
+        ?string $callbackData = null,
+        ?WebAppInfo $webApp = null,
+        ?LoginUrl $loginUrl = null,
+        ?string $switchInlineQuery = null,
+        ?string $switchInlineQueryCurrentChat = null,
         ?SwitchInlineQueryChosenChat $switchInlineQueryChosenChat = null,
-        ?CallbackGame                $callbackGame = null,
-        ?bool                        $pay = null,
-        ?DisabledButton              $disabled = null,
+        ?CopyTextButton $copyText = null,
+        ?DisabledButton $disabled = null,
     ) {
         $this->text = $text;
+        $this->style = $style;
         $this->url = $url;
         $this->callbackData = $callbackData;
         $this->webApp = $webApp;
@@ -113,15 +120,17 @@ final class InlineKeyboardButton extends AbstractObject {
         $this->switchInlineQuery = $switchInlineQuery;
         $this->switchInlineQueryCurrentChat = $switchInlineQueryCurrentChat;
         $this->switchInlineQueryChosenChat = $switchInlineQueryChosenChat;
-        $this->callbackGame = $callbackGame;
-        $this->pay = $pay;
+        $this->copyText = $copyText;
         $this->disabled = $disabled;
     }
 
-    public static function fromArray(array $data): InlineKeyboardButton {
+    public static function fromArray(array $data): RichMessageButton {
         $instance = new self();
         if (isset($data['text'])) {
-            $instance->text = $data['text'];
+            $instance->text = RichText::fromMixed($data['text']);
+        }
+        if (isset($data['style'])) {
+            $instance->style = $data['style'];
         }
         if (isset($data['url'])) {
             $instance->url = $data['url'];
@@ -144,11 +153,8 @@ final class InlineKeyboardButton extends AbstractObject {
         if (isset($data['switch_inline_query_chosen_chat'])) {
             $instance->switchInlineQueryChosenChat = SwitchInlineQueryChosenChat::fromArray($data['switch_inline_query_chosen_chat']);
         }
-        if (isset($data['callback_game'])) {
-            $instance->callbackGame = CallbackGame::fromArray($data['callback_game']);
-        }
-        if (isset($data['pay'])) {
-            $instance->pay = $data['pay'];
+        if (isset($data['copy_text'])) {
+            $instance->copyText = CopyTextButton::fromArray($data['copy_text']);
         }
         if (isset($data['disabled'])) {
             $instance->disabled = DisabledButton::fromArray($data['disabled']);
@@ -156,12 +162,21 @@ final class InlineKeyboardButton extends AbstractObject {
         return $instance;
     }
 
-    public function getText(): ?string {
+    public function getText(): mixed {
         return $this->text;
     }
 
-    public function setText(?string $value): self {
+    public function setText(mixed $value): self {
         $this->text = $value;
+        return $this;
+    }
+
+    public function getStyle(): ?string {
+        return $this->style;
+    }
+
+    public function setStyle(?string $value): self {
+        $this->style = $value;
         return $this;
     }
 
@@ -228,21 +243,12 @@ final class InlineKeyboardButton extends AbstractObject {
         return $this;
     }
 
-    public function getCallbackGame(): ?CallbackGame {
-        return $this->callbackGame;
+    public function getCopyText(): ?CopyTextButton {
+        return $this->copyText;
     }
 
-    public function setCallbackGame(?CallbackGame $value): self {
-        $this->callbackGame = $value;
-        return $this;
-    }
-
-    public function getPay(): ?bool {
-        return $this->pay;
-    }
-
-    public function setPay(?bool $value): self {
-        $this->pay = $value;
+    public function setCopyText(?CopyTextButton $value): self {
+        $this->copyText = $value;
         return $this;
     }
 
@@ -255,4 +261,22 @@ final class InlineKeyboardButton extends AbstractObject {
         return $this;
     }
 
+    public function toArray(): array {
+        $result = [];
+        foreach (array_keys(get_object_vars($this)) as $key) {
+            $value = $this->$key ?? null;
+            if ($value === null) {
+                continue;
+            }
+            if ($key === 'text') {
+                $result['text'] = RichText::toMixed($value);
+                continue;
+            }
+            if (is_object($value) && method_exists($value, 'toArray')) {
+                $value = $value->toArray();
+            }
+            $result[Utils::toSnakeCase($key)] = $value;
+        }
+        return $result;
+    }
 }

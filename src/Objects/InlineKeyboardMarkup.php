@@ -12,10 +12,20 @@ final class InlineKeyboardMarkup extends AbstractObject {
      */
     protected ?array $inlineKeyboard = null;
 
+    /**
+     * Force Reply
+     *
+     * Optional. Pass True if the reply interface must be shown to the user, as if they had manually selected the bot's message and tapped 'Reply'. The value of the field can't be changed when the inline keyboard is edited.
+     * @var bool|null
+     */
+    protected ?bool $forceReply = null;
+
     public function __construct(
         ?array $inlineKeyboard = null,
+        ?bool $forceReply = null,
     ) {
         $this->inlineKeyboard = $inlineKeyboard;
+        $this->forceReply = $forceReply;
     }
 
     public static function fromArray(array $data): InlineKeyboardMarkup {
@@ -26,6 +36,9 @@ final class InlineKeyboardMarkup extends AbstractObject {
                 $data['inline_keyboard'],
             );
         }
+        if (isset($data['force_reply'])) {
+            $instance->forceReply = $data['force_reply'];
+        }
         return $instance;
     }
 
@@ -35,6 +48,15 @@ final class InlineKeyboardMarkup extends AbstractObject {
 
     public function setInlineKeyboard(?array $value): self {
         $this->inlineKeyboard = $value;
+        return $this;
+    }
+
+    public function getForceReply(): ?bool {
+        return $this->forceReply;
+    }
+
+    public function setForceReply(?bool $value): self {
+        $this->forceReply = $value;
         return $this;
     }
 

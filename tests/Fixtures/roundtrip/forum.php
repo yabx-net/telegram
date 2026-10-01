@@ -48,6 +48,7 @@ return [
         'can_post_messages' => true,
         'can_edit_messages' => true,
         'can_pin_messages' => true,
+        'can_send_welcome_messages' => true,
     ],
     ForumTopicCreated::class => [
         'name' => 'General',

@@ -10,6 +10,9 @@ use Yabx\Telegram\Objects\RichBlockAnchor;
 use Yabx\Telegram\Objects\RichBlockAnimation;
 use Yabx\Telegram\Objects\RichBlockAudio;
 use Yabx\Telegram\Objects\RichBlockBlockQuotation;
+use Yabx\Telegram\Objects\RichBlockButtons;
+use Yabx\Telegram\Objects\RichBlockDocument;
+use Yabx\Telegram\Objects\RichBlockExpandableBlockQuotation;
 use Yabx\Telegram\Objects\RichBlockCollage;
 use Yabx\Telegram\Objects\RichBlockDetails;
 use Yabx\Telegram\Objects\RichBlockDivider;
@@ -54,14 +57,17 @@ final class RichBlockAllTypesTest extends TestCase {
             'anchor' => [['type' => 'anchor', 'name' => 'top'], RichBlockAnchor::class],
             'list' => [['type' => 'list', 'items' => [['label' => 'Item', 'blocks' => [$paragraph]]]], RichBlockList::class],
             'blockquote' => [['type' => 'blockquote', 'blocks' => [$paragraph]], RichBlockBlockQuotation::class],
+            'expandable_blockquote' => [['type' => 'expandable_blockquote', 'text' => 'more'], RichBlockExpandableBlockQuotation::class],
             'pullquote' => [['type' => 'pullquote', 'text' => 'quote'], RichBlockPullQuotation::class],
             'collage' => [['type' => 'collage', 'blocks' => [$paragraph]], RichBlockCollage::class],
             'slideshow' => [['type' => 'slideshow', 'blocks' => [$paragraph]], RichBlockSlideshow::class],
-            'table' => [['type' => 'table', 'cells' => [[['text' => 'A']]]], RichBlockTable::class],
+            'table' => [['type' => 'table', 'cells' => [[['text' => 'A']]], 'is_compact' => true], RichBlockTable::class],
             'details' => [['type' => 'details', 'summary' => 'More', 'blocks' => [$paragraph]], RichBlockDetails::class],
             'map' => [['type' => 'map', 'location' => SampleData::location(), 'zoom' => 10, 'width' => 400, 'height' => 300], RichBlockMap::class],
+            'buttons' => [['type' => 'buttons', 'buttons' => [['text' => 'Go', 'url' => 'https://example.com']]], RichBlockButtons::class],
             'animation' => [['type' => 'animation', 'animation' => SampleData::animation()], RichBlockAnimation::class],
             'audio' => [['type' => 'audio', 'audio' => SampleData::audio()], RichBlockAudio::class],
+            'document' => [['type' => 'document', 'document' => ['file_id' => 'BQACAgIAAxkBAAI', 'file_unique_id' => 'AgADAAI']], RichBlockDocument::class],
             'photo' => [['type' => 'photo', 'photo' => [$photo]], RichBlockPhoto::class],
             'video' => [['type' => 'video', 'video' => SampleData::video()], RichBlockVideo::class],
             'voice_note' => [['type' => 'voice_note', 'voice_note' => SampleData::voice()], RichBlockVoiceNote::class],

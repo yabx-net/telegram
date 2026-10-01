@@ -64,6 +64,30 @@ final class UniqueGiftInfo extends AbstractObject {
      */
     protected ?int $nextTransferDate = null;
 
+    /**
+     * Text
+     *
+     * Optional. Text of the message that was added to the gift
+     * @var string|null
+     */
+    protected ?string $text = null;
+
+    /**
+     * Entities
+     *
+     * Optional. Special entities that appear in the text
+     * @var MessageEntity[]|null
+     */
+    protected ?array $entities = null;
+
+    /**
+     * Is Private
+     *
+     * Optional. True, if the sender and gift text are shown only to the gift receiver; otherwise, everyone will be able to see them
+     * @var bool|null
+     */
+    protected ?bool $isPrivate = null;
+
     public static function fromArray(array $data): UniqueGiftInfo {
         $instance = new self();
         if (isset($data['gift'])) {
@@ -87,6 +111,18 @@ final class UniqueGiftInfo extends AbstractObject {
         if (isset($data['next_transfer_date'])) {
             $instance->nextTransferDate = $data['next_transfer_date'];
         }
+        if (isset($data['text'])) {
+            $instance->text = $data['text'];
+        }
+        if (isset($data['entities'])) {
+            $instance->entities = [];
+            foreach ($data['entities'] as $item) {
+                $instance->entities[] = MessageEntity::fromArray($item);
+            }
+        }
+        if (isset($data['is_private'])) {
+            $instance->isPrivate = $data['is_private'];
+        }
         return $instance;
     }
 
@@ -98,6 +134,9 @@ final class UniqueGiftInfo extends AbstractObject {
         ?string $ownedGiftId = null,
         ?int $transferStarCount = null,
         ?int $nextTransferDate = null,
+        ?string $text = null,
+        ?array $entities = null,
+        ?bool $isPrivate = null,
     ) {
         $this->gift = $gift;
         $this->origin = $origin;
@@ -106,6 +145,9 @@ final class UniqueGiftInfo extends AbstractObject {
         $this->ownedGiftId = $ownedGiftId;
         $this->transferStarCount = $transferStarCount;
         $this->nextTransferDate = $nextTransferDate;
+        $this->text = $text;
+        $this->entities = $entities;
+        $this->isPrivate = $isPrivate;
     }
 
     public function getGift(): ?UniqueGift {
@@ -168,6 +210,33 @@ final class UniqueGiftInfo extends AbstractObject {
 
     public function setNextTransferDate(?int $value): self {
         $this->nextTransferDate = $value;
+        return $this;
+    }
+
+    public function getText(): ?string {
+        return $this->text;
+    }
+
+    public function setText(?string $value): self {
+        $this->text = $value;
+        return $this;
+    }
+
+    public function getEntities(): ?array {
+        return $this->entities;
+    }
+
+    public function setEntities(?array $value): self {
+        $this->entities = $value;
+        return $this;
+    }
+
+    public function getIsPrivate(): ?bool {
+        return $this->isPrivate;
+    }
+
+    public function setIsPrivate(?bool $value): self {
+        $this->isPrivate = $value;
         return $this;
     }
 

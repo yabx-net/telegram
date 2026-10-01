@@ -212,6 +212,14 @@ final class Update extends AbstractObject {
      */
     protected ?BotSubscriptionUpdated $subscription = null;
 
+    /**
+     * Stopped Message Generation
+     *
+     * Optional. A user asked the bot to stop the generation of a message
+     * @var MessageGenerationStopped|null
+     */
+    protected ?MessageGenerationStopped $stoppedMessageGeneration = null;
+
     public function __construct(
         ?int                         $updateId = null,
         ?Message                     $message = null,
@@ -239,6 +247,7 @@ final class Update extends AbstractObject {
         ?ChatBoostUpdated            $chatBoost = null,
         ?ChatBoostRemoved            $removedChatBoost = null,
         ?BotSubscriptionUpdated      $subscription = null,
+        ?MessageGenerationStopped    $stoppedMessageGeneration = null,
     ) {
         $this->updateId = $updateId;
         $this->message = $message;
@@ -266,6 +275,7 @@ final class Update extends AbstractObject {
         $this->chatBoost = $chatBoost;
         $this->removedChatBoost = $removedChatBoost;
         $this->subscription = $subscription;
+        $this->stoppedMessageGeneration = $stoppedMessageGeneration;
     }
 
     public static function fromArray(array $data): Update {
@@ -347,6 +357,9 @@ final class Update extends AbstractObject {
         }
         if (isset($data['subscription'])) {
             $instance->subscription = BotSubscriptionUpdated::fromArray($data['subscription']);
+        }
+        if (isset($data['stopped_message_generation'])) {
+            $instance->stoppedMessageGeneration = MessageGenerationStopped::fromArray($data['stopped_message_generation']);
         }
         return $instance;
     }
@@ -582,6 +595,15 @@ final class Update extends AbstractObject {
 
     public function setSubscription(?BotSubscriptionUpdated $value): self {
         $this->subscription = $value;
+        return $this;
+    }
+
+    public function getStoppedMessageGeneration(): ?MessageGenerationStopped {
+        return $this->stoppedMessageGeneration;
+    }
+
+    public function setStoppedMessageGeneration(?MessageGenerationStopped $value): self {
+        $this->stoppedMessageGeneration = $value;
         return $this;
     }
 

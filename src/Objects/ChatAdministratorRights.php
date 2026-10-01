@@ -124,6 +124,14 @@ final class ChatAdministratorRights extends AbstractObject {
      */
     protected ?bool $canManageTopics = null;
 
+    /**
+     * Can Send Welcome Messages
+     *
+     * True, if the administrator can manage chat welcome messages or directly send them in the case of bots
+     * @var bool|null
+     */
+    protected ?bool $canSendWelcomeMessages = null;
+
     public function __construct(
         ?bool $isAnonymous = null,
         ?bool $canManageChat = null,
@@ -140,6 +148,7 @@ final class ChatAdministratorRights extends AbstractObject {
         ?bool $canEditMessages = null,
         ?bool $canPinMessages = null,
         ?bool $canManageTopics = null,
+        ?bool $canSendWelcomeMessages = null,
     ) {
         $this->isAnonymous = $isAnonymous;
         $this->canManageChat = $canManageChat;
@@ -156,6 +165,7 @@ final class ChatAdministratorRights extends AbstractObject {
         $this->canEditMessages = $canEditMessages;
         $this->canPinMessages = $canPinMessages;
         $this->canManageTopics = $canManageTopics;
+        $this->canSendWelcomeMessages = $canSendWelcomeMessages;
     }
 
     public static function fromArray(array $data): ChatAdministratorRights {
@@ -204,6 +214,9 @@ final class ChatAdministratorRights extends AbstractObject {
         }
         if (isset($data['can_manage_topics'])) {
             $instance->canManageTopics = $data['can_manage_topics'];
+        }
+        if (isset($data['can_send_welcome_messages'])) {
+            $instance->canSendWelcomeMessages = $data['can_send_welcome_messages'];
         }
         return $instance;
     }
@@ -340,6 +353,15 @@ final class ChatAdministratorRights extends AbstractObject {
 
     public function setCanManageTopics(?bool $value): self {
         $this->canManageTopics = $value;
+        return $this;
+    }
+
+    public function getCanSendWelcomeMessages(): ?bool {
+        return $this->canSendWelcomeMessages;
+    }
+
+    public function setCanSendWelcomeMessages(?bool $value): self {
+        $this->canSendWelcomeMessages = $value;
         return $this;
     }
 

@@ -52,6 +52,14 @@ final class ReplyKeyboardMarkup extends AbstractObject {
      */
     protected ?bool $selective = null;
 
+    /**
+     * Force Reply
+     *
+     * Optional. Pass True if the reply interface must be shown to the user, as if they had manually selected the bot's message and tapped 'Reply'
+     * @var bool|null
+     */
+    protected ?bool $forceReply = null;
+
     public static function fromArray(array $data): ReplyKeyboardMarkup {
         $instance = new self();
         if (isset($data['keyboard'])) {
@@ -75,6 +83,9 @@ final class ReplyKeyboardMarkup extends AbstractObject {
         if (isset($data['selective'])) {
             $instance->selective = $data['selective'];
         }
+        if (isset($data['force_reply'])) {
+            $instance->forceReply = $data['force_reply'];
+        }
         return $instance;
     }
 
@@ -85,6 +96,7 @@ final class ReplyKeyboardMarkup extends AbstractObject {
         ?bool   $oneTimeKeyboard = null,
         ?string $inputFieldPlaceholder = null,
         ?bool   $selective = null,
+        ?bool   $forceReply = null,
     ) {
         $this->keyboard = $keyboard;
         $this->isPersistent = $isPersistent;
@@ -92,6 +104,7 @@ final class ReplyKeyboardMarkup extends AbstractObject {
         $this->oneTimeKeyboard = $oneTimeKeyboard;
         $this->inputFieldPlaceholder = $inputFieldPlaceholder;
         $this->selective = $selective;
+        $this->forceReply = $forceReply;
     }
 
     public function getKeyboard(): ?array {
@@ -145,6 +158,15 @@ final class ReplyKeyboardMarkup extends AbstractObject {
 
     public function setSelective(?bool $value): self {
         $this->selective = $value;
+        return $this;
+    }
+
+    public function getForceReply(): ?bool {
+        return $this->forceReply;
+    }
+
+    public function setForceReply(?bool $value): self {
+        $this->forceReply = $value;
         return $this;
     }
 

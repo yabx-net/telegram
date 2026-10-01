@@ -357,6 +357,7 @@ final class BotApiMethodsTest extends TestCase {
             canDeleteMessages: true,
             canManageTopics: true,
             isAnonymous: false,
+            canSendWelcomeMessages: true,
         );
 
         $this->assertSame([
@@ -366,6 +367,7 @@ final class BotApiMethodsTest extends TestCase {
             'can_manage_chat' => true,
             'can_delete_messages' => true,
             'can_manage_topics' => true,
+            'can_send_welcome_messages' => true,
         ], $this->decodeLastRequest($mock));
     }
 

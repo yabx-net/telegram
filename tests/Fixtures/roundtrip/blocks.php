@@ -6,6 +6,9 @@ use Yabx\Telegram\Objects\RichBlockAnchor;
 use Yabx\Telegram\Objects\RichBlockAnimation;
 use Yabx\Telegram\Objects\RichBlockAudio;
 use Yabx\Telegram\Objects\RichBlockBlockQuotation;
+use Yabx\Telegram\Objects\RichBlockButtons;
+use Yabx\Telegram\Objects\RichBlockDocument;
+use Yabx\Telegram\Objects\RichBlockExpandableBlockQuotation;
 use Yabx\Telegram\Objects\RichBlockCollage;
 use Yabx\Telegram\Objects\RichBlockDetails;
 use Yabx\Telegram\Objects\RichBlockDivider;
@@ -38,10 +41,13 @@ return [
     RichBlockAnchor::class => ['type' => 'anchor', 'name' => 'top'],
     RichBlockList::class => ['type' => 'list', 'items' => [['label' => 'Item', 'blocks' => [$paragraph]]]],
     RichBlockBlockQuotation::class => ['type' => 'blockquote', 'blocks' => [$paragraph]],
+    RichBlockExpandableBlockQuotation::class => ['type' => 'expandable_blockquote', 'text' => 'more'],
+    RichBlockButtons::class => ['type' => 'buttons', 'buttons' => [['text' => 'Go', 'url' => 'https://example.com']]],
+    RichBlockDocument::class => ['type' => 'document', 'document' => ['file_id' => 'BQACAgIAAxkBAAI', 'file_unique_id' => 'AgADAAI']],
     RichBlockPullQuotation::class => ['type' => 'pullquote', 'text' => 'quote'],
     RichBlockCollage::class => ['type' => 'collage', 'blocks' => [$paragraph]],
     RichBlockSlideshow::class => ['type' => 'slideshow', 'blocks' => [$paragraph]],
-    RichBlockTable::class => ['type' => 'table', 'cells' => [[['text' => 'A']]]],
+    RichBlockTable::class => ['type' => 'table', 'cells' => [[['text' => 'A']]], 'is_compact' => true],
     RichBlockDetails::class => ['type' => 'details', 'summary' => 'More', 'blocks' => [$paragraph]],
     RichBlockMap::class => [
         'type' => 'map',

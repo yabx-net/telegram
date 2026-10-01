@@ -14,17 +14,21 @@ final class RichBlockTable extends RichBlock {
 
     protected ?bool $isStriped = null;
 
+    protected ?bool $isCompact = null;
+
     protected mixed $caption = null;
 
     public function __construct(
         ?array $cells = null,
         ?bool $isBordered = null,
         ?bool $isStriped = null,
+        ?bool $isCompact = null,
         mixed $caption = null
     ) {
         $this->cells = $cells;
         $this->isBordered = $isBordered;
         $this->isStriped = $isStriped;
+        $this->isCompact = $isCompact;
         $this->caption = $caption;
     }
 
@@ -41,6 +45,9 @@ final class RichBlockTable extends RichBlock {
         }
         if (isset($data['is_striped'])) {
             $instance->isStriped = $data['is_striped'];
+        }
+        if (isset($data['is_compact'])) {
+            $instance->isCompact = $data['is_compact'];
         }
         if (isset($data['caption'])) {
             $instance->caption = RichText::fromMixed($data['caption']);
@@ -76,6 +83,15 @@ final class RichBlockTable extends RichBlock {
 
     public function setIsStriped(?bool $value): self {
         $this->isStriped = $value;
+        return $this;
+    }
+
+    public function getIsCompact(): ?bool {
+        return $this->isCompact;
+    }
+
+    public function setIsCompact(?bool $value): self {
+        $this->isCompact = $value;
         return $this;
     }
 

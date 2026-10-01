@@ -7,6 +7,7 @@ namespace Yabx\Telegram\Tests\Unit\Objects;
 use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Yabx\Telegram\Objects\InputMediaAnimation;
+use Yabx\Telegram\Objects\InputMediaDocument;
 use Yabx\Telegram\Objects\InputMediaAudio;
 use Yabx\Telegram\Objects\InputMediaPhoto;
 use Yabx\Telegram\Objects\InputMediaVideo;
@@ -16,6 +17,9 @@ use Yabx\Telegram\Objects\InputRichBlockAnchor;
 use Yabx\Telegram\Objects\InputRichBlockAnimation;
 use Yabx\Telegram\Objects\InputRichBlockAudio;
 use Yabx\Telegram\Objects\InputRichBlockBlockQuotation;
+use Yabx\Telegram\Objects\InputRichBlockButtons;
+use Yabx\Telegram\Objects\InputRichBlockDocument;
+use Yabx\Telegram\Objects\InputRichBlockExpandableBlockQuotation;
 use Yabx\Telegram\Objects\InputRichBlockCollage;
 use Yabx\Telegram\Objects\InputRichBlockDetails;
 use Yabx\Telegram\Objects\InputRichBlockDivider;
@@ -65,14 +69,17 @@ final class InputRichBlockAllTypesTest extends TestCase {
             'anchor' => [['type' => 'anchor', 'name' => 'top'], InputRichBlockAnchor::class],
             'list' => [['type' => 'list', 'items' => [['blocks' => [$paragraph], 'has_checkbox' => true]]], InputRichBlockList::class],
             'blockquote' => [['type' => 'blockquote', 'blocks' => [$paragraph]], InputRichBlockBlockQuotation::class],
+            'expandable_blockquote' => [['type' => 'expandable_blockquote', 'text' => 'more'], InputRichBlockExpandableBlockQuotation::class],
             'pullquote' => [['type' => 'pullquote', 'text' => 'quote'], InputRichBlockPullQuotation::class],
             'collage' => [['type' => 'collage', 'blocks' => [$paragraph]], InputRichBlockCollage::class],
             'slideshow' => [['type' => 'slideshow', 'blocks' => [$paragraph]], InputRichBlockSlideshow::class],
-            'table' => [['type' => 'table', 'cells' => [[['text' => 'A']]]], InputRichBlockTable::class],
+            'table' => [['type' => 'table', 'cells' => [[['text' => 'A']]], 'is_compact' => true], InputRichBlockTable::class],
             'details' => [['type' => 'details', 'summary' => 'More', 'blocks' => [$paragraph]], InputRichBlockDetails::class],
             'map' => [['type' => 'map', 'location' => SampleData::location(), 'zoom' => 10, 'width' => 400, 'height' => 300], InputRichBlockMap::class],
+            'buttons' => [['type' => 'buttons', 'buttons' => [['text' => 'Go', 'callback_data' => 'go']]], InputRichBlockButtons::class],
             'animation' => [['type' => 'animation', 'animation' => $animationMedia], InputRichBlockAnimation::class],
             'audio' => [['type' => 'audio', 'audio' => $audioMedia], InputRichBlockAudio::class],
+            'document' => [['type' => 'document', 'document' => ['type' => 'document', 'media' => 'BQACAg']], InputRichBlockDocument::class],
             'photo' => [['type' => 'photo', 'photo' => $photoMedia], InputRichBlockPhoto::class],
             'video' => [['type' => 'video', 'video' => $videoMedia], InputRichBlockVideo::class],
             'voice_note' => [['type' => 'voice_note', 'voice_note' => $voiceMedia], InputRichBlockVoiceNote::class],
@@ -102,6 +109,7 @@ final class InputRichBlockAllTypesTest extends TestCase {
             'audio' => [['type' => 'audio', 'media' => 'CQACAg'], InputMediaAudio::class],
             'animation' => [['type' => 'animation', 'media' => 'CgACAg'], InputMediaAnimation::class],
             'voice_note' => [['type' => 'voice_note', 'media' => 'AwACAg', 'duration' => 3], InputMediaVoiceNote::class],
+            'document' => [['type' => 'document', 'media' => 'BQACAg'], InputMediaDocument::class],
         ];
     }
 
@@ -111,7 +119,7 @@ final class InputRichBlockAllTypesTest extends TestCase {
 
         InputRichMessageMedia::fromArray([
             'id' => 'x',
-            'media' => ['type' => 'document', 'media' => 'BQACAg'],
+            'media' => ['type' => 'sticker', 'media' => 'BQACAg'],
         ]);
     }
 }

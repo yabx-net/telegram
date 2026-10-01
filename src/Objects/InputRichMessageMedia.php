@@ -13,7 +13,7 @@ final class InputRichMessageMedia extends AbstractObject {
     /**
      * Id
      *
-     * Unique identifier of the media used in a tg://photo?id=, tg://video?id=, or tg://audio?id= link. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed.
+     * Unique identifier of the media used in a tg://photo?id=, tg://video?id=, tg://document?id=, or tg://audio?id= link. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed.
      * @var string|null
      */
     protected ?string $id = null;
@@ -22,13 +22,13 @@ final class InputRichMessageMedia extends AbstractObject {
      * Media
      *
      * The media to be sent. Everything except the media itself and its properties is ignored.
-     * @var InputMediaAnimation|InputMediaAudio|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote|null
+     * @var InputMediaAnimation|InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote|null
      */
-    protected InputMediaAnimation|InputMediaAudio|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote|null $media = null;
+    protected InputMediaAnimation|InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote|null $media = null;
 
     public function __construct(
         ?string $id = null,
-        InputMediaAnimation|InputMediaAudio|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote|null $media = null
+        InputMediaAnimation|InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote|null $media = null
     ) {
         $this->id = $id;
         $this->media = $media;
@@ -45,10 +45,11 @@ final class InputRichMessageMedia extends AbstractObject {
         return $instance;
     }
 
-    private static function mediaFromArray(array $data): InputMediaAnimation|InputMediaAudio|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote {
+    private static function mediaFromArray(array $data): InputMediaAnimation|InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote {
         return match ($data['type'] ?? null) {
             'animation' => InputMediaAnimation::fromArray($data),
             'audio' => InputMediaAudio::fromArray($data),
+            'document' => InputMediaDocument::fromArray($data),
             'photo' => InputMediaPhoto::fromArray($data),
             'video' => InputMediaVideo::fromArray($data),
             'voice_note' => InputMediaVoiceNote::fromArray($data),
@@ -65,11 +66,11 @@ final class InputRichMessageMedia extends AbstractObject {
         return $this;
     }
 
-    public function getMedia(): InputMediaAnimation|InputMediaAudio|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote|null {
+    public function getMedia(): InputMediaAnimation|InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote|null {
         return $this->media;
     }
 
-    public function setMedia(InputMediaAnimation|InputMediaAudio|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote|null $value): self {
+    public function setMedia(InputMediaAnimation|InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo|InputMediaVoiceNote|null $value): self {
         $this->media = $value;
         return $this;
     }

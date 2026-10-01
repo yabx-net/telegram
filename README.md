@@ -1,6 +1,6 @@
 # yabx/telegram
 
-PHP SDK for the [Telegram Bot API](https://core.telegram.org/bots/api). Typed request/response objects, [Guzzle](https://github.com/guzzle/guzzle) HTTP client, and coverage aligned with **Bot API 10.2** (July 2026).
+PHP SDK for the [Telegram Bot API](https://core.telegram.org/bots/api). Typed request/response objects, [Guzzle](https://github.com/guzzle/guzzle) HTTP client, and coverage aligned with **Bot API 10.3** (August 2026).
 
 ## Requirements
 
@@ -288,12 +288,17 @@ composer phpstan          # PHPStan level 2 on src/
 composer test:coverage    # fails if line coverage drops below 57%
 ```
 
-### Bot API 10.2 examples
+### Bot API 10.3 examples
 
 **Ephemeral messages**
 
 ```php
-$bot->sendMessage($chatId, 'Only you can see this', receiverUserId: $userId, callbackQueryId: $queryId);
+use Yabx\Telegram\Objects\EphemeralMessageParameters;
+
+$bot->sendMessage($chatId, 'Only you can see this', ephemeralMessageParameters: new EphemeralMessageParameters(
+    receiverUserId: $userId,
+    callbackQueryId: $queryId,
+));
 $bot->editEphemeralMessageText($chatId, $userId, $ephemeralMessageId, 'Updated');
 $bot->deleteEphemeralMessage($chatId, $userId, $ephemeralMessageId);
 ```
