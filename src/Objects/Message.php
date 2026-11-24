@@ -764,6 +764,30 @@ final class Message extends AbstractObject {
      */
     protected ?InlineKeyboardMarkup $replyMarkup = null;
 
+    /**
+     * Widget
+     *
+     * Optional. Message is an HTML widget
+     * @var Widget|null
+     */
+    protected ?Widget $widget = null;
+
+    /**
+     * Ton Wallet Transfer
+     *
+     * Optional. Service message about a transfer with a TON wallet
+     * @var TonWalletTransfer|null
+     */
+    protected ?TonWalletTransfer $tonWalletTransfer = null;
+
+    /**
+     * Paid Messages Waived
+     *
+     * Optional. Service message about the sender using a link which allows sending messages without paying Telegram Stars
+     * @var PaidMessagesWaived|null
+     */
+    protected ?PaidMessagesWaived $paidMessagesWaived = null;
+
     public function __construct(
         ?int                           $messageId = null,
         ?int                           $ephemeralMessageId = null,
@@ -860,6 +884,9 @@ final class Message extends AbstractObject {
         ?VideoChatParticipantsInvited  $videoChatParticipantsInvited = null,
         ?WebAppData                    $webAppData = null,
         ?InlineKeyboardMarkup          $replyMarkup = null,
+        ?Widget                        $widget = null,
+        ?TonWalletTransfer             $tonWalletTransfer = null,
+        ?PaidMessagesWaived            $paidMessagesWaived = null,
     ) {
         $this->messageId = $messageId;
         $this->ephemeralMessageId = $ephemeralMessageId;
@@ -956,6 +983,9 @@ final class Message extends AbstractObject {
         $this->videoChatParticipantsInvited = $videoChatParticipantsInvited;
         $this->webAppData = $webAppData;
         $this->replyMarkup = $replyMarkup;
+        $this->widget = $widget;
+        $this->tonWalletTransfer = $tonWalletTransfer;
+        $this->paidMessagesWaived = $paidMessagesWaived;
     }
 
     public static function fromArray(array $data): Message {
@@ -1259,6 +1289,15 @@ final class Message extends AbstractObject {
         }
         if (isset($data['reply_markup'])) {
             $instance->replyMarkup = InlineKeyboardMarkup::fromArray($data['reply_markup']);
+        }
+        if (isset($data['widget'])) {
+            $instance->widget = Widget::fromArray($data['widget']);
+        }
+        if (isset($data['ton_wallet_transfer'])) {
+            $instance->tonWalletTransfer = TonWalletTransfer::fromArray($data['ton_wallet_transfer']);
+        }
+        if (isset($data['paid_messages_waived'])) {
+            $instance->paidMessagesWaived = PaidMessagesWaived::fromArray($data['paid_messages_waived']);
         }
         return $instance;
     }
@@ -2115,6 +2154,33 @@ final class Message extends AbstractObject {
 
     public function setReplyMarkup(?InlineKeyboardMarkup $value): self {
         $this->replyMarkup = $value;
+        return $this;
+    }
+
+    public function getWidget(): ?Widget {
+        return $this->widget;
+    }
+
+    public function setWidget(?Widget $value): self {
+        $this->widget = $value;
+        return $this;
+    }
+
+    public function getTonWalletTransfer(): ?TonWalletTransfer {
+        return $this->tonWalletTransfer;
+    }
+
+    public function setTonWalletTransfer(?TonWalletTransfer $value): self {
+        $this->tonWalletTransfer = $value;
+        return $this;
+    }
+
+    public function getPaidMessagesWaived(): ?PaidMessagesWaived {
+        return $this->paidMessagesWaived;
+    }
+
+    public function setPaidMessagesWaived(?PaidMessagesWaived $value): self {
+        $this->paidMessagesWaived = $value;
         return $this;
     }
 

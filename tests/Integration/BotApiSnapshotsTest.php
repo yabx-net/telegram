@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Yabx\Telegram\Tests\Integration;
 
 use GuzzleHttp\Psr7\Response;
+use Yabx\Telegram\Objects\BotFullInfo;
 use Yabx\Telegram\Objects\BusinessConnection;
 use Yabx\Telegram\Objects\ChatFullInfo;
 use Yabx\Telegram\Objects\ChatInviteLink;
@@ -36,10 +37,10 @@ final class BotApiSnapshotsTest extends TestCase {
 
         $user = $bot->getMe();
 
-        $this->assertInstanceOf(User::class, $user);
+        $this->assertInstanceOf(BotFullInfo::class, $user);
         $this->assertSame(1087968824, $user->getId());
         $this->assertTrue($user->getSupportsInlineQueries());
-        $this->assertRoundTrip(User::class, $fixture);
+        $this->assertRoundTrip(BotFullInfo::class, $fixture);
     }
 
     public function testGetChatSupergroupSnapshotParsesAndRoundTrips(): void {

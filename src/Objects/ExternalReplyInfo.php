@@ -204,6 +204,14 @@ final class ExternalReplyInfo extends AbstractObject {
      */
     protected ?Venue $venue = null;
 
+    /**
+     * Widget
+     *
+     * Optional. Message is an HTML widget
+     * @var Widget|null
+     */
+    protected ?Widget $widget = null;
+
     public function __construct(
         ?MessageOrigin      $origin = null,
         ?Chat               $chat = null,
@@ -230,6 +238,7 @@ final class ExternalReplyInfo extends AbstractObject {
         ?Location           $location = null,
         ?Poll               $poll = null,
         ?Venue              $venue = null,
+        ?Widget             $widget = null,
     ) {
         $this->origin = $origin;
         $this->chat = $chat;
@@ -256,6 +265,7 @@ final class ExternalReplyInfo extends AbstractObject {
         $this->location = $location;
         $this->poll = $poll;
         $this->venue = $venue;
+        $this->widget = $widget;
     }
 
     public static function fromArray(array $data): ExternalReplyInfo {
@@ -337,6 +347,9 @@ final class ExternalReplyInfo extends AbstractObject {
         }
         if (isset($data['venue'])) {
             $instance->venue = Venue::fromArray($data['venue']);
+        }
+        if (isset($data['widget'])) {
+            $instance->widget = Widget::fromArray($data['widget']);
         }
         return $instance;
     }
@@ -563,6 +576,15 @@ final class ExternalReplyInfo extends AbstractObject {
 
     public function setVenue(?Venue $value): self {
         $this->venue = $value;
+        return $this;
+    }
+
+    public function getWidget(): ?Widget {
+        return $this->widget;
+    }
+
+    public function setWidget(?Widget $value): self {
+        $this->widget = $value;
         return $this;
     }
 

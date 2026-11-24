@@ -6,6 +6,20 @@ All notable changes to this project are documented in this file.
 
 ### Added
 
+- Bot API 10.5 support (November 22, 2026):
+  - `setMySettings`, `BotFullInfo` as the return type of `getMe`; bot-only fields removed from `User`
+  - `WriteAccessAllowed.inviter`
+  - expandable block quotations use `blocks` instead of `text`
+
+- Bot API 10.4 support (November 9, 2026):
+  - HTML widgets: `Widget`, `sendWidget`, `sendSharedWidget`, `WidgetQuery`, `SharedWidgetQuery`, `answerWidgetQuery`, `editMessageWidgetData`, `editSharedWidgetData`, inline widget content
+  - `TextQuote.rich_texts`, `ReplyParameters.quote_rich_texts`; `chat_id` may be omitted when sending an ephemeral callback reply
+  - TON wallet cards, NFTs, transfers; `StoryAreaPosition` renamed to `AreaPosition` (old name kept as an alias)
+  - chat share themes and `getChatShareThemeBackdrops`
+  - `getUniqueGift`, `deleteBusinessAccountGift`
+  - `RichTextTonAddress`, `PaidMessagesWaived`
+  - `verifyUser` / `verifyChat` custom description entities
+
 - Bot API 10.3 support (August 24, 2026):
   - Rich messages: `RichMessageButton`, `RichTextButton`, `RichBlockButtons` / `InputRichBlockButtons`, expandable quotations, document blocks, `is_compact` on tables, `tg://document?id=` media
   - Ephemeral messages: `EphemeralMessageParameters` replaces `receiver_user_id` / `callback_query_id` on send methods (including `sendLivePhoto` and `sendRichMessage`); `editEphemeralMessageText` accepts `rich_message`; `editEphemeralMessageCaption` accepts `show_caption_above_media`

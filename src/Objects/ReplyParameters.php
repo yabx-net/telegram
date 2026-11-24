@@ -68,6 +68,30 @@ final class ReplyParameters extends AbstractObject {
      */
     protected ?int $ephemeralMessageId = null;
 
+    /**
+     * Quote Rich Texts
+     *
+     * Optional. A JSON-serialized list of quoted parts of the rich message to be replied to. If non-empty, quote, quote_parse_mode and quote_entities are ignored.
+     * @var array|null
+     */
+    protected ?array $quoteRichTexts = null;
+
+    /**
+     * Checklist Task Id
+     *
+     * Optional. Identifier of the specific checklist task to be replied to
+     * @var int|null
+     */
+    protected ?int $checklistTaskId = null;
+
+    /**
+     * Poll Option Id
+     *
+     * Optional. Persistent identifier of the specific poll option to be replied to
+     * @var string|null
+     */
+    protected ?string $pollOptionId = null;
+
     public function __construct(
         ?int            $messageId = null,
         int|string|null $chatId = null,
@@ -77,6 +101,9 @@ final class ReplyParameters extends AbstractObject {
         ?array          $quoteEntities = null,
         ?int            $quotePosition = null,
         ?int            $ephemeralMessageId = null,
+        ?array          $quoteRichTexts = null,
+        ?int            $checklistTaskId = null,
+        ?string         $pollOptionId = null,
     ) {
         $this->messageId = $messageId;
         $this->chatId = $chatId;
@@ -86,6 +113,9 @@ final class ReplyParameters extends AbstractObject {
         $this->quoteEntities = $quoteEntities;
         $this->quotePosition = $quotePosition;
         $this->ephemeralMessageId = $ephemeralMessageId;
+        $this->quoteRichTexts = $quoteRichTexts;
+        $this->checklistTaskId = $checklistTaskId;
+        $this->pollOptionId = $pollOptionId;
     }
 
     public static function fromArray(array $data): ReplyParameters {
@@ -116,6 +146,15 @@ final class ReplyParameters extends AbstractObject {
         }
         if (isset($data['ephemeral_message_id'])) {
             $instance->ephemeralMessageId = $data['ephemeral_message_id'];
+        }
+        if (isset($data['quote_rich_texts'])) {
+            $instance->quoteRichTexts = array_map(fn(mixed $item) => RichText::fromMixed($item), $data['quote_rich_texts']);
+        }
+        if (isset($data['checklist_task_id'])) {
+            $instance->checklistTaskId = $data['checklist_task_id'];
+        }
+        if (isset($data['poll_option_id'])) {
+            $instance->pollOptionId = $data['poll_option_id'];
         }
         return $instance;
     }
@@ -189,6 +228,33 @@ final class ReplyParameters extends AbstractObject {
 
     public function setEphemeralMessageId(?int $value): self {
         $this->ephemeralMessageId = $value;
+        return $this;
+    }
+
+    public function getQuoteRichTexts(): ?array {
+        return $this->quoteRichTexts;
+    }
+
+    public function setQuoteRichTexts(?array $value): self {
+        $this->quoteRichTexts = $value;
+        return $this;
+    }
+
+    public function getChecklistTaskId(): ?int {
+        return $this->checklistTaskId;
+    }
+
+    public function setChecklistTaskId(?int $value): self {
+        $this->checklistTaskId = $value;
+        return $this;
+    }
+
+    public function getPollOptionId(): ?string {
+        return $this->pollOptionId;
+    }
+
+    public function setPollOptionId(?string $value): self {
+        $this->pollOptionId = $value;
         return $this;
     }
 

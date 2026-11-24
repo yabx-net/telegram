@@ -83,7 +83,7 @@ return [
         'items' => [['blocks' => [$paragraph], 'has_checkbox' => true]],
     ],
     InputRichBlockBlockQuotation::class => ['type' => 'blockquote', 'blocks' => [$paragraph]],
-    InputRichBlockExpandableBlockQuotation::class => ['type' => 'expandable_blockquote', 'text' => 'more'],
+    InputRichBlockExpandableBlockQuotation::class => ['type' => 'expandable_blockquote', 'blocks' => [['type' => 'paragraph', 'text' => 'more']]],
     InputRichBlockButtons::class => ['type' => 'buttons', 'buttons' => [['text' => 'Go', 'callback_data' => 'go']]],
     InputRichBlockDocument::class => ['type' => 'document', 'document' => ['type' => 'document', 'media' => 'BQACAg']],
     InputRichBlockPullQuotation::class => ['type' => 'pullquote', 'text' => 'quote'],

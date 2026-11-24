@@ -9,6 +9,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use Yabx\Telegram\BotApi;
 use Yabx\Telegram\Exception;
+use Yabx\Telegram\Objects\BotFullInfo;
 use Yabx\Telegram\Objects\ChatFullInfo;
 use Yabx\Telegram\Objects\ChatInviteLink;
 use Yabx\Telegram\Objects\ChatMemberAdministrator;
@@ -45,7 +46,7 @@ final class BotApiTest extends TestCase {
 
         $user = $bot->getMe();
 
-        $this->assertInstanceOf(User::class, $user);
+        $this->assertInstanceOf(BotFullInfo::class, $user);
         $this->assertSame(1, $user->getId());
         $this->assertTrue($user->getIsBot());
         $this->assertSame('test_bot', $user->getUsername());

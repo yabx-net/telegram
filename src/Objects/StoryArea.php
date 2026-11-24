@@ -12,9 +12,9 @@ final class StoryArea extends AbstractObject {
      * Position
      *
      * Position of the area
-     * @var StoryAreaPosition|null
+     * @var AreaPosition|null
      */
-    protected ?StoryAreaPosition $position = null;
+    protected ?AreaPosition $position = null;
 
     /**
      * Type
@@ -27,7 +27,7 @@ final class StoryArea extends AbstractObject {
     public static function fromArray(array $data): StoryArea {
         $instance = new self();
         if (isset($data['position'])) {
-            $instance->position = StoryAreaPosition::fromArray($data['position']);
+            $instance->position = AreaPosition::fromArray($data['position']);
         }
         if (isset($data['type'])) {
             $instance->type = StoryAreaType::fromArray($data['type']);
@@ -36,18 +36,18 @@ final class StoryArea extends AbstractObject {
     }
 
     public function __construct(
-        ?StoryAreaPosition $position = null,
+        ?AreaPosition $position = null,
         ?StoryAreaType $type = null,
     ) {
         $this->position = $position;
         $this->type = $type;
     }
 
-    public function getPosition(): ?StoryAreaPosition {
+    public function getPosition(): ?AreaPosition {
         return $this->position;
     }
 
-    public function setPosition(?StoryAreaPosition $value): self {
+    public function setPosition(?AreaPosition $value): self {
         $this->position = $value;
         return $this;
     }

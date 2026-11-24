@@ -68,61 +68,6 @@ final class User extends AbstractObject {
      */
     protected ?bool $addedToAttachmentMenu = null;
 
-    /**
-     * Can Join Groups
-     *
-     * Optional. True, if the bot can be invited to groups. Returned only in getMe.
-     * @var bool|null
-     */
-    protected ?bool $canJoinGroups = null;
-
-    /**
-     * Can Read All Group Messages
-     *
-     * Optional. True, if privacy mode is disabled for the bot. Returned only in getMe.
-     * @var bool|null
-     */
-    protected ?bool $canReadAllGroupMessages = null;
-
-    /**
-     * Supports Guest Queries
-     *
-     * Optional. True, if the bot supports guest mode. Returned only in getMe.
-     * @var bool|null
-     */
-    protected ?bool $supportsGuestQueries = null;
-
-    /**
-     * Supports Join Request Queries
-     *
-     * Optional. True, if the bot supports join request queries. Returned only in getMe.
-     * @var bool|null
-     */
-    protected ?bool $supportsJoinRequestQueries = null;
-
-    /**
-     * Supports Inline Queries
-     *
-     * Optional. True, if the bot supports inline queries. Returned only in getMe.
-     * @var bool|null
-     */
-    protected ?bool $supportsInlineQueries = null;
-
-    /**
-     * Can Connect To Business
-     *
-     * Optional. True, if the bot can be connected to a Telegram Business account to receive its messages. Returned only in getMe.
-     * @var bool|null
-     */
-    protected ?bool $canConnectToBusiness = null;
-
-    /**
-     * Has Main Web App
-     *
-     * Optional. True, if the bot has a main Web App. Returned only in getMe.
-     * @var bool|null
-     */
-    protected ?bool $hasMainWebApp = null;
 
     public function __construct(
         ?int    $id = null,
@@ -133,13 +78,6 @@ final class User extends AbstractObject {
         ?string $languageCode = null,
         ?bool   $isPremium = null,
         ?bool   $addedToAttachmentMenu = null,
-        ?bool   $canJoinGroups = null,
-        ?bool   $canReadAllGroupMessages = null,
-        ?bool   $supportsGuestQueries = null,
-        ?bool   $supportsJoinRequestQueries = null,
-        ?bool   $supportsInlineQueries = null,
-        ?bool   $canConnectToBusiness = null,
-        ?bool   $hasMainWebApp = null,
     ) {
         $this->id = $id;
         $this->isBot = $isBot;
@@ -149,13 +87,6 @@ final class User extends AbstractObject {
         $this->languageCode = $languageCode;
         $this->isPremium = $isPremium;
         $this->addedToAttachmentMenu = $addedToAttachmentMenu;
-        $this->canJoinGroups = $canJoinGroups;
-        $this->canReadAllGroupMessages = $canReadAllGroupMessages;
-        $this->supportsGuestQueries = $supportsGuestQueries;
-        $this->supportsJoinRequestQueries = $supportsJoinRequestQueries;
-        $this->supportsInlineQueries = $supportsInlineQueries;
-        $this->canConnectToBusiness = $canConnectToBusiness;
-        $this->hasMainWebApp = $hasMainWebApp;
     }
 
     public static function fromArray(array $data): User {
@@ -183,27 +114,6 @@ final class User extends AbstractObject {
         }
         if (isset($data['added_to_attachment_menu'])) {
             $instance->addedToAttachmentMenu = $data['added_to_attachment_menu'];
-        }
-        if (isset($data['can_join_groups'])) {
-            $instance->canJoinGroups = $data['can_join_groups'];
-        }
-        if (isset($data['can_read_all_group_messages'])) {
-            $instance->canReadAllGroupMessages = $data['can_read_all_group_messages'];
-        }
-        if (isset($data['supports_guest_queries'])) {
-            $instance->supportsGuestQueries = $data['supports_guest_queries'];
-        }
-        if (isset($data['supports_join_request_queries'])) {
-            $instance->supportsJoinRequestQueries = $data['supports_join_request_queries'];
-        }
-        if (isset($data['supports_inline_queries'])) {
-            $instance->supportsInlineQueries = $data['supports_inline_queries'];
-        }
-        if (isset($data['can_connect_to_business'])) {
-            $instance->canConnectToBusiness = $data['can_connect_to_business'];
-        }
-        if (isset($data['has_main_web_app'])) {
-            $instance->hasMainWebApp = $data['has_main_web_app'];
         }
         return $instance;
     }
@@ -280,67 +190,5 @@ final class User extends AbstractObject {
         return $this;
     }
 
-    public function getCanJoinGroups(): ?bool {
-        return $this->canJoinGroups;
-    }
-
-    public function setCanJoinGroups(?bool $value): self {
-        $this->canJoinGroups = $value;
-        return $this;
-    }
-
-    public function getCanReadAllGroupMessages(): ?bool {
-        return $this->canReadAllGroupMessages;
-    }
-
-    public function setCanReadAllGroupMessages(?bool $value): self {
-        $this->canReadAllGroupMessages = $value;
-        return $this;
-    }
-
-    public function getSupportsGuestQueries(): ?bool {
-        return $this->supportsGuestQueries;
-    }
-
-    public function setSupportsGuestQueries(?bool $value): self {
-        $this->supportsGuestQueries = $value;
-        return $this;
-    }
-
-    public function getSupportsJoinRequestQueries(): ?bool {
-        return $this->supportsJoinRequestQueries;
-    }
-
-    public function setSupportsJoinRequestQueries(?bool $value): self {
-        $this->supportsJoinRequestQueries = $value;
-        return $this;
-    }
-
-    public function getSupportsInlineQueries(): ?bool {
-        return $this->supportsInlineQueries;
-    }
-
-    public function setSupportsInlineQueries(?bool $value): self {
-        $this->supportsInlineQueries = $value;
-        return $this;
-    }
-
-    public function getCanConnectToBusiness(): ?bool {
-        return $this->canConnectToBusiness;
-    }
-
-    public function setCanConnectToBusiness(?bool $value): self {
-        $this->canConnectToBusiness = $value;
-        return $this;
-    }
-
-    public function getHasMainWebApp(): ?bool {
-        return $this->hasMainWebApp;
-    }
-
-    public function setHasMainWebApp(?bool $value): self {
-        $this->hasMainWebApp = $value;
-        return $this;
-    }
 
 }

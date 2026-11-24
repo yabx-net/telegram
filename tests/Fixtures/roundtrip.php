@@ -27,4 +27,5 @@ return array_merge(
     require __DIR__ . '/roundtrip/passport.php',
     require __DIR__ . '/roundtrip/services.php',
     require __DIR__ . '/roundtrip/social.php',
+    require __DIR__ . '/roundtrip/api_10_5.php',
 );

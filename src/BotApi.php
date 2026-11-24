@@ -13,6 +13,7 @@ use Yabx\Telegram\Objects\AbstractObject;
 use Yabx\Telegram\Objects\AcceptedGiftTypes;
 use Yabx\Telegram\Objects\BotAccessSettings;
 use Yabx\Telegram\Objects\BotCommand;
+use Yabx\Telegram\Objects\BotFullInfo;
 use Yabx\Telegram\Objects\BotCommandScope;
 use Yabx\Telegram\Objects\BotDescription;
 use Yabx\Telegram\Objects\BotName;
@@ -20,6 +21,7 @@ use Yabx\Telegram\Objects\BotShortDescription;
 use Yabx\Telegram\Objects\BusinessConnection;
 use Yabx\Telegram\Objects\ChatAdministratorRights;
 use Yabx\Telegram\Objects\ChatFullInfo;
+use Yabx\Telegram\Objects\ChatShareThemeBackdrops;
 use Yabx\Telegram\Objects\ChatInviteLink;
 use Yabx\Telegram\Objects\ChatMember;
 use Yabx\Telegram\Objects\ChatPermissions;
@@ -59,6 +61,7 @@ use Yabx\Telegram\Objects\Sticker;
 use Yabx\Telegram\Objects\StickerSet;
 use Yabx\Telegram\Objects\Story;
 use Yabx\Telegram\Objects\SuggestedPostParameters;
+use Yabx\Telegram\Objects\UniqueGift;
 use Yabx\Telegram\Objects\Update;
 use Yabx\Telegram\Objects\User;
 use Yabx\Telegram\Objects\UserChatBoosts;
@@ -227,16 +230,16 @@ class BotApi {
     /**
      * Method: getMe
      *
-     * A simple method for testing your bot's authentication token. Requires no parameters. Returns basic information about the bot in form of a User object.
+     * A simple method for testing your bot's authentication token. Requires no parameters. Returns full information about the bot as a BotFullInfo object.
      * @link https://core.telegram.org/bots/api#getme
-     * @return User
+     * @return BotFullInfo
      * @throws Exception
      * @throws GuzzleException
      */
-    public function getMe(): User {
+    public function getMe(): BotFullInfo {
         $params = [];
 
-        return User::fromArray($this->request('getMe', $params));
+        return BotFullInfo::fromArray($this->request('getMe', $params));
     }
 
     /**
@@ -292,10 +295,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendMessage(int|string $chatId, string $text, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendMessage(int|string|null $chatId, string $text, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['text'] = $text;
         if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
@@ -317,9 +320,9 @@ class BotApi {
      * Use this method to send rich messages. On success, the sent Message is returned.
      * @link https://core.telegram.org/bots/api#sendrichmessage
      */
-    public function sendRichMessage(int|string $chatId, InputRichMessage $richMessage, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $directMessagesTopicId = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?bool $allowPaidBroadcast = null, ?string $messageEffectId = null, ?SuggestedPostParameters $suggestedPostParameters = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendRichMessage(int|string|null $chatId, InputRichMessage $richMessage, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $directMessagesTopicId = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?bool $allowPaidBroadcast = null, ?string $messageEffectId = null, ?SuggestedPostParameters $suggestedPostParameters = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['rich_message'] = $richMessage;
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
@@ -352,7 +355,7 @@ class BotApi {
      */
     public function forwardMessage(int|string $chatId, int|string $fromChatId, int $messageId, ?int $messageThreadId = null, ?bool $disableNotification = null, ?bool $protectContent = null): Message {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['from_chat_id'] = $fromChatId;
         if (isset($disableNotification)) $params['disable_notification'] = $disableNotification;
@@ -374,7 +377,7 @@ class BotApi {
      */
     public function forwardMessages(int|string $chatId, int|string $fromChatId, array $messageIds, ?int $messageThreadId = null, ?bool $disableNotification = null, ?bool $protectContent = null): array {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['from_chat_id'] = $fromChatId;
         $params['message_ids'] = $messageIds;
@@ -407,7 +410,7 @@ class BotApi {
      */
     public function copyMessage(int|string $chatId, int|string $fromChatId, int $messageId, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): MessageId {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['from_chat_id'] = $fromChatId;
         $params['message_id'] = $messageId;
@@ -437,7 +440,7 @@ class BotApi {
      */
     public function copyMessages(int|string $chatId, int|string $fromChatId, array $messageIds, ?int $messageThreadId = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?bool $removeCaption = null): array {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['from_chat_id'] = $fromChatId;
         $params['message_ids'] = $messageIds;
@@ -472,12 +475,12 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendPhoto(int|string $chatId, string $photo, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $hasSpoiler = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendPhoto(int|string|null $chatId, string $photo, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $hasSpoiler = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         if (file_exists($photo)) $photo = fopen($photo, 'r');
         $params = [];
         if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['photo'] = $photo;
         if (isset($caption)) $params['caption'] = $caption;
@@ -521,11 +524,11 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendLivePhoto(int|string $chatId, string $livePhoto, string $photo, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $directMessagesTopicId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $hasSpoiler = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?bool $allowPaidBroadcast = null, ?string $messageEffectId = null, ?SuggestedPostParameters $suggestedPostParameters = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendLivePhoto(int|string|null $chatId, string $livePhoto, string $photo, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $directMessagesTopicId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $hasSpoiler = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?bool $allowPaidBroadcast = null, ?string $messageEffectId = null, ?SuggestedPostParameters $suggestedPostParameters = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         if (file_exists($livePhoto)) $livePhoto = fopen($livePhoto, 'r');
         if (file_exists($photo)) $photo = fopen($photo, 'r');
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['live_photo'] = $livePhoto;
         $params['photo'] = $photo;
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
@@ -574,10 +577,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendAudio(int|string $chatId, string $audio, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?string $performer = null, ?string $title = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendAudio(int|string|null $chatId, string $audio, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?string $performer = null, ?string $title = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['audio'] = $audio;
         if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
@@ -622,10 +625,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendDocument(int|string $chatId, string $document, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $thumbnail = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $disableContentTypeDetection = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendDocument(int|string|null $chatId, string $document, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $thumbnail = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $disableContentTypeDetection = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         if (file_exists($document)) $document = fopen($document, 'r');
         $params['document'] = $document;
@@ -677,10 +680,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendVideo(int|string $chatId, string $video, ?string $businessConnectionId = null, ?bool $showCaptionAboveMedia = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $supportsStreaming = null, ?bool $hasSpoiler = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendVideo(int|string|null $chatId, string $video, ?string $businessConnectionId = null, ?bool $showCaptionAboveMedia = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $supportsStreaming = null, ?bool $hasSpoiler = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         if (file_exists($video)) $video = fopen($video, 'r');
         $params['video'] = $video;
@@ -736,10 +739,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendAnimation(int|string $chatId, string $animation, ?string $businessConnectionId = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $hasSpoiler = null, ?bool $showCaptionAboveMedia = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendAnimation(int|string|null $chatId, string $animation, ?string $businessConnectionId = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $hasSpoiler = null, ?bool $showCaptionAboveMedia = null, ?string $parseMode = null, ?array $captionEntities = null, ?string $caption = null, ?string $thumbnail = null, ?int $height = null, ?int $width = null, ?int $duration = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         if (file_exists($animation)) $animation = fopen($animation, 'r');
         $params['animation'] = $animation;
@@ -789,10 +792,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendVoice(int|string $chatId, string $voice, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendVoice(int|string|null $chatId, string $voice, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?int $duration = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         if (file_exists($voice)) $voice = fopen($voice, 'r');
         $params['voice'] = $voice;
@@ -833,10 +836,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendVideoNote(int|string $chatId, string $videoNote, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $duration = null, ?int $length = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendVideoNote(int|string|null $chatId, string $videoNote, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?int $duration = null, ?int $length = null, ?string $thumbnail = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         if (file_exists($videoNote)) $videoNote = fopen($videoNote, 'r');
         $params['video_note'] = $videoNote;
@@ -882,7 +885,7 @@ class BotApi {
     public function sendPaidMedia(int|string $chatId, int $starCount, array $media, ?string $payload = null, ?string $businessConnectionId = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['star_count'] = $starCount;
         $params['media'] = $media;
         if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
@@ -915,7 +918,7 @@ class BotApi {
     public function sendMediaGroup(int|string $chatId, array $media, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, ?bool $allowPaidBroadcast = null): array {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['media'] = $media;
         if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
@@ -951,10 +954,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendLocation(int|string $chatId, float $latitude, float $longitude, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?float $horizontalAccuracy = null, ?int $livePeriod = null, ?int $heading = null, ?int $proximityAlertRadius = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendLocation(int|string|null $chatId, float $latitude, float $longitude, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?float $horizontalAccuracy = null, ?int $livePeriod = null, ?int $heading = null, ?int $proximityAlertRadius = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['latitude'] = $latitude;
         $params['longitude'] = $longitude;
@@ -999,10 +1002,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendVenue(int|string $chatId, float $latitude, float $longitude, string $title, string $address, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $foursquareId = null, ?string $foursquareType = null, ?string $googlePlaceId = null, ?string $googlePlaceType = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendVenue(int|string|null $chatId, float $latitude, float $longitude, string $title, string $address, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $foursquareId = null, ?string $foursquareType = null, ?string $googlePlaceId = null, ?string $googlePlaceType = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['latitude'] = $latitude;
         $params['longitude'] = $longitude;
@@ -1045,10 +1048,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendContact(int|string $chatId, string $phoneNumber, string $firstName, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $lastName = null, ?string $vcard = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendContact(int|string|null $chatId, string $phoneNumber, string $firstName, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $lastName = null, ?string $vcard = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['phone_number'] = $phoneNumber;
         $params['first_name'] = $firstName;
@@ -1103,7 +1106,7 @@ class BotApi {
     public function sendPoll(int|string $chatId, string $question, array $options, ?string $businessConnectionId = null, ?array $explanationEntities = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $isClosed = null, ?int $closeDate = null, ?int $openPeriod = null, ?string $explanation = null, ?string $explanationParseMode = null, ?int $correctOptionId = null, ?bool $allowsMultipleAnswers = null, ?string $type = null, ?bool $isAnonymous = null, ?array $questionEntities = null, ?string $questionParseMode = null, ?int $messageThreadId = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?InputPollMedia $media = null, ?InputPollMedia $explanationMedia = null, ?bool $membersOnly = null, ?array $countryCodes = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['question'] = $question;
         if (isset($questionParseMode)) $params['question_parse_mode'] = $questionParseMode;
@@ -1154,7 +1157,7 @@ class BotApi {
     public function sendDice(int|string $chatId, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $emoji = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         if (isset($emoji)) $params['emoji'] = $emoji;
@@ -1182,7 +1185,7 @@ class BotApi {
     public function sendChatAction(int|string $chatId, ChatAction $action, ?string $businessConnectionId = null, ?int $messageThreadId = null): bool {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['action'] = $action->value;
         return $this->request('sendChatAction', $params);
@@ -1203,7 +1206,7 @@ class BotApi {
      */
     public function setMessageReaction(int|string $chatId, int $messageId, ?array $reaction = null, ?bool $isBig = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_id'] = $messageId;
         if (isset($reaction)) $params['reaction'] = $reaction;
         if (isset($isBig)) $params['is_big'] = $isBig;
@@ -1225,7 +1228,7 @@ class BotApi {
      */
     public function deleteMessageReaction(int|string $chatId, int $messageId, ?int $userId = null, ?int $actorChatId = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_id'] = $messageId;
         if (isset($userId)) $params['user_id'] = $userId;
         if (isset($actorChatId)) $params['actor_chat_id'] = $actorChatId;
@@ -1246,7 +1249,7 @@ class BotApi {
      */
     public function deleteAllMessageReactions(int|string $chatId, ?int $userId = null, ?int $actorChatId = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($userId)) $params['user_id'] = $userId;
         if (isset($actorChatId)) $params['actor_chat_id'] = $actorChatId;
         return $this->request('deleteAllMessageReactions', $params);
@@ -1287,7 +1290,7 @@ class BotApi {
      */
     public function banChatMember(int|string $chatId, int $userId, ?int $untilDate = null, ?bool $revokeMessages = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['user_id'] = $userId;
         if (isset($untilDate)) $params['until_date'] = $untilDate;
         if (isset($revokeMessages)) $params['revoke_messages'] = $revokeMessages;
@@ -1308,7 +1311,7 @@ class BotApi {
      */
     public function unbanChatMember(int|string $chatId, int $userId, ?bool $onlyIfBanned = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['user_id'] = $userId;
         if (isset($onlyIfBanned)) $params['only_if_banned'] = $onlyIfBanned;
         return $this->request('unbanChatMember', $params);
@@ -1330,7 +1333,7 @@ class BotApi {
      */
     public function restrictChatMember(int|string $chatId, int $userId, ChatPermissions $permissions, ?bool $useIndependentChatPermissions = null, ?int $untilDate = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['user_id'] = $userId;
         $params['permissions'] = $permissions;
         if (isset($useIndependentChatPermissions)) $params['use_independent_chat_permissions'] = $useIndependentChatPermissions;
@@ -1366,7 +1369,7 @@ class BotApi {
      */
     public function promoteChatMember(int|string $chatId, int $userId, ?bool $canPinMessages = null, ?bool $canEditMessages = null, ?bool $canPostMessages = null, ?bool $canDeleteStories = null, ?bool $canEditStories = null, ?bool $canPostStories = null, ?bool $canChangeInfo = null, ?bool $canInviteUsers = null, ?bool $canPromoteMembers = null, ?bool $canRestrictMembers = null, ?bool $canManageVideoChats = null, ?bool $canDeleteMessages = null, ?bool $canManageChat = null, ?bool $isAnonymous = null, ?bool $canManageTopics = null, ?bool $canSendWelcomeMessages = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['user_id'] = $userId;
         if (isset($isAnonymous)) $params['is_anonymous'] = $isAnonymous;
         if (isset($canManageChat)) $params['can_manage_chat'] = $canManageChat;
@@ -1401,7 +1404,7 @@ class BotApi {
      */
     public function setChatAdministratorCustomTitle(int|string $chatId, int $userId, string $customTitle): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['user_id'] = $userId;
         $params['custom_title'] = $customTitle;
         return $this->request('setChatAdministratorCustomTitle', $params);
@@ -1420,7 +1423,7 @@ class BotApi {
      */
     public function banChatSenderChat(int|string $chatId, int $senderChatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['sender_chat_id'] = $senderChatId;
         return $this->request('banChatSenderChat', $params);
     }
@@ -1438,7 +1441,7 @@ class BotApi {
      */
     public function unbanChatSenderChat(int|string $chatId, int $senderChatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['sender_chat_id'] = $senderChatId;
         return $this->request('unbanChatSenderChat', $params);
     }
@@ -1457,7 +1460,7 @@ class BotApi {
      */
     public function setChatPermissions(int|string $chatId, ChatPermissions $permissions, ?bool $useIndependentChatPermissions = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['permissions'] = $permissions;
         if (isset($useIndependentChatPermissions)) $params['use_independent_chat_permissions'] = $useIndependentChatPermissions;
         return $this->request('setChatPermissions', $params);
@@ -1475,7 +1478,7 @@ class BotApi {
      */
     public function exportChatInviteLink(int|string $chatId): string {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('exportChatInviteLink', $params);
     }
 
@@ -1495,7 +1498,7 @@ class BotApi {
      */
     public function createChatInviteLink(int|string $chatId, ?string $name = null, ?int $expireDate = null, ?int $memberLimit = null, ?bool $createsJoinRequest = null): ChatInviteLink {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($name)) $params['name'] = $name;
         if (isset($expireDate)) $params['expire_date'] = $expireDate;
         if (isset($memberLimit)) $params['member_limit'] = $memberLimit;
@@ -1520,7 +1523,7 @@ class BotApi {
      */
     public function editChatInviteLink(int|string $chatId, string $inviteLink, ?string $name = null, ?int $expireDate = null, ?int $memberLimit = null, ?bool $createsJoinRequest = null): ChatInviteLink {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['invite_link'] = $inviteLink;
         if (isset($name)) $params['name'] = $name;
         if (isset($expireDate)) $params['expire_date'] = $expireDate;
@@ -1544,7 +1547,7 @@ class BotApi {
      */
     public function createChatSubscriptionInviteLink(int|string $chatId, int $subscriptionPeriod, int $subscriptionPrice, ?string $name = null): ChatInviteLink {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($name)) $params['name'] = $name;
         $params['subscription_period'] = $subscriptionPeriod;
         $params['subscription_price'] = $subscriptionPrice;
@@ -1565,7 +1568,7 @@ class BotApi {
      */
     public function editChatSubscriptionInviteLink(int|string $chatId, string $inviteLink, ?string $name = null): ChatInviteLink {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['invite_link'] = $inviteLink;
         if (isset($name)) $params['name'] = $name;
         return ChatInviteLink::fromArray($this->request('editChatSubscriptionInviteLink', $params));
@@ -1584,7 +1587,7 @@ class BotApi {
      */
     public function revokeChatInviteLink(int|string $chatId, string $inviteLink): ChatInviteLink {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['invite_link'] = $inviteLink;
         return ChatInviteLink::fromArray($this->request('revokeChatInviteLink', $params));
     }
@@ -1602,7 +1605,7 @@ class BotApi {
      */
     public function approveChatJoinRequest(int|string $chatId, int $userId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['user_id'] = $userId;
         return $this->request('approveChatJoinRequest', $params);
     }
@@ -1620,7 +1623,7 @@ class BotApi {
      */
     public function declineChatJoinRequest(int|string $chatId, int $userId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['user_id'] = $userId;
         return $this->request('declineChatJoinRequest', $params);
     }
@@ -1664,7 +1667,7 @@ class BotApi {
      */
     public function setChatPhoto(int|string $chatId, string $photo): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (file_exists($photo)) $photo = fopen($photo, 'r');
         $params['photo'] = $photo;
         return $this->request('setChatPhoto', $params, is_resource($photo));
@@ -1682,7 +1685,7 @@ class BotApi {
      */
     public function deleteChatPhoto(int|string $chatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('deleteChatPhoto', $params);
     }
 
@@ -1699,7 +1702,7 @@ class BotApi {
      */
     public function setChatTitle(int|string $chatId, string $title): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['title'] = $title;
         return $this->request('setChatTitle', $params);
     }
@@ -1717,7 +1720,7 @@ class BotApi {
      */
     public function setChatDescription(int|string $chatId, ?string $description = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($description)) $params['description'] = $description;
         return $this->request('setChatDescription', $params);
     }
@@ -1738,7 +1741,7 @@ class BotApi {
     public function pinChatMessage(int|string $chatId, int $messageId, ?string $businessConnectionId = null, ?bool $disableNotification = null): bool {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_id'] = $messageId;
         if (isset($disableNotification)) $params['disable_notification'] = $disableNotification;
         return $this->request('pinChatMessage', $params);
@@ -1759,7 +1762,7 @@ class BotApi {
     public function unpinChatMessage(int|string $chatId, ?string $businessConnectionId = null, ?int $messageId = null): bool {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageId)) $params['message_id'] = $messageId;
         return $this->request('unpinChatMessage', $params);
     }
@@ -1776,7 +1779,7 @@ class BotApi {
      */
     public function unpinAllChatMessages(int|string $chatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('unpinAllChatMessages', $params);
     }
 
@@ -1792,7 +1795,7 @@ class BotApi {
      */
     public function leaveChat(int|string $chatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('leaveChat', $params);
     }
 
@@ -1808,7 +1811,7 @@ class BotApi {
      */
     public function getChat(int|string $chatId): ChatFullInfo {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return ChatFullInfo::fromArray($this->request('getChat', $params));
     }
 
@@ -1825,7 +1828,7 @@ class BotApi {
      */
     public function getChatAdministrators(int|string $chatId, ?bool $returnBots = null): array {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($returnBots)) $params['return_bots'] = $returnBots;
         return ChatMember::arrayOf($this->request('getChatAdministrators', $params));
     }
@@ -1842,7 +1845,7 @@ class BotApi {
      */
     public function getChatMemberCount(int|string $chatId): int {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('getChatMemberCount', $params);
     }
 
@@ -1859,7 +1862,7 @@ class BotApi {
      */
     public function getChatMember(int|string $chatId, int $userId): ChatMember {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['user_id'] = $userId;
         return ChatMember::fromArray($this->request('getChatMember', $params));
     }
@@ -1877,7 +1880,7 @@ class BotApi {
      */
     public function setChatStickerSet(int|string $chatId, string $stickerSetName): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['sticker_set_name'] = $stickerSetName;
         return $this->request('setChatStickerSet', $params);
     }
@@ -1894,7 +1897,7 @@ class BotApi {
      */
     public function deleteChatStickerSet(int|string $chatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('deleteChatStickerSet', $params);
     }
 
@@ -1927,7 +1930,7 @@ class BotApi {
      */
     public function createForumTopic(int|string $chatId, string $name, ?int $iconColor = null, ?string $iconCustomEmojiId = null): ForumTopic {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['name'] = $name;
         if (isset($iconColor)) $params['icon_color'] = $iconColor;
         if (isset($iconCustomEmojiId)) $params['icon_custom_emoji_id'] = $iconCustomEmojiId;
@@ -1949,7 +1952,7 @@ class BotApi {
      */
     public function editForumTopic(int|string $chatId, int $messageThreadId, ?string $name = null, ?string $iconCustomEmojiId = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_thread_id'] = $messageThreadId;
         if (isset($name)) $params['name'] = $name;
         if (isset($iconCustomEmojiId)) $params['icon_custom_emoji_id'] = $iconCustomEmojiId;
@@ -1969,7 +1972,7 @@ class BotApi {
      */
     public function closeForumTopic(int|string $chatId, int $messageThreadId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_thread_id'] = $messageThreadId;
         return $this->request('closeForumTopic', $params);
     }
@@ -1987,7 +1990,7 @@ class BotApi {
      */
     public function reopenForumTopic(int|string $chatId, int $messageThreadId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_thread_id'] = $messageThreadId;
         return $this->request('reopenForumTopic', $params);
     }
@@ -2005,7 +2008,7 @@ class BotApi {
      */
     public function deleteForumTopic(int|string $chatId, int $messageThreadId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_thread_id'] = $messageThreadId;
         return $this->request('deleteForumTopic', $params);
     }
@@ -2023,7 +2026,7 @@ class BotApi {
      */
     public function unpinAllForumTopicMessages(int|string $chatId, int $messageThreadId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_thread_id'] = $messageThreadId;
         return $this->request('unpinAllForumTopicMessages', $params);
     }
@@ -2041,7 +2044,7 @@ class BotApi {
      */
     public function editGeneralForumTopic(int|string $chatId, string $name): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['name'] = $name;
         return $this->request('editGeneralForumTopic', $params);
     }
@@ -2058,7 +2061,7 @@ class BotApi {
      */
     public function closeGeneralForumTopic(int|string $chatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('closeGeneralForumTopic', $params);
     }
 
@@ -2074,7 +2077,7 @@ class BotApi {
      */
     public function reopenGeneralForumTopic(int|string $chatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('reopenGeneralForumTopic', $params);
     }
 
@@ -2090,7 +2093,7 @@ class BotApi {
      */
     public function hideGeneralForumTopic(int|string $chatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('hideGeneralForumTopic', $params);
     }
 
@@ -2106,7 +2109,7 @@ class BotApi {
      */
     public function unhideGeneralForumTopic(int|string $chatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('unhideGeneralForumTopic', $params);
     }
 
@@ -2122,7 +2125,7 @@ class BotApi {
      */
     public function unpinAllGeneralForumTopicMessages(int|string $chatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('unpinAllGeneralForumTopicMessages', $params);
     }
 
@@ -2163,7 +2166,7 @@ class BotApi {
      */
     public function getUserChatBoosts(int|string $chatId, int $userId): UserChatBoosts {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['user_id'] = $userId;
         return UserChatBoosts::fromArray($this->request('getUserChatBoosts', $params));
     }
@@ -2603,7 +2606,7 @@ class BotApi {
     public function stopPoll(int|string $chatId, int $messageId, ?string $businessConnectionId = null, ?InlineKeyboardMarkup $replyMarkup = null): Poll {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_id'] = $messageId;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
         return Poll::fromArray($this->request('stopPoll', $params));
@@ -2628,7 +2631,7 @@ class BotApi {
      */
     public function editEphemeralMessageText(int|string $chatId, int $receiverUserId, int $ephemeralMessageId, ?string $text = null, ?string $parseMode = null, ?array $entities = null, ?LinkPreviewOptions $linkPreviewOptions = null, ?InlineKeyboardMarkup $replyMarkup = null, ?InputRichMessage $richMessage = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['receiver_user_id'] = $receiverUserId;
         $params['ephemeral_message_id'] = $ephemeralMessageId;
         if (isset($text)) $params['text'] = $text;
@@ -2656,7 +2659,7 @@ class BotApi {
      */
     public function editEphemeralMessageMedia(int|string $chatId, int $receiverUserId, int $ephemeralMessageId, AbstractObject|string $media, ?InlineKeyboardMarkup $replyMarkup = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['receiver_user_id'] = $receiverUserId;
         $params['ephemeral_message_id'] = $ephemeralMessageId;
         $params['media'] = $media;
@@ -2682,7 +2685,7 @@ class BotApi {
      */
     public function editEphemeralMessageCaption(int|string $chatId, int $receiverUserId, int $ephemeralMessageId, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?InlineKeyboardMarkup $replyMarkup = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['receiver_user_id'] = $receiverUserId;
         $params['ephemeral_message_id'] = $ephemeralMessageId;
         if (isset($caption)) $params['caption'] = $caption;
@@ -2708,7 +2711,7 @@ class BotApi {
      */
     public function editEphemeralMessageReplyMarkup(int|string $chatId, int $receiverUserId, int $ephemeralMessageId, ?InlineKeyboardMarkup $replyMarkup = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['receiver_user_id'] = $receiverUserId;
         $params['ephemeral_message_id'] = $ephemeralMessageId;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
@@ -2729,7 +2732,7 @@ class BotApi {
      */
     public function deleteEphemeralMessage(int|string $chatId, int $receiverUserId, int $ephemeralMessageId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['receiver_user_id'] = $receiverUserId;
         $params['ephemeral_message_id'] = $ephemeralMessageId;
         return $this->request('deleteEphemeralMessage', $params);
@@ -2748,7 +2751,7 @@ class BotApi {
      */
     public function deleteMessage(int|string $chatId, int $messageId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_id'] = $messageId;
         return $this->request('deleteMessage', $params);
     }
@@ -2766,7 +2769,7 @@ class BotApi {
      */
     public function deleteMessages(int|string $chatId, array $messageIds): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_ids'] = $messageIds;
         return $this->request('deleteMessages', $params);
     }
@@ -2792,10 +2795,10 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function sendSticker(int|string $chatId, string $sticker, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $emoji = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
+    public function sendSticker(int|string|null $chatId, string $sticker, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?string $emoji = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null, ?bool $allowPaidBroadcast = null, ?EphemeralMessageParameters $ephemeralMessageParameters = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['sticker'] = $sticker;
         if (isset($emoji)) $params['emoji'] = $emoji;
@@ -3189,7 +3192,7 @@ class BotApi {
      */
     public function sendInvoice(int|string $chatId, string $title, string $description, string $payload, string $currency, array $prices, ?bool $needPhoneNumber = null, ?ReplyParameters $replyParameters = null, ?string $messageEffectId = null, ?bool $protectContent = null, ?bool $disableNotification = null, ?bool $isFlexible = null, ?bool $sendEmailToProvider = null, ?bool $sendPhoneNumberToProvider = null, ?bool $needShippingAddress = null, ?bool $needEmail = null, ?int $photoWidth = null, ?bool $needName = null, ?int $photoHeight = null, ?int $messageThreadId = null, ?int $photoSize = null, ?string $photoUrl = null, ?string $providerData = null, ?string $startParameter = null, ?array $suggestedTipAmounts = null, ?int $maxTipAmount = null, ?string $providerToken = null, ?InlineKeyboardMarkup $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['title'] = $title;
         $params['description'] = $description;
@@ -3501,7 +3504,7 @@ class BotApi {
     public function sendGame(int $chatId, string $gameShortName, ?string $businessConnectionId = null, ?int $messageThreadId = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, ?InlineKeyboardMarkup $replyMarkup = null, ?bool $allowPaidBroadcast = null): Message {
         $params = [];
         if (isset($businessConnectionId)) $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
         $params['game_short_name'] = $gameShortName;
         if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
@@ -3579,7 +3582,7 @@ class BotApi {
     public function sendChecklist(string $businessConnectionId, int $chatId, InputChecklist $checklist, ?bool $disableNotification = null, ?bool $protectContent = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, ?InlineKeyboardMarkup $replyMarkup = null): Message {
         $params = [];
         $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['checklist'] = $checklist;
         if (isset($disableNotification)) $params['disable_notification'] = $disableNotification;
         if (isset($protectContent)) $params['protect_content'] = $protectContent;
@@ -3606,7 +3609,7 @@ class BotApi {
      */
     public function sendMessageDraft(int $chatId, int $draftId, string $text, ?int $messageThreadId = null, ?string $parseMode = null, ?array $entities = null, ?bool $canStop = null, ?bool $keepOnStop = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['draft_id'] = $draftId;
         $params['text'] = $text;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
@@ -3625,7 +3628,7 @@ class BotApi {
      */
     public function sendRichMessageDraft(int $chatId, int $draftId, InputRichMessage $richMessage, ?int $messageThreadId = null, ?bool $canStop = null, ?bool $keepOnStop = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['draft_id'] = $draftId;
         $params['rich_message'] = $richMessage;
         if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
@@ -3686,7 +3689,7 @@ class BotApi {
      */
     public function setChatMemberTag(int|string $chatId, int $userId, ?string $tag = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['user_id'] = $userId;
         if (isset($tag)) $params['tag'] = $tag;
         return $this->request('setChatMemberTag', $params);
@@ -3827,10 +3830,12 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function verifyUser(int $userId, ?string $customDescription = null): bool {
+    public function verifyUser(int $userId, ?string $customDescription = null, ?string $customDescriptionParseMode = null, ?array $customDescriptionEntities = null): bool {
         $params = [];
         $params['user_id'] = $userId;
         if (isset($customDescription)) $params['custom_description'] = $customDescription;
+        if (isset($customDescriptionParseMode)) $params['custom_description_parse_mode'] = $customDescriptionParseMode;
+        if (isset($customDescriptionEntities)) $params['custom_description_entities'] = $customDescriptionEntities;
         return $this->request('verifyUser', $params);
     }
 
@@ -3845,10 +3850,12 @@ class BotApi {
      * @throws Exception
      * @throws GuzzleException
      */
-    public function verifyChat(int|string $chatId, ?string $customDescription = null): bool {
+    public function verifyChat(int|string $chatId, ?string $customDescription = null, ?string $customDescriptionParseMode = null, ?array $customDescriptionEntities = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($customDescription)) $params['custom_description'] = $customDescription;
+        if (isset($customDescriptionParseMode)) $params['custom_description_parse_mode'] = $customDescriptionParseMode;
+        if (isset($customDescriptionEntities)) $params['custom_description_entities'] = $customDescriptionEntities;
         return $this->request('verifyChat', $params);
     }
 
@@ -3880,7 +3887,7 @@ class BotApi {
      */
     public function removeChatVerification(int|string $chatId): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         return $this->request('removeChatVerification', $params);
     }
 
@@ -3899,7 +3906,7 @@ class BotApi {
     public function readBusinessMessage(string $businessConnectionId, int $chatId, int $messageId): bool {
         $params = [];
         $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_id'] = $messageId;
         return $this->request('readBusinessMessage', $params);
     }
@@ -4160,7 +4167,7 @@ class BotApi {
      */
     public function getChatGifts(int|string $chatId, ?bool $excludeUnsaved = null, ?bool $excludeSaved = null, ?bool $excludeUnlimited = null, ?bool $excludeLimitedUpgradable = null, ?bool $excludeLimitedNonUpgradable = null, ?bool $excludeFromBlockchain = null, ?bool $excludeUnique = null, ?bool $sortByPrice = null, ?string $offset = null, ?int $limit = null): OwnedGifts {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         if (isset($excludeUnsaved)) $params['exclude_unsaved'] = $excludeUnsaved;
         if (isset($excludeSaved)) $params['exclude_saved'] = $excludeSaved;
         if (isset($excludeUnlimited)) $params['exclude_unlimited'] = $excludeUnlimited;
@@ -4375,7 +4382,7 @@ class BotApi {
     public function editMessageChecklist(string $businessConnectionId, int $chatId, int $messageId, InputChecklist $checklist, ?InlineKeyboardMarkup $replyMarkup = null): Message {
         $params = [];
         $params['business_connection_id'] = $businessConnectionId;
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_id'] = $messageId;
         $params['checklist'] = $checklist;
         if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
@@ -4396,7 +4403,7 @@ class BotApi {
      */
     public function approveSuggestedPost(int $chatId, int $messageId, ?int $sendDate = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_id'] = $messageId;
         if (isset($sendDate)) $params['send_date'] = $sendDate;
         return $this->request('approveSuggestedPost', $params);
@@ -4416,7 +4423,7 @@ class BotApi {
      */
     public function declineSuggestedPost(int $chatId, int $messageId, ?string $comment = null): bool {
         $params = [];
-        $params['chat_id'] = $chatId;
+        if ($chatId !== null) $params['chat_id'] = $chatId;
         $params['message_id'] = $messageId;
         if (isset($comment)) $params['comment'] = $comment;
         return $this->request('declineSuggestedPost', $params);
@@ -4516,6 +4523,179 @@ class BotApi {
      */
     public function getLogger(): ?LoggerInterface {
         return $this->logger;
+    }
+
+    /**
+     * Method: setMySettings
+     *
+     * Use this method to change settings of the bot. Settings that aren't specified remain unchanged. Returns True on success.
+     * @link https://core.telegram.org/bots/api#setmysettings
+     */
+    public function setMySettings(
+        ?bool $supportsInlineQueries = null,
+        ?string $inlineQueryPlaceholder = null,
+        ?bool $needsInlineQueryLocation = null,
+        ?int $inlineFeedbackShareDenominator = null,
+        ?bool $canJoinGroups = null,
+        ?bool $canReadAllGroupMessages = null,
+        ?bool $canConnectToBusiness = null,
+        ?bool $canManageBots = null,
+        ?bool $supportsGuestQueries = null,
+        ?bool $supportsJoinRequestQueries = null,
+        ?bool $hasTopicsEnabled = null,
+        ?bool $allowsUsersToCreateTopics = null,
+        ?bool $hasTopicSidebar = null,
+        ?bool $canCommunicateWithBots = null,
+        ?string $callbackQueryMode = null,
+    ): bool {
+        $params = [];
+        if (isset($supportsInlineQueries)) $params['supports_inline_queries'] = $supportsInlineQueries;
+        if (isset($inlineQueryPlaceholder)) $params['inline_query_placeholder'] = $inlineQueryPlaceholder;
+        if (isset($needsInlineQueryLocation)) $params['needs_inline_query_location'] = $needsInlineQueryLocation;
+        if (isset($inlineFeedbackShareDenominator)) $params['inline_feedback_share_denominator'] = $inlineFeedbackShareDenominator;
+        if (isset($canJoinGroups)) $params['can_join_groups'] = $canJoinGroups;
+        if (isset($canReadAllGroupMessages)) $params['can_read_all_group_messages'] = $canReadAllGroupMessages;
+        if (isset($canConnectToBusiness)) $params['can_connect_to_business'] = $canConnectToBusiness;
+        if (isset($canManageBots)) $params['can_manage_bots'] = $canManageBots;
+        if (isset($supportsGuestQueries)) $params['supports_guest_queries'] = $supportsGuestQueries;
+        if (isset($supportsJoinRequestQueries)) $params['supports_join_request_queries'] = $supportsJoinRequestQueries;
+        if (isset($hasTopicsEnabled)) $params['has_topics_enabled'] = $hasTopicsEnabled;
+        if (isset($allowsUsersToCreateTopics)) $params['allows_users_to_create_topics'] = $allowsUsersToCreateTopics;
+        if (isset($hasTopicSidebar)) $params['has_topic_sidebar'] = $hasTopicSidebar;
+        if (isset($canCommunicateWithBots)) $params['can_communicate_with_bots'] = $canCommunicateWithBots;
+        if (isset($callbackQueryMode)) $params['callback_query_mode'] = $callbackQueryMode;
+        return $this->request('setMySettings', $params);
+    }
+
+    /**
+     * Method: sendWidget
+     *
+     * Use this method to send a message with an HTML widget. On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#sendwidget
+     */
+    public function sendWidget(int|string $chatId, string $html, ?int $messageThreadId = null, ?int $width = null, ?int $height = null, ?string $publicData = null, ?string $chatData = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $allowQueries = null, ?bool $isShared = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?bool $allowPaidBroadcast = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null): Message {
+        $params = [];
+        if ($chatId !== null) $params['chat_id'] = $chatId;
+        if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
+        $params['html'] = $html;
+        if (isset($width)) $params['width'] = $width;
+        if (isset($height)) $params['height'] = $height;
+        if (isset($publicData)) $params['public_data'] = $publicData;
+        if (isset($chatData)) $params['chat_data'] = $chatData;
+        if (isset($caption)) $params['caption'] = $caption;
+        if (isset($parseMode)) $params['parse_mode'] = $parseMode;
+        if (isset($captionEntities)) $params['caption_entities'] = $captionEntities;
+        if (isset($showCaptionAboveMedia)) $params['show_caption_above_media'] = $showCaptionAboveMedia;
+        if (isset($allowQueries)) $params['allow_queries'] = $allowQueries;
+        if (isset($isShared)) $params['is_shared'] = $isShared;
+        if (isset($disableNotification)) $params['disable_notification'] = $disableNotification;
+        if (isset($protectContent)) $params['protect_content'] = $protectContent;
+        if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
+        if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
+        if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
+        if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        return Message::fromArray($this->request('sendWidget', $params));
+    }
+
+    /**
+     * Method: sendSharedWidget
+     *
+     * Use this method to send again a shared widget created by the bot. On success, the sent Message is returned.
+     * @link https://core.telegram.org/bots/api#sendsharedwidget
+     */
+    public function sendSharedWidget(int|string $chatId, string $widgetId, ?int $messageThreadId = null, ?string $chatData = null, ?string $caption = null, ?string $parseMode = null, ?array $captionEntities = null, ?bool $showCaptionAboveMedia = null, ?bool $disableNotification = null, ?bool $protectContent = null, ?bool $allowPaidBroadcast = null, ?string $messageEffectId = null, ?ReplyParameters $replyParameters = null, InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null): Message {
+        $params = [];
+        if ($chatId !== null) $params['chat_id'] = $chatId;
+        if (isset($messageThreadId)) $params['message_thread_id'] = $messageThreadId;
+        $params['widget_id'] = $widgetId;
+        if (isset($chatData)) $params['chat_data'] = $chatData;
+        if (isset($caption)) $params['caption'] = $caption;
+        if (isset($parseMode)) $params['parse_mode'] = $parseMode;
+        if (isset($captionEntities)) $params['caption_entities'] = $captionEntities;
+        if (isset($showCaptionAboveMedia)) $params['show_caption_above_media'] = $showCaptionAboveMedia;
+        if (isset($disableNotification)) $params['disable_notification'] = $disableNotification;
+        if (isset($protectContent)) $params['protect_content'] = $protectContent;
+        if (isset($allowPaidBroadcast)) $params['allow_paid_broadcast'] = $allowPaidBroadcast;
+        if (isset($messageEffectId)) $params['message_effect_id'] = $messageEffectId;
+        if (isset($replyParameters)) $params['reply_parameters'] = $replyParameters;
+        if (isset($replyMarkup)) $params['reply_markup'] = $replyMarkup;
+        return Message::fromArray($this->request('sendSharedWidget', $params));
+    }
+
+    /**
+     * Method: answerWidgetQuery
+     *
+     * Use this method to send an answer to a query from a widget. On success, True is returned.
+     * @link https://core.telegram.org/bots/api#answerwidgetquery
+     */
+    public function answerWidgetQuery(string $widgetQueryId, ?string $data = null): bool {
+        $params = [];
+        $params['widget_query_id'] = $widgetQueryId;
+        if (isset($data)) $params['data'] = $data;
+        return $this->request('answerWidgetQuery', $params);
+    }
+
+    /**
+     * Method: editMessageWidgetData
+     *
+     * Use this method to edit data of a widget in a message sent by the bot or via the bot. On success, True is returned.
+     * @link https://core.telegram.org/bots/api#editmessagewidgetdata
+     */
+    public function editMessageWidgetData(int|string|null $chatId = null, ?int $messageId = null, ?string $inlineMessageId = null, ?string $publicData = null, ?string $chatData = null): bool {
+        $params = [];
+        if (isset($chatId)) $params['chat_id'] = $chatId;
+        if (isset($messageId)) $params['message_id'] = $messageId;
+        if (isset($inlineMessageId)) $params['inline_message_id'] = $inlineMessageId;
+        if (isset($publicData)) $params['public_data'] = $publicData;
+        if (isset($chatData)) $params['chat_data'] = $chatData;
+        return $this->request('editMessageWidgetData', $params);
+    }
+
+    /**
+     * Method: editSharedWidgetData
+     *
+     * Use this method to edit public data of a shared widget created by the bot. On success, True is returned.
+     * @link https://core.telegram.org/bots/api#editsharedwidgetdata
+     */
+    public function editSharedWidgetData(string $widgetId, string $publicData, ?int $cacheTime = null): bool {
+        $params = [];
+        $params['widget_id'] = $widgetId;
+        $params['public_data'] = $publicData;
+        if (isset($cacheTime)) $params['cache_time'] = $cacheTime;
+        return $this->request('editSharedWidgetData', $params);
+    }
+
+    /**
+     * Method: getChatShareThemeBackdrops
+     *
+     * Use this method to get the list of backdrops for chat share themes. Requires no parameters. Returns a ChatShareThemeBackdrops object.
+     * @link https://core.telegram.org/bots/api#getchatsharethemebackdrops
+     */
+    public function getChatShareThemeBackdrops(): ChatShareThemeBackdrops {
+        return ChatShareThemeBackdrops::fromArray($this->request('getChatShareThemeBackdrops', []));
+    }
+
+    /**
+     * Method: getUniqueGift
+     *
+     * Use this method to get information about a unique gift by its name. Returns a UniqueGift object on success.
+     * @link https://core.telegram.org/bots/api#getuniquegift
+     */
+    public function getUniqueGift(string $name): UniqueGift {
+        return UniqueGift::fromArray($this->request('getUniqueGift', ['name' => $name]));
+    }
+
+    /**
+     * Method: deleteBusinessAccountGift
+     *
+     * Deletes a regular gift owned by a managed business account without receiving Telegram Stars for it. Returns True on success.
+     * @link https://core.telegram.org/bots/api#deletebusinessaccountgift
+     */
+    public function deleteBusinessAccountGift(string $businessConnectionId, string $ownedGiftId): bool {
+        return $this->request('deleteBusinessAccountGift', [
+            'business_connection_id' => $businessConnectionId,
+            'owned_gift_id' => $ownedGiftId,
+        ]);
     }
 
     /**

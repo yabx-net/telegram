@@ -220,6 +220,22 @@ final class Update extends AbstractObject {
      */
     protected ?MessageGenerationStopped $stoppedMessageGeneration = null;
 
+    /**
+     * Widget Query
+     *
+     * Optional. A query sent to the bot by a widget in a message sent by the bot or via the bot
+     * @var WidgetQuery|null
+     */
+    protected ?WidgetQuery $widgetQuery = null;
+
+    /**
+     * Shared Widget Query
+     *
+     * Optional. A query sent to the bot from a forwarded message with a shared widget
+     * @var SharedWidgetQuery|null
+     */
+    protected ?SharedWidgetQuery $sharedWidgetQuery = null;
+
     public function __construct(
         ?int                         $updateId = null,
         ?Message                     $message = null,
@@ -248,6 +264,8 @@ final class Update extends AbstractObject {
         ?ChatBoostRemoved            $removedChatBoost = null,
         ?BotSubscriptionUpdated      $subscription = null,
         ?MessageGenerationStopped    $stoppedMessageGeneration = null,
+        ?WidgetQuery                 $widgetQuery = null,
+        ?SharedWidgetQuery           $sharedWidgetQuery = null,
     ) {
         $this->updateId = $updateId;
         $this->message = $message;
@@ -276,6 +294,8 @@ final class Update extends AbstractObject {
         $this->removedChatBoost = $removedChatBoost;
         $this->subscription = $subscription;
         $this->stoppedMessageGeneration = $stoppedMessageGeneration;
+        $this->widgetQuery = $widgetQuery;
+        $this->sharedWidgetQuery = $sharedWidgetQuery;
     }
 
     public static function fromArray(array $data): Update {
@@ -360,6 +380,12 @@ final class Update extends AbstractObject {
         }
         if (isset($data['stopped_message_generation'])) {
             $instance->stoppedMessageGeneration = MessageGenerationStopped::fromArray($data['stopped_message_generation']);
+        }
+        if (isset($data['widget_query'])) {
+            $instance->widgetQuery = WidgetQuery::fromArray($data['widget_query']);
+        }
+        if (isset($data['shared_widget_query'])) {
+            $instance->sharedWidgetQuery = SharedWidgetQuery::fromArray($data['shared_widget_query']);
         }
         return $instance;
     }
@@ -604,6 +630,24 @@ final class Update extends AbstractObject {
 
     public function setStoppedMessageGeneration(?MessageGenerationStopped $value): self {
         $this->stoppedMessageGeneration = $value;
+        return $this;
+    }
+
+    public function getWidgetQuery(): ?WidgetQuery {
+        return $this->widgetQuery;
+    }
+
+    public function setWidgetQuery(?WidgetQuery $value): self {
+        $this->widgetQuery = $value;
+        return $this;
+    }
+
+    public function getSharedWidgetQuery(): ?SharedWidgetQuery {
+        return $this->sharedWidgetQuery;
+    }
+
+    public function setSharedWidgetQuery(?SharedWidgetQuery $value): self {
+        $this->sharedWidgetQuery = $value;
         return $this;
     }
 

@@ -21,6 +21,14 @@ final class TextQuote extends AbstractObject {
     protected ?array $entities = null;
 
     /**
+     * Rich Texts
+     *
+     * Optional. Rich text of the quote if it was chosen from a rich message
+     * @var array|null
+     */
+    protected ?array $richTexts = null;
+
+    /**
      * Position
      *
      * Approximate quote position in the original message in UTF-16 code units as specified by the sender
@@ -39,11 +47,13 @@ final class TextQuote extends AbstractObject {
     public function __construct(
         ?string $text = null,
         ?array  $entities = null,
+        ?array  $richTexts = null,
         ?int    $position = null,
         ?bool   $isManual = null,
     ) {
         $this->text = $text;
         $this->entities = $entities;
+        $this->richTexts = $richTexts;
         $this->position = $position;
         $this->isManual = $isManual;
     }
@@ -58,6 +68,9 @@ final class TextQuote extends AbstractObject {
             foreach ($data['entities'] as $item) {
                 $instance->entities[] = MessageEntity::fromArray($item);
             }
+        }
+        if (isset($data['rich_texts'])) {
+            $instance->richTexts = array_map(fn(mixed $item) => RichText::fromMixed($item), $data['rich_texts']);
         }
         if (isset($data['position'])) {
             $instance->position = $data['position'];
@@ -83,6 +96,15 @@ final class TextQuote extends AbstractObject {
 
     public function setEntities(?array $value): self {
         $this->entities = $value;
+        return $this;
+    }
+
+    public function getRichTexts(): ?array {
+        return $this->richTexts;
+    }
+
+    public function setRichTexts(?array $value): self {
+        $this->richTexts = $value;
         return $this;
     }
 

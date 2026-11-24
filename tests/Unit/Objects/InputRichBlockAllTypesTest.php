@@ -69,7 +69,7 @@ final class InputRichBlockAllTypesTest extends TestCase {
             'anchor' => [['type' => 'anchor', 'name' => 'top'], InputRichBlockAnchor::class],
             'list' => [['type' => 'list', 'items' => [['blocks' => [$paragraph], 'has_checkbox' => true]]], InputRichBlockList::class],
             'blockquote' => [['type' => 'blockquote', 'blocks' => [$paragraph]], InputRichBlockBlockQuotation::class],
-            'expandable_blockquote' => [['type' => 'expandable_blockquote', 'text' => 'more'], InputRichBlockExpandableBlockQuotation::class],
+            'expandable_blockquote' => [['type' => 'expandable_blockquote', 'blocks' => [['type' => 'paragraph', 'text' => 'more']]], InputRichBlockExpandableBlockQuotation::class],
             'pullquote' => [['type' => 'pullquote', 'text' => 'quote'], InputRichBlockPullQuotation::class],
             'collage' => [['type' => 'collage', 'blocks' => [$paragraph]], InputRichBlockCollage::class],
             'slideshow' => [['type' => 'slideshow', 'blocks' => [$paragraph]], InputRichBlockSlideshow::class],

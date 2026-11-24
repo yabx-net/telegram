@@ -19,12 +19,12 @@ final class RichBlockExpandableBlockQuotation extends RichBlock {
     protected string $type = 'expandable_blockquote';
 
     /**
-     * Text
+     * Blocks
      *
-     * Text of the block
-     * @var RichText|string|array|null
+     * Content of the block
+     * @var RichBlock[]|null
      */
-    protected mixed $text = null;
+    protected ?array $blocks = null;
 
     /**
      * Credit
@@ -35,10 +35,10 @@ final class RichBlockExpandableBlockQuotation extends RichBlock {
     protected mixed $credit = null;
 
     public function __construct(
-        mixed $text = null,
+        ?array $blocks = null,
         mixed $credit = null
     ) {
-        $this->text = $text;
+        $this->blocks = $blocks;
         $this->credit = $credit;
     }
 
@@ -47,8 +47,8 @@ final class RichBlockExpandableBlockQuotation extends RichBlock {
         if (isset($data['type'])) {
             $instance->type = $data['type'];
         }
-        if (isset($data['text'])) {
-            $instance->text = RichText::fromMixed($data['text']);
+        if (isset($data['blocks'])) {
+            $instance->blocks = array_map(fn(array $item) => RichBlock::fromArray($item), $data['blocks']);
         }
         if (isset($data['credit'])) {
             $instance->credit = RichText::fromMixed($data['credit']);
@@ -60,12 +60,12 @@ final class RichBlockExpandableBlockQuotation extends RichBlock {
         return $this->type;
     }
 
-    public function getText(): mixed {
-        return $this->text;
+    public function getBlocks(): ?array {
+        return $this->blocks;
     }
 
-    public function setText(mixed $value): self {
-        $this->text = $value;
+    public function setBlocks(?array $value): self {
+        $this->blocks = $value;
         return $this;
     }
 

@@ -9,6 +9,8 @@ abstract class InputMessageContent extends AbstractObject {
 
     public static function fromArray(array $data): mixed {
         if (key_exists('rich_message', $data)) return InputRichMessageContent::fromArray($data);
+        if (key_exists('widget_id', $data)) return InputSharedWidgetMessageContent::fromArray($data);
+        if (key_exists('html', $data)) return InputWidgetMessageContent::fromArray($data);
         if (key_exists('message_text', $data)) return InputTextMessageContent::fromArray($data);
         elseif (key_exists('latitude', $data) && key_exists('title', $data)) return InputVenueMessageContent::fromArray($data);
         elseif (key_exists('latitude', $data)) return InputLocationMessageContent::fromArray($data);

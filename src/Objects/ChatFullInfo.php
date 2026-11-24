@@ -372,6 +372,22 @@ final class ChatFullInfo extends AbstractObject {
      */
     protected ?ChatLocation $location = null;
 
+    /**
+     * Ton Wallet Card
+     *
+     * Optional. TON wallet card shown on the profile page of a user
+     * @var TonWalletCard|null
+     */
+    protected ?TonWalletCard $tonWalletCard = null;
+
+    /**
+     * Share Theme
+     *
+     * Optional. Theme of the screen for sharing a link to the user or the chat
+     * @var ChatShareTheme|null
+     */
+    protected ?ChatShareTheme $shareTheme = null;
+
     public function __construct(
         ?int                  $id = null,
         ?string               $type = null,
@@ -419,6 +435,8 @@ final class ChatFullInfo extends AbstractObject {
         ?string               $customEmojiStickerSetName = null,
         ?int                  $linkedChatId = null,
         ?ChatLocation         $location = null,
+        ?TonWalletCard        $tonWalletCard = null,
+        ?ChatShareTheme       $shareTheme = null,
     ) {
         $this->id = $id;
         $this->type = $type;
@@ -466,6 +484,8 @@ final class ChatFullInfo extends AbstractObject {
         $this->customEmojiStickerSetName = $customEmojiStickerSetName;
         $this->linkedChatId = $linkedChatId;
         $this->location = $location;
+        $this->tonWalletCard = $tonWalletCard;
+        $this->shareTheme = $shareTheme;
     }
 
     public static function fromArray(array $data): ChatFullInfo {
@@ -613,6 +633,12 @@ final class ChatFullInfo extends AbstractObject {
         }
         if (isset($data['location'])) {
             $instance->location = ChatLocation::fromArray($data['location']);
+        }
+        if (isset($data['ton_wallet_card'])) {
+            $instance->tonWalletCard = TonWalletCard::fromArray($data['ton_wallet_card']);
+        }
+        if (isset($data['share_theme'])) {
+            $instance->shareTheme = ChatShareTheme::fromArray($data['share_theme']);
         }
         return $instance;
     }
@@ -1028,6 +1054,24 @@ final class ChatFullInfo extends AbstractObject {
 
     public function setLocation(?ChatLocation $value): self {
         $this->location = $value;
+        return $this;
+    }
+
+    public function getTonWalletCard(): ?TonWalletCard {
+        return $this->tonWalletCard;
+    }
+
+    public function setTonWalletCard(?TonWalletCard $value): self {
+        $this->tonWalletCard = $value;
+        return $this;
+    }
+
+    public function getShareTheme(): ?ChatShareTheme {
+        return $this->shareTheme;
+    }
+
+    public function setShareTheme(?ChatShareTheme $value): self {
+        $this->shareTheme = $value;
         return $this;
     }
 

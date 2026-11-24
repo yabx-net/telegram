@@ -11,7 +11,7 @@ final class EphemeralMessageParameters extends AbstractObject {
     /**
      * Receiver User Id
      *
-     * Identifier of the user who will receive the message. It is not guaranteed that the user will receive the message, especially if they are offline.
+     * Optional. Identifier of the user who will receive the message; required unless the message is sent as an ephemeral reply to a callback query. If omitted, then the parameter chat_id of the method is ignored. It is not guaranteed that the user will receive the message, especially if they are offline.
      * @var int|null
      */
     protected ?int $receiverUserId = null;

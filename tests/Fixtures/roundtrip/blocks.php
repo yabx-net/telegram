@@ -41,7 +41,7 @@ return [
     RichBlockAnchor::class => ['type' => 'anchor', 'name' => 'top'],
     RichBlockList::class => ['type' => 'list', 'items' => [['label' => 'Item', 'blocks' => [$paragraph]]]],
     RichBlockBlockQuotation::class => ['type' => 'blockquote', 'blocks' => [$paragraph]],
-    RichBlockExpandableBlockQuotation::class => ['type' => 'expandable_blockquote', 'text' => 'more'],
+    RichBlockExpandableBlockQuotation::class => ['type' => 'expandable_blockquote', 'blocks' => [['type' => 'paragraph', 'text' => 'more']]],
     RichBlockButtons::class => ['type' => 'buttons', 'buttons' => [['text' => 'Go', 'url' => 'https://example.com']]],
     RichBlockDocument::class => ['type' => 'document', 'document' => ['file_id' => 'BQACAgIAAxkBAAI', 'file_unique_id' => 'AgADAAI']],
     RichBlockPullQuotation::class => ['type' => 'pullquote', 'text' => 'quote'],

@@ -57,7 +57,7 @@ final class RichBlockAllTypesTest extends TestCase {
             'anchor' => [['type' => 'anchor', 'name' => 'top'], RichBlockAnchor::class],
             'list' => [['type' => 'list', 'items' => [['label' => 'Item', 'blocks' => [$paragraph]]]], RichBlockList::class],
             'blockquote' => [['type' => 'blockquote', 'blocks' => [$paragraph]], RichBlockBlockQuotation::class],
-            'expandable_blockquote' => [['type' => 'expandable_blockquote', 'text' => 'more'], RichBlockExpandableBlockQuotation::class],
+            'expandable_blockquote' => [['type' => 'expandable_blockquote', 'blocks' => [['type' => 'paragraph', 'text' => 'more']]], RichBlockExpandableBlockQuotation::class],
             'pullquote' => [['type' => 'pullquote', 'text' => 'quote'], RichBlockPullQuotation::class],
             'collage' => [['type' => 'collage', 'blocks' => [$paragraph]], RichBlockCollage::class],
             'slideshow' => [['type' => 'slideshow', 'blocks' => [$paragraph]], RichBlockSlideshow::class],
